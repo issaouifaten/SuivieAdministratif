@@ -136,7 +136,12 @@ public class MenuHome extends AppCompatActivity implements NavigationView.OnNavi
             Intent intent = new Intent(getApplicationContext(), EtatJournalArticleVendu.class);
             startActivity(intent);
         }
-      //nav_etat_journal_vente_article
+        else  if (id == R.id.nav_etat_list_commande) {
+
+            Intent intent = new Intent(getApplicationContext(), EtatCommande.class);
+            startActivity(intent);
+        }
+      //nav_etat_list_commande
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
