@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item android:title="Statistique  "  >
+
+            <menu>
+                <item
+                    android:id="@+id/nav_etat_chiffre_affaire"
+                    android:title="Chiffre d'affaire Global" />
+                <item
+                    android:id="@+id/nav_etat_stock_article"
+                    android:title="Stock" />
+                <item
+                    android:id="@+id/nav_etat_globale"
+                    android:title="GLOBALE" />
+                <item
+                    android:id="@+id/nav_etat_journal_vente_article"
+                    android:title="Journal Vente Article" />
+            </menu>
+        </item>
+
+
+        <item
+            android:icon="@drawable/ic_list_black"
+            android:title="Historique">
+            <menu/>
+        </item>
+
+
+
+
+    </group>
+
+
+</menu>
