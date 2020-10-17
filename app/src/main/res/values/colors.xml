@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#4B0004</color>
     <color name="colorAccent">#971001</color>
 
+    <color name="colorPrimary2">#cf8a51</color>
+
     <color name="blue_ocean">#6699CC</color>
     <!-- <color name="colorPrimary">#3f51b5</color>
      <color name="colorPrimaryDark">#000066</color>
@@ -16,15 +18,22 @@
 
     <color name="light_black">#504f4f</color>
     <color name="black">#000000</color>
-    <color name="blue">#0737d4</color>
+    <color name="blue2">#0737d4</color>
     <color name="bg">#F2F2F2</color>
 
     <color name="blue_colisage">#025E90</color>
 
-    <color name="blue2">#00839E</color>
+    <color name="blue">#00839E</color>
     <color name="blue_prix">#46B29D</color>
     <color name="lightgray">#ededed</color>
     <color name="white">#ffffff</color>
+
+
+
+    <color name="back_rouge">#fcf2f2</color>
+    <color name="back_vert">#f2fff5</color>
+    <color name="back_rouge_">#fde7e7</color>
+
 
     <color name="back_card_inactive">#e9f2f2f2</color>
     <color name="back_card_coture">#e9f9f9f9</color>

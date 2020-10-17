@@ -8,9 +8,11 @@
         <item android:title="Statistique  "  >
 
             <menu>
+
                 <item
                     android:id="@+id/nav_etat_chiffre_affaire"
                     android:title="Chiffre d'affaire Global" />
+
                 <item
                     android:id="@+id/nav_etat_stock_article"
                     android:title="Stock" />
@@ -24,6 +26,7 @@
                 <item
                     android:id="@+id/nav_etat_journal_vente_article"
                     android:title="Journal Vente Article" />
+
             </menu>
         </item>
 

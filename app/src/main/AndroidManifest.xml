@@ -2,20 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.suivieadministratif">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo_i2s"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Globale"></activity>
+        <activity android:name=".HistoriqueLigneBonCommandeActivity"></activity>
+        <activity android:name=".Globale" />
         <activity android:name=".MenuServeur" />
         <activity android:name=".EtatJournalArticleVendu" />
         <activity android:name=".StockArticle" />
-        <activity android:name=".EtatCommande" />
+        <activity
+            android:name=".EtatCommande"
+            android:label="Etat de Bon Commande" />
         <activity android:name=".EtatChiffreAffaire" />
         <activity
             android:name=".MenuHome"
@@ -30,5 +31,7 @@
         </activity>
         <activity android:name=".MainActivity" />
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
