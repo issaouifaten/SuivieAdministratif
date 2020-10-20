@@ -20,9 +20,19 @@
                 <item
                     android:id="@+id/nav_etat_list_commande"
                     android:title="liste commande" />
+
+                <item
+                    android:id="@+id/nav_livraison_vente"
+                    android:title="Livraison Vente" />
+
+                <item
+                    android:id="@+id/nav_retour_vente"
+                    android:title="Retour Vente " />
+
                 <item
                     android:id="@+id/nav_etat_globale"
                     android:title="GLOBALE" />
+
                 <item
                     android:id="@+id/nav_etat_journal_vente_article"
                     android:title="Journal Vente Article" />

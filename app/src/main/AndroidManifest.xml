@@ -9,13 +9,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HistoriqueLigneBonCommandeActivity"></activity>
+
+
+        <activity android:name=".activity.HistoriqueLigneBonRetourActivity"></activity>
+
+        <activity android:name=".activity.EtatRetourActivity"
+            android:label="Etat de Bon Retour" />
+
+        <activity android:name=".activity.HistoriqueLigneBonLivraisonActivity" />
+
+        <activity android:name=".activity.LigneBonLivraisonVenteActivity" />
+
+        <activity
+            android:name=".activity.EtatLivraisonActivity"
+            android:label="Etat de Bon Livraison" />
+        <activity android:name=".activity.HistoriqueLigneBonCommandeActivity" />
         <activity android:name=".Globale" />
         <activity android:name=".MenuServeur" />
         <activity android:name=".EtatJournalArticleVendu" />
         <activity android:name=".StockArticle" />
         <activity
-            android:name=".EtatCommande"
+            android:name=".activity.EtatCommande"
             android:label="Etat de Bon Commande" />
         <activity android:name=".EtatChiffreAffaire" />
         <activity

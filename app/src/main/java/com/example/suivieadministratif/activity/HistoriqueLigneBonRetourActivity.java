@@ -1,6 +1,9 @@
-package com.example.suivieadministratif;
+package com.example.suivieadministratif.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import   com.example.suivieadministratif.R ;
+import com.example.suivieadministratif.task.HistoriqueLBLTask;
+import com.example.suivieadministratif.task.HistoriqueLBRTask;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,49 +11,56 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.suivieadministratif.task.HistoriqueLBCTask;
-
 import java.text.DecimalFormat;
 
-public class HistoriqueLigneBonCommandeActivity extends AppCompatActivity {
+public class HistoriqueLigneBonRetourActivity extends AppCompatActivity {
 
 
-    TextView txt_num_bc, txt_date_bc, txt_client, txt_ttc;
-    ListView lv_ligne_bc;
+
+    TextView txt_num_br, txt_date_bc, txt_client, txt_ttc;
+    ListView lv_ligne_br;
     ProgressBar pb;
-
     DecimalFormat decF = new DecimalFormat("0.000");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_historique_ligne_bon_commande);
+        setContentView(R.layout.activity_historique_ligne_bon_retour);
 
 
-        String NumeroBC = getIntent().getStringExtra("cle_numero_bon_cmd_vente");
-        setTitle(NumeroBC);
+
+
+        String NumeroBR = getIntent().getStringExtra("cle_numero_bon_ret_vente");
+        setTitle(NumeroBR);
 
         String RaisonSociale = getIntent().getStringExtra("cle_raison_sociale");
         double ttc = getIntent().getDoubleExtra("cle_total_ttc", 0);
         String date_cmd = getIntent().getStringExtra("cle_date_bc");
 
-        txt_num_bc = (TextView) findViewById(R.id.txt_num_bc);
+        txt_num_br = (TextView) findViewById(R.id.txt_num_br);
         txt_date_bc = (TextView) findViewById(R.id.txt_date_bc);
         txt_client = (TextView) findViewById(R.id.txt_raison_client);
         txt_ttc = (TextView) findViewById(R.id.txt_prix_ttc);
 
-        lv_ligne_bc = (ListView) findViewById(R.id.lv_ligne_bon_commande);
+        lv_ligne_br = (ListView) findViewById(R.id.lv_ligne_bon_retour);
         pb = (ProgressBar) findViewById(R.id.pb);
         pb.setVisibility(View.INVISIBLE);
 
         txt_client.setText(RaisonSociale);
         txt_ttc.setText(decF.format(ttc));
         txt_date_bc.setText(date_cmd);
-        txt_num_bc.setText(NumeroBC);
+        txt_num_br.setText(NumeroBR);
 
-        HistoriqueLBCTask historiqueLBCTask  = new HistoriqueLBCTask (this  ,lv_ligne_bc ,NumeroBC , pb) ;
-        historiqueLBCTask.execute();
+        HistoriqueLBRTask historiqueLBRTask  = new HistoriqueLBRTask (this  ,lv_ligne_br ,NumeroBR , pb) ;
+        historiqueLBRTask.execute();
+
+
+
 
 
     }
+
+
+
 }

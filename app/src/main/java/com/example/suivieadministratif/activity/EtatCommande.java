@@ -1,11 +1,9 @@
-package com.example.suivieadministratif;
+package com.example.suivieadministratif.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +13,8 @@ import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.example.suivieadministratif.ConnectionClass;
+import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.adapter.BonCommandeAdapter;
 import com.example.suivieadministratif.task.HistoriqueBCTask;
 
@@ -34,8 +34,7 @@ public class EtatCommande extends AppCompatActivity {
 
     public TextView txt_date_debut, txt_date_fin;
 
-    ConnectionClass connectionClass;
-    String NomUtilisateur,codeclient,rsclient="",mail="",Nbcmd="",date,nbcmd,totale;
+
     final Context co = this;
     String user, password, base, ip;
 
@@ -49,8 +48,6 @@ public class EtatCommande extends AppCompatActivity {
     public static Date date_fin   = null;
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     NumberFormat formatter = new DecimalFormat("00");
-
-
 
 
     @Override

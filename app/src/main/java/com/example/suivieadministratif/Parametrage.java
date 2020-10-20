@@ -31,6 +31,20 @@ public class Parametrage extends AppCompatActivity {
         edtuser = (EditText) findViewById(R.id.user);
         edtbase = (EditText) findViewById(R.id.db);
 
+
+        SharedPreferences prefs =   getSharedPreferences(prefnamesql , Context.MODE_PRIVATE);
+        final SharedPreferences.Editor edt = prefs.edit();
+        edt.putBoolean("etatsql", false);
+
+        if( prefs.contains("ip") && prefs.contains("base") ) {
+            String _ip = prefs.getString("ip", "");
+            String _base = prefs.getString("base", "");
+
+            edtip.setText(_ip);
+            edtbase.setText(_base);
+
+        }
+
         btadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

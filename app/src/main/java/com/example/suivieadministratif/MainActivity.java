@@ -153,13 +153,16 @@ public class MainActivity extends AppCompatActivity
                 z = "Please enter User Id and Password";
             else {
                 try {
+                    Log.e("DoLogin" ,"connectionClass"+ip+ " "+base) ;
                     Connection con = connectionClass.CONN(ip, password, user, base);
                     if (con == null) {
                         z = "Error in connection with SQL server";
                     } else {
-                        String query = "SELECT *,(select RaisonSociale from Societe)as NomSociete from Utilisateur  " +
+
+                        String query = "SELECT  *, (select RaisonSociale from Societe) as NomSociete from Utilisateur  " +
                                 " where Utilisateur.NomUtilisateur='" + userid + "' and MotDePasse='" + p + "'";
-                        Log.e("q",query);
+
+                        Log.e("query_login",query);
                         Statement stmt = con.createStatement();
                         ResultSet rs = stmt.executeQuery(query);
 
@@ -176,7 +179,6 @@ public class MainActivity extends AppCompatActivity
                             CodeEmployer = "";
                             isSuccess = true;
                             z = "Login avec succée";
-
 
                         }
 

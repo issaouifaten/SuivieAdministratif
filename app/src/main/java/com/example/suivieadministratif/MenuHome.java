@@ -6,26 +6,21 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Menu;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.suivieadministratif.activity.EtatCommande;
+import com.example.suivieadministratif.activity.EtatLivraisonActivity;
+import com.example.suivieadministratif.activity.EtatRetourActivity;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -139,6 +134,18 @@ public class MenuHome extends AppCompatActivity implements NavigationView.OnNavi
         else  if (id == R.id.nav_etat_list_commande) {
 
             Intent intent = new Intent(getApplicationContext(), EtatCommande.class);
+            startActivity(intent);
+        }
+
+        else  if (id == R.id.nav_livraison_vente) {
+
+            Intent intent = new Intent(getApplicationContext(), EtatLivraisonActivity.class);
+            startActivity(intent);
+        }
+
+        else  if (id == R.id.nav_retour_vente) {
+
+            Intent intent = new Intent(getApplicationContext(), EtatRetourActivity.class);
             startActivity(intent);
         }
       //nav_etat_list_commande
