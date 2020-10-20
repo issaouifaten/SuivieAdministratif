@@ -8,6 +8,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -159,14 +160,14 @@ public class Globale extends AppCompatActivity {
         String z = "";
         Boolean test = false;
 
-
+        int nb_ste = 1;
         List<Map<String, String>> prolist = new ArrayList<Map<String, String>>();
         float total_gloabl = 0;
 
         @Override
         protected void onPreExecute() {
             progressBar.setVisibility(View.VISIBLE);
-
+            nb_ste = 1;
             total_gloabl = 0;
         }
 
@@ -177,7 +178,7 @@ public class Globale extends AppCompatActivity {
             condition = "";
             txt_total.setText("" + total_gloabl);
 
-            String[] from = {"CodeClient", "RaisonSociale", "NomRepresentant", "NumeroPiece", "TotalTTC", "NomRAD","NbSociete","NomSociete"};
+            String[] from = {"CodeClient", "RaisonSociale", "NomRepresentant", "NumeroPiece", "TotalTTC", "NomRAD", "NbSociete", "NomSociete"};
             int[] views = {R.id.txt_code, R.id.txt_designation, R.id.txt_nom_representant, R.id.tx_num_piece, R.id.txt_total_ttc, R.id.txt_nom_rad};
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
                     prolist, R.layout.item_chiffre_affaire_global, from,
@@ -212,6 +213,7 @@ public class Globale extends AppCompatActivity {
                     final TextView txt_total_ttc = (TextView) convertView.findViewById(R.id.txt_total_ttc);
                     final TextView txt_nom_rad = (TextView) convertView.findViewById(R.id.txt_nom_rad);
                     final TextView txt_nom_ste = (TextView) convertView.findViewById(R.id.txt_nom_ste);
+                    final CardView card_situation = (CardView) convertView.findViewById(R.id.card_situation);
 
                     final HashMap<String, Object> obj = (HashMap<String, Object>) ADA
                             .getItem(position);
@@ -237,6 +239,30 @@ public class Globale extends AppCompatActivity {
 
                     tx_num_piece.setText(NumeroPiece);
                     txt_total_ttc.setText(TotalTTC);
+                    if( (Integer.parseInt(NbSociete)%2 ==0))
+                    {
+                        card_situation.setBackgroundColor(Color.parseColor("#ebf0fa"));
+                    }else{
+                        card_situation.setBackgroundColor(Color.parseColor("#ffddcc"));
+                    }
+
+
+//
+//                    switch (NbSociete) {
+//                        case "1":
+//                            card_situation.setBackgroundColor(Color.parseColor("#ebf0fa"));
+//                            break;
+//                        case "2":
+//                            card_situation.setBackgroundColor(Color.parseColor("#ffddcc"));
+//                            break;
+//                        case "3": card_situation.setBackgroundColor( Color.parseColor("#e6fff2"));   break;
+//
+//                        default:
+//                            card_situation.setBackgroundColor(Color.parseColor("#f2f2f2"));
+//                            break;
+//
+//
+//                    }
 
 
                     return convertView;
@@ -265,7 +291,7 @@ public class Globale extends AppCompatActivity {
 
                     ResultSet rs_list = ps_.executeQuery();
                     z = "e";
-                    int nb_ste = 1;
+
                     while (rs_list.next()) {
                         String ip_list = rs_list.getString("IP");
                         String base_list = rs_list.getString("NomBase");

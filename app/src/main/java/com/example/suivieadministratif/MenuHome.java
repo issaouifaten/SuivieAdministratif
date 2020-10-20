@@ -34,7 +34,7 @@ public class MenuHome extends AppCompatActivity implements NavigationView.OnNavi
     final Context co = this;
     ProgressBar pbbar;
     String query_jeux = "";
-    TextView txt_titre, txt_version;
+    TextView txt_titre, txt_version,txt_nomste;
     ImageView img_logo_hannibal;
 
     GridView gridSituation;
@@ -70,6 +70,8 @@ public class MenuHome extends AppCompatActivity implements NavigationView.OnNavi
         password = pref.getString("password", password);
         base = pref.getString("base", base);
         NomSociete = pref.getString("NomSociete", NomSociete);
+        txt_nomste=(TextView)findViewById(R.id.txt_nomste);
+        txt_nomste.setText(NomSociete);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

@@ -40,7 +40,7 @@ public class StockArticle extends AppCompatActivity {
     EditText edtRecherche;
     String querysearch="";
     String Frs="Tout";
-    ArrayList<String> datalibelle,datacode;
+    ArrayList<String> datalibelle,datacode,dataLibelleFRS,datacodeFRS;
     Spinner  spindepot;
     ProgressBar progressBar;
     @Override
@@ -100,37 +100,8 @@ public class StockArticle extends AppCompatActivity {
         });
 
         ////////////////////////////////////////////////////
-        String query = "select RaisonSociale, CodeFournisseur from Fournisseur";
-
-        try {
-            Connection connect = connectionClass.CONN(ip, password, user, base);
-            PreparedStatement stmt;
-            stmt = connect.prepareStatement(query);
-            ResultSet rsss = stmt.executeQuery();
-            ArrayList<String> data = new ArrayList<String>();
-            data.add("Tout");
-            while (rsss.next()) {
-                String id = rsss.getString("RaisonSociale");
-                data.add(id);
-
-            }
-            String[] array = data.toArray(new String[0]);
-
-
-            ArrayAdapter<CharSequence> adapter = new ArrayAdapter(getApplicationContext(),
-                    R.layout.spinner, data);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinfrs.setAdapter(adapter);
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-        }
-
-
-
-
+ GetDataSpinnerFRS getDataSpinnerFRS=new GetDataSpinnerFRS();
+ getDataSpinnerFRS.execute("");
         spinfrs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
@@ -499,13 +470,13 @@ public class StockArticle extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             //  Log.e("frs", querylist);
-            // pbbar.setVisibility(View.VISIBLE);
+             progressBar.setVisibility(View.VISIBLE);
 
         }
 
         @Override
         protected void onPostExecute(String r) {
-            // pbbar.setVisibility(View.GONE);
+              progressBar.setVisibility(View.GONE);
             //   Toast.makeText(getApplicationContext(), r, Toast.LENGTH_SHORT).show();
             //   Toast.makeText(getApplicationContext(), r, Toast.LENGTH_SHORT).show();
             String[] array = datacode.toArray(new String[0]);
@@ -562,6 +533,79 @@ public class StockArticle extends AppCompatActivity {
         }
     }
 
+
+
+
+    public class GetDataSpinnerFRS extends AsyncTask<String, String, String> {
+        String z = "  ";
+
+        List<Map<String, String>> prolist = new ArrayList<Map<String, String>>();
+
+        @Override
+        protected void onPreExecute() {
+            //  Log.e("frs", querylist);
+            progressBar.setVisibility(View.VISIBLE);
+
+        }
+
+        @Override
+        protected void onPostExecute(String r) {
+            progressBar.setVisibility(View.GONE);
+            //   Toast.makeText(getApplicationContext(), r, Toast.LENGTH_SHORT).show();
+            //   Toast.makeText(getApplicationContext(), r, Toast.LENGTH_SHORT).show();
+            String[] array = datacodeFRS.toArray(new String[0]);
+
+
+            ArrayAdapter<CharSequence> adapter = new ArrayAdapter(getApplicationContext(),
+                    R.layout.spinner, dataLibelleFRS);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinfrs.setAdapter(adapter);
+
+
+
+
+
+
+        }
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                Connection con = connectionClass.CONN(ip, password, user, base);
+                if (con == null) {
+                    z = "Error in connection with SQL server";
+                } else {
+
+                    PreparedStatement stmt;
+                    dataLibelleFRS = new ArrayList<String>();
+                    datacodeFRS = new ArrayList<String>();
+
+                    String querydepot="select RaisonSociale, CodeFournisseur from Fournisseur";
+
+                    stmt = con.prepareStatement(querydepot);
+                    ResultSet rsss = stmt.executeQuery();
+                    Log.e("spinFRS", querydepot);
+                    dataLibelleFRS.add("Rechercher frs");
+                    datacodeFRS.add("");
+                    while (rsss.next()) {
+                        String libelle= rsss.getString("RaisonSociale");
+                        dataLibelleFRS.add(libelle);
+                        String CodeFournisseur= rsss.getString("CodeFournisseur");
+                        datacodeFRS.add(CodeFournisseur);
+
+                    }
+
+
+                }
+            } catch (SQLException ex) {
+                z = "list" + ex.toString();
+
+            } catch (Exception e) {
+
+            }
+            return z;
+        }
+    }
 
 
 

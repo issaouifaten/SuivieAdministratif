@@ -2,15 +2,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.suivieadministratif">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
-        android:icon="@drawable/logo_i2s"
+        android:icon="@drawable/i2s"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/i2s"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
+        <activity android:name=".Globale"></activity>
+        <activity android:name=".MenuServeur"
+            android:label="Liste Societe"/>
+        <activity android:name=".EtatJournalArticleVendu"
+            android:label="Journal Article Vendu"/>
+        <activity android:name=".StockArticle"
+            android:label="JournalArticleVendu"
+            />
+        <activity android:name=".activity.EtatCommande" />
+        <activity android:name=".EtatChiffreAffaire"
+            android:label="ChiffreAffaire"/>
         <activity android:name=".activity.HistoriqueLigneBonRetourActivity"></activity>
 
         <activity android:name=".activity.EtatRetourActivity"
@@ -24,28 +35,21 @@
             android:name=".activity.EtatLivraisonActivity"
             android:label="Etat de Bon Livraison" />
         <activity android:name=".activity.HistoriqueLigneBonCommandeActivity" />
-        <activity android:name=".Globale" />
-        <activity android:name=".MenuServeur" />
-        <activity android:name=".EtatJournalArticleVendu" />
-        <activity android:name=".StockArticle" />
-        <activity
-            android:name=".activity.EtatCommande"
-            android:label="Etat de Bon Commande" />
-        <activity android:name=".EtatChiffreAffaire" />
         <activity
             android:name=".MenuHome"
-            android:label="@string/title_activity_menu_home"
+            android:label="HOME"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Parametrage">
+        <activity android:name=".Parametrage"
+
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:label="LOGIN"/>
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
