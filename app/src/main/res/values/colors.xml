@@ -28,11 +28,18 @@
     <color name="lightgray">#ededed</color>
     <color name="white">#ffffff</color>
 
-
+    <color name="orange">#f7923b</color>
 
     <color name="back_rouge">#fcf2f2</color>
     <color name="back_vert">#f2fff5</color>
     <color name="back_rouge_">#fde7e7</color>
+    <color name="rouge_clair2">#d9d8d8</color>
+
+    <color name="color_alerte">#a10009</color>
+    <color name="color_info">#008c28</color>
+    <color name="color_info2">#78b348</color>
+    <color name="color_info_panier">#d64700</color>
+    <color name="progressBarColor">#7F0007</color>
 
 
     <color name="back_card_inactive">#e9f2f2f2</color>

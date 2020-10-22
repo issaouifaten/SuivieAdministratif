@@ -59,13 +59,20 @@ public class EtatChiffreAffaire extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_etat_chiffre_affaire);
+
+
+        SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
+        String NomSociete = pref.getString("NomSociete", "");
+        setTitle(NomSociete + " : Chiffre d'Affaire");
+
+
         connectionClass = new ConnectionClass();
 
         SharedPreferences prefe = getSharedPreferences("usersession", Context.MODE_PRIVATE);
         SharedPreferences.Editor edte = prefe.edit();
         NomUtilisateur = prefe.getString("NomUtilisateur", NomUtilisateur);
 
-        SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
+       // SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         SharedPreferences.Editor edt = pref.edit();
         user = pref.getString("user", user);
         ip = pref.getString("ip", ip);

@@ -42,7 +42,7 @@
                         <ImageView
                             android:layout_width="25dp"
                             android:layout_height="25dp"
-                            android:src="@drawable/ic_retour" />
+                            android:src="@drawable/ic_retour_" />
 
                         <TextView
                             android:id="@+id/txt_num_br"

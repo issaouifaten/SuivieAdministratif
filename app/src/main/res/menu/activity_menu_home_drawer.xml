@@ -3,38 +3,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
+
+    <item
+        android:id="@+id/nav_principal"
+        android:title="Pricipal"
+        android:icon="@drawable/ic_home"
+        />
+
     <group android:checkableBehavior="single">
 
-        <item android:title="Statistique  "  >
+        <item android:title="Vente"  >
 
             <menu>
-                <item
-                    android:id="@+id/nav_etat_chiffre_affaire"
-                    android:title="CHIFFRE D'AFFAIRE"
-                    android:icon="@drawable/ic_dashboard"
-                    />
-                <item
-                    android:id="@+id/nav_etat_stock_article"
-                    android:title="STOCK"
-                    android:icon="@drawable/ic_store_black_24dp"/>
+
                 <item
                     android:id="@+id/nav_livraison_vente"
-                    android:title="Livraison Vente" />
+                    android:title="Livraison Vente"
+                    android:icon="@drawable/ic_livraison"/>
 
                 <item
                     android:id="@+id/nav_retour_vente"
-                    android:title="Retour Vente " />
+                    android:title="Retour Vente "
+                    android:icon="@drawable/ic_retour_"/>
                 <item
                     android:id="@+id/nav_etat_list_commande"
-                    android:title="liste commande" />
-                <item
-                    android:id="@+id/nav_etat_globale"
-                    android:title="GLOBALE"
-                    android:icon="@drawable/ic_ste"/>
+                    android:title="liste commande"
+                    android:icon="@drawable/ic_cmd"/>
+
+
                 <item
                     android:id="@+id/nav_etat_journal_vente_article"
                     android:title="JOURNAL VENTE ARTICLE"
                     android:icon="@drawable/ic_shopping_cart_black_24dp"/>
+
+
             </menu>
         </item>
 
@@ -50,5 +52,83 @@
 
     </group>
 
+    <group android:checkableBehavior="single">
 
+    <item android:title="Chiffre d'Affaire"  >
+
+        <menu>
+
+
+
+            <item
+                android:id="@+id/nav_etat_chiffre_affaire"
+                android:title="CHIFFRE D'AFFAIRE"
+                android:icon="@drawable/ic_ca_"
+                />
+
+
+            <item
+                android:id="@+id/nav_etat_globale"
+                android:title="CA GLOBALE"
+                android:icon="@drawable/ic_dashboard"/>
+
+        </menu>
+    </item>
+
+
+    <item
+        android:icon="@drawable/ic_list_black"
+        android:title="Historique">
+        <menu/>
+    </item>
+
+
+
+
+</group>
+
+    <group android:checkableBehavior="single">
+
+        <item android:title="Stock"  >
+
+            <menu>
+
+
+
+                <item
+                    android:id="@+id/nav_etat_stock_article"
+                    android:title="STOCK"
+                    android:icon="@drawable/ic_etat_stock"/>
+
+
+
+            </menu>
+        </item>
+
+
+    </group>
+
+
+    <group android:checkableBehavior="single">
+
+        <item android:title="Application"  >
+
+            <menu>
+
+                <item
+                    android:id="@+id/nav_param_server"
+                    android:title="Paramètrage Serveur"
+                    android:icon="@drawable/ic_param_conn"/>
+
+                <item
+                    android:id="@+id/nav_deconnexion"
+                    android:title="Déconnexion"
+                    android:icon="@drawable/ic_disconnect"/>
+
+
+            </menu>
+        </item>
+
+
+    </group>
 </menu>

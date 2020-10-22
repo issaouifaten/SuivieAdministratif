@@ -10,6 +10,7 @@ import com.example.suivieadministratif.task.HistoriqueBLTask;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -58,6 +59,11 @@ public class EtatLivraisonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_etat_livraison);
 
+
+        SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
+        String NomSociete = pref.getString("NomSociete", "");
+
+        setTitle(NomSociete + " : Bon Livraison");
 
         txt_date_debut = findViewById(R.id.txt_date_debut);
         txt_date_fin = findViewById(R.id.txt_date_fin);

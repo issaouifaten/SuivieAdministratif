@@ -66,6 +66,9 @@ public class EtatJournalArticleVendu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_etat_journal_article_vendu);
 
+        SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
+        String NomSociete = pref.getString("NomSociete", "");
+        setTitle(NomSociete + " : Journal Article Vendu");
 
         connectionClass = new ConnectionClass();
 
@@ -73,7 +76,7 @@ public class EtatJournalArticleVendu extends AppCompatActivity {
         SharedPreferences.Editor edte = prefe.edit();
         NomUtilisateur = prefe.getString("NomUtilisateur", NomUtilisateur);
 
-        SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
+
         SharedPreferences.Editor edt = pref.edit();
         user = pref.getString("user", user);
         ip = pref.getString("ip", ip);

@@ -27,7 +27,7 @@
             android:id="@+id/edtuserid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
+            android:inputType="textEmailAddress"
             android:hint="Nom"
             android:textColor="@color/colorPrimaryDark"
             android:textColorHint="@color/colorPrimaryDark" />
@@ -35,13 +35,13 @@
         <EditText
             android:id="@+id/edtpass"
             android:layout_width="match_parent"
-
             android:layout_height="wrap_content"
-
             android:hint="Mot de passe "
             android:inputType="textPassword"
             android:textColor="@color/colorPrimaryDark"
             android:textColorHint="@color/colorPrimaryDark" />
+
+
     </LinearLayout>
 
 </LinearLayout>

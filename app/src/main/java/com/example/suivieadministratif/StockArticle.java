@@ -48,9 +48,12 @@ public class StockArticle extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_article);
 
+        SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
+        String NomSociete = pref.getString("NomSociete", "");
+        setTitle(NomSociete + " : Etat de Stock");
+
 
         /// CONNECTION BASE
-        SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         SharedPreferences.Editor edt = pref.edit();
         user = pref.getString("user", user);
         ip = pref.getString("ip", ip);
@@ -58,7 +61,7 @@ public class StockArticle extends AppCompatActivity {
         base = pref.getString("base", base);
         ///////////////////////////////////////
 
-        //////////
+
         connectionClass = new ConnectionClass();
         ////SESSION UTILISATEUR
         SharedPreferences prefe = getSharedPreferences("usersession", Context.MODE_PRIVATE);
@@ -72,11 +75,6 @@ public class StockArticle extends AppCompatActivity {
          spindepot=(Spinner)findViewById(R.id.spin_depot);
         GetDataSpinner getDataSpinner=new GetDataSpinner();
         getDataSpinner.execute("");
-
-
-
-
-
 
 
 

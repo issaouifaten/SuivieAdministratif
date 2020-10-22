@@ -1,10 +1,12 @@
 package com.example.suivieadministratif;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -19,10 +21,17 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.DatePicker;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.example.suivieadministratif.adapter.TotalCALV;
+import com.example.suivieadministratif.model.ChiffreAffaireParSociete;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,13 +46,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class Globale extends AppCompatActivity {
+public class ChiffreAffaireGlobale extends AppCompatActivity {
+
+
     ConnectionClass connectionClass;
     String CodeSociete, NomUtilisateur, CodeLivreur;
     final Context co = this;
     String user, password, base, ip;
     GridView gridSituation;
-    TextView txt_datedebut, txt_datefin, txt_total;
+    TextView txt_datedebut, txt_datefin;
     String datedebut = "", datefin = "";
     DatePicker datePicker;
     GridView gridEtat;
@@ -52,10 +63,22 @@ public class Globale extends AppCompatActivity {
     Spinner spinRespensable;
     String condition = "";
 
+
+    FloatingActionButton fab_arrow;
+    RelativeLayout layoutBottomSheet;
+    BottomSheetBehavior sheetBehavior;
+
+    ListView  list_tot_ca  ;
+
+    FillList fillList ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_globale);
+
+        setTitle( "Chiffre d'Affaire Global");
+
         connectionClass = new ConnectionClass();
         SharedPreferences prefe = getSharedPreferences("usersession", Context.MODE_PRIVATE);
         SharedPreferences.Editor edte = prefe.edit();
@@ -70,12 +93,16 @@ public class Globale extends AppCompatActivity {
 
         txt_datedebut = (TextView) findViewById(R.id.txt_date_debut);
         txt_datefin = (TextView) findViewById(R.id.txt_date_fin);
-        txt_total = (TextView) findViewById(R.id.txt_total);
+
         gridEtat = (GridView) findViewById(R.id.grid_detail);
+
+        list_tot_ca = (ListView)   findViewById(R.id.lv_list_tot_ca) ;
 
         CardView card_date_debut = (CardView) findViewById(R.id.card_date_debut);
         CardView card_date_fin = (CardView) findViewById(R.id.card_date_fin);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+
         card_date_debut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +123,8 @@ public class Globale extends AppCompatActivity {
                                         .format(d);
 
                                 txt_datedebut.setText(datedebut);
-                                FillList fillList = new FillList();
+
+                                  fillList = new FillList(ChiffreAffaireGlobale.this);
                                 fillList.execute("");
 
 
@@ -131,7 +159,7 @@ public class Globale extends AppCompatActivity {
                                 txt_datefin.setText(datefin);
 
 
-                                FillList fillList = new FillList();
+                                 fillList = new FillList(ChiffreAffaireGlobale.this);
                                 fillList.execute("");
                             }
                         });
@@ -149,12 +177,57 @@ public class Globale extends AppCompatActivity {
         datedebut = sdf.format(calendar.getTime());
         txt_datedebut.setText(datedebut);
         txt_datefin.setText(datefin);
-        FillList fillList = new FillList();
+
+         fillList = new FillList(ChiffreAffaireGlobale.this);
         fillList.execute("");
 
 
+
+        layoutBottomSheet = (RelativeLayout)  findViewById(R.id.bottom_sheet);
+        fab_arrow = (FloatingActionButton)  findViewById(R.id.fab_arrow);
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        sheetBehavior.setHideable(false);
+
+
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+
+                        fab_arrow.setImageResource(R.drawable.ic_arrow_down);
+
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+                        // Toast.makeText(getActivity() , "Expand Sheet" ,Toast.LENGTH_LONG).show();
+                        fab_arrow.setImageResource(R.drawable.ic_arrow_up);
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
+
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        fillList.cancel(true) ;
+    }
 
     public class FillList extends AsyncTask<String, String, String> {
         String z = "";
@@ -162,13 +235,20 @@ public class Globale extends AppCompatActivity {
 
         int nb_ste = 1;
         List<Map<String, String>> prolist = new ArrayList<Map<String, String>>();
-        float total_gloabl = 0;
+        ArrayList<ChiffreAffaireParSociete> list_ca  = new ArrayList<>() ;
+
+
+        Activity activity  ;
+
+        public FillList(Activity activity) {
+            this.activity = activity;
+        }
 
         @Override
         protected void onPreExecute() {
             progressBar.setVisibility(View.VISIBLE);
             nb_ste = 1;
-            total_gloabl = 0;
+
         }
 
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
@@ -176,7 +256,7 @@ public class Globale extends AppCompatActivity {
         protected void onPostExecute(String r) {
             progressBar.setVisibility(View.GONE);
             condition = "";
-            txt_total.setText("" + total_gloabl);
+
 
             String[] from = {"CodeClient", "RaisonSociale", "NomRepresentant", "NumeroPiece", "TotalTTC", "NomRAD", "NbSociete", "NomSociete"};
             int[] views = {R.id.txt_code, R.id.txt_designation, R.id.txt_nom_representant, R.id.tx_num_piece, R.id.txt_total_ttc, R.id.txt_nom_rad};
@@ -273,6 +353,9 @@ public class Globale extends AppCompatActivity {
             gridEtat.setAdapter(baseAdapter);
 
 
+            TotalCALV  adapter  = new TotalCALV(activity  , list_ca) ;
+            list_tot_ca.setAdapter(adapter);
+
         }
 
         @Override
@@ -292,6 +375,8 @@ public class Globale extends AppCompatActivity {
                     ResultSet rs_list = ps_.executeQuery();
                     z = "e";
 
+                    list_ca.clear();
+                    double total_ca  = 0  ;
                     while (rs_list.next()) {
                         String ip_list = rs_list.getString("IP");
                         String base_list = rs_list.getString("NomBase");
@@ -300,8 +385,29 @@ public class Globale extends AppCompatActivity {
 
                         Connection con_local = connectionClass.CONN(ip_list, password, user, base_list);
 
+                        String  query_t_ca  = "select  SUM(TotalTTC )  as ChiffreAffaire\n" +
+                                "from Vue_GlobalVente  where DateFactureVente IN('"+datedebut+"','"+datefin+"') " ;
 
-                        ///////////////////////////////////////
+                        Log.e("query_ca_global", query_t_ca);
+                        PreparedStatement ps_ca_g = con_local.prepareStatement(query_t_ca);
+                        ResultSet rs_ca_g = ps_ca_g.executeQuery();
+
+
+
+
+                        while (rs_ca_g.next()) {
+
+
+                            String  nom_soc  = nom_list ;
+                            double  ca_t_soc  = rs_ca_g.getDouble("ChiffreAffaire") ;
+
+                            total_ca = total_ca  +ca_t_soc ;
+
+                            ChiffreAffaireParSociete caSoc  = new ChiffreAffaireParSociete(nom_soc ,ca_t_soc)  ;
+                            list_ca.add(caSoc) ;
+
+                        }
+
 
 
                         String queryTable = "select CodeClient,RaisonSociale,TotalTTC,NumeroFactureVente,\n" +
@@ -310,8 +416,9 @@ public class Globale extends AppCompatActivity {
                                 " (select Nom from Respensable where Respensable.CodeRespensable=Vue_GlobalVente.CodeRespensableAdministration) as NomRAD  \n" +
                                 " from Vue_GlobalVente  where DateFactureVente IN('" + datedebut + "','" + datefin + "') " + condition;
 
+
                         PreparedStatement ps = con_local.prepareStatement(queryTable);
-                        Log.e("query", queryTable);
+                        Log.e("query_ca_global", queryTable);
 
                         ResultSet rs = ps.executeQuery();
                         z = "e";
@@ -323,6 +430,7 @@ public class Globale extends AppCompatActivity {
                             datanum.put("CodeClient", rs.getString("CodeClient"));
                             datanum.put("RaisonSociale", rs.getString("RaisonSociale"));
                             datanum.put("NumeroPiece", rs.getString("NumeroFactureVente"));
+
                             datanum.put("TotalTTC", rs.getString("TotalTTC"));
 
                             datanum.put("NomRepresentant", rs.getString("NomRepresentant"));
@@ -330,14 +438,12 @@ public class Globale extends AppCompatActivity {
                             datanum.put("NbSociete", nb_ste + "");
                             datanum.put("NomSociete", nom_list);
 
-                            total_gloabl += rs.getFloat("TotalTTC");
+
                             prolist.add(datanum);
 
-
                             test = true;
-
-
                             z = "succees";
+
                         }
 
                         nb_ste++;
@@ -346,7 +452,7 @@ public class Globale extends AppCompatActivity {
 
                     }
 
-
+                    list_ca.add(new ChiffreAffaireParSociete("Total",total_ca)) ;
                 }
             } catch (SQLException ex) {
                 z = "tablelist" + ex.toString();

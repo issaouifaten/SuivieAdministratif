@@ -1,4 +1,4 @@
-package com.example.suivieadministratif;
+package com.example.suivieadministratif.param;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.suivieadministratif.LoginActivity;
+import com.example.suivieadministratif.R;
 
 
 public class Parametrage extends AppCompatActivity {
@@ -58,7 +61,7 @@ public class Parametrage extends AppCompatActivity {
                 edt.putString("ip", edtip.getText().toString());
 
                 edt.commit();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
             }
         });
@@ -74,7 +77,7 @@ public class Parametrage extends AppCompatActivity {
         SharedPreferences p = getSharedPreferences(prefnamesql, Context.MODE_PRIVATE);
         st = p.getBoolean("etatsql", false);
         if (st == true) {
-            Intent i = new Intent(getApplicationContext(), MainActivity.class);
+            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(i);
         }
 

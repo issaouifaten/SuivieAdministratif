@@ -10,6 +10,7 @@ import com.example.suivieadministratif.task.HistoriqueBRTask;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -57,6 +58,10 @@ public class EtatRetourActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_etat_retour);
 
+
+        SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
+        String NomSociete = pref.getString("NomSociete", "");
+        setTitle(NomSociete + " : Bon Retour");
 
 
         txt_date_debut = findViewById(R.id.txt_date_debut);

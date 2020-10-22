@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Globale">
+    tools:context=".ChiffreAffaireGlobale">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -105,55 +106,18 @@
                 <GridView
                     android:id="@+id/grid_detail"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/footer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:layout_alignParentBottom="true"
-                android:orientation="horizontal">
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/card_compte"
-                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="bottom"
-                    android:layout_marginBottom="10dp"
-                    app:cardBackgroundColor="@color/back_card_coture">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:gravity="right"
-                        android:orientation="horizontal"
-                        android:padding="10dp">
-
-                        <TextView
-                            android:id="@+id/textView2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Chiffre Global : "
-                            android:textStyle="bold|italic" />
-
-                        <TextView
-                            android:id="@+id/txt_total"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:padding="5dp"
-                            android:text="0.000"
-                            android:textSize="20dp"
-                            android:textStyle="bold|italic" />
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
+                    android:layout_marginBottom="60dp"/>
             </LinearLayout>
+
+
 
 
         </RelativeLayout>
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <include layout="@layout/bottom_sheet_total_ca" />
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

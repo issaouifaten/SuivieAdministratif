@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.suivieadministratif">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/i2s"
@@ -11,26 +9,40 @@
         android:roundIcon="@drawable/i2s"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Globale"></activity>
-        <activity android:name=".MenuServeur"
-            android:label="Liste Societe"/>
-        <activity android:name=".EtatJournalArticleVendu"
-            android:label="Journal Article Vendu"/>
-        <activity android:name=".StockArticle"
-            android:label="JournalArticleVendu"
-            />
+
+
+        <activity android:name=".activity.SplachScreenActivity"
+            android:theme="@style/noactionBar">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+
+        <activity android:name=".ChiffreAffaireGlobale" />
+        <activity
+            android:name=".MenuServeur"
+            android:label="Liste Societe" />
+        <activity
+            android:name=".EtatJournalArticleVendu"
+            android:label="Journal Article Vendu" />
+        <activity
+            android:name=".StockArticle"
+            android:label="JournalArticleVendu" />
         <activity android:name=".activity.EtatCommande" />
-        <activity android:name=".EtatChiffreAffaire"
-            android:label="ChiffreAffaire"/>
-        <activity android:name=".activity.HistoriqueLigneBonRetourActivity"></activity>
-
-        <activity android:name=".activity.EtatRetourActivity"
+        <activity
+            android:name=".EtatChiffreAffaire"
+            android:label="ChiffreAffaire" />
+        <activity android:name=".activity.HistoriqueLigneBonRetourActivity" />
+        <activity
+            android:name=".activity.EtatRetourActivity"
             android:label="Etat de Bon Retour" />
-
         <activity android:name=".activity.HistoriqueLigneBonLivraisonActivity" />
-
         <activity android:name=".activity.LigneBonLivraisonVenteActivity" />
-
         <activity
             android:name=".activity.EtatLivraisonActivity"
             android:label="Etat de Bon Livraison" />
@@ -39,17 +51,25 @@
             android:name=".MenuHome"
             android:label="HOME"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Parametrage"
 
-            >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity android:name=".param.Parametrage"
+            android:label="Paramètrage Serveur">
+
         </activity>
-        <activity android:name=".MainActivity"
-            android:label="LOGIN"/>
+
+
+        <activity
+            android:name=".LoginActivity"
+            android:label="LOGIN" />
+
+        <activity android:name=".activity.CompteDesactiveActivity" />
+
+        <activity android:name=".activity.ConnexionEuServeurEchoueActivity" />
+
+
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

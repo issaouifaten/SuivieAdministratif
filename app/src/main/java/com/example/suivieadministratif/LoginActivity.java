@@ -3,6 +3,7 @@ package com.example.suivieadministratif;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,20 +15,24 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.suivieadministratif.param.Parametrage;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class MainActivity extends AppCompatActivity
+public class LoginActivity extends AppCompatActivity
 {
 
-    EditText edtuserid, edtpass;
-    Button btnlogin, server, back, btuser, btnpass;
+    private TextInputLayout ed_login , ed_password ;
+    Button btn_login ;
     final Context co = this;
     ConnectionClass connectionClass;
     String CodeRepresentant;
@@ -36,7 +41,7 @@ public class MainActivity extends AppCompatActivity
     Boolean test;
     String CodeSociete, NomUtilisateur, CZ, RAD, Commercial, Admin, CodeEmployer, CodeZone = "";
     boolean st = false;
-    String prefname = "usersession", NomSociete = "",MotDePasseAnnulation="";
+    String prefname = "usersession", NomSociete = "",MotDePasse="";
     Boolean Actif = false;
 
     @Override
@@ -44,31 +49,33 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getWindow() . setFlags ( WindowManager.LayoutParams.FLAG_FULLSCREEN , WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
+        btn_login = findViewById(R.id.btn_login);
+        ed_login = findViewById(R.id.login);
+        ed_password = findViewById(R.id.password);
+
+
         connectionClass = new ConnectionClass();
 
-        btnlogin = (Button) findViewById(R.id.btlogin);
+        btn_login = (Button) findViewById(R.id.btn_login);
         //  pbbar = (ProgressBar) findViewById(R.id.pbbar);
 
 
-        SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
-        SharedPreferences.Editor edt = pref.edit();
-        user = pref.getString("user", user);
-        ip = pref.getString("ip", ip);
-        password = pref.getString("password", password);
-        base = pref.getString("base", base);
-        connectionClass = new ConnectionClass();
-
-        edtuserid = (EditText) findViewById(R.id.edtuserid);
-        edtpass = (EditText) findViewById(R.id.edtpass);
-
 
         final Context co = this;
-        btnlogin.setOnClickListener(new View.OnClickListener() {
+        btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                if (!valideLogin() | !valideMtp()) {
+                    return;
+                }
+                String _login = ed_login.getEditText().getText().toString();
+                String _mot_de_passe = ed_password.getEditText().getText().toString();
 
-                DoLogin doLogin = new DoLogin();
+                DoLogin doLogin = new DoLogin(LoginActivity.this , _login, _mot_de_passe,btn_login);
                 doLogin.execute("");
 
 
@@ -83,46 +90,134 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    private Boolean valideLogin() {
+        String val = ed_login.getEditText().getText().toString();
+        if (val.isEmpty()) {
+            AlertDialog alertDialog = new AlertDialog.Builder(this)
+//set icon
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+//set title
+                    .setTitle("alert")
+//set message
+                    .setMessage("champ mail est vide")
+//set positive button
+//set negative button
+                    .setNegativeButton("okey", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //set what should happen when negative button is clicked
+                            Toast.makeText(getApplicationContext(), "Nothing Happened", Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .show();
+            ed_login.setError("le champ ne peut pas être vide");
+            return false;
+        } else {
+            ed_login.setError(null);
+            ed_login.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+    private Boolean valideMtp() {
+        String val = ed_password.getEditText().getText().toString();
+        if (val.isEmpty()) {
+
+            AlertDialog alertDialog = new AlertDialog.Builder(this)
+//set icon
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+//set title
+                    .setTitle("alert")
+//set message
+                    .setMessage("champ mot de passe est vide")
+//s
+//set negative button
+                    .setNegativeButton("okey", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //set what should happen when negative button is clicked
+                            Toast.makeText(getApplicationContext(), "Nothing Happened", Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .show();
+
+            ed_password.setError("le champ ne peut pas être vide");
+            return false;
+        } else {
+            ed_password.setError(null);
+            ed_password.setErrorEnabled(false);
+            return true;
+        }
+    }
+
+
+
     public class DoLogin extends AsyncTask<String, String, String> {
         String z = "";
         Boolean isSuccess = false;
 
 
-        String userid = edtuserid.getText().toString();
-        String p = edtpass.getText().toString();
+        Activity activity ;
+        String _login;
+        String _password;
+        Button btn_connexion   ;
+
+        public DoLogin(Activity activity, String _login, String _password, Button btn_connexion) {
+            this.activity = activity;
+            this._login = _login;
+            this._password = _password;
+            this.btn_connexion = btn_connexion;
+
+
+
+            SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
+            SharedPreferences.Editor edt = pref.edit();
+            user = pref.getString("user", user);
+            ip = pref.getString("ip", ip);
+            password = pref.getString("password", password);
+            base = pref.getString("base", base);
+            connectionClass = new ConnectionClass();
+
+
+        }
+
+
 
 
         @Override
         protected void onPreExecute() {
-
+            btn_connexion.setText("Connexion en cours ...");
+            btn_connexion.setEnabled(false);
         }
 
         @Override
         protected void onPostExecute(String r) {
 
-            Toast.makeText(MainActivity.this, r+Actif, Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, r+Actif, Toast.LENGTH_SHORT).show();
             if (Actif) {
                 if (isSuccess) {
 
-                    SharedPreferences prefs = MainActivity.this.getSharedPreferences(prefname, Context.MODE_PRIVATE);
+                    SharedPreferences prefs = activity.getSharedPreferences(prefname, Context.MODE_PRIVATE);
                     SharedPreferences.Editor edt = prefs.edit();
                     edt.putBoolean("etat", true);
                     edt.putString("NomUtilisateur", NomUtilisateur);
+                    edt.putString("MotDePasse", MotDePasse);
 
                     edt.putString("NomSociete", NomSociete);
-                    edt.putString("MotDePasse", MotDePasseAnnulation);
+
 
                     edt.commit();
 
-                    Intent i = new Intent(MainActivity.this,  MenuServeur.class);
-
+                    Intent i = new Intent(LoginActivity.this,  MenuServeur.class);
                     startActivity(i);
+                    finish();
                     Toast.makeText(getApplicationContext(), NomUtilisateur, Toast.LENGTH_LONG).show();
 
                 } else {
 
                     Toast.makeText(getApplicationContext(), "Verifiez vos Données", Toast.LENGTH_SHORT).show();
-
+                    btn_connexion.setText("Connexion");
+                    btn_connexion.setEnabled(true);
 
                 }
             } else {
@@ -149,7 +244,7 @@ public class MainActivity extends AppCompatActivity
 
         @Override
         protected String doInBackground(String... params) {
-            if (userid.trim().equals("") || password.trim().equals(""))
+            if (_login.trim().equals("") || password.trim().equals(""))
                 z = "Please enter User Id and Password";
             else {
                 try {
@@ -160,7 +255,7 @@ public class MainActivity extends AppCompatActivity
                     } else {
 
                         String query = "SELECT  *, (select RaisonSociale from Societe) as NomSociete from Utilisateur  " +
-                                " where Utilisateur.NomUtilisateur='" + userid + "' and MotDePasse='" + p + "'";
+                                " where Utilisateur.NomUtilisateur='" + _login + "' and MotDePasse='" + _password + "'";
 
                         Log.e("query_login",query);
                         Statement stmt = con.createStatement();
@@ -174,7 +269,7 @@ public class MainActivity extends AppCompatActivity
                             NomSociete = rs.getString("NomSociete");
                             Actif = rs.getBoolean("Actif");
                             Log.e("Actif",""+Actif);
-                            MotDePasseAnnulation = rs.getString("MotDePasseAnnulation");
+                            MotDePasse = rs.getString("MotDePasse");
 
                             CodeEmployer = "";
                             isSuccess = true;
@@ -194,17 +289,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        SharedPreferences p = getSharedPreferences(prefname, Context.MODE_PRIVATE);
-        st = p.getBoolean("etat", false);
-        if (st == true) {
-            Intent i = new Intent(MainActivity.this,  MenuServeur.class);
-            startActivity(i);
-        }
 
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

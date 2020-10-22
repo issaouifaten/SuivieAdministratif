@@ -41,7 +41,7 @@
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/ic_retour" />
+                        android:src="@drawable/ic_retour_" />
 
 
                     <TextView

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,11 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.DatePicker;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.sql.Connection;
@@ -43,11 +43,15 @@ public class MenuServeur extends AppCompatActivity {
     GridView gridServeur;
     ProgressBar progressBar;
 
+    public   static Activity  fa  ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_serveur);
         connectionClass = new ConnectionClass();
+
+        fa =  this  ;
 
         SharedPreferences prefe = getSharedPreferences("usersession", Context.MODE_PRIVATE);
         SharedPreferences.Editor edte = prefe.edit();
@@ -85,86 +89,6 @@ public class MenuServeur extends AppCompatActivity {
             total_gloabl=0;
         }
 
-        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-        @Override
-        protected void onPostExecute(String r) {
-        //    progressBar.setVisibility(View.GONE);
-
-
-            String[] from = {"NomSociete", "CodeSociete", "IP", "NomBase" };
-            int[] views = {R.id.txt_code, R.id.txt_designation, R.id.txt_nom_representant, R.id.tx_num_piece, R.id.txt_total_ttc,R.id.txt_nom_rad};
-            final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
-                    prolist, R.layout.item_chiffre_affaire_global, from,
-                    views);
-
-
-            final BaseAdapter baseAdapter = new BaseAdapter() {
-                @Override
-                public int getCount() {
-                    return prolist.size();
-                }
-
-                @Override
-                public Object getItem(int position) {
-                    return null;
-                }
-
-                @Override
-                public long getItemId(int position) {
-                    return 0;
-                }
-
-
-                @Override
-                public View getView(int position, View convertView, ViewGroup parent) {
-                    final LayoutInflater layoutInflater = LayoutInflater.from(co);
-                    convertView = layoutInflater.inflate(R.layout.item_serveur, null);
-                    final TextView txt_nomsociete = (TextView) convertView.findViewById(R.id.txt_nomsociete);
-                    final CardView btn_login = (CardView) convertView.findViewById(R.id.btn_login);
-
-                    final HashMap<String, Object> obj = (HashMap<String, Object>) ADA
-                            .getItem(position);
-                 final   String NomSociete = (String) obj.get("NomSociete");
-                  final  String NomBase = (String) obj.get("NomBase");
-                  final  String IP = (String) obj.get("IP");
-
-
-//  String[] from = {"CodeClient", "RaisonSociale" ,"TypeOperation","NumeroPiece","TotalTTC"};
-//
-
-                    txt_nomsociete.setText(NomSociete);
-                    btn_login.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor edt = pref.edit();
-                            edt.putString("base", NomBase);
-                            edt.putString("ip", IP);
-                            edt.putString("NomSociete", NomSociete);
-
-                            edt.commit();
-
-                            Intent intent=new Intent(getApplicationContext(),MenuHome.class);
-                            startActivity(intent);
-
-                        }
-                    });
-
-
-
-
-
-
-
-                    return convertView;
-                }
-            };
-
-
-            gridServeur.setAdapter(baseAdapter);
-
-
-        }
 
         @Override
         protected String doInBackground(String... params) {
@@ -179,7 +103,7 @@ public class MenuServeur extends AppCompatActivity {
                     String queryTable = " select * from ListeSociete";
 
                     PreparedStatement ps = con.prepareStatement(queryTable);
-                    Log.e("query", queryTable);
+                    Log.e("query_list_soc", queryTable);
 
                     ResultSet rs = ps.executeQuery();
                     z = "e";
@@ -212,6 +136,104 @@ public class MenuServeur extends AppCompatActivity {
             }
             return z;
         }
+
+        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+        @Override
+        protected void onPostExecute(String r) {
+            //    progressBar.setVisibility(View.GONE);
+
+
+            String[] from = {"NomSociete", "CodeSociete", "IP", "NomBase" };
+             int[] views = {R.id.txt_code, R.id.txt_designation, R.id.txt_nom_representant, R.id.tx_num_piece, R.id.txt_total_ttc,R.id.txt_nom_rad};
+            final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
+                    prolist, R.layout.item_chiffre_affaire_global, from, views);
+
+
+
+            final BaseAdapter baseAdapter = new BaseAdapter() {
+                @Override
+                public int getCount() {
+                    return prolist.size();
+                }
+
+                @Override
+                public Object getItem(int position) {
+                    return null;
+                }
+
+                @Override
+                public long getItemId(int position) {
+                    return 0;
+                }
+
+
+                @Override
+                public View getView(int position, View convertView, ViewGroup parent) {
+                    final LayoutInflater layoutInflater = LayoutInflater.from(co);
+                    convertView = layoutInflater.inflate(R.layout.item_serveur, null);
+
+                    final ImageView img_societe = (ImageView) convertView.findViewById(R.id.img_societe);
+                    final TextView txt_nomsociete = (TextView) convertView.findViewById(R.id.txt_nomsociete);
+                    final CardView btn_login = (CardView) convertView.findViewById(R.id.btn_login);
+
+
+
+                    final HashMap<String, Object> obj = (HashMap<String, Object>) ADA
+                            .getItem(position);
+                    final   String NomSociete = (String) obj.get("NomSociete");
+                    final  String NomBase = (String) obj.get("NomBase");
+                    final  String IP = (String) obj.get("IP");
+
+
+//  String[] from = {"CodeClient", "RaisonSociale" ,"TypeOperation","NumeroPiece","TotalTTC"};
+//
+
+                    txt_nomsociete.setText(NomSociete);
+
+                    if (NomSociete.equals("CCM"))
+                    {
+                        img_societe.setImageResource(R.drawable.ic_logo_ccm);
+                    }
+                    else  if (NomSociete.equals("GMT"))
+                    {
+                        img_societe.setImageResource(R.drawable.ic_logo_gmt);
+                    }
+
+                    btn_login.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
+                            SharedPreferences.Editor edt = pref.edit();
+                            edt.putString("base", NomBase);
+                            edt.putString("ip", IP);
+                            edt.putString("NomSociete", NomSociete);
+
+                            edt.commit();
+
+                            Intent intent=new Intent(getApplicationContext(),MenuHome.class);
+                            startActivity(intent);
+
+                        }
+                    });
+
+
+
+
+
+
+
+                    return convertView;
+                }
+            };
+
+
+            gridServeur.setAdapter(baseAdapter);
+
+
+        }
+
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -231,7 +253,9 @@ public class MenuServeur extends AppCompatActivity {
             SharedPreferences.Editor edt = pref.edit();
             edt.putBoolean("etat", false);
             edt.commit();
-            Intent inte = new Intent(getApplicationContext(), MainActivity.class);
+
+            finish();
+            Intent inte = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(inte);
 
 
