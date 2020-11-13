@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.suivieadministratif.LoginActivity;
 import com.example.suivieadministratif.R;
 
 public class CompteDesactiveActivity extends Activity {

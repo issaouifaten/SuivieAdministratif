@@ -10,8 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.suivieadministratif.LoginActivity;
+import com.example.suivieadministratif.activity.LoginActivity;
 import com.example.suivieadministratif.R;
+import com.example.suivieadministratif.activity.SplachScreenActivity;
 
 
 public class Parametrage extends AppCompatActivity {
@@ -61,7 +62,7 @@ public class Parametrage extends AppCompatActivity {
                 edt.putString("ip", edtip.getText().toString());
 
                 edt.commit();
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SplachScreenActivity.class);
                 startActivity(intent);
             }
         });

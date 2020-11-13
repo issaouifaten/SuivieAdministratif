@@ -15,7 +15,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.example.suivieadministratif.ConnectionClass;
-import com.example.suivieadministratif.LoginActivity;
 import com.example.suivieadministratif.MenuServeur;
 import  com.example.suivieadministratif.R ;
 import com.example.suivieadministratif.param.Param;
@@ -64,8 +63,6 @@ public class SplachScreenActivity extends AppCompatActivity {
 
         //  get PARAM USER
 
-
-
         etatUser = prefUser.getBoolean("etat", false);
         NomUtilisateur = prefUser.getString("NomUtilisateur", "");
         NomSociete = prefUser.getString("NomSociete", "");
@@ -78,7 +75,7 @@ public class SplachScreenActivity extends AppCompatActivity {
         etatSQL = prefs.getBoolean("etatsql", false);
 
 
-
+        Log.e("Spach_etat_sql", etatSQL + "");
     }
 
     @Override
@@ -99,17 +96,16 @@ public class SplachScreenActivity extends AppCompatActivity {
                     SharedPreferences p_ = getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
 
                     ///  get param SQL
-                    user = p_.getString("user", user);
                     ip = p_.getString("ip", ip);
-                    password = p_.getString("password", password);
                     base = p_.getString("base", base);
+                    user = p_.getString("user", user);
+                    password = p_.getString("password", password);
+
 
 
                     if (etatUser == true) {
 
-
                         SharedPreferences prefUser = getSharedPreferences(Param.PREF_USER, Context.MODE_PRIVATE);
-
                         //  get PARAM USER
                         NomUtilisateur = prefUser.getString("NomUtilisateur", "0");
                         MotDePasse = prefUser.getString("MotDePasse", "");
@@ -123,9 +119,12 @@ public class SplachScreenActivity extends AppCompatActivity {
                     } else {
 
                         Log.e("onResume_Parm", "LoginActivity");
+
                         Intent i = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(i);
                         finish();
+
+
                     }
 
 

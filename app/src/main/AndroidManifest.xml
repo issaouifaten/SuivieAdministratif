@@ -60,7 +60,7 @@
 
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:label="LOGIN" />
 
         <activity android:name=".activity.CompteDesactiveActivity" />

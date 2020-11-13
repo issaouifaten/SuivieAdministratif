@@ -1,4 +1,4 @@
-package com.example.suivieadministratif;
+package com.example.suivieadministratif.activity;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +20,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.suivieadministratif.ConnectionClass;
+import com.example.suivieadministratif.MenuServeur;
+import com.example.suivieadministratif.R;
+import com.example.suivieadministratif.param.Param;
 import com.example.suivieadministratif.param.Parametrage;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -35,13 +39,12 @@ public class LoginActivity extends AppCompatActivity
     Button btn_login ;
     final Context co = this;
     ConnectionClass connectionClass;
-    String CodeRepresentant;
+    
     String user, password, base, ip;
-    ResultSet rs;
-    Boolean test;
-    String CodeSociete, NomUtilisateur, CZ, RAD, Commercial, Admin, CodeEmployer, CodeZone = "";
+   
+    String    NomUtilisateur,   CodeEmployer ;
     boolean st = false;
-    String prefname = "usersession", NomSociete = "",MotDePasse="";
+    String NomSociete = "",MotDePasse="";
     Boolean Actif = false;
 
     @Override
@@ -197,14 +200,12 @@ public class LoginActivity extends AppCompatActivity
             if (Actif) {
                 if (isSuccess) {
 
-                    SharedPreferences prefs = activity.getSharedPreferences(prefname, Context.MODE_PRIVATE);
+                    SharedPreferences prefs = activity.getSharedPreferences(Param.PREF_USER, Context.MODE_PRIVATE);
                     SharedPreferences.Editor edt = prefs.edit();
                     edt.putBoolean("etat", true);
                     edt.putString("NomUtilisateur", NomUtilisateur);
                     edt.putString("MotDePasse", MotDePasse);
-
                     edt.putString("NomSociete", NomSociete);
-
 
                     edt.commit();
 

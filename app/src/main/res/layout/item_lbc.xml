@@ -59,8 +59,8 @@
                     android:id="@+id/fab_cercel_qt"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    app:backgroundTint="@color/ripple_lite"
-                    />
+                    app:backgroundTint="@color/ripple_lite" />
+
 
 
                 <TextView
