@@ -16,11 +16,8 @@ import android.widget.SearchView;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
-import com.example.suivieadministratif.activity.HistoriqueLigneBonLivraisonActivity;
-import com.example.suivieadministratif.activity.HistoriqueLigneBonRetourActivity;
-import com.example.suivieadministratif.adapter.BonLivraisonAdapter;
+import com.example.suivieadministratif.module.vente.HistoriqueLigneBonRetourActivity;
 import com.example.suivieadministratif.adapter.BonRetourAdapter;
-import com.example.suivieadministratif.model.BonLivraisonVente;
 import com.example.suivieadministratif.model.BonRetourVente;
 
 import java.sql.Connection;
@@ -95,7 +92,8 @@ public class HistoriqueBRTask extends AsyncTask<String, String, String> {
                 z = "Error in connection with SQL server";
             } else {
 
-                String queryHis_bc = "select  *  from BonRetourVente   \n" +
+                String queryHis_bc = "select   NumeroBonRetourVente ,RaisonSociale ,TotalTTC , DateBonRetourVente ,NumeroEtat " +
+                        "  from BonRetourVente   \n" +
                         "    where CONVERT (Date  , DateBonRetourVente)  between  '"+df.format(date_debut)+"'  and  '"+df.format(date_fin)+"'\n" +
                         "    order by DateBonRetourVente desc  \n" +
                         "     ";
@@ -135,7 +133,7 @@ public class HistoriqueBRTask extends AsyncTask<String, String, String> {
         pb.setVisibility(View.INVISIBLE);
 
         BonRetourAdapter bonRetourAdapter  = new BonRetourAdapter(activity  , listBonRetourVente)  ;
-        lv_hist_br.setAdapter(bonRetourAdapter);
+         lv_hist_br.setAdapter(bonRetourAdapter);
 
         listOnClick(listBonRetourVente);
 

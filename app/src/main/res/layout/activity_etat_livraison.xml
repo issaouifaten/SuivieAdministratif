@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/back_echek_2"
-    tools:context=".activity.EtatLivraisonActivity">
+    tools:context=".module.vente.EtatLivraisonActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -97,16 +98,13 @@
 
         </LinearLayout>
 
+
         <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
-            android:padding="5dp"
-            tools:context="com.example.faten.testsql.activity.HistoriqueBonCommande" >
-
-
+            android:padding="5dp">
 
 
             <RelativeLayout
@@ -140,8 +138,6 @@
                         android:layout_height="75dp"
                         android:background="@drawable/reload" /> -->
 
-
-
                 <ListView
                     android:id="@+id/lv_list_historique_bl"
                     android:layout_width="match_parent"
@@ -151,6 +147,7 @@
                     android:layout_alignParentTop="true"
                     android:divider="#00000000"
                     android:dividerHeight="1dp" />
+
 
 
 

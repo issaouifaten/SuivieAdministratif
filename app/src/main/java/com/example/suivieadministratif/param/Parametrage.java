@@ -20,7 +20,7 @@ public class Parametrage extends AppCompatActivity {
 
 
     boolean st = false;
-    String prefnamesql = "usersessionsql";
+
     Button btadd, btcancel;
     EditText edtip, edtpass, edtbase, edtuser, edtcodliv;
 
@@ -36,9 +36,9 @@ public class Parametrage extends AppCompatActivity {
         edtbase = (EditText) findViewById(R.id.db);
 
 
-        SharedPreferences prefs =   getSharedPreferences(prefnamesql , Context.MODE_PRIVATE);
-        final SharedPreferences.Editor edt = prefs.edit();
-        edt.putBoolean("etatsql", false);
+        SharedPreferences prefs =   getSharedPreferences(Param.PEF_SERVER , Context.MODE_PRIVATE);
+        //final SharedPreferences.Editor edt = prefs.edit();
+        //edt.putBoolean("etatsql", false);
 
         if( prefs.contains("ip") && prefs.contains("base") ) {
             String _ip = prefs.getString("ip", "");
@@ -53,7 +53,7 @@ public class Parametrage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                SharedPreferences prefs = Parametrage.this.getSharedPreferences(prefnamesql, Context.MODE_PRIVATE);
+                SharedPreferences prefs = Parametrage.this.getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
                 SharedPreferences.Editor edt = prefs.edit();
                 edt.putBoolean("etatsql", true);
                 edt.putString("user", edtuser.getText().toString());
@@ -64,6 +64,8 @@ public class Parametrage extends AppCompatActivity {
                 edt.commit();
                 Intent intent = new Intent(getApplicationContext(), SplachScreenActivity.class);
                 startActivity(intent);
+
+                finish();
             }
         });
 
@@ -75,12 +77,12 @@ public class Parametrage extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferences p = getSharedPreferences(prefnamesql, Context.MODE_PRIVATE);
+      /*  SharedPreferences p = getSharedPreferences(prefnamesql, Context.MODE_PRIVATE);
         st = p.getBoolean("etatsql", false);
         if (st == true) {
             Intent i = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(i);
-        }
+        }*/
 
     }
 

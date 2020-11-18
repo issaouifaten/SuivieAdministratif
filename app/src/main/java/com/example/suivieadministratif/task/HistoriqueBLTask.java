@@ -16,12 +16,8 @@ import android.widget.SearchView;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
-import com.example.suivieadministratif.activity.EtatCommande;
-import com.example.suivieadministratif.activity.HistoriqueLigneBonCommandeActivity;
-import com.example.suivieadministratif.activity.HistoriqueLigneBonLivraisonActivity;
-import com.example.suivieadministratif.adapter.BonCommandeAdapter;
+import com.example.suivieadministratif.module.vente.HistoriqueLigneBonLivraisonActivity;
 import com.example.suivieadministratif.adapter.BonLivraisonAdapter;
-import com.example.suivieadministratif.model.BonCommandeVente;
 import com.example.suivieadministratif.model.BonLivraisonVente;
 
 import java.sql.Connection;

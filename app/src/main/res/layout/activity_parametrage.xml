@@ -82,8 +82,9 @@
 
                     android:inputType="textPassword"
                     android:singleLine="true"
-
                     android:text="ideal2s" />
+
+
 
                 <Button
                     android:id="@+id/add"
@@ -92,9 +93,10 @@
                     android:layout_margin="20dp"
                     android:padding="5dp"
                     android:background="@color/colorPrimary"
-                    android:text="Login"
+                    android:text="valider Configuration"
                     android:textColor="@android:color/white"
-                    android:textSize="28sp" />
+                    android:textSize="20sp" />
+
 
 
             </LinearLayout>

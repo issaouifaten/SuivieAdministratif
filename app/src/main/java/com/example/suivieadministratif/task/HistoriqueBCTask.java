@@ -15,11 +15,12 @@ import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.example.suivieadministratif.ConnectionClass;
-import com.example.suivieadministratif.activity.EtatCommande;
-import com.example.suivieadministratif.activity.HistoriqueLigneBonCommandeActivity;
+import com.example.suivieadministratif.module.vente.EtatCommande;
+import com.example.suivieadministratif.module.vente.HistoriqueLigneBonCommandeActivity;
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.adapter.BonCommandeAdapter;
 import com.example.suivieadministratif.model.BonCommandeVente;
+import com.example.suivieadministratif.param.Param;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -60,19 +61,19 @@ public class HistoriqueBCTask extends AsyncTask<String, String, String> {
         this.pb = pb;
         this.search_bar_client = search_bar_client;
 
-        SharedPreferences prefe = activity.getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
-        SharedPreferences.Editor edte = prefe.edit();
+
+        SharedPreferences prefe = activity.getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
         user = prefe.getString("user", user);
         ip = prefe.getString("ip", ip);
         password = prefe.getString("password", password);
         base = prefe.getString("base", base);
 
 
+        Log.e("BON_CMD" ,Param.PEF_SERVER +"-"+ip+"-"+base) ;
 
       /*  SharedPreferences pref=activity.getSharedPreferences("usersession", Context.MODE_PRIVATE);
         SharedPreferences.Editor edt=pref.edit();
         NomUtilisateur= pref.getString("NomUtilisateur",NomUtilisateur);*/
-
 
         connectionClass = new ConnectionClass();
 
@@ -223,7 +224,6 @@ public class HistoriqueBCTask extends AsyncTask<String, String, String> {
 
         for (BonCommandeVente c : listClientCMD) {
             final String txtRaisonSocial = c.getReferenceClient().toLowerCase();
-
 
             if (txtRaisonSocial.contains(term)) {
                 filetrListClient.add(c);

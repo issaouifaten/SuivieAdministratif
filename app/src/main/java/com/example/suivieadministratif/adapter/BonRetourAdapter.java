@@ -3,6 +3,7 @@ package com.example.suivieadministratif.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,22 +48,22 @@ public class BonRetourAdapter extends ArrayAdapter<BonRetourVente> {
 
         BonRetourVente br = listBonRetour.get(position);
 
-        CardView card_cmd  = (CardView) rowView.findViewById(R.id.item_bon_commande);
+        CardView card_cmd  = (CardView) rowView.findViewById(R.id.item_bon_retour);
         TextView txt_num_br        = (TextView) rowView.findViewById(R.id.txt_num_br);
         TextView txt_raison_client       = (TextView) rowView.findViewById(R.id.txt_raison_client);
         TextView txt_ttc          = (TextView) rowView.findViewById(R.id.txt_prix_ttc);
         TextView txt_date_bc         = (TextView) rowView.findViewById(R.id.txt_date_bc);
 
+            txt_num_br .setText (br.getNumeroBonRetourVente());
+            txt_raison_client.setText(br.getRaisonSociale());
+            txt_ttc.setText   (formatter.format(br.getTotalTTC())+" TTC");
+            txt_date_bc.setText(df.format(br.getDateBonRetourVente()));
 
-        txt_num_br .setText (br.getNumeroBonRetourVente());
-        txt_raison_client.setText(br.getRaisonSociale());
-        txt_ttc.setText   (formatter.format(br.getTotalTTC())+" TTC");
-        txt_date_bc.setText(df.format(br.getDateBonRetourVente()));
 
-        if (br.getNumeroEtat().equals("E00"))
-        {
-            card_cmd.setCardBackgroundColor(activity.getResources().getColor(R.color.back_rouge_));
-        }
+            if (br.getNumeroEtat().equals("E00"))
+            {
+                card_cmd.setCardBackgroundColor(activity.getResources().getColor(R.color.back_rouge_));
+            }
 
         return rowView ;
 

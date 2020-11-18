@@ -15,7 +15,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.example.suivieadministratif.ConnectionClass;
-import com.example.suivieadministratif.MenuServeur;
 import  com.example.suivieadministratif.R ;
 import com.example.suivieadministratif.param.Param;
 import com.example.suivieadministratif.param.Parametrage;
@@ -100,7 +99,6 @@ public class SplachScreenActivity extends AppCompatActivity {
                     base = p_.getString("base", base);
                     user = p_.getString("user", user);
                     password = p_.getString("password", password);
-
 
 
                     if (etatUser == true) {
@@ -286,11 +284,8 @@ public class SplachScreenActivity extends AppCompatActivity {
 
                     Intent ToCompteDesactive = new Intent(SplachScreenActivity.this, CompteDesactiveActivity.class);
                     ToCompteDesactive.putExtra("nom_user", NomUtilisateur);
-                   // ToCompteDesactive.putExtra("fonction", LibelleFonction);
                     startActivity(ToCompteDesactive);
 
-                    // Toast.makeText(getApplicationContext()," Verifiez Vos Données ",Toast.LENGTH_SHORT).show();
-                    // txt_error.setVisibility(View.VISIBLE);
 
                 }
             }

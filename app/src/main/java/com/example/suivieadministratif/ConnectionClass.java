@@ -13,15 +13,15 @@ import java.sql.SQLException;
  */
 public class ConnectionClass {
     //  String ip = "192.168.1.26";
- // String ip = "196.179.246.166";
+   // String ip = "196.179.246.166";
    String classs = "net.sourceforge.jtds.jdbc.Driver";
-   // String db = "I2S_Delivery";
-  //  String un = "sa";
-
+    // String db = "I2S_Delivery";
+    //  String un = "sa";
     // String password = "ideal2s";
 
     @SuppressLint("NewApi")
-    public Connection CONN(String ip, String password, String un , String db) {
+    public Connection CONN(String ip, String password, String user , String db) {
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                 .permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -31,7 +31,7 @@ public class ConnectionClass {
 
             Class.forName(classs);
             ConnURL = "jdbc:jtds:sqlserver://" + ip + ";"
-                    + "databaseName=" + db + ";user=" + un + ";password="
+                    + "databaseName=" + db + ";user=" + user + ";password="
                     + password + ";";
             Log.e("ConnURL", ConnURL);
 

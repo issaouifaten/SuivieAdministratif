@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/back"
-    tools:context=".MenuServeur">
+    tools:context=".activity.MenuServeur">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -16,11 +16,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.suivieadministratif.activity.EtatCommande;
-import com.example.suivieadministratif.activity.EtatLivraisonActivity;
-import com.example.suivieadministratif.activity.EtatRetourActivity;
+import com.example.suivieadministratif.activity.MenuServeur;
+import com.example.suivieadministratif.module.vente.EtatCommande;
+import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
+import com.example.suivieadministratif.module.vente.EtatRetourActivity;
 import com.example.suivieadministratif.activity.LoginActivity;
 import com.example.suivieadministratif.fragment.PrincipalFragment;
+import com.example.suivieadministratif.param.Param;
 import com.example.suivieadministratif.param.Parametrage;
 import com.google.android.material.navigation.NavigationView;
 
@@ -211,8 +213,7 @@ public class MenuHome extends AppCompatActivity implements NavigationView.OnNavi
 
     public   void  deconnexion  ()
     {
-
-        SharedPreferences pref = getSharedPreferences("usersession", Context.MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences(Param.PREF_USER, Context.MODE_PRIVATE);
         SharedPreferences.Editor edt = pref.edit();
         edt.putBoolean("etat", false);
         edt.commit();
@@ -245,9 +246,9 @@ public class MenuHome extends AppCompatActivity implements NavigationView.OnNavi
                             public void onClick(DialogInterface di, int i) {
 
                                 if (edtuserid.getText().toString().equals("admin") && edtpass.getText().toString().equals("admin")) {
-                                    SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
+                                    SharedPreferences pref = getSharedPreferences(Param.PEF_SERVER , Context.MODE_PRIVATE);
                                     SharedPreferences.Editor edt = pref.edit();
-                                    edt.putBoolean("etatsql", false);
+                                    //edt.putBoolean("etatsql", false);
                                     edt.commit();
                                     Intent inte = new Intent(getApplicationContext(), Parametrage.class);
                                     startActivity(inte);

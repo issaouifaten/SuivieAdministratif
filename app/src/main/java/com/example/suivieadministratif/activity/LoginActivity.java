@@ -21,7 +21,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.suivieadministratif.ConnectionClass;
-import com.example.suivieadministratif.MenuServeur;
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.param.Param;
 import com.example.suivieadministratif.param.Parametrage;
@@ -326,9 +325,9 @@ public class LoginActivity extends AppCompatActivity
                                 public void onClick(DialogInterface di, int i) {
 
                                     if (edtuserid.getText().toString().equals("admin") && edtpass.getText().toString().equals("admin")) {
-                                        SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
+                                        SharedPreferences pref = getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
                                         SharedPreferences.Editor edt = pref.edit();
-                                        edt.putBoolean("etatsql", false);
+                                       // edt.putBoolean("etatsql", false);
                                         edt.commit();
                                         Intent inte = new Intent(getApplicationContext(), Parametrage.class);
                                         startActivity(inte);

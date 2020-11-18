@@ -21,18 +21,15 @@ import com.example.suivieadministratif.EtatJournalArticleVendu;
 import com.example.suivieadministratif.ChiffreAffaireGlobale;
 import com.example.suivieadministratif.R ;
 import com.example.suivieadministratif.StockArticle;
-import com.example.suivieadministratif.activity.EtatCommande;
-import com.example.suivieadministratif.activity.EtatLivraisonActivity;
-import com.example.suivieadministratif.activity.EtatRetourActivity;
+import com.example.suivieadministratif.module.vente.EtatCommande;
+import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
+import com.example.suivieadministratif.module.vente.EtatRetourActivity;
 
 public class PrincipalFragment extends Fragment {
-
-
 
     CardView   btn_etat_stock ;
     CardView btn_bon_commande,  btn_bon_livraison , btn_bon_retour   , btn_vente_journal_article;
     CardView   btn_ca_soc  , btn_ca_golbal  ;
-
 
     TextView   txt_ca_soc  ;
     ImageView img_societe ;

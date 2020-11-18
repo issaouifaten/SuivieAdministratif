@@ -10,22 +10,46 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <activity android:name=".module.reglementFournisseur.ReglementFournisseurActivity"
+            android:label="Règlement Fournisseur" >
 
-        <activity android:name=".activity.SplachScreenActivity"
+        </activity>
+        <activity
+            android:name=".module.reglementClient.ReglementClientActivity"
+            android:label="Règlement Client">
+
+        </activity>
+        <activity
+            android:name=".module.caisse.CaisseRecetteActivity"
+            android:label="Caisse Recette" />
+        <activity
+            android:name=".module.caisse.MouvementCaisseDepenseDetailActivity"
+            android:label="Mouvement Caisse Depense" />
+        <activity android:name=".module.achat.LigneBonRetourAchatActivity" />
+        <activity android:name=".module.achat.LigneBonLivraisonAchatActivity" />
+        <activity android:name=".module.achat.LigneBonCommandeAchatActivity" />
+        <activity android:name=".module.achat.BonRetourAchatActivity" />
+        <activity android:name=".module.achat.BonLivraisonAchatActivity" />
+        <activity android:name=".module.achat.BonCommandeAchatActivity" />
+        <activity
+            android:name=".activity.BasicActivity"
+            android:label="@string/title_activity_basic"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.HomeActivity"
+            android:label="@string/title_activity_home" />
+        <activity
+            android:name=".activity.SplachScreenActivity"
             android:theme="@style/noactionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
-
         <activity android:name=".ChiffreAffaireGlobale" />
         <activity
-            android:name=".MenuServeur"
+            android:name=".activity.MenuServeur"
             android:label="Liste Societe" />
         <activity
             android:name=".EtatJournalArticleVendu"
@@ -33,41 +57,32 @@
         <activity
             android:name=".StockArticle"
             android:label="JournalArticleVendu" />
-        <activity android:name=".activity.EtatCommande" />
+        <activity android:name=".module.vente.EtatCommande" />
         <activity
             android:name=".EtatChiffreAffaire"
             android:label="ChiffreAffaire" />
-        <activity android:name=".activity.HistoriqueLigneBonRetourActivity" />
+        <activity android:name=".module.vente.HistoriqueLigneBonRetourActivity" />
         <activity
-            android:name=".activity.EtatRetourActivity"
+            android:name=".module.vente.EtatRetourActivity"
             android:label="Etat de Bon Retour" />
-        <activity android:name=".activity.HistoriqueLigneBonLivraisonActivity" />
-        <activity android:name=".activity.LigneBonLivraisonVenteActivity" />
+        <activity android:name=".module.vente.HistoriqueLigneBonLivraisonActivity" />
+        <activity android:name=".module.vente.LigneBonLivraisonVenteActivity" />
         <activity
-            android:name=".activity.EtatLivraisonActivity"
+            android:name=".module.vente.EtatLivraisonActivity"
             android:label="Etat de Bon Livraison" />
-        <activity android:name=".activity.HistoriqueLigneBonCommandeActivity" />
+        <activity android:name=".module.vente.HistoriqueLigneBonCommandeActivity" />
         <activity
             android:name=".MenuHome"
             android:label="HOME"
             android:theme="@style/AppTheme.NoActionBar" />
-
-
-        <activity android:name=".param.Parametrage"
-            android:label="Paramètrage Serveur">
-
-        </activity>
-
-
+        <activity
+            android:name=".param.Parametrage"
+            android:label="Paramètrage Serveur" />
         <activity
             android:name=".activity.LoginActivity"
             android:label="LOGIN" />
-
         <activity android:name=".activity.CompteDesactiveActivity" />
-
         <activity android:name=".activity.ConnexionEuServeurEchoueActivity" />
-
-
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

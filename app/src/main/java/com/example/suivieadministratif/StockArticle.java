@@ -21,6 +21,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.suivieadministratif.param.Param;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,23 +50,23 @@ public class StockArticle extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stock_article);
 
-        SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
         setTitle(NomSociete + " : Etat de Stock");
 
 
         /// CONNECTION BASE
-        SharedPreferences.Editor edt = pref.edit();
+
+
         user = pref.getString("user", user);
         ip = pref.getString("ip", ip);
         password = pref.getString("password", password);
         base = pref.getString("base", base);
         ///////////////////////////////////////
 
-
         connectionClass = new ConnectionClass();
         ////SESSION UTILISATEUR
-        SharedPreferences prefe = getSharedPreferences("usersession", Context.MODE_PRIVATE);
+        SharedPreferences prefe = getSharedPreferences(Param.PREF_USER, Context.MODE_PRIVATE);
         SharedPreferences.Editor edte = prefe.edit();
         NomUtilisateur = prefe.getString("NomUtilisateur", NomUtilisateur);
         CodeSociete = prefe.getString("CodeSociete", CodeSociete);
@@ -72,7 +74,7 @@ public class StockArticle extends AppCompatActivity {
 
         progressBar.setVisibility(View.GONE);
 
-         spindepot=(Spinner)findViewById(R.id.spin_depot);
+        spindepot=(Spinner)findViewById(R.id.spin_depot);
         GetDataSpinner getDataSpinner=new GetDataSpinner();
         getDataSpinner.execute("");
 
@@ -83,10 +85,11 @@ public class StockArticle extends AppCompatActivity {
         edtRecherche=(EditText)findViewById(R.id.edt_recherche) ;
         gridArticle=(GridView)findViewById(R.id.grid_article) ;
         Button btadd=(Button)findViewById(R.id.btadd);
+
+
         btadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
                 String oldText=edtRecherche.getText().toString();
                 String newText=oldText+"%";
