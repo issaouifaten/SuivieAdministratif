@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/back_echek_2"
     tools:context=".module.reglementFournisseur.ReglementFournisseurActivity">
 
     <RelativeLayout
@@ -103,6 +104,24 @@
                 </RelativeLayout>
 
             </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/buttonround">
+
+
+                <SearchView
+                    android:id="@+id/search_bar_frns"
+                    android:layout_width="match_parent"
+                    android:hint="Rechercher Client"
+                    android:layout_height="50dp">
+                </SearchView>
+
+
+            </RelativeLayout>
 
             <RelativeLayout
                 xmlns:android="http://schemas.android.com/apk/res/android"

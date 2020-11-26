@@ -5,11 +5,11 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+
     <androidx.cardview.widget.CardView
         android:foreground="?android:attr/selectableItemBackground"
-        android:clickable="true"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
@@ -20,7 +20,6 @@
         card_view:cardElevation="2dp"
         card_view:cardMaxElevation="6dp">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -28,13 +27,12 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
-
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -48,7 +46,6 @@
                             android:src="@drawable/ic_fournisseur"
                             android:layout_margin="5dp"/>
 
-
                         <TextView
                             android:id="@+id/txt_raison_social"
                             android:layout_width="match_parent"
@@ -58,12 +55,9 @@
                             android:layout_marginTop="5dp"
                             android:layout_marginRight="140dp"
                             android:textStyle="bold"
-                            android:textColor="@color/color_g_1"
-                            />
-
+                            android:textColor="@color/color_g_1" />
 
                     </LinearLayout>
-
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -71,13 +65,56 @@
                         android:layout_marginRight="200dp"
                         android:src="@drawable/line_h"/>
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_alignParentLeft="true"
+                            >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Etablie par : "
+                                android:textStyle="italic" />
+
+                            <TextView
+                                android:id="@+id/txt_etablie_par"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="___"
+                                android:textStyle="italic|bold"
+                                android:layout_marginLeft="10dp"/>
+
+                        </LinearLayout>
 
 
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_alignParentRight="true"
+                            android:background="@drawable/cadre_jaune">
+
+
+                            <TextView
+                                android:id="@+id/txt_total_montant"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="200.000"
+                                android:textStyle="italic|bold"
+                                android:textColor="@color/color_g_7"
+                                android:layout_margin="5dp"/>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
 
                 </LinearLayout>
-
-
-
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -100,59 +137,7 @@
 
                 </LinearLayout>
 
-
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentBottom="true">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Etablie par : "
-                        android:textStyle="italic" />
-
-                    <TextView
-                        android:id="@+id/txt_etablie_par"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="___"
-                        android:textStyle="italic|bold"
-                        android:layout_marginLeft="10dp"/>
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:background="@drawable/cadre_jaune">
-
-
-                    <TextView
-                        android:id="@+id/txt_total_montant"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="200.000"
-                        android:textStyle="italic|bold"
-                        android:textColor="@color/color_g_7"
-                        android:layout_margin="5dp"/>
-
-                </LinearLayout>
-
-
             </RelativeLayout>
-
-
-
-
 
         </LinearLayout>
 

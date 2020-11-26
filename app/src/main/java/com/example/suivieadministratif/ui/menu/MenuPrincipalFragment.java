@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.param.Param;
@@ -16,6 +17,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MenuPrincipalFragment extends Fragment {
 
@@ -30,8 +32,11 @@ public class MenuPrincipalFragment extends Fragment {
 
         SharedPreferences pref = getActivity().getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete","") ;
+       TextView txt_libelle_soc =(TextView) root.findViewById(R.id.txt_libelle_soc) ;
 
-        ImageView img_soc = (ImageView)   root.findViewById(R.id.img_soc) ;
+        CircleImageView img_soc = (CircleImageView)   root.findViewById(R.id.img_soc) ;
+
+        txt_libelle_soc.setText(NomSociete);
         if (NomSociete.equals("CCM"))
         {
             img_soc.setImageResource(R.drawable.ic_logo_ccm);
@@ -39,6 +44,10 @@ public class MenuPrincipalFragment extends Fragment {
         else  if (NomSociete.equals("GMT"))
         {
             img_soc.setImageResource(R.drawable.ic_logo_gmt);
+        }
+        else  if (NomSociete.contains("I2S"))
+        {
+            img_soc.setImageResource(R.drawable.i2s);
         }
 
 

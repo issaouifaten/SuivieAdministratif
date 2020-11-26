@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.module.reglementClient.ReglementClientActivity;
+import com.example.suivieadministratif.module.reglementFournisseur.RapportEcheanceFournisseurActivity;
 import com.example.suivieadministratif.module.reglementFournisseur.ReglementFournisseurActivity;
 
 import androidx.annotation.NonNull;
@@ -43,6 +44,17 @@ public class MenuReglementFournisseurFragment extends Fragment {
 
                 Intent intent1 = new Intent(getActivity() , ReglementFournisseurActivity.class) ;
                 startActivity(intent1);
+            }
+        });
+
+        CardView   btn_echeance_fournisseur = (CardView)   root.findViewById(R.id.btn_echenace_fournisseur);
+        btn_echeance_fournisseur.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent1 = new Intent(getActivity() , RapportEcheanceFournisseurActivity.class) ;
+                startActivity(intent1);
+
             }
         });
 

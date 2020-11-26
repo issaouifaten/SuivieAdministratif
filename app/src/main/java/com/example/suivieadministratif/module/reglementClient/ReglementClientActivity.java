@@ -15,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -29,6 +30,8 @@ public class ReglementClientActivity extends AppCompatActivity {
     ProgressBar pb;
     ListView lv_list_reg_client  ;
     public TextView txt_date_debut, txt_date_fin;
+
+ SearchView search_bar_client;
 
     int id_DatePickerDialog = 0;
     Date currentDate = new Date();
@@ -60,10 +63,10 @@ public class ReglementClientActivity extends AppCompatActivity {
         lv_list_reg_client  = findViewById( R.id.lv_list_reglement_client) ;
 
         pb = (ProgressBar) findViewById(R.id.pb);
+        search_bar_client = (SearchView)   findViewById(R.id.search_bar_client) ;
 
 
-
-        txt_tot_reglement = (TextView) findViewById(R.id.txt_tot_reglement) ;
+        txt_tot_reglement = (TextView) findViewById(R.id.txt_tot_echeance_client) ;
 
         final Calendar cal1 = Calendar.getInstance();
         cal1.setTime(currentDate);
@@ -218,7 +221,7 @@ public class ReglementClientActivity extends AppCompatActivity {
     public   void   updateData ()
     {
 
-        ListeReglementClientTask listeReglementClientTask  = new ListeReglementClientTask(this ,lv_list_reg_client , pb ,date_debut ,date_fin  ) ;
+        ListeReglementClientTask listeReglementClientTask  = new ListeReglementClientTask(this ,lv_list_reg_client , pb ,date_debut ,date_fin  ,search_bar_client) ;
         listeReglementClientTask.execute() ;
 
     }

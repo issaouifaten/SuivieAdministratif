@@ -107,7 +107,7 @@
                             android:textStyle="bold"
                             android:layout_marginTop="10dp"
                             android:textSize="15dp"
-                            android:text="Caisse Dépnse"/>
+                            android:text="Caisse Dépense"/>
 
 
                     </LinearLayout>

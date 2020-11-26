@@ -203,12 +203,16 @@ public class MenuServeur extends AppCompatActivity {
                     {
                         img_societe.setImageResource(R.drawable.ic_logo_gmt);
                     }
+                    else  if (NomSociete.contains("I2S"))
+                    {
+                        img_societe.setImageResource(R.drawable.i2s);
+                    }
 
                     btn_login.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
-                            SharedPreferences pref = getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
+                            SharedPreferences pref = getSharedPreferences(Param.PEF_SERVER , Context.MODE_PRIVATE);
                             SharedPreferences.Editor edt = pref.edit();
                             edt.putString("base", NomBase);
                             edt.putString("ip", IP);

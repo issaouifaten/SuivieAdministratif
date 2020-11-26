@@ -10,6 +10,7 @@ import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.module.vente.EtatCommande;
 import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
 import com.example.suivieadministratif.module.vente.EtatRetourActivity;
+import com.example.suivieadministratif.module.vente.MouvementVenteServiceActivity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -64,7 +65,15 @@ public class MenuVenteFragment extends Fragment {
         });
 
 
+        CardView  btn_mvmnt_vente_service= (CardView) root.findViewById(R.id.btn_mvmnt_vente_service) ;
+        btn_mvmnt_vente_service.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                Intent intent5 = new Intent(getActivity(), MouvementVenteServiceActivity.class);
+                startActivity(intent5);
+            }
+        });
 
 
         menuViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {

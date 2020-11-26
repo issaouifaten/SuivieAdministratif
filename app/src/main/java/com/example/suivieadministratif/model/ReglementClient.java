@@ -7,14 +7,16 @@ public class ReglementClient {
 
     private String NumeroReglementClient;
     private Date dateReglementClient;
+    private Date heureCreation ;
     private String RaisonSociale;
     private double  TotalPayement ;
     private String NomUtilisateur;
 
 
-    public ReglementClient(String numeroReglementClient, Date dateReglementClient, String raisonSociale, double totalPayement, String nomUtilisateur) {
+    public ReglementClient(String numeroReglementClient, Date dateReglementClient, Date heureCreation , String raisonSociale, double totalPayement, String nomUtilisateur) {
         NumeroReglementClient = numeroReglementClient;
         this.dateReglementClient = dateReglementClient;
+        this.heureCreation=heureCreation;
         RaisonSociale = raisonSociale;
         TotalPayement = totalPayement;
         NomUtilisateur = nomUtilisateur;
@@ -60,6 +62,13 @@ public class ReglementClient {
         NomUtilisateur = nomUtilisateur;
     }
 
+    public Date getHeureCreation() {
+        return heureCreation;
+    }
+
+    public void setHeureCreation(Date heureCreation) {
+        this.heureCreation = heureCreation;
+    }
 
     @Override
     public String toString() {

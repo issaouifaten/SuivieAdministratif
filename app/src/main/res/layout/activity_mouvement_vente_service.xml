@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back_echek_2"
+    tools:context=".module.vente.MouvementVenteServiceActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_marginRight="2dp"
+                android:background="@drawable/buttonround">
+
+
+                <TextView
+                    android:id="@+id/txt_date_debut"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="#00000000"
+                    android:gravity="center"
+                    android:text="10/10/2019"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="40dp"
+                    android:textColor="@color/colorPrimary2"
+                    android:layout_toStartOf="@+id/img1"
+                    android:layout_centerVertical="true" />
+
+                <ImageView
+
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:foregroundGravity="center"
+                    android:src="@drawable/ic_calendar"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_marginRight="2dp"
+                android:background="@drawable/buttonround">
+
+
+                <TextView
+                    android:id="@+id/txt_date_fin"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="#00000000"
+                    android:gravity="center"
+                    android:text="10/10/2019"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="40dp"
+                    android:textColor="@color/colorPrimary2"
+                    android:layout_toStartOf="@+id/img1"
+                    android:layout_centerVertical="true" />
+
+                <ImageView
+
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:foregroundGravity="center"
+                    android:src="@drawable/ic_calendar"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:padding="5dp"
+            tools:context="com.example.faten.testsql.activity.HistoriqueBonCommande" >
+
+
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/buttonround">
+
+
+                <SearchView
+                    android:id="@+id/search_bar_client"
+                    android:layout_width="match_parent"
+                    android:hint="Rechercher Client"
+                    android:layout_height="50dp">
+                </SearchView>
+
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginTop="60dp">
+
+                <!--    <Button
+                        android:id="@+id/btreload"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:background="@drawable/reload" /> -->
+
+
+                <ListView
+                    android:id="@+id/lv_list_mvmnt_vente_service"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:divider="#00000000"
+                    android:dividerHeight="1dp" />
+
+
+            </LinearLayout>
+
+
+
+            <ProgressBar
+                android:id="@+id/pb_bc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

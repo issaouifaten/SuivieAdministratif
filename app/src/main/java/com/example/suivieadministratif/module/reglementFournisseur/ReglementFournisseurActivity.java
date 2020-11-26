@@ -3,8 +3,6 @@ package com.example.suivieadministratif.module.reglementFournisseur;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.suivieadministratif.R ;
-import com.example.suivieadministratif.module.reglementClient.ReglementClientActivity;
-import com.example.suivieadministratif.task.ListeReglementClientTask;
 import com.example.suivieadministratif.task.ListeReglementFournisseurTask;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -17,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
@@ -31,7 +30,7 @@ public class ReglementFournisseurActivity extends AppCompatActivity {
     ProgressBar pb;
     ListView lv_list_reg_fournisseur  ;
     public TextView txt_date_debut, txt_date_fin;
-
+    SearchView search_bar_frns ;
     int id_DatePickerDialog = 0;
     Date currentDate = new Date();
     public static int year_x1, month_x1, day_x1;
@@ -59,12 +58,13 @@ public class ReglementFournisseurActivity extends AppCompatActivity {
         txt_date_fin = findViewById(R.id.txt_date_fin);
 
         lv_list_reg_fournisseur  = findViewById( R.id.lv_list_reglement_fournisseur) ;
+        search_bar_frns = (SearchView)   findViewById(R.id.search_bar_frns) ;
 
         pb = (ProgressBar) findViewById(R.id.pb);
 
 
 
-        txt_tot_reglement = (TextView) findViewById(R.id.txt_tot_reglement) ;
+        txt_tot_reglement = (TextView) findViewById(R.id.txt_tot_echeance_client) ;
 
         final Calendar cal1 = Calendar.getInstance();
         cal1.setTime(currentDate);
@@ -219,7 +219,7 @@ public class ReglementFournisseurActivity extends AppCompatActivity {
     public   void   updateData ()
     {
 
-        ListeReglementFournisseurTask listeReglementFournisseurTask  = new ListeReglementFournisseurTask(this ,lv_list_reg_fournisseur , pb ,date_debut ,date_fin  ) ;
+        ListeReglementFournisseurTask listeReglementFournisseurTask  = new ListeReglementFournisseurTask(this ,lv_list_reg_fournisseur , pb ,date_debut ,date_fin ,  search_bar_frns ) ;
         listeReglementFournisseurTask.execute() ;
 
     }

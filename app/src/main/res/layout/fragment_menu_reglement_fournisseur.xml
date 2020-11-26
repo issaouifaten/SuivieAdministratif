@@ -117,7 +117,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_bon_retour"
+                    android:id="@+id/btn_echenace_fournisseur"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
@@ -137,10 +137,10 @@
                         android:gravity="center">
 
                         <ImageView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:src="@drawable/ic_reglement_frns"
-                            android:padding="15dp"/>
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/ic_echeance"
+                            android:padding="5dp"/>
 
 
                         <ImageView
@@ -153,7 +153,7 @@
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
                             android:layout_marginTop="10dp"
-                            android:text="Button "
+                            android:text="Rapport Echéance Fournisseur"
                             android:textSize="15dp"
                             android:gravity="center"/>
 

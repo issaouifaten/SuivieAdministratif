@@ -2,19 +2,24 @@ package com.example.suivieadministratif.task;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.adapter.ReglementClientAdapterLV;
 import com.example.suivieadministratif.adapter.ReglementFournisseurAdapterLV;
 import com.example.suivieadministratif.model.ReglementClient;
 import com.example.suivieadministratif.model.ReglementFournisseur;
+import com.example.suivieadministratif.module.reglementClient.DetailReglementClientActivity;
 import com.example.suivieadministratif.module.reglementClient.ReglementClientActivity;
+import com.example.suivieadministratif.module.reglementFournisseur.DetailReglementFournisseurActivity;
 import com.example.suivieadministratif.module.reglementFournisseur.ReglementFournisseurActivity;
 import com.example.suivieadministratif.param.Param;
 
@@ -34,6 +39,7 @@ public class ListeReglementFournisseurTask extends AsyncTask<String, String, Str
     Activity activity;
     ListView lv_reglement_fournisseur ;
     ProgressBar pb_chargement ;
+    SearchView search_bar_frns  ;
 
     Date  date_debut  , date_fin ;
     ConnectionClass connectionClass ;
@@ -46,12 +52,13 @@ public class ListeReglementFournisseurTask extends AsyncTask<String, String, Str
     double total_reglement  =0 ;
 
 
-    public ListeReglementFournisseurTask(Activity activity  , ListView lv_reglement_fournisseur , ProgressBar pb_chargement , Date  date_debut  , Date date_fin ) {
+    public ListeReglementFournisseurTask(Activity activity  , ListView lv_reglement_fournisseur , ProgressBar pb_chargement , Date  date_debut  , Date date_fin,SearchView search_bar_frns   ) {
         this.activity  = activity  ;
         this.lv_reglement_fournisseur = lv_reglement_fournisseur  ;
         this.pb_chargement  = pb_chargement   ;
         this.date_debut = date_debut  ;
         this.date_fin = date_fin  ;
+        this.search_bar_frns=search_bar_frns ;
 
 
         SharedPreferences pref = activity.getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
@@ -138,19 +145,89 @@ public class ListeReglementFournisseurTask extends AsyncTask<String, String, Str
 
         ReglementFournisseurAdapterLV adapterLV = new ReglementFournisseurAdapterLV(activity , listReglementFournisseur) ;
         lv_reglement_fournisseur.setAdapter(adapterLV);
+        listOnClick(listReglementFournisseur);
+
+
+        search_bar_frns.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                if (!search_bar_frns.isIconified()) {
+                    search_bar_frns.setIconified(true);
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+
+                final ArrayList<ReglementFournisseur> filterReglementFournisseur = filterReglementFournisseur(listReglementFournisseur, query);
+
+                ReglementFournisseurAdapterLV adapterLV = new ReglementFournisseurAdapterLV(activity , filterReglementFournisseur) ;
+                lv_reglement_fournisseur.setAdapter(adapterLV);
+
+                listOnClick(filterReglementFournisseur);
+
+                return false;
+
+            }
+        });
+
+
 
         ReglementFournisseurActivity.txt_tot_reglement.setText(decF.format(total_reglement) +" Dt");
-      /*  MouvementCaisseDepenseDetailActivity.txt_tot_depense.setText(decF.format(total_depense) +" Dt");
-        MouvementDepenseAdapterLV adapter  = new MouvementDepenseAdapterLV(activity  , listMvntCaisse) ;
-        lv_list_mvmnt_caisse.setAdapter(adapter);*/
+
+
 
 
     }
 
 
+    public void listOnClick(final  ArrayList<ReglementFournisseur> listReglementFournisseur ) {
+
+        lv_reglement_fournisseur.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                ReglementFournisseur reg_selected  = listReglementFournisseur.get(position) ;
+                Intent intent1 = new Intent(activity , DetailReglementFournisseurActivity.class)  ;
+                intent1.putExtra("cle_num_reg",reg_selected.getNumeroReglementFournisseur());
+
+                SimpleDateFormat simpleDateFormat  = new SimpleDateFormat("dd/MM/yyyy") ;
+
+                intent1.putExtra("cle_raison",reg_selected.getRaisonSociale());
+                intent1.putExtra("cle_date_reg",simpleDateFormat.format( reg_selected.getDateReglementFournisseur() ));
+                intent1.putExtra("cle_etablie_par",reg_selected.getNomUtilisateur());
+                intent1.putExtra("cle_montant",reg_selected.getTotalPayement());
+
+                activity.startActivity(intent1);
+            }
+        });
+
+    }
 
 
 
+    private ArrayList<ReglementFournisseur> filterReglementFournisseur(ArrayList<ReglementFournisseur> listFrnsReg, String term) {
+
+        term = term.toLowerCase();
+        final ArrayList<ReglementFournisseur> filetrReglementFournisseur = new ArrayList<>();
+
+        double mnt_reg_fournisseur  =0 ;
+        for (ReglementFournisseur f : listFrnsReg) {
+            final String txtRaisonSocial = f.getRaisonSociale().toLowerCase();
+
+
+            if (txtRaisonSocial.contains(term)) {
+                filetrReglementFournisseur.add(f);
+                mnt_reg_fournisseur=mnt_reg_fournisseur+ f.getTotalPayement()  ;
+            }
+        }
+        DecimalFormat  decF  = new DecimalFormat("0.000") ;
+        ReglementFournisseurActivity.txt_tot_reglement.setText(decF.format(mnt_reg_fournisseur) +" Dt");
+        return filetrReglementFournisseur;
+
+    }
 
 
 }

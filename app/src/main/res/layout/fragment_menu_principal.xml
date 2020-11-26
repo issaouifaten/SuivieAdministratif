@@ -1,56 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/back"
-        tools:context=".ui.menu.MenuPrincipalFragment">
-
-
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@drawable/back"
+    tools:context=".ui.menu.MenuPrincipalFragment">
 
-    <androidx.cardview.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:clickable="true"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_margin ="10dp"
-        card_view:cardCornerRadius="2dp"
-        card_view:contentPadding="2dp"
-        card_view:cardBackgroundColor="#66FCF9F9"
-        card_view:cardElevation="2dp"
-        card_view:cardMaxElevation="6dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-
-        <LinearLayout
+        <androidx.cardview.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            card_view:cardBackgroundColor="#66FCF9F9"
+            card_view:cardCornerRadius="2dp"
+            card_view:cardElevation="2dp"
+            card_view:cardMaxElevation="6dp"
+            card_view:contentPadding="2dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/img_soc"
+                    android:layout_width="60dp"
+                    android:layout_height="96dp"
+                    android:src="@drawable/ic_depot"
+                    app:civ_border_width="1dp"
+                    app:civ_border_color="#FDFBFB"/>
+
+
+               <!-- <ImageView
+                    android:id="@+id/img_soc"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/ic_depot" />-->
 
                 <ImageView
-                    android:id="@+id/img_soc"
-                    android:layout_width="100dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/ic_logo_ccm" />
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/line_v" />
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/txt_libelle_soc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="I2S"
+                    android:textColor="@color/colorPrimary"/>
+
+            </LinearLayout>
 
 
-    </androidx.cardview.widget.CardView>
-
+        </androidx.cardview.widget.CardView>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="20dp"
+            android:gravity="center">
 
 
             <LinearLayout
@@ -60,50 +83,49 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:gravity="center"
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
 
-                    <androidx.cardview.widget.CardView
+                    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/btn_vente"
-                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:clickable="true"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
                         android:layout_margin="10dp"
-                        card_view:cardCornerRadius="2dp"
-                        card_view:contentPadding="10dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
                         card_view:cardBackgroundColor="#66FCF9F9"
+                        card_view:cardCornerRadius="2dp"
                         card_view:cardElevation="2dp"
-                        card_view:cardMaxElevation="6dp">
+                        card_view:cardMaxElevation="6dp"
+                        card_view:contentPadding="10dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:orientation="vertical">
 
                             <ImageView
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
-                                android:src="@drawable/ic_vente_1"
-                                android:padding="13dp"/>
+                                android:padding="13dp"
+                                android:src="@drawable/ic_vente_1" />
 
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="10dp"
-                                android:src="@drawable/line_h"/>
+                                android:src="@drawable/line_h" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textStyle="bold"
                                 android:layout_marginTop="10dp"
+                                android:text="Vente"
                                 android:textSize="15dp"
-                                android:text="Vente"/>
+                                android:textStyle="bold" />
 
 
                         </LinearLayout>
@@ -111,26 +133,27 @@
 
                     </androidx.cardview.widget.CardView>
 
-                    <androidx.cardview.widget.CardView
+                    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/btn_achat"
-                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:clickable="true"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
                         android:layout_margin="10dp"
-                        card_view:cardCornerRadius="2dp"
-                        card_view:contentPadding="10dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
                         card_view:cardBackgroundColor="#66FCF9F9"
+                        card_view:cardCornerRadius="2dp"
                         card_view:cardElevation="2dp"
-                        card_view:cardMaxElevation="6dp">
+                        card_view:cardMaxElevation="6dp"
+                        card_view:contentPadding="10dp">
 
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+
 
 
                             <RelativeLayout
@@ -140,109 +163,104 @@
                                 <ImageView
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
-                                    android:src="@drawable/ic_achat"
-                                    android:padding="13dp"/>
-
+                                    android:padding="13dp"
+                                    android:src="@drawable/ic_achat" />
 
 
                             </RelativeLayout>
-
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="10dp"
-                                android:src="@drawable/line_h"/>
-
+                                android:src="@drawable/line_h" />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textStyle="bold"
                                 android:layout_marginTop="10dp"
+                                android:gravity="center"
                                 android:text="Achat"
                                 android:textSize="15dp"
-                                android:gravity="center"/>
-
+                                android:textStyle="bold" />
 
 
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
-
 
 
                 </LinearLayout>
 
 
                 <LinearLayout
-                    android:gravity="center"
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
 
-                    <androidx.cardview.widget.CardView
+                    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/btn_reg_client"
-                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:clickable="true"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
                         android:layout_margin="10dp"
-                        card_view:cardCornerRadius="2dp"
-                        card_view:contentPadding="10dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
                         card_view:cardBackgroundColor="#66FCF9F9"
+                        card_view:cardCornerRadius="2dp"
                         card_view:cardElevation="2dp"
-                        card_view:cardMaxElevation="6dp">
+                        card_view:cardMaxElevation="6dp"
+                        card_view:contentPadding="10dp">
 
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:orientation="vertical">
 
                             <ImageView
                                 android:layout_width="100dp"
                                 android:layout_height="100dp"
-                                android:src="@drawable/ic_reg_client"
-                                android:padding="15dp"/>
+                                android:padding="15dp"
+                                android:src="@drawable/ic_reg_client" />
 
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="10dp"
-                                android:src="@drawable/line_h"/>
+                                android:src="@drawable/line_h" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textStyle="bold"
                                 android:layout_marginTop="10dp"
+                                android:gravity="center"
                                 android:text="Règlement Client"
                                 android:textSize="11dp"
-                                android:gravity="center"/>
+                                android:textStyle="bold" />
 
 
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
-                    <androidx.cardview.widget.CardView
+                    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/btn_reg_frns"
-                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:clickable="true"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
                         android:layout_margin="10dp"
-                        card_view:cardCornerRadius="2dp"
-                        card_view:contentPadding="10dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
                         card_view:cardBackgroundColor="#66FCF9F9"
+                        card_view:cardCornerRadius="2dp"
                         card_view:cardElevation="2dp"
-                        card_view:cardMaxElevation="6dp">
+                        card_view:cardMaxElevation="6dp"
+                        card_view:contentPadding="10dp">
 
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+
 
 
                             <RelativeLayout
@@ -252,117 +270,105 @@
                                 <ImageView
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
-                                    android:src="@drawable/ic_reglement_frns"
-                                    android:padding="15dp"/>
-
-
+                                    android:padding="15dp"
+                                    android:src="@drawable/ic_reglement_frns" />
 
 
                             </RelativeLayout>
-
-
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="10dp"
-                                android:src="@drawable/line_h"/>
+                                android:src="@drawable/line_h" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textStyle="bold"
                                 android:layout_marginTop="10dp"
+                                android:gravity="center"
                                 android:text="Règlement Fournisseur"
                                 android:textSize="11dp"
-                                android:gravity="center"/>
+                                android:textStyle="bold" />
 
 
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
 
-
-
                 </LinearLayout>
 
 
                 <LinearLayout
-                    android:gravity="center"
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
 
-
-
-                    <androidx.cardview.widget.CardView
+                    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/btn_caisse"
-                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:clickable="true"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
                         android:layout_margin="10dp"
-                        card_view:cardCornerRadius="2dp"
-                        card_view:contentPadding="10dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
                         card_view:cardBackgroundColor="#66FCF9F9"
+                        card_view:cardCornerRadius="2dp"
                         card_view:cardElevation="2dp"
-                        card_view:cardMaxElevation="6dp">
+                        card_view:cardMaxElevation="6dp"
+                        card_view:contentPadding="10dp">
 
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:gravity="center">
-
+                            android:gravity="center"
+                            android:orientation="vertical">
 
 
                             <ImageView
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
-                                android:src="@drawable/ic_caisse"
-                                android:padding="10dp"/>
+                                android:padding="10dp"
+                                android:src="@drawable/ic_caisse" />
 
 
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="10dp"
-                                android:src="@drawable/line_h"/>
+                                android:src="@drawable/line_h" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textStyle="bold"
+                                android:gravity="center"
 
                                 android:text="Caisse"
                                 android:textSize="15dp"
-                                android:gravity="center"/>
-
+                                android:textStyle="bold" />
 
 
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
 
-
                     <androidx.cardview.widget.CardView
                         android:id="@+id/btn_workflow"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:clickable="true"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
                         android:layout_margin="10dp"
-                        app:cardCornerRadius="2dp"
-                        app:contentPadding="10dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
                         app:cardBackgroundColor="#66FCF9F9"
+                        app:cardCornerRadius="2dp"
                         app:cardElevation="2dp"
-                        app:cardMaxElevation="6dp">
+                        app:cardMaxElevation="6dp"
+                        app:contentPadding="10dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:orientation="vertical">
 
 
                             <ImageView
@@ -375,107 +381,98 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="10dp"
-                                android:src="@drawable/line_h"/>
+                                android:src="@drawable/line_h" />
 
                             <TextView
 
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textStyle="bold"
+                                android:gravity="center"
 
                                 android:text="Workflow + Alerte"
                                 android:textSize="15dp"
-                                android:gravity="center"/>
-
-
+                                android:textStyle="bold" />
 
 
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
-
 
 
                 </LinearLayout>
 
 
                 <LinearLayout
-                    android:gravity="center"
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
 
-
-
-                    <androidx.cardview.widget.CardView
+                    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/btn_etat_de_stock"
-                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:clickable="true"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
                         android:layout_margin="10dp"
-                        card_view:cardCornerRadius="2dp"
-                        card_view:contentPadding="10dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
                         card_view:cardBackgroundColor="#66FCF9F9"
+                        card_view:cardCornerRadius="2dp"
                         card_view:cardElevation="2dp"
-                        card_view:cardMaxElevation="6dp">
+                        card_view:cardMaxElevation="6dp"
+                        card_view:contentPadding="10dp">
 
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:gravity="center">
-
+                            android:gravity="center"
+                            android:orientation="vertical">
 
 
                             <ImageView
                                 android:layout_width="80dp"
                                 android:layout_height="80dp"
-                                android:src="@drawable/ic_etat_stock"
-                                android:padding="10dp"/>
+                                android:padding="10dp"
+                                android:src="@drawable/ic_etat_stock" />
 
 
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="10dp"
-                                android:src="@drawable/line_h"/>
+                                android:src="@drawable/line_h" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textStyle="bold"
+                                android:gravity="center"
 
                                 android:text="Etat de stock"
                                 android:textSize="15dp"
-                                android:gravity="center"/>
-
+                                android:textStyle="bold" />
 
 
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
 
-
                     <androidx.cardview.widget.CardView
                         android:id="@+id/btn_inventaire"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:clickable="true"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
                         android:layout_margin="10dp"
-                        app:cardCornerRadius="2dp"
-                        app:contentPadding="10dp"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
                         app:cardBackgroundColor="#66FCF9F9"
+                        app:cardCornerRadius="2dp"
                         app:cardElevation="2dp"
-                        app:cardMaxElevation="6dp">
+                        app:cardMaxElevation="6dp"
+                        app:contentPadding="10dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:orientation="vertical">
 
 
                             <ImageView
@@ -488,24 +485,21 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="10dp"
-                                android:src="@drawable/line_h"/>
+                                android:src="@drawable/line_h" />
 
                             <TextView
                                 android:id="@+id/txt_ca_soc"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textStyle="bold"
+                                android:gravity="center"
 
                                 android:text="Inventaire "
                                 android:textSize="15dp"
-                                android:gravity="center"/>
-
-
+                                android:textStyle="bold" />
 
 
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
-
 
 
                 </LinearLayout>
@@ -513,10 +507,12 @@
             </LinearLayout>
 
 
-
         </ScrollView>
-</LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 

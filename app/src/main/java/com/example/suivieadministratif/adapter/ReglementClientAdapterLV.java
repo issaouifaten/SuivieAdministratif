@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class ReglementClientAdapterLV extends ArrayAdapter<ReglementClient> {
 
 
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
     DecimalFormat formatter = new DecimalFormat("0.000");
     private final Activity activity;
@@ -50,7 +50,7 @@ public class ReglementClientAdapterLV extends ArrayAdapter<ReglementClient> {
         txt_raison  .setText(reglementClient.getRaisonSociale());
         txt_etablie_par.setText(reglementClient.getNomUtilisateur());
         txt_total_montant.setText(formatter.format(reglementClient.getTotalPayement())+" Dt");
-        txt_date_reglement.setText(sdf.format(reglementClient.getDateReglementClient()));
+        txt_date_reglement.setText(sdf.format(reglementClient.getHeureCreation()));
 
 
         return rowView;

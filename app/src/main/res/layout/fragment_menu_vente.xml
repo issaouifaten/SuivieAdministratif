@@ -290,7 +290,7 @@
 
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_etat_credit_par_rec"
+                    android:id="@+id/btn_mvmnt_vente_service"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
@@ -310,15 +310,16 @@
                         android:gravity="center">
 
                         <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:src="@drawable/ic_credit_client_par_rec"
-                            android:padding="5dp"/>
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:src="@drawable/ic_mvt_vente_service"
+                           />
 
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="10dp"
                             android:src="@drawable/line_h"/>
+
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -327,8 +328,15 @@
                             android:layout_marginTop="5dp"
                             android:textSize="15dp"
                             android:gravity="center"
-                            android:text="Crédit Client par Recouvreur"/>
+                            android:text="Mouvement de Vente Service "/>
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:textSize="10dp"
+                            android:gravity="center"
+                            android:text="(Article non stockable)"/>
 
                     </LinearLayout>
 

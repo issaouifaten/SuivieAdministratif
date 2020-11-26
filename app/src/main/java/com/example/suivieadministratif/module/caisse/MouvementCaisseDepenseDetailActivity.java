@@ -72,7 +72,7 @@ public class MouvementCaisseDepenseDetailActivity extends AppCompatActivity {
         rb_fournisseur = findViewById(R.id.rb_fournisseur) ;
         rb_client = findViewById(R.id.rb_client) ;
 
-        txt_tot_depense = (TextView) findViewById(R.id.txt_tot_reglement) ;
+        txt_tot_depense = (TextView) findViewById(R.id.txt_tot_echeance_client) ;
 
         final Calendar cal1 = Calendar.getInstance();
         cal1.setTime(currentDate);

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.suivieadministratif.R;
+import com.example.suivieadministratif.module.reglementClient.RapportEcheanceClientActivity;
 import com.example.suivieadministratif.module.reglementClient.ReglementClientActivity;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,17 @@ public class MenuReglementClientFragment extends Fragment {
                 startActivity(intent1);
             }
         });
+
+
+        CardView   btn_echeance_client = (CardView)   root.findViewById(R.id.btn_echeance_Client);
+        btn_echeance_client.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent  intent1 = new Intent(getActivity() , RapportEcheanceClientActivity.class) ;
+                startActivity(intent1);
+            }
+        });
+
 
         menuViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
