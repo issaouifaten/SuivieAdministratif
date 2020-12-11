@@ -52,12 +52,13 @@ public class BonLivraisonAdapter extends ArrayAdapter<BonLivraisonVente> {
         TextView txt_raison_client       = (TextView) rowView.findViewById(R.id.txt_raison_client);
         TextView txt_ttc          = (TextView) rowView.findViewById(R.id.txt_prix_ttc);
         TextView txt_date_bc         = (TextView) rowView.findViewById(R.id.txt_date_bc);
-
+        TextView     txt_libelle_etat= (TextView) rowView.findViewById(R.id.txt_libelle_etat);
 
         txt_num_bl .setText (bl.getNumeroBonLivraisonVente());
         txt_raison_client.setText(bl.getRaisonSociale());
         txt_ttc.setText   (formatter.format(bl.getTotalTTC())+" TTC");
         txt_date_bc.setText(df.format(bl.getDateBonLivraisonVente()));
+        txt_libelle_etat.setText(bl.getLibelleEtat());
 
         if (bl.getNumeroEtat().equals("E00"))
         {

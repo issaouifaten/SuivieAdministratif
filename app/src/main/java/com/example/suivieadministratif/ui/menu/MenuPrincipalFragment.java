@@ -6,11 +6,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.param.Param;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.MenuStatiqtiqueEtRapportActiviteFragment;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -84,34 +84,6 @@ public class MenuPrincipalFragment extends Fragment {
 
 
 
-        CardView btn_reglement_client = (CardView)   root.findViewById(R.id.btn_reg_client) ;
-        btn_reglement_client.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment = new MenuReglementClientFragment();
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                if (fragment != null) {
-                    ft.replace(R.id.nav_host_fragment, fragment);
-                    ft.addToBackStack(null);
-                    ft.commit();
-                }
-            }
-        });
-
-
-        CardView  btn_reglement_frns = (CardView)   root.findViewById(R.id.btn_reg_frns) ;
-        btn_reglement_frns.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment fragment = new MenuReglementFournisseurFragment();
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                if (fragment != null) {
-                    ft.replace(R.id.nav_host_fragment, fragment);
-                    ft.addToBackStack(null);
-                    ft.commit();
-                }
-            }
-        });
 
 
         CardView  btn_caisse_depense = (CardView)  root.findViewById(R.id.btn_caisse);
@@ -144,6 +116,20 @@ public class MenuPrincipalFragment extends Fragment {
         });
 
 
+
+        CardView  btn_statistique_et_rapport_act = (CardView)  root.findViewById(R.id.btn_statistique_rapport);
+        btn_statistique_et_rapport_act.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new MenuStatiqtiqueEtRapportActiviteFragment();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                if (fragment != null) {
+                    ft.replace(R.id.nav_host_fragment, fragment);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
+            }
+        });
 
 /*
         CardView btn_etat_stock ;

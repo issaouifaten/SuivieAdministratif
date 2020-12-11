@@ -10,6 +10,8 @@ import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.module.achat.BonCommandeAchatActivity;
 import com.example.suivieadministratif.module.achat.BonLivraisonAchatActivity;
 import com.example.suivieadministratif.module.achat.BonRetourAchatActivity;
+import com.example.suivieadministratif.module.reglementFournisseur.RapportEcheanceFournisseurActivity;
+import com.example.suivieadministratif.module.reglementFournisseur.ReglementFournisseurActivity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -69,6 +71,27 @@ public class MenuAchatFragment extends Fragment {
         });
 
 
+        CardView btn_reglement_frns = (CardView)  root.findViewById(R.id.btn_reg_frns)  ;
+
+        btn_reglement_frns.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent1 = new Intent(getActivity() , ReglementFournisseurActivity.class) ;
+                startActivity(intent1);
+            }
+        });
+
+        CardView   btn_echeance_fournisseur = (CardView)   root.findViewById(R.id.btn_echenace_fournisseur);
+        btn_echeance_fournisseur.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent1 = new Intent(getActivity() , RapportEcheanceFournisseurActivity.class) ;
+                startActivity(intent1);
+
+            }
+        });
 
 
         return root;

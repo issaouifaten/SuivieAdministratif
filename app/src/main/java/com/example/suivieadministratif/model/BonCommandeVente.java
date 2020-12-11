@@ -15,6 +15,7 @@ public class BonCommandeVente {
     private double TotalTVA;
     private double TotalTTC;
     private String NumeroEtat;
+    private String LibelleEtat;
     private String NomUtilisateur ;
     private Date   DateCreation;
     private Date   HeureCreation;
@@ -31,12 +32,13 @@ public class BonCommandeVente {
     }
 
 
-    public BonCommandeVente(String numeroBonCommandeVente, Date dateBonCommandeVente, String referenceClient, double totalTTC,String NumeroEtat) {
+    public BonCommandeVente(String numeroBonCommandeVente, Date dateBonCommandeVente, String referenceClient, double totalTTC,String NumeroEtat , String LibelleEtat ) {
         NumeroBonCommandeVente = numeroBonCommandeVente;
         DateBonCommandeVente = dateBonCommandeVente;
         ReferenceClient = referenceClient;
         TotalTTC = totalTTC;
         this.NumeroEtat = NumeroEtat  ;
+        this.LibelleEtat =LibelleEtat ;
     }
 
     public BonCommandeVente(String numeroBonCommandeVente, Date dateBonCommandeVente, String numeroDevisVente, String codeClient, String referenceClient, Date dateReferenceClient, int delaiLivraison, double totalHT, double totalTVA, double totalTTC, String numeroEtat, String nomUtilisateur, Date dateCreation, Date heureCreation, String observation, double totalRemise, double totalFodec, double totalNetHT, double tauxRemiseExceptionnel, double montantRemiseExceptionnel, String codeLivreur) {
@@ -230,6 +232,14 @@ public class BonCommandeVente {
 
     public void setCodeLivreur(String codeLivreur) {
         CodeLivreur = codeLivreur;
+    }
+
+    public String getLibelleEtat() {
+        return LibelleEtat;
+    }
+
+    public void setLibelleEtat(String libelleEtat) {
+        LibelleEtat = libelleEtat;
     }
 
     @Override

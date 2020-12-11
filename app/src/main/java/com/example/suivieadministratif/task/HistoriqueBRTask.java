@@ -16,9 +16,10 @@ import android.widget.SearchView;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
-import com.example.suivieadministratif.module.vente.HistoriqueLigneBonRetourActivity;
 import com.example.suivieadministratif.adapter.BonRetourAdapter;
 import com.example.suivieadministratif.model.BonRetourVente;
+import com.example.suivieadministratif.module.vente.EtatRetourActivity;
+import com.example.suivieadministratif.module.vente.HistoriqueLigneBonRetourActivity;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -44,17 +45,20 @@ public class HistoriqueBRTask extends AsyncTask<String, String, String> {
     String user, password, base, ip;
 
     String NomUtilisateur;
-    Date  date_debut , date_fin  ;
+    Date date_debut, date_fin;
     DateFormat dtfSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
     ArrayList<BonRetourVente> listBonRetourVente = new ArrayList<>();
 
-    public HistoriqueBRTask(Activity activity, Date  date_debut , Date date_fin  , ListView lv_hist_br, ProgressBar pb, SearchView search_bar_client) {
+    double tot_retour = 0;
+
+
+    public HistoriqueBRTask(Activity activity, Date date_debut, Date date_fin, ListView lv_hist_br, ProgressBar pb, SearchView search_bar_client) {
         this.activity = activity;
-        this.date_debut = date_debut  ;
-        this.date_fin = date_fin  ;
+        this.date_debut = date_debut;
+        this.date_fin = date_fin;
         this.lv_hist_br = lv_hist_br;
         this.pb = pb;
         this.search_bar_client = search_bar_client;
@@ -92,17 +96,19 @@ public class HistoriqueBRTask extends AsyncTask<String, String, String> {
                 z = "Error in connection with SQL server";
             } else {
 
-                String queryHis_bc = "select   NumeroBonRetourVente ,RaisonSociale ,TotalTTC , DateBonRetourVente ,NumeroEtat " +
-                        "  from BonRetourVente   \n" +
-                        "    where CONVERT (Date  , DateBonRetourVente)  between  '"+df.format(date_debut)+"'  and  '"+df.format(date_fin)+"'\n" +
-                        "    order by DateBonRetourVente desc  \n" +
+                String queryHis_bc = "select   NumeroBonRetourVente ,RaisonSociale ,TotalTTC , DateBonRetourVente ,Etat.NumeroEtat  ,Etat.Libelle " +
+                        "  from BonRetourVente  " +
+                        "    inner JOIN Etat  on Etat.NumeroEtat =  BonRetourVente.NumeroEtat  \n" +
+                        "    where CONVERT (Date  , DateBonRetourVente)  between  '" + df.format(date_debut) + "'  and  '" + df.format(date_fin) + "'\n" +
+                        "    order by DateBonRetourVente desc \n" +
                         "     ";
 
 
-                Log.e("queryHis_br",""+queryHis_bc) ;
+                Log.e("queryHis_br", "" + queryHis_bc);
                 PreparedStatement ps = con.prepareStatement(queryHis_bc);
                 ResultSet rs = ps.executeQuery();
 
+                tot_retour = 0;
                 while (rs.next()) {
 
                     String NumeroBonRetourVente = rs.getString("NumeroBonRetourVente");
@@ -110,8 +116,13 @@ public class HistoriqueBRTask extends AsyncTask<String, String, String> {
                     double TotalTTC = rs.getDouble("TotalTTC");
                     Date DateBonRetourVente = dtfSQL.parse(rs.getString("DateBonRetourVente"));
                     String NumeroEtat = rs.getString("NumeroEtat");
+                    String Libelle = rs.getString("Libelle");
 
-                    BonRetourVente bonRetourVente = new BonRetourVente(NumeroBonRetourVente, DateBonRetourVente, RaisonSociale, TotalTTC, NumeroEtat);
+
+                    if (!NumeroEtat.equals("E00")) {
+                        tot_retour = tot_retour + TotalTTC;
+                    }
+                    BonRetourVente bonRetourVente = new BonRetourVente(NumeroBonRetourVente, DateBonRetourVente, RaisonSociale, TotalTTC, NumeroEtat ,Libelle);
                     listBonRetourVente.add(bonRetourVente);
 
                 }
@@ -121,7 +132,7 @@ public class HistoriqueBRTask extends AsyncTask<String, String, String> {
         } catch (Exception ex) {
             z = "Error retrieving data from table";
 
-            Log.e("ERROR",""+ex.getMessage().toString()) ;
+            Log.e("ERROR", "" + ex.getMessage().toString());
         }
         return z;
     }
@@ -132,8 +143,12 @@ public class HistoriqueBRTask extends AsyncTask<String, String, String> {
 
         pb.setVisibility(View.INVISIBLE);
 
-        BonRetourAdapter bonRetourAdapter  = new BonRetourAdapter(activity  , listBonRetourVente)  ;
-         lv_hist_br.setAdapter(bonRetourAdapter);
+        BonRetourAdapter bonRetourAdapter = new BonRetourAdapter(activity, listBonRetourVente);
+        lv_hist_br.setAdapter(bonRetourAdapter);
+
+
+        DecimalFormat decF = new DecimalFormat("0.000");
+        EtatRetourActivity.txt_tot_retour.setText(decF.format(tot_retour) + " Dt");
 
         listOnClick(listBonRetourVente);
 
@@ -152,7 +167,7 @@ public class HistoriqueBRTask extends AsyncTask<String, String, String> {
 
                 final ArrayList<BonRetourVente> fitlerClientList = filterClientCMD(listBonRetourVente, query);
 
-                BonRetourAdapter bonRetourAdapter1  = new BonRetourAdapter(activity  , fitlerClientList)  ;
+                BonRetourAdapter bonRetourAdapter1 = new BonRetourAdapter(activity, fitlerClientList);
                 lv_hist_br.setAdapter(bonRetourAdapter1);
                 listOnClick(fitlerClientList);
 
@@ -163,7 +178,7 @@ public class HistoriqueBRTask extends AsyncTask<String, String, String> {
 
     }
 
-    public void listOnClick(final  ArrayList<BonRetourVente  > listBR ) {
+    public void listOnClick(final ArrayList<BonRetourVente> listBR) {
 
         lv_hist_br.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -221,15 +236,22 @@ public class HistoriqueBRTask extends AsyncTask<String, String, String> {
 
         term = term.toLowerCase();
         final ArrayList<BonRetourVente> filetrListClient = new ArrayList<>();
-
+        tot_retour = 0;
         for (BonRetourVente c : listClientBR) {
             final String txtRaisonSocial = c.getRaisonSociale().toLowerCase();
 
-
             if (txtRaisonSocial.contains(term)) {
+
                 filetrListClient.add(c);
+                if (!c.getNumeroEtat().equals("E00")) {
+                    tot_retour = tot_retour + c.getTotalTTC();
+                }
+
             }
         }
+
+        DecimalFormat decF = new DecimalFormat("0.000");
+        EtatRetourActivity.txt_tot_retour.setText(decF.format(tot_retour) + " Dt");
         return filetrListClient;
 
     }

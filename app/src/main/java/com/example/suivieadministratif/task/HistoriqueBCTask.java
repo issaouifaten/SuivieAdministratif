@@ -16,6 +16,7 @@ import android.widget.SearchView;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.module.vente.EtatCommande;
+import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
 import com.example.suivieadministratif.module.vente.HistoriqueLigneBonCommandeActivity;
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.adapter.BonCommandeAdapter;
@@ -53,6 +54,7 @@ public class HistoriqueBCTask extends AsyncTask<String, String, String> {
 
     ArrayList<BonCommandeVente> listBonCommandeVente = new ArrayList<>();
 
+    double  total_bc  = 0  ;
     public HistoriqueBCTask(Activity activity, Date  date_debut ,Date date_fin  , ListView lv_hist_bc, ProgressBar pb, SearchView search_bar_client) {
         this.activity = activity;
         this.date_debut = date_debut  ;
@@ -95,7 +97,8 @@ public class HistoriqueBCTask extends AsyncTask<String, String, String> {
                 z = "Error in connection with SQL server";
             } else {
 
-                String queryHis_bc = "select *  from BonCommandeVente   \n" +
+                String queryHis_bc = " select   NumeroBonCommandeVente  ,RaisonSociale  ,TotalTTC  , Etat.NumeroEtat ,Etat.Libelle  , DateBonCommandeVente   from BonCommandeVente   \n" +
+                        "    inner JOIN Etat  on Etat.NumeroEtat =  BonCommandeVente.NumeroEtat   \n" +
                         "where CONVERT (Date  , DateBonCommandeVente)  between  '"+df.format(date_debut)+"'  and  '"+df.format(date_fin)+"'\n" +
                         "order by DateBonCommandeVente desc  \n ";
 
@@ -104,16 +107,17 @@ public class HistoriqueBCTask extends AsyncTask<String, String, String> {
                 PreparedStatement ps = con.prepareStatement(queryHis_bc);
                 ResultSet rs = ps.executeQuery();
 
-
                 while (rs.next()) {
 
                     String NumeroBonCommandeVente = rs.getString("NumeroBonCommandeVente");
                     String RaisonSociale = rs.getString("RaisonSociale");
                     double TotalTTC = rs.getDouble("TotalTTC");
-                    Date DateBonCommandeVente = dtfSQL.parse(rs.getString("DateBonCommandeVente"));
+                    Date   DateBonCommandeVente = dtfSQL.parse(rs.getString("DateBonCommandeVente"));
                     String NumeroEtat = rs.getString("NumeroEtat");
+                    String LibelleEtat = rs.getString("Libelle");
 
-                    BonCommandeVente bonCommandeVente = new BonCommandeVente(NumeroBonCommandeVente, DateBonCommandeVente, RaisonSociale, TotalTTC, NumeroEtat);
+
+                    BonCommandeVente bonCommandeVente = new BonCommandeVente(NumeroBonCommandeVente, DateBonCommandeVente, RaisonSociale, TotalTTC, NumeroEtat , LibelleEtat );
                     listBonCommandeVente.add(bonCommandeVente);
 
                 }
@@ -136,8 +140,10 @@ public class HistoriqueBCTask extends AsyncTask<String, String, String> {
         EtatCommande.bcAdapter = new BonCommandeAdapter(activity, listBonCommandeVente);
         lv_hist_bc.setAdapter(EtatCommande.bcAdapter);
 
-        listOnClick(listBonCommandeVente);
+        DecimalFormat  decF  = new DecimalFormat("0.000") ;
+        EtatCommande.txt_tot_commande.setText(decF.format(total_bc)+" Dt");
 
+        listOnClick(listBonCommandeVente);
         search_bar_client.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -221,14 +227,22 @@ public class HistoriqueBCTask extends AsyncTask<String, String, String> {
 
         term = term.toLowerCase();
         final ArrayList<BonCommandeVente> filetrListClient = new ArrayList<>();
-
+        total_bc=0  ;
         for (BonCommandeVente c : listClientCMD) {
             final String txtRaisonSocial = c.getReferenceClient().toLowerCase();
 
             if (txtRaisonSocial.contains(term)) {
                 filetrListClient.add(c);
+
+                if (!c.getNumeroEtat().equals("E00"))
+                {
+                    total_bc =total_bc+c.getTotalTTC();
+                }
             }
         }
+
+        DecimalFormat  decF  = new DecimalFormat("0.000") ;
+        EtatCommande.txt_tot_commande.setText(decF.format(total_bc)+" Dt");
         return filetrListClient;
 
     }

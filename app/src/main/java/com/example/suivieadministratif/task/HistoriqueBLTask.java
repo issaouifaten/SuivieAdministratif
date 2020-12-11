@@ -16,6 +16,7 @@ import android.widget.SearchView;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
+import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
 import com.example.suivieadministratif.module.vente.HistoriqueLigneBonLivraisonActivity;
 import com.example.suivieadministratif.adapter.BonLivraisonAdapter;
 import com.example.suivieadministratif.model.BonLivraisonVente;
@@ -50,6 +51,8 @@ public class HistoriqueBLTask extends AsyncTask<String, String, String> {
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
     ArrayList<BonLivraisonVente> listBonLivraisonVentes = new ArrayList<>();
+
+    double  tot_liv  =0  ;
 
     public HistoriqueBLTask(Activity activity, Date  date_debut , Date date_fin  , ListView lv_hist_bc, ProgressBar pb, SearchView search_bar_client) {
         this.activity = activity;
@@ -93,9 +96,10 @@ public class HistoriqueBLTask extends AsyncTask<String, String, String> {
                 z = "Error in connection with SQL server";
             } else {
 
-                String queryHis_bc = "select  *  from BonLivraisonVente   \n" +
-                        "    where CONVERT (Date  , DateBonLivraisonVente)  between  '"+df.format(date_debut)+"'  and  '"+df.format(date_fin)+"'\n" +
-                        "    order by DateBonLivraisonVente desc  \n" +
+                String queryHis_bc = " select  NumeroBonLivraisonVente  ,RaisonSociale  ,TotalTTC  , Etat.NumeroEtat ,Etat.Libelle  , DateBonLivraisonVente  from BonLivraisonVente   \n" +
+                        "   inner JOIN Etat  on Etat.NumeroEtat =  BonLivraisonVente.NumeroEtat  \n" +
+                        "   where CONVERT (Date  , DateBonLivraisonVente)  between  '"+df.format(date_debut)+"'  and  '"+df.format(date_fin)+"'\n" +
+                        "   order by DateBonLivraisonVente  desc \n" +
                         "     ";
 
 
@@ -110,9 +114,16 @@ public class HistoriqueBLTask extends AsyncTask<String, String, String> {
                     double TotalTTC = rs.getDouble("TotalTTC");
                     Date DateBonLivraisonVente = dtfSQL.parse(rs.getString("DateBonLivraisonVente"));
                     String NumeroEtat = rs.getString("NumeroEtat");
+                    String LibelleEtat = rs.getString("Libelle");
 
-                    BonLivraisonVente bonLivraisonVente = new BonLivraisonVente(NumeroBonLivraisonVente, DateBonLivraisonVente, RaisonSociale, TotalTTC, NumeroEtat);
+                    if (!NumeroEtat.equals("E00"))
+                    {
+                        tot_liv=tot_liv+TotalTTC ;
+                    }
+
+                    BonLivraisonVente bonLivraisonVente = new BonLivraisonVente(NumeroBonLivraisonVente, DateBonLivraisonVente, RaisonSociale, TotalTTC, NumeroEtat, LibelleEtat);
                     listBonLivraisonVentes.add(bonLivraisonVente);
+
 
                 }
 
@@ -134,6 +145,10 @@ public class HistoriqueBLTask extends AsyncTask<String, String, String> {
 
         BonLivraisonAdapter bonLivraisonAdapter  = new BonLivraisonAdapter(activity  , listBonLivraisonVentes)  ;
         lv_hist_bc.setAdapter(bonLivraisonAdapter);
+
+
+        DecimalFormat  decF  = new DecimalFormat("0.000") ;
+        EtatLivraisonActivity.txt_tot_livraison.setText(decF.format(tot_liv)+" Dt");
 
         listOnClick(listBonLivraisonVentes);
 
@@ -216,20 +231,27 @@ public class HistoriqueBLTask extends AsyncTask<String, String, String> {
 
     }
 
-
-    private ArrayList<BonLivraisonVente> filterClientCMD(ArrayList<BonLivraisonVente> listClientBL, String term) {
+    private ArrayList<BonLivraisonVente> filterClientCMD (ArrayList<BonLivraisonVente> listClientBL, String term) {
 
         term = term.toLowerCase();
         final ArrayList<BonLivraisonVente> filetrListClient = new ArrayList<>();
-
+        tot_liv=0 ;
         for (BonLivraisonVente c : listClientBL) {
             final String txtRaisonSocial = c.getRaisonSociale().toLowerCase();
 
-
             if (txtRaisonSocial.contains(term)) {
+
                 filetrListClient.add(c);
+                if (!c.getNumeroEtat().equals("E00"))
+                {
+                    tot_liv =tot_liv+c.getTotalTTC();
+                }
+
             }
         }
+
+        DecimalFormat  decF  = new DecimalFormat("0.000") ;
+        EtatLivraisonActivity.txt_tot_livraison.setText(decF.format(tot_liv)+" Dt");
         return filetrListClient;
 
     }

@@ -20,6 +20,7 @@ public class BonRetourVente {
     private double TotalTTC;
     private double TotalNote;
     private String NumeroEtat;
+    private String LibelleEtat;
     private String NomUtilisateur;
     private Date   DateCreation;
     private Date   HeureCreation;
@@ -27,12 +28,13 @@ public class BonRetourVente {
 
     private ArrayList<LigneBonRetourVente> list_ligne_br ;
 
-    public BonRetourVente ( String NumeroBonRetourVente, Date DateBonRetourVente, String referenceClient, double totalTTC,String NumeroEtat) {
+    public BonRetourVente ( String NumeroBonRetourVente, Date DateBonRetourVente, String referenceClient, double totalTTC,String NumeroEtat,String LibelleEtat) {
         this.NumeroBonRetourVente = NumeroBonRetourVente;
         this.DateBonRetourVente = DateBonRetourVente;
         RaisonSociale = referenceClient;
         TotalTTC = totalTTC;
         this.NumeroEtat = NumeroEtat  ;
+        this.LibelleEtat=LibelleEtat;
     }
 
 
@@ -67,6 +69,14 @@ public class BonRetourVente {
         DateCreation = dateCreation;
         HeureCreation = heureCreation;
         Observation = observation;
+    }
+
+    public String getLibelleEtat() {
+        return LibelleEtat;
+    }
+
+    public void setLibelleEtat(String libelleEtat) {
+        LibelleEtat = libelleEtat;
     }
 
     public String getNumeroBonRetourVente() {

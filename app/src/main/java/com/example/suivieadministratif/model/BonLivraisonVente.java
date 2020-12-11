@@ -20,6 +20,7 @@ public class BonLivraisonVente {
     private double TotalTTC;
     private double TotalNote;
     private String NumeroEtat;
+    private String LibelleEtat;
     private String NumeroEtatPayement;
     private String LibelleEtatPayement;
     private String NomUtilisateur;
@@ -46,12 +47,13 @@ public class BonLivraisonVente {
     ArrayList<LigneBonLivraisonVente> list_ligne_bl;
 
 
-    public BonLivraisonVente ( String NumeroBonLivraisonVente, Date DateBonLivraisonVente, String referenceClient, double totalTTC,String NumeroEtat) {
+    public BonLivraisonVente ( String NumeroBonLivraisonVente, Date DateBonLivraisonVente, String referenceClient, double totalTTC,String NumeroEtat,String LibelleEtat) {
         this.NumeroBonLivraisonVente = NumeroBonLivraisonVente;
         this.DateBonLivraisonVente = DateBonLivraisonVente;
         RaisonSociale = referenceClient;
         TotalTTC = totalTTC;
         this.NumeroEtat = NumeroEtat  ;
+        this.LibelleEtat = LibelleEtat ;
     }
 
 
@@ -379,6 +381,13 @@ public class BonLivraisonVente {
     }
 
 
+    public String getLibelleEtat() {
+        return LibelleEtat;
+    }
+
+    public void setLibelleEtat(String libelleEtat) {
+        LibelleEtat = libelleEtat;
+    }
 
     @Override
     public String toString() {

@@ -9,14 +9,27 @@
         android:roundIcon="@drawable/i2s"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.statistique_rapport_activite.article.JournalActiviteActivity"
+            android:label="Journal d'Activité"   ></activity>
+        <activity
+            android:name=".ui.statistique_rapport_activite.article.ArticleNonMouvementeActivity"
+            android:label="Article Non Mouvementé"></activity>
+        <activity
+            android:name=".ui.statistique_rapport_activite.article.ArticleFaibleRotationActivity"
+            android:label="Article faible Rotation" />
+        <activity
+            android:name=".ui.menu.StatistiqueMenuActivity"
+            android:label="Statistique"
+            android:theme="@style/AppTheme.NoActionBar">
 
-
-        <activity android:name=".module.reglementFournisseur.RapportEcheanceFournisseurActivity"
-            android:label="Rapport Echéance Fournisseur" ></activity>
-
-        <activity android:name=".module.reglementClient.RapportEcheanceClientActivity"
-            android:label="Rapport Echéance Client"/>
-
+            <!--  -->
+        </activity>
+        <activity
+            android:name=".module.reglementFournisseur.RapportEcheanceFournisseurActivity"
+            android:label="Rapport Echéance Fournisseur" />
+        <activity
+            android:name=".module.reglementClient.RapportEcheanceClientActivity"
+            android:label="Rapport Echéance Client" />
         <activity android:name=".module.vente.MouvementVenteServiceActivity" />
         <activity android:name=".module.reglementFournisseur.DetailReglementFournisseurActivity" />
         <activity android:name=".module.reglementClient.DetailReglementClientActivity" />

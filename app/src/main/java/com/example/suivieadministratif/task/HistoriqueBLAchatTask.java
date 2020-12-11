@@ -88,9 +88,12 @@ public class HistoriqueBLAchatTask extends AsyncTask<String, String, String> {
                 z = "Error in connection with SQL server";
             } else {
 
-                String queryHis_bc = "select  *  from BonLivraisonAchat   \n" +
-                        "    where CONVERT (Date  , DateBonLivraisonAchat)  between  '"+df.format(date_debut)+"'  and  '"+df.format(date_fin)+"'\n" +
-                        "    order by DateBonLivraisonAchat desc  \n" +
+                String queryHis_bc = "select   NumeroBonLivraisonAchat  ,RaisonSociale  ,TotalTTC  , Etat.NumeroEtat ,Etat.Libelle  , DateBonLivraisonAchat    \n" +
+
+                        "from BonLivraisonAchat   \n" +
+                        "inner JOIN Etat  on Etat.NumeroEtat =  BonLivraisonAchat.NumeroEtat  " +
+                        "where CONVERT (Date  , DateBonLivraisonAchat)  between  '"+df.format(date_debut)+"'  and  '"+df.format(date_fin)+"'\n" +
+                        "order by DateBonLivraisonAchat desc  \n" +
                         "     ";
 
 
@@ -105,8 +108,8 @@ public class HistoriqueBLAchatTask extends AsyncTask<String, String, String> {
                     double TotalTTC = rs.getDouble("TotalTTC");
                     Date DateBonLivraisonVente = dtfSQL.parse(rs.getString("DateBonLivraisonAchat"));
                     String NumeroEtat = rs.getString("NumeroEtat");
-
-                    BonLivraisonVente bonLivraisonVente = new BonLivraisonVente(NumeroBonLivraisonVente, DateBonLivraisonVente, RaisonSociale, TotalTTC, NumeroEtat);
+                    String LibelleEtat = rs.getString("Libelle");
+                    BonLivraisonVente bonLivraisonVente = new BonLivraisonVente(NumeroBonLivraisonVente, DateBonLivraisonVente, RaisonSociale, TotalTTC, NumeroEtat, LibelleEtat);
                     listBonLivraisonVentes.add(bonLivraisonVente);
 
                 }

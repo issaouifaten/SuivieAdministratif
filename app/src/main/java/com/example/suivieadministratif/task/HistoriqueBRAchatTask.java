@@ -93,8 +93,9 @@ public class HistoriqueBRAchatTask extends AsyncTask<String, String, String> {
                 z = "Error in connection with SQL server";
             } else {
 
-                String queryHis_bc = "select   NumeroBonRetourAchat ,RaisonSociale ,TotalTTC , DateBonRetourAchat ,NumeroEtat " +
-                        "  from BonRetourAchat   \n" +
+                String queryHis_bc = "select   NumeroBonRetourAchat ,RaisonSociale ,TotalTTC , DateBonRetourAchat ,Etat.NumeroEtat ,Etat.Libelle  " +
+                        "  from BonRetourAchat  \n " +
+                        "    inner JOIN Etat  on Etat.NumeroEtat =  BonCommandeVente.NumeroEtat \n" +
                         "    where CONVERT (Date  , DateBonRetourAchat)  between  '"+df.format(date_debut)+"'  and  '"+df.format(date_fin)+"'\n" +
                         "    order by DateBonRetourAchat desc  \n" +
                         "     ";
@@ -111,8 +112,8 @@ public class HistoriqueBRAchatTask extends AsyncTask<String, String, String> {
                     double TotalTTC = rs.getDouble("TotalTTC");
                     Date DateBonRetourVente = dtfSQL.parse(rs.getString("DateBonRetourAchat"));
                     String NumeroEtat = rs.getString("NumeroEtat");
-
-                    BonRetourVente bonRetourVente = new BonRetourVente(NumeroBonRetourVente, DateBonRetourVente, RaisonSociale, TotalTTC, NumeroEtat);
+                    String NumeroLibelle = rs.getString("Libelle");
+                    BonRetourVente bonRetourVente = new BonRetourVente(NumeroBonRetourVente, DateBonRetourVente, RaisonSociale, TotalTTC, NumeroEtat,NumeroLibelle);
                     listBonRetourVente.add(bonRetourVente);
 
                 }

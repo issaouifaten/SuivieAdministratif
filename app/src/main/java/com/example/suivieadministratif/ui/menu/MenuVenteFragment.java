@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.suivieadministratif.R;
+import com.example.suivieadministratif.module.reglementClient.RapportEcheanceClientActivity;
+import com.example.suivieadministratif.module.reglementClient.ReglementClientActivity;
 import com.example.suivieadministratif.module.vente.EtatCommande;
 import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
 import com.example.suivieadministratif.module.vente.EtatRetourActivity;
@@ -74,6 +76,27 @@ public class MenuVenteFragment extends Fragment {
                 startActivity(intent5);
             }
         });
+
+
+        CardView   btn_reglement_client = (CardView)  root.findViewById(R.id.btn_reg_client)  ;
+        btn_reglement_client.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent  intent1 = new Intent(getActivity() , ReglementClientActivity.class) ;
+                startActivity(intent1);
+            }
+        });
+
+
+        CardView   btn_echeance_client = (CardView)   root.findViewById(R.id.btn_echeance_Client);
+        btn_echeance_client.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent  intent1 = new Intent(getActivity() , RapportEcheanceClientActivity.class) ;
+                startActivity(intent1);
+            }
+        });
+
 
 
         menuViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {

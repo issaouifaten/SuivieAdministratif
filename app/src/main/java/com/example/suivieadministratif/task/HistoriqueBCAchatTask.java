@@ -96,15 +96,15 @@ public class HistoriqueBCAchatTask extends AsyncTask<String, String, String> {
                 z = "Error in connection with SQL server";
             } else {
 
-                String queryHis_bc = "select *  from BonCommandeAchat   \n" +
+                String queryHis_bc = "  select NumeroBonCommandeAchat  ,RaisonSociale  ,TotalTTC  , Etat.NumeroEtat ,Etat.Libelle  , DateBonCommandeAchat   from BonCommandeAchat  \n" +
+                        "inner JOIN Etat  on Etat.NumeroEtat =  BonCommandeVente.NumeroEtat    \n" +
                         "where CONVERT (Date  , DateBonCommandeAchat)  between  '"+df.format(date_debut)+"'  and  '"+df.format(date_fin)+"'\n" +
                         "order by DateBonCommandeAchat desc  \n ";
 
-
                 Log.e("queryHis_bc",""+queryHis_bc) ;
                 PreparedStatement ps = con.prepareStatement(queryHis_bc);
-                ResultSet rs = ps.executeQuery();
 
+                ResultSet rs = ps.executeQuery();
 
                 while (rs.next()) {
 
@@ -113,8 +113,9 @@ public class HistoriqueBCAchatTask extends AsyncTask<String, String, String> {
                     double TotalTTC = rs.getDouble("TotalTTC");
                     Date DateBonCommandeVente = dtfSQL.parse(rs.getString("DateBonCommandeAchat"));
                     String NumeroEtat = rs.getString("NumeroEtat");
+                    String Libelle = rs.getString("Libelle");
 
-                    BonCommandeVente bonCommandeVente = new BonCommandeVente(NumeroBonCommandeVente, DateBonCommandeVente, RaisonSociale, TotalTTC, NumeroEtat);
+                    BonCommandeVente bonCommandeVente = new BonCommandeVente(NumeroBonCommandeVente, DateBonCommandeVente, RaisonSociale, TotalTTC, NumeroEtat,Libelle);
                     listBonCommandeVente.add(bonCommandeVente);
 
                 }
@@ -153,13 +154,11 @@ public class HistoriqueBCAchatTask extends AsyncTask<String, String, String> {
             public boolean onQueryTextChange(String query) {
 
                 final ArrayList<BonCommandeVente> fitlerClientList = filterClientCMD(listBonCommandeVente, query);
-
                 EtatCommande.bcAdapter = new BonCommandeAdapter(activity, fitlerClientList);
                 lv_hist_bc.setAdapter(EtatCommande.bcAdapter);
                 listOnClick(fitlerClientList);
 
                 return false;
-
             }
         });
 

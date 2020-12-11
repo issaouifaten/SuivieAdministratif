@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.menu.MenuVenteFragment"
-    android:background="@drawable/back">
+    tools:context=".ui.statistique_rapport_activite.StatArticleFragment"
+    android:background="@drawable/back_echek_2">
 
 
     <LinearLayout
@@ -14,39 +14,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
-                android:padding="10dp"
-                android:src="@drawable/ic_reglement_frns">
-
-            </ImageView>
-
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:minHeight="?actionBarSize"
-                android:text="Règlement Client"
-                android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
-
-        </LinearLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -70,12 +37,12 @@
 
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_reg_frns"
+                    android:id="@+id/btn_devis_vente"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
                     android:layout_margin="10dp"
                     card_view:cardCornerRadius="2dp"
                     card_view:contentPadding="10dp"
@@ -90,58 +57,10 @@
                         android:gravity="center">
 
                         <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:src="@drawable/ic_reglement_frns"
-                            android:padding="13dp"/>
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="10dp"
-                            android:src="@drawable/line_h"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:layout_marginTop="5dp"
-                            android:textSize="15dp"
-                            android:gravity="center"
-                            android:layout_gravity="center"
-                            android:text="Règlement Fournisseur"/>
-
-
-                    </LinearLayout>
-
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_echenace_fournisseur"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
-                    android:layout_margin="10dp"
-                    card_view:cardCornerRadius="2dp"
-                    card_view:contentPadding="10dp"
-                    card_view:cardBackgroundColor="#66FCF9F9"
-                    card_view:cardElevation="2dp"
-                    card_view:cardMaxElevation="6dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:src="@drawable/ic_echeance"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/ic_devis_vente"
                             android:padding="5dp"/>
-
 
                         <ImageView
                             android:layout_width="match_parent"
@@ -153,18 +72,128 @@
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
                             android:layout_marginTop="10dp"
-                            android:text="Rapport Echéance Fournisseur"
                             android:textSize="15dp"
+                            android:gravity="center"
+                            android:text="Compte"/>
+
+
+                    </LinearLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_bon_commande"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:layout_margin="10dp"
+                    card_view:cardCornerRadius="2dp"
+                    card_view:contentPadding="10dp"
+                    card_view:cardBackgroundColor="#66FCF9F9"
+                    card_view:cardElevation="2dp"
+                    card_view:cardMaxElevation="6dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+
+                        <RelativeLayout
+                            android:layout_width="60dp"
+                            android:layout_height="60dp">
+
+                            <ImageView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/ic_bon_commande"
+                                android:padding="5dp"/>
+
+                        </RelativeLayout>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:src="@drawable/line_h"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:layout_marginTop="10dp"
+                            android:textSize="15dp"
+                            android:text="Liste dépense"
                             android:gravity="center"/>
-
-
 
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+
+
             </LinearLayout>
 
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_suivie_arret_de_caisse"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:layout_margin="10dp"
+                    card_view:cardCornerRadius="2dp"
+                    card_view:contentPadding="10dp"
+                    card_view:cardBackgroundColor="#66FCF9F9"
+                    card_view:cardElevation="2dp"
+                    card_view:cardMaxElevation="6dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/ic_devis_vente"
+                            android:padding="5dp"/>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:src="@drawable/line_h"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:layout_marginTop="10dp"
+                            android:textSize="15dp"
+                            android:gravity="center"
+                            android:text="Suivie Arrêt de Caisse"/>
+
+
+                    </LinearLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+
+
+            </LinearLayout>
 
 
 

@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.suivieadministratif.R;
-import com.example.suivieadministratif.module.reglementClient.RapportEcheanceClientActivity;
-import com.example.suivieadministratif.module.reglementClient.ReglementClientActivity;
+import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
+import com.example.suivieadministratif.module.vente.EtatRetourActivity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,35 +17,39 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-public class MenuReglementClientFragment extends Fragment {
+public class MenuStatistiqueFragment extends Fragment {
 
     private MenuViewModel menuViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        menuViewModel =  ViewModelProviders.of(this).get(MenuViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_menu_reglmeent_client, container, false);
 
-        CardView   btn_reglement_client = (CardView)  root.findViewById(R.id.btn_reg_client)  ;
 
-        btn_reglement_client.setOnClickListener(new View.OnClickListener() {
+        menuViewModel =
+                ViewModelProviders.of(this).get(MenuViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_statistique_et_rapport_activite , container, false);
+
+
+        CardView   btn_rapport = (CardView) root.findViewById(R.id.btn_rapport)  ;
+        btn_rapport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent  intent1 = new Intent(getActivity() , ReglementClientActivity.class) ;
-                startActivity(intent1);
+                Intent intent6 = new Intent(getActivity(), EtatLivraisonActivity.class);
+                startActivity(intent6);
             }
         });
 
+        
 
-        CardView   btn_echeance_client = (CardView)   root.findViewById(R.id.btn_echeance_Client);
-        btn_echeance_client.setOnClickListener(new View.OnClickListener() {
+        CardView btn_statistique = (CardView) root.findViewById(R.id.btn_statistique)  ;
+        btn_statistique.setOnClickListener (new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent  intent1 = new Intent(getActivity() , RapportEcheanceClientActivity.class) ;
-                startActivity(intent1);
+                Intent intent7 = new Intent(getActivity(), EtatRetourActivity.class);
+                startActivity(intent7);
             }
         });
+
 
 
         menuViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {

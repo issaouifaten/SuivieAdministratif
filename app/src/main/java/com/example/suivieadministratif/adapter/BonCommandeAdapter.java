@@ -58,13 +58,14 @@ public class BonCommandeAdapter extends ArrayAdapter<BonCommandeVente> {
         TextView txt_raison_client       = (TextView) rowView.findViewById(R.id.txt_raison_client);
         TextView txt_ttc          = (TextView) rowView.findViewById(R.id.txt_prix_ttc);
         TextView txt_date_bc         = (TextView) rowView.findViewById(R.id.txt_date_bc);
+        TextView txt_libelle_etat      = (TextView) rowView.findViewById(R.id.txt_libelle_etat);
 
 
         txt_num_bc .setText (bc.getNumeroBonCommandeVente());
         txt_raison_client.setText(bc.getReferenceClient());
         txt_ttc.setText   (formatter.format(bc.getTotalTTC())+" TTC");
         txt_date_bc.setText(df.format(bc.getDateBonCommandeVente()));
-
+        txt_libelle_etat.setText(bc.getLibelleEtat());
 
 
         if (bc.getNumeroEtat().equals("E00"))

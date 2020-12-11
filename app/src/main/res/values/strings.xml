@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Suivie Administratif</string>
+    <string name="licence">Idéal Software Solution</string>
     <string name="title_activity_menu_home">MenuHome</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -37,4 +38,19 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_statistique_menu">StatistiqueMenuActivity</string>
+
+
+    <string name="tab_text_1">Article</string>
+    <string name="tab_text_2">Fournisseur</string>
+    <string name="tab_text_3">Client</string>
+    <string name="tab_text_4">Stock</string>
+    <string name="tab_text_5">Achat</string>
+    <string name="tab_text_6">Vente</string>
+    <string name="tab_text_7">Compte</string>
+    <string name="tab_text_8">CRM</string>
+    <string name="tab_text_9">Importation</string>
+    <string name="tab_text_10">SRM</string>
+
+
 </resources>

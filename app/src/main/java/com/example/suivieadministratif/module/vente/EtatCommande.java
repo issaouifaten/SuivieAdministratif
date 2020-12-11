@@ -9,12 +9,15 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.adapter.BonCommandeAdapter;
 import com.example.suivieadministratif.task.HistoriqueBCTask;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -22,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class EtatCommande extends AppCompatActivity {
@@ -32,7 +36,6 @@ public class EtatCommande extends AppCompatActivity {
     SearchView search_bar_client;
 
     public TextView txt_date_debut, txt_date_fin;
-
 
     final Context co = this;
     String user, password, base, ip;
@@ -48,6 +51,11 @@ public class EtatCommande extends AppCompatActivity {
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     NumberFormat formatter = new DecimalFormat("00");
 
+    public static TextView txt_tot_commande ;
+
+    FloatingActionButton fab_arrow   ;
+    RelativeLayout layoutBottomSheet ;
+    BottomSheetBehavior sheetBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +67,8 @@ public class EtatCommande extends AppCompatActivity {
         String NomSociete = pref.getString("NomSociete", "");
         setTitle(NomSociete + " : Bon Commande Vente");
 
+
+        txt_tot_commande  = (TextView)  findViewById(R.id.txt_tot_commande)  ;
         txt_date_debut = findViewById(R.id.txt_date_debut);
         txt_date_fin = findViewById(R.id.txt_date_fin);
 
@@ -170,6 +180,44 @@ public class EtatCommande extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
+
+
+        layoutBottomSheet = (RelativeLayout) findViewById(R.id.bottom_sheet);
+        fab_arrow = (FloatingActionButton) findViewById(R.id.fab_arrow);
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        sheetBehavior.setHideable(false);
+
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+                        // Toast.makeText(getActivity() , "Close Sheet" ,Toast.LENGTH_LONG).show();
+                        fab_arrow.setImageResource(R.drawable.ic_arrow_down);
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+                        // Toast.makeText(getActivity() , "Expand Sheet" ,Toast.LENGTH_LONG).show();
+                        fab_arrow.setImageResource(R.drawable.ic_arrow_up);
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
+
+
+
 
     }
 
