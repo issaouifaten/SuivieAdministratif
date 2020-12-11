@@ -41,6 +41,9 @@ public class TypeMvmntAdapterLV extends ArrayAdapter<TypeMouvement> {
         if (tmvmnt.getNumeroPiece().equals("")) {
 
             rowView = inflater.inflate(R.layout.item_titre_type, null, true);
+
+
+            
             TextView txt_titre_type_mvmnt = rowView.findViewById(R.id.txt_titre_type_mvmnt);
 
             TextView   txt_total_montant= rowView.findViewById(R.id.txt_total_montant);
