@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.annotation.Nullable;
@@ -21,6 +22,7 @@ import com.example.suivieadministratif.EtatJournalArticleVendu;
 import com.example.suivieadministratif.ChiffreAffaireGlobale;
 import com.example.suivieadministratif.R ;
 import com.example.suivieadministratif.StockArticle;
+import com.example.suivieadministratif.activity.AlerteWorkflow;
 import com.example.suivieadministratif.module.vente.EtatCommande;
 import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
 import com.example.suivieadministratif.module.vente.EtatRetourActivity;
@@ -29,7 +31,7 @@ public class PrincipalFragment extends Fragment {
 
     CardView   btn_etat_stock ;
     CardView btn_bon_commande,  btn_bon_livraison , btn_bon_retour   , btn_vente_journal_article;
-    CardView   btn_ca_soc  , btn_ca_golbal  ;
+    CardView   btn_ca_soc  , btn_ca_golbal,btn_workflow  ;
 
     TextView   txt_ca_soc  ;
     ImageView img_societe ;
@@ -57,6 +59,7 @@ public class PrincipalFragment extends Fragment {
 
         btn_ca_soc= (CardView) fragmentView.findViewById(R.id.btn_ca_soc);
         btn_ca_golbal= (CardView) fragmentView.findViewById(R.id.btn_ca_global);
+        btn_workflow= (CardView) fragmentView.findViewById(R.id.btn_workflow);
 
 
 
@@ -137,7 +140,17 @@ public class PrincipalFragment extends Fragment {
             }
         });
 
-  
+
+        btn_workflow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(),"work",Toast.LENGTH_LONG).show();
+
+                Intent intent3 = new Intent(getActivity(), AlerteWorkflow.class);
+                startActivity(intent3);
+
+            }
+        });
         return fragmentView;
     }
 

@@ -1,14 +1,17 @@
 package com.example.suivieadministratif.ui.menu;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.suivieadministratif.R;
+import com.example.suivieadministratif.activity.AlerteWorkflow;
 import com.example.suivieadministratif.param.Param;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.MenuStatiqtiqueEtRapportActiviteFragment;
 
@@ -128,6 +131,16 @@ public class MenuPrincipalFragment extends Fragment {
                     ft.addToBackStack(null);
                     ft.commit();
                 }
+            }
+        });
+
+        CardView   btn_workflow= (CardView) root.findViewById(R.id.btn_workflow);
+        btn_workflow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent3 = new Intent(getActivity(), AlerteWorkflow.class);
+                startActivity(intent3);
+
             }
         });
 

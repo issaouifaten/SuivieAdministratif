@@ -10,6 +10,8 @@ import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.module.reglementClient.RapportEcheanceClientActivity;
 import com.example.suivieadministratif.module.reglementClient.ReglementClientActivity;
 import com.example.suivieadministratif.module.vente.EtatCommande;
+import com.example.suivieadministratif.module.vente.EtatDevisVente;
+import com.example.suivieadministratif.module.vente.EtatFactureVente;
 import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
 import com.example.suivieadministratif.module.vente.EtatRetourActivity;
 import com.example.suivieadministratif.module.vente.MouvementVenteServiceActivity;
@@ -33,6 +35,18 @@ public class MenuVenteFragment extends Fragment {
         menuViewModel =
                 ViewModelProviders.of(this).get(MenuViewModel.class);
         View root = inflater.inflate(R.layout.fragment_menu_vente, container, false);
+
+
+        CardView   btn_devis_vente = (CardView) root.findViewById(R.id.btn_devis_vente)  ;
+        btn_devis_vente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent6 = new Intent(getActivity(), EtatDevisVente.class);
+                startActivity(intent6);
+            }
+        });
+
+
 
 
         CardView   btn_bon_livraison = (CardView) root.findViewById(R.id.btn_bon_livraison)  ;
@@ -65,7 +79,16 @@ public class MenuVenteFragment extends Fragment {
 
             }
         });
+        CardView  btn_facture_vente = (CardView) root.findViewById(R.id.btn_facture_vente) ;
+        btn_facture_vente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                Intent intent5 = new Intent(getActivity(), EtatFactureVente.class);
+                startActivity(intent5);
+
+            }
+        });
 
         CardView  btn_mvmnt_vente_service= (CardView) root.findViewById(R.id.btn_mvmnt_vente_service) ;
         btn_mvmnt_vente_service.setOnClickListener(new View.OnClickListener() {

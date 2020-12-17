@@ -68,9 +68,11 @@ public class WorkFlowTask extends AsyncTask<String, String, String> {
 
         Log.e("BON_CMD" ,Param.PEF_SERVER +"-"+ip+"-"+base) ;
 
-        /*SharedPreferences pref=activity.getSharedPreferences("usersession", Context.MODE_PRIVATE);
-        SharedPreferences.Editor edt=pref.edit();
-        NomUtilisateur= pref.getString("NomUtilisateur",NomUtilisateur);*/
+        //user session
+        SharedPreferences prefeuser = activity.getSharedPreferences("usersession", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edte = prefeuser.edit();
+        NomUtilisateur = prefeuser.getString("NomUtilisateur", NomUtilisateur);
+
 
         connectionClass = new ConnectionClass();
 
@@ -92,6 +94,12 @@ public class WorkFlowTask extends AsyncTask<String, String, String> {
                 z = "Error in connection with SQL server";
             } else {
 
+
+                String condition_user1="(WorkFlow.UtilisateurConserner1='"+NomUtilisateur+"' and Vue1=0  and  GETDATE() between DateDebut1 and DateFin1 )";
+                String condition_user2="(WorkFlow.UtilisateurConserner2='"+NomUtilisateur+"' and Vue2=0  and  GETDATE() between DateDebut2 and DateFin2 )";
+                String condition_user3="(WorkFlow.UtilisateurConserner3='"+NomUtilisateur+"' and Vue3=0  and  GETDATE() between DateDebut3 and DateFin3 )";
+
+
                 String query_work_flow = "  select NumeroWorkflow ,WorkFlow.CodeEvenement ,\n" +
                         " EvenementWorkflow.Libelle ,  DateCreation ,CreerPar ,NumeroPiece ,\n" +
                         " WorkFlow. UtilisateurConserner1 ,Vue1  ,DateDebut1 , DateFin1 ,\n" +
@@ -99,7 +107,8 @@ public class WorkFlowTask extends AsyncTask<String, String, String> {
                         " WorkFlow.UtilisateurConserner3 ,Vue3 ,DateVue3 ,DateDebut3 , DateFin3 ,\n" +
                         " UtilisateurValideur , DateFin , Fini\n" +
                         " from  WorkFlow\n" +
-                        " left  join  EvenementWorkflow on  EvenementWorkflow.CodeEvenement =  WorkFlow.CodeEvenement  ";
+                        " left  join  EvenementWorkflow on  EvenementWorkflow.CodeEvenement =  WorkFlow.CodeEvenement " +
+                        "  where Fini=0 and ( "+condition_user1+" or "+condition_user2+" or "+condition_user3+"  )";
 
 
                 Log.e("query_work_flow",""+query_work_flow) ;
