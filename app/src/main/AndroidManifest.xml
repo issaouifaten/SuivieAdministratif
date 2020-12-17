@@ -11,7 +11,8 @@
         android:roundIcon="@drawable/i2s"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".module.vente.DetailLigneFactureVente"></activity>
+        <activity android:name=".module.vente.EtatBonAvoirVente"></activity>
+        <activity android:name=".module.vente.DetailLigneFactureVente" />
         <activity android:name=".module.vente.EtatFactureVente" />
         <activity android:name=".module.vente.DetailLigneDevisVente" />
         <activity android:name=".module.vente.EtatDevisVente" />
