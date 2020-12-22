@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EtatChiffreAffaire">
+    tools:context=".ui.statistique_rapport_activite.Vente.EtatChiffreAffaire">
 
     <LinearLayout
         android:layout_width="match_parent"

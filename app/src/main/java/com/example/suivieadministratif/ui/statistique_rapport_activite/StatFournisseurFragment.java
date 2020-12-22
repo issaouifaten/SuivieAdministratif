@@ -1,5 +1,6 @@
 package com.example.suivieadministratif.ui.statistique_rapport_activite;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,9 +8,12 @@ import android.view.ViewGroup;
 
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.ui.menu.MenuViewModel;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Fournisseur.ListeRetenuFrs;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Fournisseur.PieceNonPayeFrs;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -38,15 +42,23 @@ public class StatFournisseurFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_stat_fournisseur, container, false);
 
 
-       /* CardView   btn_bon_livraison = (CardView) root.findViewById(R.id.btn_bon_livraison)  ;
-        btn_bon_livraison.setOnClickListener(new View.OnClickListener() {
+  CardView btn_retenu_frs = (CardView) root.findViewById(R.id.btn_retenu_frs)  ;
+        btn_retenu_frs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent6 = new Intent(getActivity(), EtatLivraisonActivity.class);
+                Intent intent6 = new Intent(getActivity(), ListeRetenuFrs.class);
                 startActivity(intent6);
             }
         });
-
+        CardView btn_piece_non_paye = (CardView) root.findViewById(R.id.btn_piece_non_paye)  ;
+        btn_piece_non_paye.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent6 = new Intent(getActivity(), PieceNonPayeFrs.class);
+                startActivity(intent6);
+            }
+        });
+      /*
 
         CardView btn_bon_retour = (CardView) root.findViewById(R.id.btn_bon_retour)  ;
         btn_bon_retour.setOnClickListener(new View.OnClickListener() {

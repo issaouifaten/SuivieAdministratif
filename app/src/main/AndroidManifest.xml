@@ -11,7 +11,24 @@
         android:roundIcon="@drawable/i2s"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".module.achat.DetailLigneFactureAchat"></activity>
+        <activity android:name=".ui.statistique_rapport_activite.CRM.EtatJournalActivite"></activity>
+        <activity android:name=".ui.statistique_rapport_activite.Compte.SuivieArretCaisse" />
+        <activity android:name=".ui.statistique_rapport_activite.CRM.Etat_Suivie_VoitureParMission" />
+        <activity android:name=".ui.statistique_rapport_activite.Client.IndicateurEncourClient" />
+        <activity android:name=".ui.statistique_rapport_activite.Client.PieceNonPayeClient" />
+        <activity android:name=".ui.statistique_rapport_activite.Fournisseur.PieceNonPayeFrs" />
+        <activity android:name=".ui.statistique_rapport_activite.Client.ListRetenuClient" />
+        <activity android:name=".ui.statistique_rapport_activite.Achat.EtatJournalArticleAchete" />
+        <activity android:name=".ui.statistique_rapport_activite.Client.FicheClient" />
+        <activity android:name=".ui.statistique_rapport_activite.Fournisseur.ListeRetenuFrs" />
+        <activity android:name=".ui.statistique_rapport_activite.article.ArticleDLC" />
+        <activity android:name=".module.Stock.DetailLigneBonTransfert" />
+        <activity android:name=".module.Stock.BonTransfertStock" />
+        <activity android:name=".module.Stock.DetailLigneBonSortie" />
+        <activity android:name=".module.Stock.BonSortie" />
+        <activity android:name=".module.Stock.DetailLigneBonEntre" />
+        <activity android:name=".module.Stock.BonEntre" />
+        <activity android:name=".module.achat.DetailLigneFactureAchat" />
         <activity android:name=".module.achat.FactureAchat" />
         <activity android:name=".module.vente.EtatBonAvoirVente" />
         <activity android:name=".module.vente.DetailLigneFactureVente" />
@@ -86,14 +103,14 @@
             android:name=".activity.MenuServeur"
             android:label="Liste Societe" />
         <activity
-            android:name=".EtatJournalArticleVendu"
+            android:name=".ui.statistique_rapport_activite.article.EtatJournalArticleVendu"
             android:label="Journal Article Vendu" />
         <activity
-            android:name=".StockArticle"
+            android:name=".module.Stock.StockArticle"
             android:label="JournalArticleVendu" />
         <activity android:name=".module.vente.EtatCommande" />
         <activity
-            android:name=".EtatChiffreAffaire"
+            android:name=".ui.statistique_rapport_activite.Vente.EtatChiffreAffaire"
             android:label="ChiffreAffaire" />
         <activity android:name=".module.vente.HistoriqueLigneBonRetourActivity" />
         <activity

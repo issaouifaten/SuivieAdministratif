@@ -238,7 +238,7 @@ public class FactureAchat extends AppCompatActivity {
         protected void onPostExecute(String r) {
             progressBar.setVisibility(View.GONE);
 
-// NumeroDevisAchat,DateCreation,NomUtilisateur,CodeClient,RaisonSociale,TotalTTC,Etat.Libelle as Etat
+// NumeroDevisAchat,DateCreation,NomUtilisateur,CodeFournisseur,RaisonSociale,TotalTTC,Etat.Libelle as Etat
             String[] from = {"NumeroFactureAchat", "DateCreation",   "RaisonSociale","TotalTTC","Etat"};
             int[] views = {R.id.txt_num_bc, R.id.txt_date_bc, R.id.txt_raison_client, R.id.txt_prix_ttc, R.id.txt_libelle_etat};
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
@@ -288,7 +288,7 @@ public class FactureAchat extends AppCompatActivity {
                 } else {
 
 
-                    String queryTable = "select NumeroFactureAchat,RaisonSociale,CodeClient,TotalTTC,DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
+                    String queryTable = "select NumeroFactureAchat,RaisonSociale,CodeFournisseur,TotalTTC,DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
                             "from FactureAchat \n" +
                             "inner join Etat on Etat.NumeroEtat=FactureAchat.NumeroEtat\n" +
                             "where DateCreation between '"+date_debut+"' and '"+date_fin+"'\n" +
@@ -305,7 +305,7 @@ public class FactureAchat extends AppCompatActivity {
                         Map<String, String> datanum = new HashMap<String, String>();
                         datanum.put("NumeroFactureAchat", rs.getString("NumeroFactureAchat"));
                         datanum.put("NomUtilisateur", rs.getString("NomUtilisateur"));
-                        datanum.put("CodeClient", rs.getString("CodeClient"));
+                        datanum.put("CodeFournisseur", rs.getString("CodeFournisseur"));
                         datanum.put("RaisonSociale", rs.getString("RaisonSociale"));
                         datanum.put("TotalTTC", rs.getString("TotalTTC"));
                         datanum.put("Etat", rs.getString("Etat"));

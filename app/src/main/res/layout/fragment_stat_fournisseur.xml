@@ -249,7 +249,7 @@
 
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_facture_vente"
+                    android:id="@+id/btn_piece_non_paye"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:layout_width="140dp"
@@ -293,7 +293,7 @@
 
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_bon_avoir"
+                    android:id="@+id/btn_retenu_frs"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:layout_width="140dp"

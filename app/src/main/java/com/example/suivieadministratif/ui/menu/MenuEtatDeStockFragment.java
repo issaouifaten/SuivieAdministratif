@@ -7,7 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.suivieadministratif.R;
-import com.example.suivieadministratif.StockArticle;
+import com.example.suivieadministratif.module.Stock.StockArticle;
+import com.example.suivieadministratif.module.Stock.BonEntre;
+import com.example.suivieadministratif.module.Stock.BonSortie;
+import com.example.suivieadministratif.module.Stock.BonTransfertStock;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,6 +41,34 @@ public class MenuEtatDeStockFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent2 = new Intent(getActivity(), StockArticle.class);
+                startActivity(intent2);
+            }
+        });
+        //btn_bon_entree
+        CardView  btn_bon_entree = (CardView) root.findViewById(R.id.btn_bon_entree) ;
+        btn_bon_entree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent2 = new Intent(getActivity(), BonEntre.class);
+                startActivity(intent2);
+            }
+        });
+        //btn_bonsortie_de_stock
+        CardView  btn_bonsortie_de_stock = (CardView) root.findViewById(R.id.btn_bonsortie_de_stock) ;
+        btn_bonsortie_de_stock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent2 = new Intent(getActivity(), BonSortie.class);
+                startActivity(intent2);
+            }
+        });
+        //btn_passation_bon_transfert
+
+        CardView  btn_passation_bon_transfert = (CardView) root.findViewById(R.id.btn_passation_bon_transfert) ;
+        btn_passation_bon_transfert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent2 = new Intent(getActivity(), BonTransfertStock.class);
                 startActivity(intent2);
             }
         });

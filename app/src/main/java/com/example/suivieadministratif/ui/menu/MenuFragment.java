@@ -18,10 +18,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.suivieadministratif.ChiffreAffaireGlobale;
-import com.example.suivieadministratif.EtatChiffreAffaire;
-import com.example.suivieadministratif.EtatJournalArticleVendu;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Vente.EtatChiffreAffaire;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.article.EtatJournalArticleVendu;
 import com.example.suivieadministratif.R;
-import com.example.suivieadministratif.StockArticle;
+import com.example.suivieadministratif.module.Stock.StockArticle;
 import com.example.suivieadministratif.module.vente.EtatCommande;
 import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
 import com.example.suivieadministratif.module.vente.EtatRetourActivity;

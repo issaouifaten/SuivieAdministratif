@@ -14,11 +14,13 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.suivieadministratif.ui.statistique_rapport_activite.article.EtatJournalArticleVendu;
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.task.ListDepotTaskForSearchableSpinner;
 import com.example.suivieadministratif.task.ListFamilleTaskForSearchableSpinner;
 import com.example.suivieadministratif.task.ListFournisseurTaskForSearchableSpinner;
 import com.example.suivieadministratif.ui.menu.MenuViewModel;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.article.ArticleDLC;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.article.ArticleFaibleRotationActivity;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.article.ArticleNonMouvementeActivity;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
@@ -105,17 +107,30 @@ public class StatArticleFragment extends Fragment {
         });
 
 
-    /*
-        CardView btn_bon_retour = (CardView) root.findViewById(R.id.btn_bon_retour)  ;
-        btn_bon_retour.setOnClickListener(new View.OnClickListener() {
+
+        CardView btn_journal_article = (CardView) root.findViewById(R.id.btn_journal_article)  ;
+        btn_journal_article.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent7 = new Intent(getActivity(), EtatRetourActivity.class);
+                Intent intent7 = new Intent(getActivity(), EtatJournalArticleVendu.class);
+                startActivity(intent7);
+            }
+        });
+
+        //btn_article_dlc
+        CardView btn_article_dlc = (CardView) root.findViewById(R.id.btn_article_dlc)  ;
+        btn_article_dlc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent7 = new Intent(getActivity(), ArticleDLC.class);
                 startActivity(intent7);
             }
         });
 
 
+
+
+   /*
         CardView  btn_bon_commande = (CardView) root.findViewById(R.id.btn_bon_commande) ;
         btn_bon_commande.setOnClickListener(new View.OnClickListener() {
             @Override

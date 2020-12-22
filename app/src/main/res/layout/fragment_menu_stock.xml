@@ -117,7 +117,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_transfert_de_stock"
+                    android:id="@+id/btn_bonsortie_de_stock"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
@@ -152,7 +152,7 @@
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
                             android:layout_marginTop="10dp"
-                            android:text="Trasfert Stock "
+                            android:text="Sortie Stock "
                             android:textSize="15dp"
                             android:gravity="center"/>
 

@@ -1,5 +1,6 @@
 package com.example.suivieadministratif.ui.statistique_rapport_activite;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,9 +8,13 @@ import android.view.ViewGroup;
 
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.ui.menu.MenuViewModel;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.FicheClient;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.ListRetenuClient;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.PieceNonPayeClient;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -36,39 +41,39 @@ public class StatClientFragment extends Fragment {
                 ViewModelProviders.of(this).get(MenuViewModel.class);
         View root = inflater.inflate(R.layout.fragment_stat_client, container, false);
 
-/*
-        CardView   btn_bon_livraison = (CardView) root.findViewById(R.id.btn_bon_livraison)  ;
-        btn_bon_livraison.setOnClickListener(new View.OnClickListener() {
+
+        CardView btn_suivie_client = (CardView) root.findViewById(R.id.btn_suivie_client)  ;
+        btn_suivie_client.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent6 = new Intent(getActivity(), EtatLivraisonActivity.class);
+                Intent intent6 = new Intent(getActivity(), FicheClient.class);
                 startActivity(intent6);
             }
         });
 
 
-        CardView btn_bon_retour = (CardView) root.findViewById(R.id.btn_bon_retour)  ;
-        btn_bon_retour.setOnClickListener(new View.OnClickListener() {
+        CardView btn_list_retenu_cl = (CardView) root.findViewById(R.id.btn_list_retenu_cl)  ;
+        btn_list_retenu_cl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent7 = new Intent(getActivity(), EtatRetourActivity.class);
+                Intent intent7 = new Intent(getActivity(), ListRetenuClient.class);
                 startActivity(intent7);
             }
         });
 
 
-        CardView  btn_bon_commande = (CardView) root.findViewById(R.id.btn_bon_commande) ;
-        btn_bon_commande.setOnClickListener(new View.OnClickListener() {
+        CardView  btn_piece_non_paye_client = (CardView) root.findViewById(R.id.btn_piece_non_paye_client) ;
+        btn_piece_non_paye_client.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent5 = new Intent(getActivity(), EtatCommande.class);
+                Intent intent5 = new Intent(getActivity(), PieceNonPayeClient.class);
                 startActivity(intent5);
 
             }
         });
 
-
+/*
         CardView  btn_mvmnt_vente_service= (CardView) root.findViewById(R.id.btn_mvmnt_vente_service) ;
         btn_mvmnt_vente_service.setOnClickListener(new View.OnClickListener() {
             @Override

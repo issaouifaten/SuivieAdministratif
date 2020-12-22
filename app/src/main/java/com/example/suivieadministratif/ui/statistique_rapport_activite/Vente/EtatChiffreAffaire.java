@@ -1,4 +1,4 @@
-package com.example.suivieadministratif;
+package com.example.suivieadministratif.ui.statistique_rapport_activite.Vente;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +27,9 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.suivieadministratif.ConnectionClass;
+import com.example.suivieadministratif.R;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

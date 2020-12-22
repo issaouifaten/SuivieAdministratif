@@ -1,4 +1,4 @@
-package com.example.suivieadministratif;
+package com.example.suivieadministratif.module.Stock;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,6 +21,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.suivieadministratif.ConnectionClass;
+import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.param.Param;
 
 import java.sql.Connection;
@@ -586,7 +588,7 @@ public class StockArticle extends AppCompatActivity {
                     stmt = con.prepareStatement(querydepot);
                     ResultSet rsss = stmt.executeQuery();
                     Log.e("spinFRS", querydepot);
-                    dataLibelleFRS.add("Rechercher frs");
+                    dataLibelleFRS.add("Tout");
                     datacodeFRS.add("");
                     while (rsss.next()) {
                         String libelle= rsss.getString("RaisonSociale");

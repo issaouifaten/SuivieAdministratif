@@ -36,7 +36,7 @@
 
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_article_faible_rotation"
+                    android:id="@+id/btn_journal_article_achete"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:layout_width="140dp"
