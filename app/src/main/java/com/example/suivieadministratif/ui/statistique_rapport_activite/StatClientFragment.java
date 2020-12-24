@@ -9,8 +9,12 @@ import android.view.ViewGroup;
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.ui.menu.MenuViewModel;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.FicheClient;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.IndicateurEncourClient;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.ListRetenuClient;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.MoyenReglementClient;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.PieceNonPayeClient;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.SuivieCommandeClient;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.SuivieCommandeNonConformeClient;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -73,38 +77,46 @@ public class StatClientFragment extends Fragment {
             }
         });
 
-/*
-        CardView  btn_mvmnt_vente_service= (CardView) root.findViewById(R.id.btn_mvmnt_vente_service) ;
-        btn_mvmnt_vente_service.setOnClickListener(new View.OnClickListener() {
+
+        CardView  btn_suivie_cmd_client= (CardView) root.findViewById(R.id.btn_suivie_cmd_client) ;
+        btn_suivie_cmd_client.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent5 = new Intent(getActivity(), MouvementVenteServiceActivity.class);
+                Intent intent5 = new Intent(getActivity(), SuivieCommandeClient.class);
                 startActivity(intent5);
             }
         });
 
-
-        CardView   btn_reglement_client = (CardView)  root.findViewById(R.id.btn_reg_client)  ;
-        btn_reglement_client.setOnClickListener(new View.OnClickListener() {
+        CardView   btn_cmd_non_conforme = (CardView)  root.findViewById(R.id.btn_cmd_non_conforme)  ;
+        btn_cmd_non_conforme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent  intent1 = new Intent(getActivity() , ReglementClientActivity.class) ;
+                Intent  intent1 = new Intent(getActivity() , SuivieCommandeNonConformeClient.class) ;
                 startActivity(intent1);
             }
         });
 
 
-        CardView   btn_echeance_client = (CardView)   root.findViewById(R.id.btn_echeance_Client);
-        btn_echeance_client.setOnClickListener(new View.OnClickListener() {
+
+        CardView   btn_moy_reg = (CardView)   root.findViewById(R.id.btn_moy_reg);
+        btn_moy_reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent  intent1 = new Intent(getActivity() , RapportEcheanceClientActivity.class) ;
+                Intent  intent1 = new Intent(getActivity() , MoyenReglementClient.class) ;
                 startActivity(intent1);
             }
         });
 
-*/
+//btn_indicateur_solde
+        CardView   btn_indicateur_solde = (CardView)   root.findViewById(R.id.btn_indicateur_solde);
+        btn_indicateur_solde.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent  intent1 = new Intent(getActivity() , IndicateurEncourClient.class) ;
+                startActivity(intent1);
+            }
+        });
 
         menuViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override

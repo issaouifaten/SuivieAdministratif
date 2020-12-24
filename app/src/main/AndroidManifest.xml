@@ -11,7 +11,10 @@
         android:roundIcon="@drawable/i2s"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.statistique_rapport_activite.Client.SuivieCommandeNonConformeClient"></activity>
+        <activity android:name=".ui.statistique_rapport_activite.Achat.EtatArticlePerime"></activity>
+        <activity android:name=".ui.statistique_rapport_activite.Achat.EtatGlobalAchat" />
+        <activity android:name=".ui.statistique_rapport_activite.Client.MoyenReglementClient" />
+        <activity android:name=".ui.statistique_rapport_activite.Client.SuivieCommandeNonConformeClient" />
         <activity android:name=".ui.statistique_rapport_activite.Client.SuivieCommandeClient" />
         <activity android:name=".ui.statistique_rapport_activite.Fournisseur.CommandeFournisseurNonConforme" />
         <activity android:name=".ui.statistique_rapport_activite.Fournisseur.SuivieCommandeFrs" />

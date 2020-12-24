@@ -35,6 +35,11 @@
                 android:textSize="10dp" />
 
 
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:background="#c9c9c9" />
+
             <TextView
                 android:id="@+id/txt_nom"
                 android:layout_width="200dp"
@@ -47,6 +52,11 @@
                 android:textColor="@color/blue" />
 
 
+            <View
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:background="#c9c9c9" />
+
             <TextView
                 android:id="@+id/txt_montant"
                 android:layout_width="50dp"
@@ -58,17 +68,6 @@
                 android:textColor="@color/colorPrimary"
 
                 android:textStyle="bold" />
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="fill_parent"
-                android:background="#c9c9c9" />
-
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="fill_parent"
-                android:background="#c9c9c9" />
 
 
         </LinearLayout>

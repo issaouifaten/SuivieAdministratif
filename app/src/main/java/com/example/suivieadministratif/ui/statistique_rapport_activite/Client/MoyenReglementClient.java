@@ -44,7 +44,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class IndicateurEncourClient extends AppCompatActivity {
+public class MoyenReglementClient extends AppCompatActivity {
+
     ConnectionClass connectionClass;
     String CodeSociete, NomUtilisateur, CodeLivreur;
     final Context co = this;
@@ -59,16 +60,16 @@ public class IndicateurEncourClient extends AppCompatActivity {
     ArrayList<String> data_CodeClient, data_NomClient;
     Spinner spinRespensable, spinClient;
     String condition = "", conditionclient = "", conditionArticle = "";
-
+    EditText edt_recherche;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_indicateur_encour_client);
+        setContentView(R.layout.activity_moyen_reglement_client);
 
         SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " :Indicateur Solde Client");
+        setTitle(NomSociete + " : Moyen Reglement Client");
 
         connectionClass = new ConnectionClass();
 
@@ -87,11 +88,9 @@ public class IndicateurEncourClient extends AppCompatActivity {
         txt_datefin = (TextView) findViewById(R.id.txt_date_fin);
         txt_total = (TextView) findViewById(R.id.txt_total);
         gridEtat = (GridView) findViewById(R.id.grid_detail);
-        spinRespensable = (Spinner) findViewById(R.id.spinnerrepresentant);
+
         spinClient = (Spinner) findViewById(R.id.spinnerclient);
 
-        GetDataSpinner getDataSpinner = new GetDataSpinner();
-        getDataSpinner.execute("");
         GetDataSpinnerClient getDataSpinnerClient = new GetDataSpinnerClient();
         getDataSpinnerClient.execute("");
 
@@ -192,26 +191,8 @@ public class IndicateurEncourClient extends AppCompatActivity {
 
             }
         });
-        spinRespensable.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0) {
-                    String CodeRepresentant = data_CodeRespensable.get(position);
-                    condition = "  and ( CodeRepresentant='" + CodeRepresentant + "'  or CodeRespensableAdministration ='"+CodeRepresentant+"' ) ";
-                    FillList fillList = new FillList();
-                    fillList.execute("");
-                } else {
-                    condition = "";
-                    FillList fillList = new FillList();
-                    fillList.execute("");
-                }
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
 
     }
 
@@ -227,8 +208,6 @@ public class IndicateurEncourClient extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             progressBar.setVisibility(View.VISIBLE);
-            ProcedureCalculSoldeClient procedureCalculSoldeClient=new ProcedureCalculSoldeClient();
-            procedureCalculSoldeClient.execute("");
             list.clear();
             total_gloabl = 0;
         }
@@ -240,17 +219,90 @@ public class IndicateurEncourClient extends AppCompatActivity {
             condition = "";
             txt_total.setText("" + total_gloabl);
 
-            String[] from = {"CodeClient", "RaisonSociale",  "TotalCA", "TotalSolde", "TotalEncour",  "TotaleGarantie", "TotalImpayer"};
-            int[] views = {R.id.txt_code, R.id.txt_rs, R.id.txt_ca, R.id.txt_solde, R.id.txt_encour, R.id.txt_garentie,R.id.txt_impaye};
+            String[] from = {"CodeClient", "RaisonSociale", "NbJour", "CodeModeReglement","NumeroBonLivraisonVente","DatePiece","mnt","Observation",
+                    "NumeroPiece", "MontantLettrer", "CodeForceVente", "TotalTTC", "Echeance", "DesignationArticle", "NbJourParPourcentage"};
+            int[] views = {R.id.txt_code, R.id.txt_designation, R.id.txt_nom_representant, R.id.tx_num_piece, R.id.txt_total_ttc, R.id.txt_nom_rad};
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
-                    prolist, R.layout.item_indicateur_sld_client, from,
+                    prolist, R.layout.item_suivie_commande_client, from,
                     views);
 
 
+            final BaseAdapter baseAdapter = new BaseAdapter() {
+                @Override
+                public int getCount() {
+                    return prolist.size();
+                }
+
+                @Override
+                public Object getItem(int position) {
+                    return null;
+                }
+
+                @Override
+                public long getItemId(int position) {
+                    return 0;
+                }
+
+
+                @Override
+                public View getView(int position, View convertView, ViewGroup parent) {
+                    final LayoutInflater layoutInflater = LayoutInflater.from(co);
+                    convertView = layoutInflater.inflate(R.layout.item_moyen_reglement_client, null);
+                    final TextView txt_code = (TextView) convertView.findViewById(R.id.txt_code);
+                    final TextView txt_designation = (TextView) convertView.findViewById(R.id.txt_designation);
+                    final TextView tx_num_piece = (TextView) convertView.findViewById(R.id.tx_num_piece);
+                    final TextView txt_date_piece = (TextView) convertView.findViewById(R.id.txt_date_piece);
+                    final TextView txt_Echeance = (TextView) convertView.findViewById(R.id.txt_Echeance);
+                    final TextView txt_code_reg = (TextView) convertView.findViewById(R.id.txt_code_reg);
+                    final TextView txt_montant_lettre = (TextView) convertView.findViewById(R.id.txt_montant_lettre);
+                    final TextView txt_nbj_per = (TextView) convertView.findViewById(R.id.txt_nbj_per);
+                    final TextView qt_nbj = (TextView) convertView.findViewById(R.id.qt_nbj);
+                    final TextView txt_montant_cmd = (TextView) convertView.findViewById(R.id.montant_cmd);
+
+                    final CardView layout_vendeur = (CardView) convertView.findViewById(R.id.card_client_);
+
+                    final HashMap<String, Object> obj = (HashMap<String, Object>) ADA
+                            .getItem(position);
+                    String CodeClient = (String) obj.get("CodeClient");
+                    String RaisonSociale = (String) obj.get("RaisonSociale");
+                    String NumeroPiece = (String) obj.get("NumeroPiece");
+                    String MontantLettrer = (String) obj.get("MontantLettrer");
+
+
+                    String TotalTTC = (String) obj.get("TotalTTC");
+                    String Echeance = (String) obj.get("Echeance");
+                    String NbJour = (String) obj.get("NbJour");
+                    String CodeModeReglement = (String) obj.get("CodeModeReglement");
+
+                    String NbJourParPourcentage = (String) obj.get("NbJourParPourcentage");
+                    String DatePiece = (String) obj.get("DatePiece");
 
 
 
-            gridEtat.setAdapter(ADA);
+                    txt_Echeance.setText(Echeance);
+                    tx_num_piece.setText(NumeroPiece);
+                    txt_code.setText(CodeClient);
+                    txt_date_piece.setText(DatePiece);
+                    txt_designation.setText(RaisonSociale);
+                    txt_code_reg.setText(CodeModeReglement);
+                    txt_montant_lettre.setText(MontantLettrer);
+                    txt_nbj_per.setText(NbJourParPourcentage);
+                    qt_nbj.setText(NbJour);
+                    txt_montant_cmd.setText(TotalTTC);
+
+
+                    if (list.contains(position)) {
+                        layout_vendeur.setVisibility(View.VISIBLE);
+                    } else {
+                        layout_vendeur.setVisibility(View.GONE);
+                    }
+
+                    return convertView;
+                }
+            };
+
+
+            gridEtat.setAdapter(baseAdapter);
 
 
         }
@@ -265,8 +317,12 @@ public class IndicateurEncourClient extends AppCompatActivity {
                 } else {
 
 
-                    String queryTable = "select CodeClient,RaisonSociale,TotalSolde,TotalEncour,TotaleGarantie,TotalContentieux,TotalCA,TotalImpayer\n" +
-                            " from IndicateurEnCourClient where RaisonSociale!='' "+conditionclient+condition;
+                    String queryTable = "select CodeClient,RaisonSociale,NumeroPiece,CONVERT(date, DatePiece,103) as DatePiece ," +
+                            "MontantLettrer,TotalTTC,\n" +
+                            "CONVERT(date, Echeance,103) as Echeance,\n" +
+                            "CodeModeReglement,NbJour ,convert(numeric(18,2),NbJour*(MontantLettrer/TotalTTC) )as NbJourParPourcentage\n" +
+                            "from\tLettrageReglementClient\n" +
+                            "where DatePiece between '"+datedebut+"' and '"+datefin+"'\n"+conditionclient;
 
                     PreparedStatement ps = con.prepareStatement(queryTable);
                     Log.e("query", queryTable);
@@ -280,14 +336,17 @@ public class IndicateurEncourClient extends AppCompatActivity {
                         Map<String, String> datanum = new HashMap<String, String>();
                         datanum.put("CodeClient", rs.getString("CodeClient"));
                         datanum.put("RaisonSociale", rs.getString("RaisonSociale"));
-                        datanum.put("TotalSolde", rs.getString("TotalSolde"));
-                        datanum.put("TotalEncour", rs.getString("TotalEncour"));
-                        datanum.put("TotaleGarantie", rs.getString("TotaleGarantie"));
-                        datanum.put("TotalContentieux", rs.getString("TotalContentieux"));
-                        datanum.put("TotalCA", rs.getString("TotalCA"));
-                        datanum.put("TotalImpayer", rs.getString("TotalImpayer"));
+                        datanum.put("NumeroPiece", rs.getString("NumeroPiece"));
+                        datanum.put("DatePiece", rs.getString("DatePiece"));
+                        datanum.put("MontantLettrer", rs.getString("MontantLettrer"));
+                        datanum.put("TotalTTC", rs.getString("TotalTTC"));
+                        datanum.put("Echeance", rs.getString("Echeance"));
 
-                               String nom = rs.getString("CodeClient").toUpperCase();
+                        datanum.put("CodeModeReglement", rs.getString("CodeModeReglement"));
+                        datanum.put("NbJour", rs.getString("NbJour"));
+                        datanum.put("NbJourParPourcentage", rs.getString("NbJourParPourcentage"));
+
+                        String nom = rs.getString("NumeroPiece").toUpperCase();
                         if (!ancien.equals(nom)) {
                             ancien = nom;
 
@@ -295,7 +354,7 @@ public class IndicateurEncourClient extends AppCompatActivity {
                         }
                         posi++;
 
-                        total_gloabl += rs.getFloat("TotalEncour");
+                        total_gloabl += rs.getFloat("MontantLettrer");
                         prolist.add(datanum);
 
 
@@ -316,6 +375,7 @@ public class IndicateurEncourClient extends AppCompatActivity {
             return z;
         }
     }
+
 
     public class GetDataSpinner extends AsyncTask<String, String, String> {
         String z = "  ";
@@ -366,56 +426,6 @@ public class IndicateurEncourClient extends AppCompatActivity {
                         data_NomRespensable.add(designation);
 
                     }
-
-
-                }
-            } catch (SQLException ex) {
-                z = "list" + ex.toString();
-
-            } catch (Exception e) {
-
-            }
-            return z;
-        }
-    }
-
-
-
-    public class ProcedureCalculSoldeClient extends AsyncTask<String, String, String> {
-        String z = "  ";
-
-        List<Map<String, String>> prolist = new ArrayList<Map<String, String>>();
-
-        @Override
-        protected void onPreExecute() {
-            //  Log.e("frs", querylist);
-            // pbbar.setVisibility(View.VISIBLE);
-
-        }
-
-        @Override
-        protected void onPostExecute(String r) {
-
-
-
-
-
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            try {
-                Connection con = connectionClass.CONN(ip, password, user, base);
-                if (con == null) {
-                    z = "Error in connection with SQL server";
-                } else {
-
-                    PreparedStatement stmt, stmt2;
-
-                    stmt = con.prepareStatement("SoldeClientsIndicateur '"+datedebut+"' ,'"+datefin+"'");
-                    ResultSet rsss = stmt.executeQuery();
-
 
 
                 }

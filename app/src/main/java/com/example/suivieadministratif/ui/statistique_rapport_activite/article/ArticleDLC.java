@@ -57,7 +57,7 @@ public class ArticleDLC extends AppCompatActivity {
         setContentView(R.layout.activity_article_d_l_c);
         SharedPreferences pref = getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " : Etat de Stock");
+        setTitle(NomSociete + " : Etat Article DLC");
 
 
         /// CONNECTION BASE
