@@ -10,11 +10,10 @@ import android.widget.AdapterView;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.adapter.SpinnerAdapter;
-import com.example.suivieadministratif.model.Depot;
-import com.example.suivieadministratif.model.FamilleArticle;
+import com.example.suivieadministratif.model.Article;
+import com.example.suivieadministratif.model.NatureArticle;
 import com.example.suivieadministratif.param.Param;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Fournisseur.SuivieCommandeFrs;
-import com.example.suivieadministratif.ui.statistique_rapport_activite.StatArticleFragment;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.sql.Connection;
@@ -22,24 +21,24 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class ListDepotTaskForSearchableSpinner extends AsyncTask<String,String,String> {
+public class ListNatureArticleTaskForSearchableSpinner extends AsyncTask<String,String,String> {
 
     Connection con;
     String res ;
 
     Activity activity  ;
-    SearchableSpinner sp_depot ;
+    SearchableSpinner sp_nature_article ;
     String origine  ;
 
     ArrayList<String> listLibelle = new ArrayList<>() ;
-    ArrayList<Depot> listDepot = new ArrayList<Depot>() ;
+    ArrayList<NatureArticle> listNatureArticle = new ArrayList<NatureArticle>() ;
 
     ConnectionClass connectionClass;
     String user, password, base, ip;
 
-    public ListDepotTaskForSearchableSpinner(Activity activity , SearchableSpinner sp_depot , String origine) {
+    public ListNatureArticleTaskForSearchableSpinner(Activity activity , SearchableSpinner sp_nature_article , String origine) {
         this.activity = activity  ;
-        this.sp_depot = sp_depot  ;
+        this.sp_nature_article = sp_nature_article  ;
         this.origine=origine ;
 
 
@@ -79,16 +78,8 @@ public class ListDepotTaskForSearchableSpinner extends AsyncTask<String,String,S
                 res = "Check Your Internet Access!";
             } else {
 
-                String  CONDITION  = "" ;
 
-                if (origine .equals("dialogArticleNonMouvemente")  || origine .equals("SuivieCommandeFrs")  )
-                {
-                    CONDITION = CONDITION + " and   CodeNature='1' " ;
-                }
-                else {
-
-                }
-                String query = "select   CodeDepot  , Libelle  from  Depot   where 1 =1 " + CONDITION ;
+                String query = " select  CodeNature , Libelle  from  NatureArticle " ;
 
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
@@ -96,23 +87,15 @@ public class ListDepotTaskForSearchableSpinner extends AsyncTask<String,String,S
                 Log.e("query", query) ;
 
 
-                listLibelle.clear();
-
-                if (origine.equals("SuivieCommandeFrs"))
-                {
-                    listDepot.add(new Depot("" ,"Tout les depots")) ;
-                    listLibelle.add("Tout les depots")  ;
-                }
 
                 while ( rs.next() ) {
 
-                    String CodeDepot = rs.getString("CodeDepot") ;
+                    String CodeNature = rs.getString("CodeNature") ;
                     String Libelle =rs.getString("Libelle") ;
 
-                    Depot  depot  = new Depot(CodeDepot ,Libelle) ;
-                    listDepot.add(depot) ;
-                    listLibelle.add(depot.getLibelle())  ;
-                    Log.e("Depot", depot.getCodeDepot() + " - " +depot.getLibelle() );
+                    NatureArticle  natureArticle  = new NatureArticle(CodeNature ,Libelle) ;
+                    listNatureArticle.add(natureArticle) ;
+                    listLibelle.add(Libelle) ;
 
                 }
             }
@@ -134,30 +117,36 @@ public class ListDepotTaskForSearchableSpinner extends AsyncTask<String,String,S
         super.onPostExecute(s);
 
         SpinnerAdapter adapter = new SpinnerAdapter(activity  , listLibelle)  ;
-        sp_depot.setAdapter(adapter);
-        sp_depot.setSelection(0);
+        sp_nature_article.setAdapter(adapter);
+        sp_nature_article.setSelection(0);
+        SuivieCommandeFrs.CodeNatureArticleSelected= listNatureArticle.get(0).getCodeNature() ;
 
-        sp_depot.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        ListArticleTaskForSearchableSpinner listArticleTaskForSearchableSpinner = new ListArticleTaskForSearchableSpinner(activity,  SuivieCommandeFrs.sp_article ,  SuivieCommandeFrs.CodeNatureArticleSelected ,"SuivieCommandeFrs");
+        listArticleTaskForSearchableSpinner.execute();
+
+
+        SuivieCMD_FournisseurTask  suivieCMD_fournisseurTask = new SuivieCMD_FournisseurTask(activity , SuivieCommandeFrs.rv_list_suivi_cmd_frns ,SuivieCommandeFrs.pb ,SuivieCommandeFrs.date_debut,SuivieCommandeFrs.date_fin ,SuivieCommandeFrs.CodeDepotSelected ,SuivieCommandeFrs.CodeArticleSelected ,SuivieCommandeFrs.CodeNatureArticleSelected) ;
+        suivieCMD_fournisseurTask.execute() ;
+
+
+        sp_nature_article.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 
-                Log.e("Depot_selected"  ,""+listDepot.get(position).toString())  ;
+                Log.e("Article_selected"  ,""+listNatureArticle.get(position).toString())  ;
 
-                if (origine .equals("dialogArticleNonMouvemente"))
+                 if (origine .equals("SuivieCommandeFrs"))
                 {
-
-                    StatArticleFragment.CodeDepot_selected = listDepot.get(position).getCodeDepot() ;
-                    StatArticleFragment.LibelleDepot_selected  = listDepot.get(position).getLibelle()  ;
-                }
-
-
-                else if (origine .equals("SuivieCommandeFrs"))
-                {
-                    SuivieCommandeFrs.CodeDepotSelected = listDepot.get(position).getCodeDepot() ;
-                    SuivieCommandeFrs.DepotSelected  = listDepot.get(position).getLibelle() ;
+                    SuivieCommandeFrs.CodeNatureArticleSelected= listNatureArticle.get(position).getCodeNature() ;
+                  //  SuivieCommandeFrs.DepotSelected  = listArticle.get(position).getDesignationArticle() ;
 
                     SuivieCMD_FournisseurTask  suivieCMD_fournisseurTask = new SuivieCMD_FournisseurTask(activity , SuivieCommandeFrs.rv_list_suivi_cmd_frns ,SuivieCommandeFrs.pb ,SuivieCommandeFrs.date_debut,SuivieCommandeFrs.date_fin ,SuivieCommandeFrs.CodeDepotSelected ,SuivieCommandeFrs.CodeArticleSelected ,SuivieCommandeFrs.CodeNatureArticleSelected) ;
                     suivieCMD_fournisseurTask.execute() ;
+
+                    ListArticleTaskForSearchableSpinner listArticleTaskForSearchableSpinner = new ListArticleTaskForSearchableSpinner(activity,  SuivieCommandeFrs.sp_article ,  SuivieCommandeFrs.CodeNatureArticleSelected ,"SuivieCommandeFrs");
+                    listArticleTaskForSearchableSpinner.execute();
+
                 }
 
             }
@@ -167,6 +156,7 @@ public class ListDepotTaskForSearchableSpinner extends AsyncTask<String,String,S
             }
         }
         );
+
 
     }
 

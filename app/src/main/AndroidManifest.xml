@@ -16,8 +16,10 @@
         <activity android:name=".ui.statistique_rapport_activite.Client.MoyenReglementClient" />
         <activity android:name=".ui.statistique_rapport_activite.Client.SuivieCommandeNonConformeClient" />
         <activity android:name=".ui.statistique_rapport_activite.Client.SuivieCommandeClient" />
-        <activity android:name=".ui.statistique_rapport_activite.Fournisseur.CommandeFournisseurNonConforme" />
-        <activity android:name=".ui.statistique_rapport_activite.Fournisseur.SuivieCommandeFrs" />
+        <activity android:name=".ui.statistique_rapport_activite.Fournisseur.CommandeFournisseurNonConforme"
+            android:label="CMD Frns Non Conforme"/>
+        <activity android:name=".ui.statistique_rapport_activite.Fournisseur.SuivieCommandeFrs"
+            android:label="Suiv. Cmd. Fournisseurs"/>
         <activity android:name=".ui.statistique_rapport_activite.CRM.EtatJournalActivite" />
         <activity android:name=".ui.statistique_rapport_activite.Compte.SuivieArretCaisse" />
         <activity android:name=".ui.statistique_rapport_activite.CRM.Etat_Suivie_VoitureParMission" />
@@ -42,6 +44,8 @@
         <activity android:name=".module.vente.EtatFactureVente" />
         <activity android:name=".module.vente.DetailLigneDevisVente" />
         <activity android:name=".module.vente.EtatDevisVente" />
+
+
         <activity
             android:name=".activity.AlerteWorkflow"
             android:label="@string/title_activity_alerte_workflow"

@@ -88,9 +88,9 @@ public class ListTypeMvmntTask extends AsyncTask<String, String, String> {
                 CONDITION_type = CONDITION_type + " ''  )";
 
                 String query_type_distinct = " select  Numero , Date  , Nom ,Montant ,Type  from TypeMouvement\n" +
-                        "where CONVERT (Date ,Date )   between  '" + date_debut + "'  and  '" + date_fin + "'\n" +
-                        "and Type in   " + CONDITION_type + "\n" +
-                        "Order  BY Type\n   ";
+                        " where CONVERT (Date ,Date)  between  '" + date_debut + "'  and  '" + date_fin + "'\n" +
+                        " and Type in   " + CONDITION_type + "\n" +
+                        " Order BY Type\n ";
 
 
                 Log.e("query_type_mvmnt", "" + query_type_distinct);

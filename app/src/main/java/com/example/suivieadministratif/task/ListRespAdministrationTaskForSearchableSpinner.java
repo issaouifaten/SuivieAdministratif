@@ -10,12 +10,10 @@ import android.widget.AdapterView;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.adapter.SpinnerAdapter;
-import com.example.suivieadministratif.model.Depot;
 import com.example.suivieadministratif.model.Fournisseur;
+import com.example.suivieadministratif.model.ResponsableAdministration;
 import com.example.suivieadministratif.param.Param;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Fournisseur.CommandeFournisseurNonConforme;
-import com.example.suivieadministratif.ui.statistique_rapport_activite.Fournisseur.SuivieCommandeFrs;
-import com.example.suivieadministratif.ui.statistique_rapport_activite.StatArticleFragment;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.sql.Connection;
@@ -23,24 +21,24 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class ListFournisseurTaskForSearchableSpinner extends AsyncTask<String,String,String> {
+public class ListRespAdministrationTaskForSearchableSpinner extends AsyncTask<String,String,String> {
 
     Connection con;
     String res ;
 
     Activity activity  ;
-    SearchableSpinner sp_fournisseur ;
+    SearchableSpinner sp_resp_admin ;
     String origine  ;
 
-    ArrayList<String> listRaison = new ArrayList<>() ;
-    ArrayList<Fournisseur> listFournisseur  = new ArrayList<Fournisseur>() ;
+    ArrayList<String> listNom= new ArrayList<>() ;
+    ArrayList<ResponsableAdministration> listResp = new ArrayList<ResponsableAdministration>() ;
 
     ConnectionClass connectionClass;
     String user, password, base, ip;
 
-    public ListFournisseurTaskForSearchableSpinner(Activity activity , SearchableSpinner sp_fournisseur , String origine) {
+    public ListRespAdministrationTaskForSearchableSpinner(Activity activity , SearchableSpinner sp_resp_admin , String origine) {
         this.activity = activity  ;
-        this.sp_fournisseur = sp_fournisseur  ;
+        this.sp_resp_admin = sp_resp_admin  ;
         this.origine=origine ;
 
 
@@ -81,7 +79,10 @@ public class ListFournisseurTaskForSearchableSpinner extends AsyncTask<String,St
             } else {
 
 
-                String query = "  select  CodeFournisseur  , RaisonSociale  from  Fournisseur \n   where 1 =1 " ;
+                String query = "  \n" +
+                        "select  CodeRespensable , Nom  \n" +
+                        "from Respensable \n" +
+                        "where CodeRespensable in (select MatriculePersonnel from  FonctionnaliterPersonnel where Actif=1 and Autoriser= 1 ) " ;
 
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
@@ -89,22 +90,22 @@ public class ListFournisseurTaskForSearchableSpinner extends AsyncTask<String,St
                 Log.e("query", query) ;
 
 
-                listRaison.clear();
+                listNom.clear();
 
 
-                    listFournisseur.add(new Fournisseur("" ,"Tout les fournisseur")) ;
-                    listRaison.add("Tout les fournisseur")  ;
+                    listResp.add(new ResponsableAdministration("" ,"Tout les Responsable")) ;
+                listNom.add("Tout les Responsable")  ;
 
 
                 while ( rs.next() ) {
 
-                    String CodeFournisseur = rs.getString("CodeFournisseur") ;
-                    String RaisonSociale =rs.getString("RaisonSociale") ;
+                    String CodeRespensable = rs.getString("CodeRespensable") ;
+                    String Nom =rs.getString("Nom") ;
 
-                    Fournisseur  fournisseur  = new Fournisseur(CodeFournisseur ,RaisonSociale) ;
-                    listFournisseur.add(fournisseur) ;
-                    listRaison.add(fournisseur.getRaisonSocial())  ;
-                    Log.e("Fournisseur ", fournisseur.getCodeFournisseur() + " - " +fournisseur.getRaisonSocial()  );
+                    ResponsableAdministration  responsableAdministration  = new ResponsableAdministration(CodeRespensable ,Nom) ;
+                    listResp.add ( responsableAdministration ) ;
+                    listNom.add  ( Nom )  ;
+                    Log.e("Responsable ", responsableAdministration.getCodeResponsable() + " - " +responsableAdministration.getNom() );
 
                 }
             }
@@ -125,19 +126,19 @@ public class ListFournisseurTaskForSearchableSpinner extends AsyncTask<String,St
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
 
-        SpinnerAdapter adapter = new SpinnerAdapter(activity  , listRaison)  ;
-        sp_fournisseur.setAdapter(adapter);
-        sp_fournisseur.setSelection(0);
+        SpinnerAdapter adapter = new SpinnerAdapter(activity  , listNom)  ;
+        sp_resp_admin.setAdapter(adapter);
+        sp_resp_admin.setSelection(0);
 
-        sp_fournisseur.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        sp_resp_admin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 
-                Log.e("Depot_selected"  ,""+listFournisseur.get(position).toString())  ;
+                Log.e("resp_selected"  ,""+listResp.get(position).toString())  ;
 
                 if (origine .equals("CommandeFournisseurNonConforme"))
                 {
-                    CommandeFournisseurNonConforme.CodeFournisseurSelected = listFournisseur.get(position).getCodeFournisseur() ;
+                    CommandeFournisseurNonConforme.CodeRespAdmin = listResp.get(position).getCodeResponsable() ;
 
                 }
 
