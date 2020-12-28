@@ -1,4 +1,4 @@
-package com.example.suivieadministratif.ui.statistique_rapport_activite.Achat;
+package com.example.suivieadministratif.ui.statistique_rapport_activite.Vente;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.param.Param;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Achat.EtatGlobalAchat;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,7 +42,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class EtatArticlePerime extends AppCompatActivity {
+public class EtatGlobalVente extends AppCompatActivity {
 
     String user, password, base, ip;
     String CodeSociete, NomUtilisateur ;
@@ -63,11 +64,11 @@ public class EtatArticlePerime extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_etat_article_perime);
+        setContentView(R.layout.activity_etat_global_achat);
 
         SharedPreferences pref = getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " :Etat Article  Perime");
+        setTitle(NomSociete + " :Etat Global Vente");
 
 
         /// CONNECTION BASE
@@ -102,9 +103,9 @@ public class EtatArticlePerime extends AppCompatActivity {
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-         date_debut= sdf.format(calendar.getTime());
-        calendar.add(Calendar.MONTH, +1);
         date_fin = sdf.format(calendar.getTime());
+        calendar.add(Calendar.MONTH, -1);
+        date_debut = sdf.format(calendar.getTime());
         txt_date_debut.setText(date_debut);
         txt_date_fin.setText(date_fin);
 
@@ -213,7 +214,7 @@ public class EtatArticlePerime extends AppCompatActivity {
 
                 }
                 else {
-                    conditionFrs=" and CodeFournisseur='"+ Frs+ "'";
+                    conditionFrs=" and  Vue_ListeVenteGlobalDetailler.CodeClient='"+ Frs+ "'";
                 }
 
 
@@ -244,7 +245,7 @@ public class EtatArticlePerime extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if( charSequence.length()>1)
                 {
-                    conditionArticle=" and (CodeArticle  like'%"+charSequence+"%'  or  DesignationArticle like'%"+charSequence+"%')";
+                    conditionArticle=" and (Vue_ListeVenteGlobalDetailler.CodeArticle  like'%"+charSequence+"%'  or  Vue_ListeVenteGlobalDetailler.Designation like'%"+charSequence+"%')";
 
                 }else{
                     conditionArticle="";
@@ -316,10 +317,10 @@ public class EtatArticlePerime extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
             //   Toast.makeText(getApplicationContext(), r, Toast.LENGTH_SHORT).show();
 
-            String[] from = {"CodeArticle", "Quantite",    "DateLimiteConsommation","QTRestante","TotalNetHT","Designation","NumeroLot"};
-            int[] views = {R.id.txt_code_article, R.id.txt_qt, R.id.txt_date_limite, R.id.txt_qt, R.id.txt_tot_ht,R.id.txt_designation_article,R.id.txt_num_lot};
+            String[] from = {"CodeArticle", "Quantite",    "TotalAchatHT","NBP","AImporter","Designation","NetImporter"};
+            int[] views = {R.id.txt_code_article, R.id.txt_qt, R.id.txt_total_achat, R.id.txt_nbp, R.id.txt_aimporte,R.id.txt_designation_article,R.id.txt_net_importe};
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
-                    prolist, R.layout.item_article_perime, from,
+                    prolist, R.layout.item_global_achat, from,
                     views);
             gridArticle.setAdapter(ADA);
 
@@ -334,12 +335,17 @@ public class EtatArticlePerime extends AppCompatActivity {
                 if (con == null) {
                     z = "Error in connection with SQL server";
                 } else {
-                    querysearch=" select CodeArticle,DesignationArticle,NumeroLot,\n" +
-                            "convert(date,DateLimiteConsommation,103) as DateLimiteConsommation ,\n" +
-                            "convert(numeric(18,2),QTRestante)as QTRestante,convert(numeric(18,3),NetHT*QTRestante) as TotalNetHT\n" +
-                            "from Vue_ListeArticlePrime\n" +
-                            "where DateLimiteConsommation \n" +
-                            "between '"+date_debut+"' and '"+date_fin+"' " +conditionArticle+conditionDepot+conditionFrs+
+                    querysearch=" select Vue_ListeVenteGlobalDetailler.CodeArticle ,Vue_ListeVenteGlobalDetailler.Designation,\n" +
+                            "convert(numeric(18,0), SUM(Quantite)) as Quantite ,sum(MontantEtrange) as\tNetImporter ,SUM(NetHT)as TotalAchatHT, COUNT(NumeroPiece)as NBP ,\n" +
+                            " case SUM(NetHT)\n" +
+                            "WHEN 0 THEN 0 \n" +
+                            "ELSE convert(numeric(18,2),(sum(MontantEtrange)/SUM(NetHT)*100 ) )\n" +
+                            "end as AImporter \n" +
+                            "from Vue_ListeVenteGlobalDetailler \n" +
+                            "inner join  Article on Article.CodeArticle=Vue_ListeVenteGlobalDetailler.CodeArticle\n" +
+                            "where DatePiece between '"+date_debut+"' and '"+date_fin+"'\n" +conditionFrs+conditionArticle+conditionDepot+
+                            "group by Vue_ListeVenteGlobalDetailler.CodeArticle,Vue_ListeVenteGlobalDetailler.Designation \n" +
+                            " order by TotalAchatHT desc" +
                             " ";
 
                     PreparedStatement ps = con.prepareStatement(querysearch);
@@ -350,12 +356,12 @@ public class EtatArticlePerime extends AppCompatActivity {
                     while (rs.next()) {
                         Map<String, String> datanum = new HashMap<String, String>();
                         datanum.put("CodeArticle", rs.getString("CodeArticle"));
-                        datanum.put("Designation", rs.getString("DesignationArticle"));
-                        datanum.put("NumeroLot", rs.getString("NumeroLot"));
-                        datanum.put("DateLimiteConsommation", rs.getString("DateLimiteConsommation"));
-                        datanum.put("QTRestante", rs.getString("QTRestante"));
-                        datanum.put("TotalNetHT", rs.getString("TotalNetHT"));
-
+                        datanum.put("Designation", rs.getString("Designation"));
+                        datanum.put("NetImporter", rs.getString("NetImporter"));
+                        datanum.put("TotalAchatHT", rs.getString("TotalAchatHT"));
+                        datanum.put("NBP", rs.getString("NBP"));
+                        datanum.put("AImporter", rs.getString("AImporter"));
+                        datanum.put("Quantite", rs.getString("Quantite"));
 
 
                         prolist.add(datanum);
@@ -501,7 +507,7 @@ public class EtatArticlePerime extends AppCompatActivity {
                     dataLibelleFRS = new ArrayList<String>();
                     datacodeFRS = new ArrayList<String>();
 
-                    String querydepot="select RaisonSociale, CodeFournisseur from Fournisseur";
+                    String querydepot="select RaisonSociale, CodeClient from Client";
 
                     stmt = con.prepareStatement(querydepot);
                     ResultSet rsss = stmt.executeQuery();
@@ -511,8 +517,8 @@ public class EtatArticlePerime extends AppCompatActivity {
                     while (rsss.next()) {
                         String libelle= rsss.getString("RaisonSociale");
                         dataLibelleFRS.add(libelle);
-                        String CodeFournisseur= rsss.getString("CodeFournisseur");
-                        datacodeFRS.add(CodeFournisseur);
+                        String CodeClient= rsss.getString("CodeClient");
+                        datacodeFRS.add(CodeClient);
 
                     }
 

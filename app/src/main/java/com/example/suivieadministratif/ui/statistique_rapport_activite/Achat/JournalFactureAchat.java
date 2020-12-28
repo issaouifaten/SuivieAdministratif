@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class EtatArticlePerime extends AppCompatActivity {
+public class JournalFactureAchat extends AppCompatActivity {
 
     String user, password, base, ip;
     String CodeSociete, NomUtilisateur ;
@@ -49,7 +49,7 @@ public class EtatArticlePerime extends AppCompatActivity {
     Spinner spinfrs;
     ConnectionClass connectionClass;
     GridView gridArticle;
-    EditText edtRecherche;
+
     String querysearch="";
     String Frs="Tout";
     ArrayList<String> datalibelle,datacode,dataLibelleFRS,datacodeFRS;
@@ -63,11 +63,11 @@ public class EtatArticlePerime extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_etat_article_perime);
+        setContentView(R.layout.activity_journal_facture_achat);
 
         SharedPreferences pref = getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " :Etat Article  Perime");
+        setTitle(NomSociete + " : Journal Facture Achat ");
 
 
         /// CONNECTION BASE
@@ -89,22 +89,20 @@ public class EtatArticlePerime extends AppCompatActivity {
 
         progressBar.setVisibility(View.GONE);
 
-        spindepot=(Spinner)findViewById(R.id.spin_depot);
-        GetDataSpinner getDataSpinner=new GetDataSpinner();
-        getDataSpinner.execute("");
+
 
         txt_date_debut = findViewById(R.id.txt_date_debut);
         txt_date_fin = findViewById(R.id.txt_date_fin);
         spinfrs = (Spinner) findViewById(R.id.spinner);
-        edtRecherche=(EditText)findViewById(R.id.edt_recherche) ;
+
         gridArticle=(GridView)findViewById(R.id.grid_article) ;
         Button btadd=(Button)findViewById(R.id.btadd);
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-         date_debut= sdf.format(calendar.getTime());
-        calendar.add(Calendar.MONTH, +1);
         date_fin = sdf.format(calendar.getTime());
+        calendar.add(Calendar.MONTH, -1);
+        date_debut = sdf.format(calendar.getTime());
         txt_date_debut.setText(date_debut);
         txt_date_fin.setText(date_fin);
 
@@ -129,7 +127,7 @@ public class EtatArticlePerime extends AppCompatActivity {
                                         .format(d);
 
                                 txt_date_debut.setText(date_debut);
-                                FillList fillList = new FillList();
+                                 FillList fillList = new  FillList();
                                 fillList.execute("");
 
 
@@ -165,7 +163,7 @@ public class EtatArticlePerime extends AppCompatActivity {
                                 txt_date_fin.setText(date_fin);
 
 
-                                FillList fillList = new FillList();
+                                 FillList fillList = new  FillList();
                                 fillList.execute("");
                             }
                         });
@@ -181,22 +179,9 @@ public class EtatArticlePerime extends AppCompatActivity {
 
 
 
-        btadd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String oldText=edtRecherche.getText().toString();
-                String newText=oldText+"%";
-                edtRecherche.setText(newText);
-                edtRecherche.setSelection(newText.length());
-                FillList fillList = new FillList();
-                fillList.execute("");
-
-            }
-        });
 
         ////////////////////////////////////////////////////
-        GetDataSpinnerFRS getDataSpinnerFRS=new GetDataSpinnerFRS();
+         GetDataSpinnerFRS getDataSpinnerFRS=new  GetDataSpinnerFRS();
         getDataSpinnerFRS.execute("");
         spinfrs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -217,7 +202,7 @@ public class EtatArticlePerime extends AppCompatActivity {
                 }
 
 
-                FillList fillList = new FillList();
+                 FillList fillList = new  FillList();
                 fillList.execute("");
 
 
@@ -234,58 +219,8 @@ public class EtatArticlePerime extends AppCompatActivity {
 
 
 
-        edtRecherche.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if( charSequence.length()>1)
-                {
-                    conditionArticle=" and (CodeArticle  like'%"+charSequence+"%'  or  DesignationArticle like'%"+charSequence+"%')";
-
-                }else{
-                    conditionArticle="";
-                }
-                FillList fillList = new FillList();
-                fillList.execute("");
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
 
 
-        spindepot.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                if(i!=0) {
-                    CodeDepot = datacode.get(i);
-                    LibelleDepot = datalibelle.get(i);
-
-
-                    conditionDepot=" and CodeDepot='"+CodeDepot+"'" ;
-
-
-
-
-                }else{
-                    conditionDepot=" ";
-                }
-                FillList fillList = new FillList();
-                fillList.execute("");
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
     }
 
@@ -316,10 +251,10 @@ public class EtatArticlePerime extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
             //   Toast.makeText(getApplicationContext(), r, Toast.LENGTH_SHORT).show();
 
-            String[] from = {"CodeArticle", "Quantite",    "DateLimiteConsommation","QTRestante","TotalNetHT","Designation","NumeroLot"};
-            int[] views = {R.id.txt_code_article, R.id.txt_qt, R.id.txt_date_limite, R.id.txt_qt, R.id.txt_tot_ht,R.id.txt_designation_article,R.id.txt_num_lot};
+            String[] from = {"NumeroPiece", "TotalTVA",    "TotalRemise","TotalHT","TotalFodec","DatePiece","RaisonSociale","TotalTTC","TimbreFiscal"};
+            int[] views = {R.id.txt_num_piece, R.id.txt_qt, R.id.txt_remise, R.id.txt_ht, R.id.txt_fodec,R.id.txt_date_piece,R.id.txt_rs,R.id.txt_ttc,R.id.txt_fiscal};
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
-                    prolist, R.layout.item_article_perime, from,
+                    prolist, R.layout.item_journal_facture_achat, from,
                     views);
             gridArticle.setAdapter(ADA);
 
@@ -334,12 +269,8 @@ public class EtatArticlePerime extends AppCompatActivity {
                 if (con == null) {
                     z = "Error in connection with SQL server";
                 } else {
-                    querysearch=" select CodeArticle,DesignationArticle,NumeroLot,\n" +
-                            "convert(date,DateLimiteConsommation,103) as DateLimiteConsommation ,\n" +
-                            "convert(numeric(18,2),QTRestante)as QTRestante,convert(numeric(18,3),NetHT*QTRestante) as TotalNetHT\n" +
-                            "from Vue_ListeArticlePrime\n" +
-                            "where DateLimiteConsommation \n" +
-                            "between '"+date_debut+"' and '"+date_fin+"' " +conditionArticle+conditionDepot+conditionFrs+
+                    querysearch="select NumeroPiece,convert(date,DatePiece,103) as DatePiece ,RaisonSociale,TotalRemise,TotalHT,TotalFodec,TotalTVA,TimbreFiscal,TotalTTC" +
+                            " from Vue_ListeAchatJournalier where DatePiece between '"+date_debut+"' and '"+date_fin+"'"+conditionFrs +
                             " ";
 
                     PreparedStatement ps = con.prepareStatement(querysearch);
@@ -349,13 +280,15 @@ public class EtatArticlePerime extends AppCompatActivity {
                     ArrayList data1 = new ArrayList();
                     while (rs.next()) {
                         Map<String, String> datanum = new HashMap<String, String>();
-                        datanum.put("CodeArticle", rs.getString("CodeArticle"));
-                        datanum.put("Designation", rs.getString("DesignationArticle"));
-                        datanum.put("NumeroLot", rs.getString("NumeroLot"));
-                        datanum.put("DateLimiteConsommation", rs.getString("DateLimiteConsommation"));
-                        datanum.put("QTRestante", rs.getString("QTRestante"));
-                        datanum.put("TotalNetHT", rs.getString("TotalNetHT"));
-
+                        datanum.put("NumeroPiece", rs.getString("NumeroPiece"));
+                        datanum.put("DatePiece", rs.getString("DatePiece"));
+                        datanum.put("RaisonSociale", rs.getString("RaisonSociale"));
+                        datanum.put("TotalRemise", rs.getString("TotalRemise"));
+                        datanum.put("TotalHT", rs.getString("TotalHT"));
+                        datanum.put("TotalFodec", rs.getString("TotalFodec"));
+                        datanum.put("TotalTVA", rs.getString("TotalTVA"));
+                        datanum.put("TimbreFiscal", rs.getString("TimbreFiscal"));
+                        datanum.put("TotalTTC", rs.getString("TotalTTC"));
 
 
                         prolist.add(datanum);
@@ -380,79 +313,6 @@ public class EtatArticlePerime extends AppCompatActivity {
 
 
 
-
-
-
-    public class GetDataSpinner extends AsyncTask<String, String, String> {
-        String z = "  ";
-
-        List<Map<String, String>> prolist = new ArrayList<Map<String, String>>();
-
-        @Override
-        protected void onPreExecute() {
-            //  Log.e("frs", querylist);
-            progressBar.setVisibility(View.VISIBLE);
-
-        }
-
-        @Override
-        protected void onPostExecute(String r) {
-            progressBar.setVisibility(View.GONE);
-            //   Toast.makeText(getApplicationContext(), r, Toast.LENGTH_SHORT).show();
-            //   Toast.makeText(getApplicationContext(), r, Toast.LENGTH_SHORT).show();
-            String[] array = datacode.toArray(new String[0]);
-
-
-            ArrayAdapter<CharSequence> adapter = new ArrayAdapter(getApplicationContext(),
-                    R.layout.spinner, datalibelle);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spindepot.setAdapter(adapter);
-
-
-
-
-
-
-        }
-        @Override
-        protected String doInBackground(String... params) {
-
-            try {
-                Connection con = connectionClass.CONN(ip, password, user, base);
-                if (con == null) {
-                    z = "Error in connection with SQL server";
-                } else {
-
-                    PreparedStatement stmt;
-                    datalibelle = new ArrayList<String>();
-                    datacode = new ArrayList<String>();
-
-                    String querydepot="select * from Depot where CodeNature=1";
-
-                    stmt = con.prepareStatement(querydepot);
-                    ResultSet rsss = stmt.executeQuery();
-                    Log.e("spindepot", querydepot);
-                    datalibelle.add("Tout Depot");
-                    datacode.add("");
-                    while (rsss.next()) {
-                        String libelle= rsss.getString("Libelle");
-                        datalibelle.add(libelle);
-                        String CodeDepot= rsss.getString("CodeDepot");
-                        datacode.add(CodeDepot);
-
-                    }
-
-
-                }
-            } catch (SQLException ex) {
-                z = "list" + ex.toString();
-
-            } catch (Exception e) {
-
-            }
-            return z;
-        }
-    }
 
 
 

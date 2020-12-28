@@ -12,6 +12,8 @@ import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.Fi
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.ListRetenuClient;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.PieceNonPayeClient;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Vente.EtatChiffreAffaire;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Vente.EtatGlobalVente;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Vente.JournalFactureVente;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -82,17 +84,26 @@ public class StatVenteFragment extends Fragment {
             }
         });
 
-/*
-        CardView   btn_reglement_client = (CardView)  root.findViewById(R.id.btn_reg_client)  ;
-        btn_reglement_client.setOnClickListener(new View.OnClickListener() {
+
+        CardView   btn_journal_facture_vente = (CardView)  root.findViewById(R.id.btn_journal_facture_vente)  ;
+        btn_journal_facture_vente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent  intent1 = new Intent(getActivity() , ReglementClientActivity.class) ;
+                Intent  intent1 = new Intent(getActivity() , JournalFactureVente.class) ;
                 startActivity(intent1);
             }
         });
 
+        CardView   btn_global_vente = (CardView)  root.findViewById(R.id.btn_global_vente)  ;
+        btn_global_vente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent  intent1 = new Intent(getActivity() , EtatGlobalVente.class) ;
+                startActivity(intent1);
+            }
+        });
 
+/*
         CardView   btn_echeance_client = (CardView)   root.findViewById(R.id.btn_echeance_Client);
         btn_echeance_client.setOnClickListener(new View.OnClickListener() {
             @Override

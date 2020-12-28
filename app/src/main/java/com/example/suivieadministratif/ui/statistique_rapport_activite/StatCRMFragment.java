@@ -24,6 +24,7 @@ import com.example.suivieadministratif.task.ListTypeMvmntDisticntTask;
 import com.example.suivieadministratif.ui.menu.MenuViewModel;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.CRM.EtatJournalActivite;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.CRM.Etat_Suivie_VoitureParMission;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.CRM.ListeCauseRetour;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.article.JournalActiviteActivity;
 
 import java.text.DecimalFormat;
@@ -101,18 +102,18 @@ public class StatCRMFragment extends Fragment {
         });
 
 
-/*
-        CardView  btn_bon_commande = (CardView) root.findViewById(R.id.btn_bon_commande) ;
-        btn_bon_commande.setOnClickListener(new View.OnClickListener() {
+
+        CardView  btn_cause_retour = (CardView) root.findViewById(R.id.btn_cause_retour) ;
+        btn_cause_retour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent5 = new Intent(getActivity(), EtatCommande.class);
+                Intent intent5 = new Intent(getActivity(), ListeCauseRetour.class);
                 startActivity(intent5);
 
             }
         });
-
+/*
 
         CardView  btn_mvmnt_vente_service= (CardView) root.findViewById(R.id.btn_mvmnt_vente_service) ;
         btn_mvmnt_vente_service.setOnClickListener(new View.OnClickListener() {

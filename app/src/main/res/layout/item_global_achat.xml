@@ -130,7 +130,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Total Achat HT"
+                    android:text="Total  HT"
                     android:textColor="@color/blue"
                     android:textStyle="bold" />
             </LinearLayout>

@@ -11,6 +11,7 @@ import com.example.suivieadministratif.ui.menu.MenuViewModel;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Achat.EtatArticlePerime;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Achat.EtatGlobalAchat;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Achat.EtatJournalArticleAchete;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Achat.JournalFactureAchat;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -72,19 +73,19 @@ public class StatAchatFragment extends Fragment {
 
             }
         });
-/*
 
-        CardView  btn_mvmnt_vente_service= (CardView) root.findViewById(R.id.btn_mvmnt_vente_service) ;
-        btn_mvmnt_vente_service.setOnClickListener(new View.OnClickListener() {
+
+        CardView  btn_journal_facture_achat= (CardView) root.findViewById(R.id.btn_journal_facture_achat) ;
+        btn_journal_facture_achat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent5 = new Intent(getActivity(), MouvementVenteServiceActivity.class);
+                Intent intent5 = new Intent(getActivity(), JournalFactureAchat.class);
                 startActivity(intent5);
             }
         });
 
-
+/*
         CardView   btn_reglement_client = (CardView)  root.findViewById(R.id.btn_reg_client)  ;
         btn_reglement_client.setOnClickListener(new View.OnClickListener() {
             @Override

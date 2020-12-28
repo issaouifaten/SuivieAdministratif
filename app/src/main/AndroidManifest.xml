@@ -11,15 +11,24 @@
         android:roundIcon="@drawable/i2s"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.statistique_rapport_activite.Achat.EtatArticlePerime"></activity>
+        <activity android:name=".ui.statistique_rapport_activite.Stock.Etat_Stock"></activity>
+        <activity android:name=".ui.statistique_rapport_activite.Stock.Etat_indic_dispo_stock" />
+        <activity android:name=".ui.statistique_rapport_activite.CRM.ListeCauseRetour" />
+        <activity android:name=".ui.statistique_rapport_activite.Compte.ListDepense" />
+        <activity android:name=".ui.statistique_rapport_activite.Vente.EtatGlobalVente" />
+        <activity android:name=".ui.statistique_rapport_activite.Vente.JournalFactureVente" />
+        <activity android:name=".ui.statistique_rapport_activite.Achat.JournalFactureAchat" />
+        <activity android:name=".ui.statistique_rapport_activite.Achat.EtatArticlePerime" />
         <activity android:name=".ui.statistique_rapport_activite.Achat.EtatGlobalAchat" />
         <activity android:name=".ui.statistique_rapport_activite.Client.MoyenReglementClient" />
         <activity android:name=".ui.statistique_rapport_activite.Client.SuivieCommandeNonConformeClient" />
         <activity android:name=".ui.statistique_rapport_activite.Client.SuivieCommandeClient" />
-        <activity android:name=".ui.statistique_rapport_activite.Fournisseur.CommandeFournisseurNonConforme"
-            android:label="CMD Frns Non Conforme"/>
-        <activity android:name=".ui.statistique_rapport_activite.Fournisseur.SuivieCommandeFrs"
-            android:label="Suiv. Cmd. Fournisseurs"/>
+        <activity
+            android:name=".ui.statistique_rapport_activite.Fournisseur.CommandeFournisseurNonConforme"
+            android:label="CMD Frns Non Conforme" />
+        <activity
+            android:name=".ui.statistique_rapport_activite.Fournisseur.SuivieCommandeFrs"
+            android:label="Suiv. Cmd. Fournisseurs" />
         <activity android:name=".ui.statistique_rapport_activite.CRM.EtatJournalActivite" />
         <activity android:name=".ui.statistique_rapport_activite.Compte.SuivieArretCaisse" />
         <activity android:name=".ui.statistique_rapport_activite.CRM.Etat_Suivie_VoitureParMission" />
@@ -44,8 +53,6 @@
         <activity android:name=".module.vente.EtatFactureVente" />
         <activity android:name=".module.vente.DetailLigneDevisVente" />
         <activity android:name=".module.vente.EtatDevisVente" />
-
-
         <activity
             android:name=".activity.AlerteWorkflow"
             android:label="@string/title_activity_alerte_workflow"

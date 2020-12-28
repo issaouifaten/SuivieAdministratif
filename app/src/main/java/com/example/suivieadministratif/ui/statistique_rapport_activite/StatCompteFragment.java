@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.ui.menu.MenuViewModel;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Compte.ListDepense;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Compte.SuivieArretCaisse;
 
 import androidx.annotation.NonNull;
@@ -46,17 +47,17 @@ public class StatCompteFragment extends Fragment {
                 startActivity(intent6);
             }
         });
-      /*
-        CardView btn_bon_retour = (CardView) root.findViewById(R.id.btn_bon_retour)  ;
-        btn_bon_retour.setOnClickListener(new View.OnClickListener() {
+
+        CardView btn_list_depense = (CardView) root.findViewById(R.id.btn_list_depense)  ;
+        btn_list_depense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent7 = new Intent(getActivity(), EtatRetourActivity.class);
+                Intent intent7 = new Intent(getActivity(), ListDepense.class);
                 startActivity(intent7);
             }
         });
 
-
+      /*
         CardView  btn_bon_commande = (CardView) root.findViewById(R.id.btn_bon_commande) ;
         btn_bon_commande.setOnClickListener(new View.OnClickListener() {
             @Override
