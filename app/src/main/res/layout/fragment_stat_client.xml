@@ -37,7 +37,7 @@
 
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_devis_vente"
+                    android:id="@+id/btn_suivie_cmd_client"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
@@ -84,7 +84,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_bon_commande"
+                    android:id="@+id/btn_indicateur_solde"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
@@ -149,43 +149,43 @@
 
                 <androidx.cardview.widget.CardView
 
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:clickable="true"
+                    android:id="@+id/btn_cmd_non_conforme"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
                     android:layout_margin="10dp"
-                    card_view:cardCornerRadius="2dp"
-                    card_view:contentPadding="10dp"
-                    card_view:cardBackgroundColor="#66FCF9F9"
-                    card_view:cardElevation="2dp"
-                    card_view:cardMaxElevation="6dp">
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardBackgroundColor="#66FCF9F9"
+                    app:cardCornerRadius="2dp"
+                    app:cardElevation="2dp"
+                    app:cardMaxElevation="6dp"
+                    app:contentPadding="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="60dp"
                             android:layout_height="60dp"
-                            android:src="@drawable/ic_livraison"
-                            android:padding="5dp"/>
+                            android:padding="5dp"
+                            android:src="@drawable/ic_livraison" />
 
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="10dp"
-                            android:src="@drawable/line_h"/>
+                            android:src="@drawable/line_h" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
                             android:layout_marginTop="10dp"
-                            android:textSize="15dp"
                             android:gravity="center"
-                            android:text="CMD Clients non conformes"/>
+                            android:text="CMD Clients non conformes"
+                            android:textSize="15dp"
+                            android:textStyle="bold" />
 
 
                     </LinearLayout>
@@ -194,7 +194,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_bon_retour"
+                    android:id="@+id/btn_moy_reg"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
@@ -249,43 +249,43 @@
 
                 <androidx.cardview.widget.CardView
 
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:clickable="true"
+                    android:id="@+id/btn_piece_non_paye_client"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
                     android:layout_margin="10dp"
-                    card_view:cardCornerRadius="2dp"
-                    card_view:contentPadding="10dp"
-                    card_view:cardBackgroundColor="#66FCF9F9"
-                    card_view:cardElevation="2dp"
-                    card_view:cardMaxElevation="6dp">
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardBackgroundColor="#66FCF9F9"
+                    app:cardCornerRadius="2dp"
+                    app:cardElevation="2dp"
+                    app:cardMaxElevation="6dp"
+                    app:contentPadding="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="60dp"
                             android:layout_height="60dp"
-                            android:src="@drawable/ic_livraison"
-                            android:padding="5dp"/>
+                            android:padding="5dp"
+                            android:src="@drawable/ic_livraison" />
 
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="10dp"
-                            android:src="@drawable/line_h"/>
+                            android:src="@drawable/line_h" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
                             android:layout_marginTop="10dp"
-                            android:textSize="15dp"
                             android:gravity="center"
-                            android:text="Pièce non payé client"/>
+                            android:text="Pièce non payé client"
+                            android:textSize="15dp"
+                            android:textStyle="bold" />
 
 
                     </LinearLayout>
@@ -295,43 +295,43 @@
 
                 <androidx.cardview.widget.CardView
 
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:clickable="true"
+                    android:id="@+id/btn_suivie_client"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
                     android:layout_margin="10dp"
-                    card_view:cardCornerRadius="2dp"
-                    card_view:contentPadding="10dp"
-                    card_view:cardBackgroundColor="#66FCF9F9"
-                    card_view:cardElevation="2dp"
-                    card_view:cardMaxElevation="6dp">
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    app:cardBackgroundColor="#66FCF9F9"
+                    app:cardCornerRadius="2dp"
+                    app:cardElevation="2dp"
+                    app:cardMaxElevation="6dp"
+                    app:contentPadding="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:orientation="vertical">
 
                         <ImageView
                             android:layout_width="60dp"
                             android:layout_height="60dp"
-                            android:src="@drawable/ic_retour"
-                            android:padding="5dp"/>
+                            android:padding="5dp"
+                            android:src="@drawable/ic_retour" />
 
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="10dp"
-                            android:src="@drawable/line_h"/>
+                            android:src="@drawable/line_h" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
                             android:layout_marginTop="10dp"
-                            android:textSize="15dp"
+                            android:gravity="center"
                             android:text="Suivie Client"
-                            android:gravity="center"/>
+                            android:textSize="15dp"
+                            android:textStyle="bold" />
 
 
                     </LinearLayout>
@@ -348,7 +348,7 @@
 
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_bon_livraison"
+                    android:id="@+id/btn_list_retenu_cl"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"

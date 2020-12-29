@@ -22,6 +22,10 @@ import com.example.suivieadministratif.adapter.TypeMvmntGVAdapter;
 import com.example.suivieadministratif.model.TypeMouvementClick;
 import com.example.suivieadministratif.task.ListTypeMvmntDisticntTask;
 import com.example.suivieadministratif.ui.menu.MenuViewModel;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.CRM.EtatJournalActivite;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.CRM.Etat_Suivie_VoitureParMission;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.CRM.ListeCauseRetour;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.FicheClient;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.article.JournalActiviteActivity;
 
 import java.text.DecimalFormat;
@@ -71,46 +75,56 @@ public class StatCRMFragment extends Fragment {
         menuViewModel = ViewModelProviders.of(this).get(MenuViewModel.class);
         View root = inflater.inflate(R.layout.fragment_stat_crm, container, false);
 
-        CardView btn_journal_activite = (CardView) root.findViewById(R.id.btn_journal_activite);
-        btn_journal_activite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogChoixActiviteJournalier(v);
-            }
-        });
+//        CardView btn_journal_activite = (CardView) root.findViewById(R.id.btn_journal_activite);
+//        btn_journal_activite.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialogChoixActiviteJournalier(v);
+//            }
+//        });
 
-/*
-        CardView   btn_bon_livraison = (CardView) root.findViewById(R.id.btn_bon_livraison)  ;
-        btn_bon_livraison.setOnClickListener(new View.OnClickListener() {
+
+        CardView   btn_suivie_vente = (CardView) root.findViewById(R.id.btn_suivie_vente)  ;
+        btn_suivie_vente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent6 = new Intent(getActivity(), EtatLivraisonActivity.class);
+                Intent intent6 = new Intent(getActivity(), Etat_Suivie_VoitureParMission.class);
                 startActivity(intent6);
             }
         });
 
-
-        CardView btn_bon_retour = (CardView) root.findViewById(R.id.btn_bon_retour)  ;
-        btn_bon_retour.setOnClickListener(new View.OnClickListener() {
+        CardView btn_journal_activite = (CardView) root.findViewById(R.id.btn_journal_activite)  ;
+        btn_journal_activite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent7 = new Intent(getActivity(), EtatRetourActivity.class);
+                Intent intent7 = new Intent(getActivity(), EtatJournalActivite.class);
                 startActivity(intent7);
             }
         });
 
 
-        CardView  btn_bon_commande = (CardView) root.findViewById(R.id.btn_bon_commande) ;
-        btn_bon_commande.setOnClickListener(new View.OnClickListener() {
+
+        CardView  btn_cause_retour = (CardView) root.findViewById(R.id.btn_cause_retour) ;
+        btn_cause_retour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent5 = new Intent(getActivity(), EtatCommande.class);
+                Intent intent5 = new Intent(getActivity(), ListeCauseRetour.class);
                 startActivity(intent5);
 
             }
         });
 
+        CardView btn_suivie_client = (CardView) root.findViewById(R.id.btn_suivie_client)  ;
+        btn_suivie_client.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent6 = new Intent(getActivity(), FicheClient.class);
+                startActivity(intent6);
+            }
+        });
+
+/*
 
         CardView  btn_mvmnt_vente_service= (CardView) root.findViewById(R.id.btn_mvmnt_vente_service) ;
         btn_mvmnt_vente_service.setOnClickListener(new View.OnClickListener() {

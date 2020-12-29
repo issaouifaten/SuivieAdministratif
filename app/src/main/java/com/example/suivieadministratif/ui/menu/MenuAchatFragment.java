@@ -10,6 +10,7 @@ import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.module.achat.BonCommandeAchatActivity;
 import com.example.suivieadministratif.module.achat.BonLivraisonAchatActivity;
 import com.example.suivieadministratif.module.achat.BonRetourAchatActivity;
+import com.example.suivieadministratif.module.achat.FactureAchat;
 import com.example.suivieadministratif.module.reglementFournisseur.RapportEcheanceFournisseurActivity;
 import com.example.suivieadministratif.module.reglementFournisseur.ReglementFournisseurActivity;
 
@@ -92,8 +93,17 @@ public class MenuAchatFragment extends Fragment {
 
             }
         });
+//btn_facture_achat
+        CardView   btn_facture_achat = (CardView)   root.findViewById(R.id.btn_facture_achat);
+        btn_facture_achat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                Intent intent1 = new Intent(getActivity() , FactureAchat.class) ;
+                startActivity(intent1);
 
+            }
+        });
         return root;
     }
 }

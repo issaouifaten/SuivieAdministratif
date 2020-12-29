@@ -262,7 +262,6 @@
                     android:text="Tout"
                     android:textColor="@drawable/rbtn_textcolor_selector_" />
 
-
                 <RadioButton
                     android:id="@+id/rb_frns_local"
                     android:layout_width="match_parent"

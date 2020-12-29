@@ -17,11 +17,11 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import com.example.suivieadministratif.EtatChiffreAffaire;
-import com.example.suivieadministratif.EtatJournalArticleVendu;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Vente.EtatChiffreAffaire;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.article.EtatJournalArticleVendu;
 import com.example.suivieadministratif.ChiffreAffaireGlobale;
 import com.example.suivieadministratif.R ;
-import com.example.suivieadministratif.StockArticle;
+import com.example.suivieadministratif.module.Stock.StockArticle;
 import com.example.suivieadministratif.activity.AlerteWorkflow;
 import com.example.suivieadministratif.module.vente.EtatCommande;
 import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;

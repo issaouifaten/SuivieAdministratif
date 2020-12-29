@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.suivieadministratif.activity.MenuServeur;
+import com.example.suivieadministratif.module.Stock.StockArticle;
 import com.example.suivieadministratif.module.vente.EtatCommande;
 import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
 import com.example.suivieadministratif.module.vente.EtatRetourActivity;
@@ -24,6 +25,8 @@ import com.example.suivieadministratif.activity.LoginActivity;
 import com.example.suivieadministratif.fragment.PrincipalFragment;
 import com.example.suivieadministratif.param.Param;
 import com.example.suivieadministratif.param.Parametrage;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Vente.EtatChiffreAffaire;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.article.EtatJournalArticleVendu;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.appcompat.app.ActionBar;

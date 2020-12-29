@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.statistique_rapport_activite.Stock.Etat_Stock">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/bt_prix_achatht"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/rbtn_selector_"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="AchatHT"
+
+                    android:textColor="@drawable/rbtn_textcolor_selector_" />
+
+                <RadioButton
+                    android:id="@+id/bt_prix_achatttc"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/rbtn_selector_"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="AchatTTC"
+
+                    android:textColor="@drawable/rbtn_textcolor_selector_"
+
+                    />
+
+                <RadioButton
+                    android:id="@+id/bt_prix_venteht"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/rbtn_selector_"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="Vente HT"
+
+                    android:textColor="@drawable/rbtn_textcolor_selector_" />
+
+                <RadioButton
+                    android:id="@+id/bt_prix_ventettc"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/rbtn_selector_"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="Vente TTC"
+
+                    android:textColor="@drawable/rbtn_textcolor_selector_" />
+
+                <RadioButton
+                    android:id="@+id/bt_valeurmax"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/rbtn_selector_"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+                    android:text="Val.Max"
+
+                    android:textColor="@drawable/rbtn_textcolor_selector_" />
+
+                <RadioButton
+                    android:id="@+id/bt_valeurmin"
+                    android:layout_width="80dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/rbtn_selector_"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="center"
+
+                    android:text="Val.Min"
+                    android:textColor="@drawable/rbtn_textcolor_selector_" />
+            </RadioGroup>
+        </HorizontalScrollView>
+
+        <GridView
+            android:id="@+id/grid_etat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="2dp" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

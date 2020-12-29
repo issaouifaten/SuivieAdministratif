@@ -36,7 +36,7 @@
 
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_article_faible_rotation"
+                    android:id="@+id/btn_journal_article_achete"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:layout_width="140dp"
@@ -81,7 +81,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_bon_commande"
+                    android:id="@+id/btn_journal_facture_achat"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
@@ -145,7 +145,7 @@
 
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_bon_livraison"
+                    android:id="@+id/btn_global_achat"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
@@ -191,7 +191,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_bon_retour"
+                    android:id="@+id/btn_article_perime"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"

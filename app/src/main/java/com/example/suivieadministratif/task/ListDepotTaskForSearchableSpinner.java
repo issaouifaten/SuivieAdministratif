@@ -13,6 +13,7 @@ import com.example.suivieadministratif.adapter.SpinnerAdapter;
 import com.example.suivieadministratif.model.Depot;
 import com.example.suivieadministratif.model.FamilleArticle;
 import com.example.suivieadministratif.param.Param;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Fournisseur.SuivieCommandeFrs;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.StatArticleFragment;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
@@ -80,7 +81,7 @@ public class ListDepotTaskForSearchableSpinner extends AsyncTask<String,String,S
 
                 String  CONDITION  = "" ;
 
-                if (origine .equals("dialogArticleNonMouvemente"))
+                if (origine .equals("dialogArticleNonMouvemente")  || origine .equals("SuivieCommandeFrs")  )
                 {
                     CONDITION = CONDITION + " and   CodeNature='1' " ;
                 }
@@ -96,18 +97,22 @@ public class ListDepotTaskForSearchableSpinner extends AsyncTask<String,String,S
 
 
                 listLibelle.clear();
-             /*   listLibelle.add("Tout les Depots");
-                listDepot .add(new Depot("","Tout les Depots"))  ;*/
+
+                if (origine.equals("SuivieCommandeFrs"))
+                {
+                    listDepot.add(new Depot("" ,"Tout les depots")) ;
+                    listLibelle.add("Tout les depots")  ;
+                }
 
                 while ( rs.next() ) {
 
                     String CodeDepot = rs.getString("CodeDepot") ;
                     String Libelle =rs.getString("Libelle") ;
 
-                     Depot  depot  = new Depot(CodeDepot ,Libelle) ;
-                     listDepot.add(depot) ;
-                     listLibelle.add(depot.getLibelle())  ;
-                     Log.e("Depot", depot.getCodeDepot() + " - " +depot.getLibelle() );
+                    Depot  depot  = new Depot(CodeDepot ,Libelle) ;
+                    listDepot.add(depot) ;
+                    listLibelle.add(depot.getLibelle())  ;
+                    Log.e("Depot", depot.getCodeDepot() + " - " +depot.getLibelle() );
 
                 }
             }
@@ -138,8 +143,22 @@ public class ListDepotTaskForSearchableSpinner extends AsyncTask<String,String,S
 
                 Log.e("Depot_selected"  ,""+listDepot.get(position).toString())  ;
 
-                StatArticleFragment.CodeDepot_selected = listDepot.get(position).getCodeDepot() ;
-                StatArticleFragment.LibelleDepot_selected  = listDepot.get(position).getLibelle()  ;
+                if (origine .equals("dialogArticleNonMouvemente"))
+                {
+
+                    StatArticleFragment.CodeDepot_selected = listDepot.get(position).getCodeDepot() ;
+                    StatArticleFragment.LibelleDepot_selected  = listDepot.get(position).getLibelle()  ;
+                }
+
+
+                else if (origine .equals("SuivieCommandeFrs"))
+                {
+                    SuivieCommandeFrs.CodeDepotSelected = listDepot.get(position).getCodeDepot() ;
+                    SuivieCommandeFrs.DepotSelected  = listDepot.get(position).getLibelle() ;
+
+                    SuivieCMD_FournisseurTask  suivieCMD_fournisseurTask = new SuivieCMD_FournisseurTask(activity , SuivieCommandeFrs.rv_list_suivi_cmd_frns ,SuivieCommandeFrs.pb ,SuivieCommandeFrs.date_debut,SuivieCommandeFrs.date_fin ,SuivieCommandeFrs.CodeDepotSelected ,SuivieCommandeFrs.term_rech_art ,SuivieCommandeFrs.CodeNatureArticleSelected) ;
+                    suivieCMD_fournisseurTask.execute() ;
+                }
 
             }
             @Override
@@ -148,7 +167,6 @@ public class ListDepotTaskForSearchableSpinner extends AsyncTask<String,String,S
             }
         }
         );
-
 
     }
 
