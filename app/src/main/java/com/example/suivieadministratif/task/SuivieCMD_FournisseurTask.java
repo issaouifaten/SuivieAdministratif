@@ -50,7 +50,7 @@ public class SuivieCMD_FournisseurTask extends AsyncTask<String, String, String>
     Date date_debut, date_fin;
 
     String CodeDepot;
-    String CodeArticle;
+    String term_rech_article;
     String CodeNatureArticle;
 
 
@@ -69,14 +69,14 @@ public class SuivieCMD_FournisseurTask extends AsyncTask<String, String, String>
 
     String  res  = "" ;
 
-    public SuivieCMD_FournisseurTask(Activity activity, RecyclerView rv_suivie_cmd_frns, ProgressBar pb, Date date_debut, Date date_fin, String codeDepot, String codeArticle, String codeNatureArticle) {
+    public SuivieCMD_FournisseurTask(Activity activity, RecyclerView rv_suivie_cmd_frns, ProgressBar pb, Date date_debut, Date date_fin, String codeDepot, String term_rech_article, String codeNatureArticle) {
         this.activity = activity;
         this.rv_suivie_cmd_frns = rv_suivie_cmd_frns;
         this.pb = pb;
         this.date_debut = date_debut;
         this.date_fin = date_fin;
         CodeDepot = codeDepot;
-        CodeArticle = codeArticle;
+       this. term_rech_article = term_rech_article;
         CodeNatureArticle = codeNatureArticle;
 
         SharedPreferences prefe = activity.getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
@@ -110,9 +110,10 @@ public class SuivieCMD_FournisseurTask extends AsyncTask<String, String, String>
                 {
                     CONDITION =  CONDITION + "   and CodeDepot  = '"+CodeDepot+"' " ;
                 }
-                 if (!CodeArticle.equals(""))
+                 if (!term_rech_article.equals(""))
                 {
-                    CONDITION =  CONDITION + "   and LigneBonCommandeAchat.CodeArticle =  '"+CodeArticle+"'  " ;
+                    CONDITION =  CONDITION + "   and (LigneBonCommandeAchat.DesignationArticle  like   '%"+term_rech_article+"%' \n" +
+                            "   or LigneBonCommandeAchat.CodeArticle like   '%"+term_rech_article+"%' ) \n " ;
                 }
 
                 if (!CodeNatureArticle.equals(""))

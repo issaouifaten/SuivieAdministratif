@@ -11,14 +11,18 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.QuickContactBadge;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.example.suivieadministratif.R;
+import com.example.suivieadministratif.adapter.BonLivraisonAdapter;
+import com.example.suivieadministratif.model.BonLivraisonVente;
 import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
 import com.example.suivieadministratif.task.ListArticleTaskForSearchableSpinner;
 import com.example.suivieadministratif.task.ListDepotTaskForSearchableSpinner;
@@ -31,6 +35,7 @@ import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -59,11 +64,14 @@ public class SuivieCommandeFrs extends AppCompatActivity {
     RelativeLayout layoutBottomSheet ;
     BottomSheetBehavior sheetBehavior;
 
-    public static SearchableSpinner sp_article ;
+    SearchView search_bar_article;
+
+   // public static SearchableSpinner sp_article ;
 
     public   static   String  CodeDepotSelected  = "" ;
     public   static   String  DepotSelected  = "" ;
-    public   static   String  CodeArticleSelected  = "" ;
+     public   static   String  term_rech_art  = "" ;
+
     public   static   String  CodeNatureArticleSelected  = "" ;
 
     @Override
@@ -80,23 +88,24 @@ public class SuivieCommandeFrs extends AppCompatActivity {
         txt_date_debut = findViewById(R.id.txt_date_debut);
         txt_date_fin = findViewById(R.id.txt_date_fin);
         txt_tot_ht = (TextView) findViewById(R.id.txt_tot_ht);
+        search_bar_article = (SearchView) findViewById(R.id.search_bar_article);
 
         rv_list_suivi_cmd_frns = (RecyclerView) findViewById(R.id.rv_list_suivi_cmd_frns);
         rv_list_suivi_cmd_frns.setHasFixedSize(true);
         rv_list_suivi_cmd_frns.setLayoutManager(new LinearLayoutManager(this));
 
         pb = (ProgressBar) findViewById(R.id.pb_bc);
-
+        term_rech_art="" ;
         SearchableSpinner sp_depot = (SearchableSpinner)  findViewById(R.id.sp_depot);
-        sp_article = (SearchableSpinner)  findViewById(R.id.sp_article);
+        //sp_article = (SearchableSpinner)  findViewById(R.id.sp_article);
         SearchableSpinner sp_nature_article = (SearchableSpinner)  findViewById(R.id.sp_nature_article);
 
         final Calendar cal1 = Calendar.getInstance();
         cal1.setTime(currentDate);
         cal1.add(Calendar.MONTH, -3);
-        year_x1 = cal1.get(Calendar.YEAR);
+        year_x1  = cal1.get(Calendar.YEAR);
         month_x1 = cal1.get(Calendar.MONTH);
-        day_x1 = cal1.get(Calendar.DAY_OF_MONTH);
+        day_x1   = cal1.get(Calendar.DAY_OF_MONTH);
 
 
         final Calendar cal2 = Calendar.getInstance();
@@ -119,6 +128,7 @@ public class SuivieCommandeFrs extends AppCompatActivity {
 
         ListNatureArticleTaskForSearchableSpinner  listNatureArticleTaskForSearchableSpinner  = new ListNatureArticleTaskForSearchableSpinner(this, sp_nature_article , "SuivieCommandeFrs");
         listNatureArticleTaskForSearchableSpinner.execute();
+
 
         txt_date_debut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,6 +207,41 @@ public class SuivieCommandeFrs extends AppCompatActivity {
         });
 
 
+      Button btn_pourcent = (Button)  findViewById(R.id.btn_pourcent) ;
+      btn_pourcent.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+
+
+              String  last_query  =  search_bar_article.getQuery().toString() ;
+              String new_query  = last_query+"%" ;
+              search_bar_article.setQuery(new_query , false);
+
+          }
+      });
+
+
+        search_bar_article.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                if (!search_bar_article.isIconified()) {
+                    search_bar_article.setIconified(true);
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String term) {
+
+                term_rech_art = term ;
+
+                updateData();
+
+                return false;
+
+            }
+        });
 
 
         layoutBottomSheet = (RelativeLayout) findViewById(R.id.bottom_sheet);
@@ -237,9 +282,15 @@ public class SuivieCommandeFrs extends AppCompatActivity {
 
     public  void  updateData(){
 
-        SuivieCMD_FournisseurTask  suivieCMD_fournisseurTask = new SuivieCMD_FournisseurTask(this , rv_list_suivi_cmd_frns ,pb ,date_debut,date_fin ,CodeDepotSelected ,CodeArticleSelected ,CodeNatureArticleSelected) ;
+        SuivieCMD_FournisseurTask  suivieCMD_fournisseurTask = new SuivieCMD_FournisseurTask(this , rv_list_suivi_cmd_frns ,pb ,date_debut,date_fin , CodeDepotSelected , term_rech_art ,CodeNatureArticleSelected) ;
         suivieCMD_fournisseurTask.execute() ;
+
     }
+
+
+
+
+
 
 
 }

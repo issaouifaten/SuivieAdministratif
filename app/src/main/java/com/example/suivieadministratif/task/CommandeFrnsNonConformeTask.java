@@ -96,50 +96,52 @@ public class CommandeFrnsNonConformeTask extends AsyncTask<String, String, Strin
 
                 String  CONDITION = "  " ;
 
-              /*  if (!CodeDepot.equals(""))
+               if (!CodeFournisseur.equals(""))
                 {
-                    CONDITION =  CONDITION + "   and CodeDepot  = '"+CodeDepot+"' " ;
+                    CONDITION =  CONDITION + "   and Fournisseur.CodeFournisseur = '"+CodeFournisseur+"' " ;
                 }
-                 if (!CodeArticle.equals(""))
+                 if (!CodeResponsable.equals(""))
                 {
-                    CONDITION =  CONDITION + "   and LigneBonCommandeAchat.CodeArticle =  '"+CodeArticle+"'  " ;
+                    CONDITION =  CONDITION + "   and Fournisseur.CodeRAD =    '"+CodeResponsable+"'  " ;
                 }
 
-                if (!CodeNatureArticle.equals(""))
+             /*   if (!CodeNatureArticle.equals(""))
                 {
                     CONDITION =  CONDITION + "  and Article.CodeNature = '"+CodeNatureArticle+"'  " ;
                 }
 */
 
                 String query_suivie_cmd_frns = "  SELECT \n" +
-                        "    BonCommandeAchat . NumeroBonCommandeAchat  ,\n" +
-                        "    BonCommandeAchat . DateBonCommandeAchat , \n" +
-                        "    BonLivraisonAchat . CodeFournisseur   , \n" +
-                        "    BonLivraisonAchat . RaisonSociale ,  \n" +
-                        "    BonCommandeAchat . TotalHT ,  \n" +
-                        "    BonLivraisonAchat . DateBonLivraisonAchat  \n" +
-                        "  \n" +
-                        " \n" +
-                        "  \n" +
-                        "     \n" +
-                        " FROM   (   LigneBonCommandeAchat   LigneBonCommandeAchat \n" +
-                        "  LEFT OUTER JOIN ((   Stock   Stock  INNER JOIN    LigneBonLivraisonAchat   LigneBonLivraisonAchat  ON  Stock . CodeArticle = LigneBonLivraisonAchat . CodeArticle ) \n" +
-                        "  \n" +
-                        "  INNER JOIN    BonLivraisonAchat   BonLivraisonAchat  ON ( Stock . CodeDepot = BonLivraisonAchat . CodeDepot ) \n" +
-                        "  AND ( LigneBonLivraisonAchat . NumeroBonLivraisonAchat = BonLivraisonAchat . NumeroBonLivraisonAchat )) \n" +
-                        "  ON ( LigneBonCommandeAchat . CodeArticle = LigneBonLivraisonAchat . CodeArticle ) \n" +
-                        "  AND ( LigneBonCommandeAchat . NumeroBonCommandeAchat = LigneBonLivraisonAchat . NumeroBonCommandeAchat )) \n" +
-                        "  INNER JOIN    BonCommandeAchat   BonCommandeAchat  ON  LigneBonLivraisonAchat . NumeroBonCommandeAchat = BonCommandeAchat . NumeroBonCommandeAchat \n" +
-                        " WHERE  ( BonCommandeAchat . DateBonCommandeAchat  between  '"+df.format(date_debut)+"' and  '"+df.format(date_fin)+"' )\n" +
+                        "        BonCommandeAchat . NumeroBonCommandeAchat  ,\n" +
+                        "        BonCommandeAchat . DateBonCommandeAchat , \n" +
+                        "        BonLivraisonAchat . CodeFournisseur   , \n" +
+                        "        BonLivraisonAchat . RaisonSociale ,  \n" +
+                        "        BonCommandeAchat . TotalHT ,  \n" +
+                        "        BonLivraisonAchat . DateBonLivraisonAchat  \n" +
+                        "         \n" +
+                        "     FROM   (   LigneBonCommandeAchat   LigneBonCommandeAchat \n" +
+                        "      LEFT OUTER JOIN ((   Stock   Stock  INNER JOIN    LigneBonLivraisonAchat   LigneBonLivraisonAchat  ON  Stock . CodeArticle = LigneBonLivraisonAchat . CodeArticle ) \n" +
+                        "      \n" +
+                        "      INNER JOIN    BonLivraisonAchat   BonLivraisonAchat  ON ( Stock . CodeDepot = BonLivraisonAchat . CodeDepot ) \n" +
+                        "      AND ( LigneBonLivraisonAchat . NumeroBonLivraisonAchat = BonLivraisonAchat . NumeroBonLivraisonAchat )) \n" +
+                        "      ON ( LigneBonCommandeAchat . CodeArticle = LigneBonLivraisonAchat . CodeArticle ) \n" +
+                        "      AND ( LigneBonCommandeAchat . NumeroBonCommandeAchat = LigneBonLivraisonAchat . NumeroBonCommandeAchat )) \n" +
+                        "      INNER JOIN    BonCommandeAchat   BonCommandeAchat  ON  LigneBonLivraisonAchat . NumeroBonCommandeAchat = BonCommandeAchat . NumeroBonCommandeAchat \n" +
                         "    \n" +
-                        "     and ( BonCommandeAchat.NumeroEtat<> 'E40')\n" +
-                        "     and ( BonCommandeAchat.NumeroEtat <>'E00') \n" +
-                        "     and ( BonCommandeAchat.NumeroEtat <>'E22') \n" +
-                        "     and ( BonCommandeAchat.NumeroEtat <>'E03')\n" +
-                        "     \n" +
-                        "    and    LigneBonLivraisonAchat.Quantite <> LigneBonCommandeAchat.Quantite \n" +
-                        " \n" +
-                        " ORDER BY  LigneBonLivraisonAchat.NumeroBonLivraisonAchat \n"    ;
+                        "    INNER  JOIN Fournisseur on Fournisseur.CodeFournisseur= BonCommandeAchat.CodeFournisseur\n" +
+                        "     WHERE  ( BonCommandeAchat . DateBonCommandeAchat  between  '"+df.format(date_debut)+"' and  '"+df.format(date_fin)+"' )\n" +
+                        "        \n" +
+                        "         and ( BonCommandeAchat.NumeroEtat<> 'E40')\n" +
+                        "         and ( BonCommandeAchat.NumeroEtat <>'E00') \n" +
+                        "         and ( BonCommandeAchat.NumeroEtat <>'E22') \n" +
+                        "         and ( BonCommandeAchat.NumeroEtat <>'E03')\n" +
+                        "         \n" +
+                        "        and    LigneBonLivraisonAchat.Quantite <> LigneBonCommandeAchat.Quantite \n" +
+                        "        \n" +CONDITION+
+
+
+                        "     ORDER BY  LigneBonLivraisonAchat.NumeroBonLivraisonAchat \n" +
+                        "\n"    ;
 
 
                 Log.e("query_suivie_cmd_frns", "" + query_suivie_cmd_frns);
@@ -210,8 +212,6 @@ public class CommandeFrnsNonConformeTask extends AsyncTask<String, String, Strin
         DecimalFormat decF = new DecimalFormat("0.000");
         CommandeFournisseurNonConforme.txt_tot_ht.setText(decF.format(total_) + " Dt");
 
-
     }
-
 
 }

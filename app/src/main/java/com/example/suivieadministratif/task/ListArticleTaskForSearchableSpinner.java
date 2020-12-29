@@ -139,7 +139,7 @@ public class ListArticleTaskForSearchableSpinner extends AsyncTask<String,String
         SpinnerAdapter adapter = new SpinnerAdapter(activity  , listDesignation)  ;
         sp_article.setAdapter(adapter);
         sp_article.setSelection(0);
-        SuivieCommandeFrs.CodeArticleSelected = listArticle.get(0).getCodeArticle() ;
+
 
         sp_article.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -149,11 +149,10 @@ public class ListArticleTaskForSearchableSpinner extends AsyncTask<String,String
 
                  if (origine .equals("SuivieCommandeFrs"))
                 {
-                    SuivieCommandeFrs.CodeArticleSelected = listArticle.get(position).getCodeArticle() ;
-                    //SuivieCommandeFrs.DepotSelected  = listArticle.get(position).getDesignationArticle() ;
 
 
-                    SuivieCMD_FournisseurTask  suivieCMD_fournisseurTask = new SuivieCMD_FournisseurTask(activity , SuivieCommandeFrs.rv_list_suivi_cmd_frns ,SuivieCommandeFrs.pb ,SuivieCommandeFrs.date_debut,SuivieCommandeFrs.date_fin ,SuivieCommandeFrs.CodeDepotSelected ,SuivieCommandeFrs.CodeArticleSelected ,SuivieCommandeFrs.CodeNatureArticleSelected) ;
+
+                    SuivieCMD_FournisseurTask  suivieCMD_fournisseurTask = new SuivieCMD_FournisseurTask(activity , SuivieCommandeFrs.rv_list_suivi_cmd_frns ,SuivieCommandeFrs.pb ,SuivieCommandeFrs.date_debut,SuivieCommandeFrs.date_fin ,SuivieCommandeFrs.CodeDepotSelected ,SuivieCommandeFrs.term_rech_art ,SuivieCommandeFrs.CodeNatureArticleSelected) ;
                     suivieCMD_fournisseurTask.execute() ;
                 }
 

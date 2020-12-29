@@ -139,6 +139,8 @@ public class ListRespAdministrationTaskForSearchableSpinner extends AsyncTask<St
                 if (origine .equals("CommandeFournisseurNonConforme"))
                 {
                     CommandeFournisseurNonConforme.CodeRespAdmin = listResp.get(position).getCodeResponsable() ;
+                    CommandeFrnsNonConformeTask commandeFrnsNonConformeTask = new CommandeFrnsNonConformeTask(activity ,  CommandeFournisseurNonConforme.rv_list_cmd_frns_nn_conforme , CommandeFournisseurNonConforme.pb , CommandeFournisseurNonConforme.date_debut, CommandeFournisseurNonConforme.date_fin , CommandeFournisseurNonConforme.CodeFournisseurSelected , CommandeFournisseurNonConforme. CodeRespAdmin) ;
+                    commandeFrnsNonConformeTask.execute() ;
 
                 }
 
