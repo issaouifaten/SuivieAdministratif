@@ -25,6 +25,7 @@ import com.example.suivieadministratif.ui.menu.MenuViewModel;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.CRM.EtatJournalActivite;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.CRM.Etat_Suivie_VoitureParMission;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.CRM.ListeCauseRetour;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.FicheClient;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.article.JournalActiviteActivity;
 
 import java.text.DecimalFormat;
@@ -113,6 +114,16 @@ public class StatCRMFragment extends Fragment {
 
             }
         });
+
+        CardView btn_suivie_client = (CardView) root.findViewById(R.id.btn_suivie_client)  ;
+        btn_suivie_client.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent6 = new Intent(getActivity(), FicheClient.class);
+                startActivity(intent6);
+            }
+        });
+
 /*
 
         CardView  btn_mvmnt_vente_service= (CardView) root.findViewById(R.id.btn_mvmnt_vente_service) ;
