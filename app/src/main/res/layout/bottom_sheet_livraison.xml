@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:behavior_hideable="true"
-    app:behavior_peekHeight="100dp"
+    app:behavior_peekHeight="120dp"
     android:gravity="center"
     android:paddingTop="@dimen/activity_margin"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
@@ -89,14 +89,8 @@
                 android:layout_weight="1"
                 android:foreground="?android:attr/selectableItemBackground">
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    app:srcCompat="@drawable/ic_livraison" />
-
 
                 <TextView
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Total Livraison"/>
