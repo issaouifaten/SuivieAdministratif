@@ -47,18 +47,16 @@
             android:src="@drawable/ic_livraison"/>
 
 
-
-
         <TextView
             android:id="@+id/txt_gratuite"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:text="Total Livraison"
+            android:text="Total Mouvement Vente Service"
             android:textColor="#ffa000"
             android:textSize="20dp"
-            android:textStyle="bold"
-            android:layout_marginLeft="10dp"/>
+            android:textStyle="bold" />
 
 
 
@@ -89,21 +87,14 @@
                 android:layout_weight="1"
                 android:foreground="?android:attr/selectableItemBackground">
 
-
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Total Livraison"/>
-
-                <TextView
-                    android:id="@+id/txt_tot_livraison"
+                    android:id="@+id/txt_tot_mvmnt_vente_service"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="--"
                     android:textSize="20dp"
                     android:textStyle="bold"
                     android:gravity="center"/>
-
 
 
             </LinearLayout>

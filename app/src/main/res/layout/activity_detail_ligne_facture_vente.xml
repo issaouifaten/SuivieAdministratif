@@ -166,4 +166,8 @@
             android:layout_marginTop="100dp"></ListView>
 
     </RelativeLayout>
+
+
+
+    <include layout="@layout/banniere_societe" />
 </androidx.constraintlayout.widget.ConstraintLayout>
