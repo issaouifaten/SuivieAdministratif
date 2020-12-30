@@ -52,7 +52,15 @@ public class MenuPrincipalFragment extends Fragment {
         {
             img_soc.setImageResource(R.drawable.i2s);
         }
+        else  if (NomSociete.contains("CMVI"))
+        {
+            img_soc.setImageResource(R.drawable.cmvi_logo);
+        }
 
+        else  if (NomSociete.contains("MTD"))
+        {
+            img_soc.setImageResource(R.drawable.mtd_logo_transportatio);
+        }
 
         CardView btn_vente = (CardView)   root.findViewById(R.id.btn_vente) ;
         btn_vente.setOnClickListener(new View.OnClickListener() {
