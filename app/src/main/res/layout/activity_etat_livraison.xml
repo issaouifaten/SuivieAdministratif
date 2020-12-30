@@ -198,4 +198,5 @@
 
     <include layout="@layout/banniere_societe" />
 
+
 </androidx.constraintlayout.widget.ConstraintLayout>

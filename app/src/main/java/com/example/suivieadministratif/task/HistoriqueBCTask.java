@@ -107,6 +107,7 @@ public class HistoriqueBCTask extends AsyncTask<String, String, String> {
                 PreparedStatement ps = con.prepareStatement(queryHis_bc);
                 ResultSet rs = ps.executeQuery();
 
+                total_bc =0 ;
                 while (rs.next()) {
 
                     String NumeroBonCommandeVente = rs.getString("NumeroBonCommandeVente");
@@ -116,6 +117,7 @@ public class HistoriqueBCTask extends AsyncTask<String, String, String> {
                     String NumeroEtat = rs.getString("NumeroEtat");
                     String LibelleEtat = rs.getString("Libelle");
 
+                    total_bc = total_bc +TotalTTC ;
 
                     BonCommandeVente bonCommandeVente = new BonCommandeVente(NumeroBonCommandeVente, DateBonCommandeVente, RaisonSociale, TotalTTC, NumeroEtat , LibelleEtat );
                     listBonCommandeVente.add(bonCommandeVente);
