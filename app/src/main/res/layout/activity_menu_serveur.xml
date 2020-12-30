@@ -23,7 +23,7 @@
 
            <de.hdodenhof.circleimageview.CircleImageView
                android:id="@+id/img_soc"
-               android:layout_width="200dp"
+               android:layout_width="150dp"
                android:layout_height="200dp"
                android:layout_centerInParent="true"
                android:layout_gravity="center"
@@ -70,7 +70,7 @@
 
     </LinearLayout>
 
-
+    <!--
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -100,6 +100,9 @@
             android:textSize="12sp" />
 
     </LinearLayout>
+    -->
 
+
+    <include layout="@layout/banniere_societe" />
 
 </RelativeLayout>

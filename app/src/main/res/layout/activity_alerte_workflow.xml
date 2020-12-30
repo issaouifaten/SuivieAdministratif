@@ -44,4 +44,6 @@
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@android:drawable/ic_menu_rotate" />
 
+    <include layout="@layout/banniere_societe"  />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
