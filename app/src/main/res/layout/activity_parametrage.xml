@@ -18,7 +18,7 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/login_title"
+
             android:layout_marginLeft="30dp"
             android:layout_marginTop="70dp"
             android:layout_marginRight="30dp"
@@ -37,8 +37,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="70dp"
+                    android:orientation="horizontal">
 
 
                     <RadioGroup
@@ -52,28 +52,28 @@
                             android:id="@+id/rb_wifi_distant"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:text="Connexion Distante"
+                            android:background="@drawable/rbtn_selector_rouge"
                             android:button="@null"
                             android:checked="true"
-                            android:background="@drawable/rbtn_selector_rouge"
-                            android:textColor="@drawable/rbtn_textcolor_selector_rouge"
-                            android:layout_gravity="center"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:text="Connexion Distante"
+                            android:textColor="@drawable/rbtn_textcolor_selector_rouge" />
 
 
                         <RadioButton
                             android:id="@+id/rb_wifi_local"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
+                            android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:text="Connexion I2S"
+                            android:background="@drawable/rbtn_selector_rouge"
                             android:button="@null"
                             android:checked="false"
-                            android:background="@drawable/rbtn_selector_rouge"
-                            android:textColor="@drawable/rbtn_textcolor_selector_rouge"
-                            android:layout_gravity="center"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:text="Connexion I2S"
+                            android:textColor="@drawable/rbtn_textcolor_selector_rouge" />
 
                     </RadioGroup>
                 </LinearLayout>
@@ -155,12 +155,12 @@
 
         <ImageView
             android:id="@+id/user_profile_photo"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
             android:elevation="4dp"
-            android:src="@drawable/logo_i2s" />
+            android:src="@drawable/i2s_erp_v2" />
 
 
     </RelativeLayout>
