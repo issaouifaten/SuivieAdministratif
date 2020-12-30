@@ -207,7 +207,15 @@ public class MenuServeur extends AppCompatActivity {
                     {
                         img_societe.setImageResource(R.drawable.i2s);
                     }
+                    else  if (NomSociete.contains("CMVI"))
+                    {
+                        img_societe.setImageResource(R.drawable.cmvi_logo);
+                    }
 
+                    else  if (NomSociete.contains("MTD"))
+                    {
+                        img_societe.setImageResource(R.drawable.mtd_logo_transportatio);
+                    }
                     btn_login.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

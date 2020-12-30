@@ -4,8 +4,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingTop="150dp">
+    android:orientation="vertical">
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/btn_workflow"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/rbtn_selector_rouge"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+
+            android:text="ALERTE"
+            android:textColor="@drawable/rbtn_textcolor_selector_rouge" />
+
+        <RadioButton
+            android:id="@+id/bt_alerte"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@drawable/rbtn_selector_rouge"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:text="WORKFLOW"
+
+            android:textColor="@drawable/rbtn_textcolor_selector_rouge"
+
+            />
+
+    </RadioGroup>
 
     <ProgressBar
         android:id="@+id/progressBar2"

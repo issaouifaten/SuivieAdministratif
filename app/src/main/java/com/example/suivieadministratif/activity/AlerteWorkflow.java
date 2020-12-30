@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.example.suivieadministratif.ConnectionClass;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Stock.Etat_Stock;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -19,10 +20,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -47,7 +50,7 @@ public class AlerteWorkflow extends AppCompatActivity {
     final Context co = this;
     String user, password, base, ip;
     GridView gridSituation;
-    TextView txt_datedebut, txt_datefin, txt_total;
+    TextView txt_title;
     String datedebut = "", datefin = "";
     DatePicker datePicker;
     GridView gridEtat;
@@ -56,40 +59,41 @@ public class AlerteWorkflow extends AppCompatActivity {
     Spinner spinRespensable;
     String condition = "";
     Boolean toggle=true;
-
+   String NomSociete;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alerte_workflow);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+          txt_title = (TextView) findViewById(R.id.txt_title);
         setSupportActionBar(toolbar);
         SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
-      final  String NomSociete = pref.getString("NomSociete", "");
+       NomSociete = pref.getString("NomSociete", "");
         setTitle(NomSociete  );
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setTitle(NomSociete  );
-                String t="Liste Workflow";
-                if(toggle) {
-                    FillListWorkflow fillListWorkflow = new FillListWorkflow();
-                    fillListWorkflow.execute("");
-                    t="Liste Workflow";
-                }else{
-                    FillList fillList = new FillList();
-                    fillList.execute("");
-                    t="Liste Alerte";
-                }
-                toggle=!toggle;
-
-                Snackbar.make(view, t, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                setTitle(NomSociete  );
+//                String t="Liste Workflow";
+//                if(toggle) {
+//                    FillListWorkflow fillListWorkflow = new FillListWorkflow();
+//                    fillListWorkflow.execute("");
+//                    t="Liste Workflow";
+//                }else{
+//                    FillList fillList = new FillList();
+//                    fillList.execute("");
+//                    t="Liste Alerte";
+//                }
+//                toggle=!toggle;
+//
+//                Snackbar.make(view, t, Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//
+//
+//            }
+//        });
 
 
 
@@ -107,8 +111,43 @@ public class AlerteWorkflow extends AppCompatActivity {
         base = pref.getString("base", base);
         gridEtat = (GridView) findViewById(R.id.grid_list);
         progressBar = (ProgressBar) findViewById(R.id.progressBar2);
-        FillList fillList = new FillList();
-        fillList.execute("");
+
+
+        RadioButton bt_workflow=(RadioButton)findViewById(R.id.btn_workflow) ;
+        RadioButton bt_alerte=(RadioButton)findViewById(R.id.bt_alerte) ;
+        bt_alerte.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                {
+
+                    FillList fillList=new  FillList();
+                    fillList.execute();
+
+                }
+            }
+        });
+
+        bt_workflow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                {
+
+                    FillListWorkflow fillList=new  FillListWorkflow();
+                    fillList.execute();
+
+                }
+            }
+        });
+
+
+        bt_alerte.setChecked(true);
+
+
+
+
+
     }
 
 
@@ -123,7 +162,7 @@ public class AlerteWorkflow extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             progressBar.setVisibility(View.VISIBLE);
-
+            txt_title.setText(NomSociete+" : Alerte");
 
         }
 
@@ -264,7 +303,7 @@ public class AlerteWorkflow extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             progressBar.setVisibility(View.VISIBLE);
-
+            txt_title.setText(NomSociete+" : Workflow");
 
         }
 

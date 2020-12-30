@@ -242,7 +242,7 @@ public class ListDepense extends AppCompatActivity {
             txt_total.setText(""+total_gloabl);
 
             String[] from = { "CodeCompte", "Libelle", "NumeroMouvement", "TotalPayer", "RaisonSociale","DateMouvement","Caisse"};
-            int[] views = {R.id.txt_codecompte, R.id.txt_libelle,  R.id.txt_num_, R.id.txt_total_ttc,R.id.txt_nom,R.id.txt_date,R.id.txt_caisse};
+            int[] views = {R.id.txt_codecompte, R.id.txt_libelle,  R.id.txt_num_, R.id.txt_total_montant,R.id.txt_nom,R.id.txt_date,R.id.txt_caisse};
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
                     prolist, R.layout.item_list_depense, from,
                     views);
