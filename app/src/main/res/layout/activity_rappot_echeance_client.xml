@@ -15,105 +15,108 @@
         android:gravity="center">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="70dp">
+            android:gravity="bottom"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="70dp"
+            android:orientation="vertical">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:orientation="horizontal">
 
 
-                <RelativeLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
-                    android:gravity="center"
-                    android:layout_weight="1"
                     android:layout_marginRight="2dp"
-                    android:background="@drawable/buttonround">
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonround"
+                    android:gravity="center">
 
 
                     <TextView
                         android:id="@+id/txt_date_debut"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="40dp"
+                        android:layout_toStartOf="@+id/img1"
                         android:background="#00000000"
                         android:gravity="center"
                         android:text="10/10/2019"
-                        android:textStyle="bold"
-                        android:textSize="15dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="40dp"
                         android:textColor="@color/colorPrimary2"
-                        android:layout_toStartOf="@+id/img1"
-                        android:layout_centerVertical="true" />
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
 
                     <ImageView
 
                         android:layout_width="30dp"
                         android:layout_height="40dp"
-                        android:layout_margin="10dp"
                         android:layout_alignParentEnd="true"
+                        android:layout_margin="10dp"
                         android:foregroundGravity="center"
-                        android:src="@drawable/ic_calendar"/>
+                        android:src="@drawable/ic_calendar" />
 
                 </RelativeLayout>
 
-                <RelativeLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
-                    android:gravity="center"
-                    android:layout_weight="1"
                     android:layout_marginRight="2dp"
-                    android:background="@drawable/buttonround">
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonround"
+                    android:gravity="center">
 
 
                     <TextView
                         android:id="@+id/txt_date_fin"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="40dp"
+                        android:layout_toStartOf="@+id/img1"
                         android:background="#00000000"
                         android:gravity="center"
                         android:text="10/10/2019"
-                        android:textStyle="bold"
-                        android:textSize="15dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="40dp"
                         android:textColor="@color/colorPrimary2"
-                        android:layout_toStartOf="@+id/img1"
-                        android:layout_centerVertical="true" />
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
 
 
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="40dp"
-                        android:layout_margin="10dp"
                         android:layout_alignParentEnd="true"
+                        android:layout_margin="10dp"
                         android:foregroundGravity="center"
-                        android:src="@drawable/ic_calendar"/>
+                        android:src="@drawable/ic_calendar" />
 
                 </RelativeLayout>
 
             </LinearLayout>
 
 
-
-            <RelativeLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center">
-
 
 
                 <RelativeLayout
@@ -125,16 +128,16 @@
                         android:id="@+id/lv_list_echeance_client"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin ="5dp"
-                        android:gravity="center"
+                        android:layout_margin="5dp"
                         android:divider="#00FFFFFF"
-                        android:stretchMode="columnWidth"/>
+                        android:gravity="center"
+                        android:stretchMode="columnWidth" />
 
                     <ProgressBar
                         android:id="@+id/pb"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_centerInParent="true"/>
+                        android:layout_centerInParent="true" />
 
 
                     <!--  <ListView
@@ -157,6 +160,15 @@
     </RelativeLayout>
 
     <include layout="@layout/bottom_sheet_tot_echeance_client" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <include layout="@layout/banniere_societe" />
+    </LinearLayout>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
