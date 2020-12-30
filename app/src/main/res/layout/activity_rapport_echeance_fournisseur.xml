@@ -15,6 +15,14 @@
         android:gravity="center">
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+        <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -156,7 +164,19 @@
 
     </RelativeLayout>
 
-    <include layout="@layout/bottom_sheet_tot_echeance_fournisseur" />
+    <include
+        layout="@layout/bottom_sheet_tot_echeance_fournisseur"
+         />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/banniere_societe"
+            />
+    </LinearLayout>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

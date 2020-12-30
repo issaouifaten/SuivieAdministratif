@@ -171,4 +171,15 @@
 
     <include layout="@layout/bottom_reglement_fournisseur" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/banniere_societe"
+            />
+    </LinearLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
