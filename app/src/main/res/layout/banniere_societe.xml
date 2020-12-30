@@ -13,12 +13,12 @@
 
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:layout_marginLeft="10dp"
-        android:src="@drawable/logo_i2s"
+        android:src="@drawable/logoi2s_gris"
         app:civ_border_color="#FDFBFB"
         app:civ_border_width="0.2dp"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,6 +30,7 @@
         android:layout_marginLeft="10dp"
         android:text="@string/licence"
         android:textColor="@color/white"
-        android:textSize="12sp" />
+        android:textSize="14sp"
+        android:textStyle="bold|italic" />
 
 </LinearLayout>
