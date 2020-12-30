@@ -69,7 +69,7 @@ public class ListRetenuClient extends AppCompatActivity {
         //sql session
         SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " :Retenu Client");
+        setTitle(NomSociete + " : Retenu Client");
         connectionClass = new ConnectionClass();
 
         SharedPreferences prefe = getSharedPreferences("usersession", Context.MODE_PRIVATE);

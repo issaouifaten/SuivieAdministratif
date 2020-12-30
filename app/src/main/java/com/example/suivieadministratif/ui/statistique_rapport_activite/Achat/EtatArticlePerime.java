@@ -67,7 +67,7 @@ public class EtatArticlePerime extends AppCompatActivity {
 
         SharedPreferences pref = getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " :Etat Article  Perime");
+        setTitle(NomSociete + " : Etat Article  Périmé");
 
 
         /// CONNECTION BASE

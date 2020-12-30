@@ -67,7 +67,7 @@ public class SuivieArretCaisse extends AppCompatActivity {
 
         SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " :Suivie Arret Caisse");
+        setTitle(NomSociete + " : Suivie Arrêt de Caisse");
 
         connectionClass = new ConnectionClass();
 

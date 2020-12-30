@@ -71,7 +71,7 @@ public class Etat_indic_dispo_stock extends AppCompatActivity {
 
         SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " :Indicateur Disponibilté stock");
+        setTitle(NomSociete + " : Indicateur Disponibilté stock");
 
         connectionClass = new ConnectionClass();
 

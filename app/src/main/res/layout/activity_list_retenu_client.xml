@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/back_echek_2"
-        tools:context=".module.vente.EtatCommande">
+        tools:context=".module.vente.EtatCommande"
+        android:layout_marginBottom="40dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -125,7 +126,8 @@
                     <GridView
                         android:id="@+id/lv_list_historique_bc"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="70dp"/>
 
                 </LinearLayout>
 
@@ -141,37 +143,11 @@
 
         <include layout="@layout/bottom_sheet_devis_vente" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/colorPrimary"
-            android:orientation="horizontal"
-            app:behavior_hideable="false"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-
-            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="17dp"
-                android:layout_height="17dp"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/logo_i2s"
-                app:civ_border_color="#FDFBFB"
-                app:civ_border_width="0.2dp"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:text="@string/licence"
-                android:textColor="@color/white"
-                android:textSize="10dp" />
-
-
-        </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+    <include layout="@layout/banniere_societe" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

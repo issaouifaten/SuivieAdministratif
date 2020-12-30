@@ -62,8 +62,6 @@ public class PieceNonPayeClient extends AppCompatActivity {
     RelativeLayout layoutBottomSheet;
     BottomSheetBehavior sheetBehavior;
 
-
-
     String date_debut = "",date_fin="";
 
     ConnectionClass connectionClass;

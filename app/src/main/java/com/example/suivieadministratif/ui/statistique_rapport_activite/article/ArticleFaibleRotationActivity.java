@@ -4,6 +4,9 @@ import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.task.ArticleFaibleRotationTask;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -17,6 +20,10 @@ public class ArticleFaibleRotationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_faible_rotation);
+
+        SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
+        String NomSociete = pref.getString("NomSociete", "");
+        setTitle(NomSociete + " : Article Faible Rotation");
 
         SearchView search_bar = (SearchView)  findViewById(R.id.search_bar) ;
 

@@ -68,6 +68,13 @@ public class FicheClient extends AppCompatActivity {
         setContentView(R.layout.activity_fiche_client);
 
         connectionClass = new ConnectionClass();
+
+
+        SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
+        String NomSociete = pref.getString("NomSociete", "");
+        setTitle(NomSociete + " : Suivie Client");
+
+
         SharedPreferences prefe = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         SharedPreferences.Editor edte = prefe.edit();
         user = prefe.getString("user", user);

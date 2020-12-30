@@ -16,6 +16,7 @@ import com.example.suivieadministratif.param.Param;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Fournisseur.CommandeFournisseurNonConforme;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Fournisseur.SuivieCommandeFrs;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.StatArticleFragment;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.importation.SuivieDossierImportationActivity;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.sql.Connection;
@@ -80,8 +81,15 @@ public class ListFournisseurTaskForSearchableSpinner extends AsyncTask<String,St
                 res = "Check Your Internet Access!";
             } else {
 
+                String  CONDIION= "  " ;
 
-                String query = "  select  CodeFournisseur  , RaisonSociale  from  Fournisseur \n   where 1 =1 " ;
+                if (origine .equals("SuivieDossierImportationActivity")) {
+
+                    CONDIION = CONDIION+"  and  inactif=0  and Etrange = 1 " ;
+
+                }
+
+                String query = "  select  CodeFournisseur  , RaisonSociale  from  Fournisseur \n   where 1 =1  "+CONDIION ;
 
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
@@ -143,6 +151,18 @@ public class ListFournisseurTaskForSearchableSpinner extends AsyncTask<String,St
                     commandeFrnsNonConformeTask.execute() ;
 
                 }
+
+
+                else  if (origine .equals("SuivieDossierImportationActivity"))
+                {
+                    SuivieDossierImportationActivity.CodeFournisseurSelected = listFournisseur.get(position).getCodeFournisseur() ;
+
+                  /*  CommandeFrnsNonConformeTask commandeFrnsNonConformeTask = new CommandeFrnsNonConformeTask(activity ,  CommandeFournisseurNonConforme.rv_list_cmd_frns_nn_conforme , CommandeFournisseurNonConforme.pb , CommandeFournisseurNonConforme.date_debut, CommandeFournisseurNonConforme.date_fin , CommandeFournisseurNonConforme.CodeFournisseurSelected , CommandeFournisseurNonConforme. CodeRespAdmin) ;
+                    commandeFrnsNonConformeTask.execute() ;*/
+
+                }
+
+                //
 
 
 

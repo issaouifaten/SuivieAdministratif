@@ -61,7 +61,7 @@ public class Etat_Stock extends AppCompatActivity {
         bt_valeurmin=(RadioButton)findViewById(R.id.bt_valeurmin);
         SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " :Etat Stock");
+        setTitle(NomSociete + " : Etat Stock");
 
         connectionClass = new ConnectionClass();
 

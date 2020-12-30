@@ -67,7 +67,7 @@ public class EtatGlobalAchat extends AppCompatActivity {
 
         SharedPreferences pref = getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " :Etat Global Achat");
+        setTitle(NomSociete + " : Etat Global Achat");
 
 
         /// CONNECTION BASE

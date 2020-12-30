@@ -67,7 +67,7 @@ public class EtatJournalArticleAchete extends AppCompatActivity {
 
         SharedPreferences pref = getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " : Journal Article Achete");
+        setTitle(NomSociete + " : Journal Article Acheté");
 
 
         /// CONNECTION BASE
