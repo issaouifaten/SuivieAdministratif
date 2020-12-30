@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".module.Stock.DetailLigneBonSortie">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <include layout="@layout/banniere_societe" />
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
