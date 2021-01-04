@@ -1,13 +1,20 @@
 package com.example.suivieadministratif.module.achat;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+
 import com.example.suivieadministratif.R ;
+import com.example.suivieadministratif.activity.HomeActivity;
+import com.example.suivieadministratif.module.reglementFournisseur.RapportEcheanceFournisseurActivity;
+import com.example.suivieadministratif.module.reglementFournisseur.ReglementFournisseurActivity;
 import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
 import com.example.suivieadministratif.task.HistoriqueBLAchatTask;
 import com.example.suivieadministratif.task.HistoriqueBLTask;
+import com.google.android.material.navigation.NavigationView;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -170,6 +177,97 @@ public class BonLivraisonAchatActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
+
+
+
+        NavigationView nav_menu=findViewById(R.id.nav_view);
+        View headerView = nav_menu.getHeaderView(0);
+
+
+        CardView btn_bon_liv_achat = (CardView) headerView. findViewById(R.id.btn_bon_livraison_achat) ;
+        btn_bon_liv_achat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent1 = new Intent(getApplicationContext() , BonLivraisonAchatActivity.class) ;
+                startActivity(intent1);
+            }
+        });
+
+
+        CardView  btn_bon_cmd_achat = (CardView)  headerView. findViewById(R.id.btn_bon_commande_achat) ;
+        btn_bon_cmd_achat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent  intent1 = new Intent(getApplicationContext() , BonCommandeAchatActivity.class) ;
+                startActivity(intent1);
+            }
+        });
+
+
+
+        CardView  btn_bon_retour_achat = (CardView) headerView. findViewById(R.id.btn_bon_retour_achat) ;
+        btn_bon_retour_achat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent  intent1 = new Intent(getApplicationContext() , BonRetourAchatActivity.class) ;
+                startActivity(intent1);
+            }
+        });
+
+
+        CardView btn_reglement_frns = (CardView)headerView. findViewById(R.id.btn_reg_frns)  ;
+
+        btn_reglement_frns.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent1 = new Intent(getApplicationContext() , ReglementFournisseurActivity.class) ;
+                startActivity(intent1);
+            }
+        });
+
+        CardView   btn_echeance_fournisseur = (CardView) headerView.  findViewById(R.id.btn_echenace_fournisseur);
+        btn_echeance_fournisseur.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent1 = new Intent(getApplicationContext() , RapportEcheanceFournisseurActivity.class) ;
+                startActivity(intent1);
+
+            }
+        });
+//btn_facture_achat
+        CardView   btn_facture_achat = (CardView)  headerView. findViewById(R.id.btn_facture_achat);
+        btn_facture_achat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent1 = new Intent(getApplicationContext() , FactureAchat.class) ;
+                startActivity(intent1);
+
+            }
+        });
+
+
+
+
+        CardView   btn_home= (CardView) headerView.findViewById(R.id.btn_home );
+        btn_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toCaisseRecette  = new Intent(getApplicationContext() , HomeActivity.class) ;
+                startActivity(toCaisseRecette);
+
+            }
+        });
+
+
+
+
+
+
+
 
 
     }

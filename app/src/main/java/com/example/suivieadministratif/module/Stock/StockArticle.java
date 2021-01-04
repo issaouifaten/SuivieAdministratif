@@ -1,8 +1,10 @@
 package com.example.suivieadministratif.module.Stock;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,7 +25,9 @@ import android.widget.Toast;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
+import com.example.suivieadministratif.activity.HomeActivity;
 import com.example.suivieadministratif.param.Param;
+import com.google.android.material.navigation.NavigationView;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -101,6 +105,61 @@ public class StockArticle extends AppCompatActivity {
 
             }
         });
+
+        NavigationView nav_menu=findViewById(R.id.nav_view);
+        View root = nav_menu.getHeaderView(0);
+
+        CardView btn_etat_de_stock = (CardView) root.findViewById(R.id.btn_etat_de_stock) ;
+        btn_etat_de_stock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent2 = new Intent(getApplicationContext(), StockArticle.class);
+                startActivity(intent2);
+            }
+        });
+        //btn_bon_entree
+        CardView  btn_bon_entree = (CardView) root.findViewById(R.id.btn_bon_entree) ;
+        btn_bon_entree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent2 = new Intent(getApplicationContext(), BonEntre.class);
+                startActivity(intent2);
+            }
+        });
+        //btn_bonsortie_de_stock
+        CardView  btn_bonsortie_de_stock = (CardView) root.findViewById(R.id.btn_bonsortie_de_stock) ;
+        btn_bonsortie_de_stock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent2 = new Intent(getApplicationContext(), BonSortie.class);
+                startActivity(intent2);
+            }
+        });
+        //btn_passation_bon_transfert
+
+        CardView  btn_passation_bon_transfert = (CardView) root.findViewById(R.id.btn_passation_bon_transfert) ;
+        btn_passation_bon_transfert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent2 = new Intent(getApplicationContext(), BonTransfertStock.class);
+                startActivity(intent2);
+            }
+        });
+        CardView   btn_home= (CardView) root.findViewById(R.id.btn_home );
+        btn_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toCaisseRecette  = new Intent(getApplicationContext() , HomeActivity.class) ;
+                startActivity(toCaisseRecette);
+
+            }
+        });
+
+
+
+
+
+
 
         ////////////////////////////////////////////////////
  GetDataSpinnerFRS getDataSpinnerFRS=new GetDataSpinnerFRS();

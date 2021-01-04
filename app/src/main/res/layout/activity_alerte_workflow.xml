@@ -8,6 +8,100 @@
     android:fitsSystemWindows="true"
     tools:context=".activity.AlerteWorkflow">
 
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:fitsSystemWindows="true"
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="-159dp"
+        tools:layout_editor_absoluteY="-331dp"
+        tools:openDrawer="start">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/colorPrimary"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txt_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="50dp"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"
+                        android:textStyle="italic" />
+                </LinearLayout>
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/btn_workflow"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/rbtn_selector_rouge"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+
+                        android:text="WORKFLOW"
+                        android:textColor="@drawable/rbtn_textcolor_selector_rouge" />
+
+                    <RadioButton
+                        android:id="@+id/bt_alerte"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/rbtn_selector_rouge"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="ALERTE"
+
+                        android:textColor="@drawable/rbtn_textcolor_selector_rouge"
+
+                        />
+
+                </RadioGroup>
+
+                <ProgressBar
+                    android:id="@+id/progressBar2"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+                <GridView
+                    android:id="@+id/grid_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_margin="5dp"
+                    android:padding="5dp" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,40 +109,6 @@
         android:orientation="vertical">
 
         <include layout="@layout/banniere_societe" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/colorPrimary"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/txt_title"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:paddingLeft="50dp"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"
-                android:textStyle="italic" />
-        </LinearLayout>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_margin="@dimen/fab_margin"
-            android:visibility="gone"
-            app:srcCompat="@android:drawable/ic_menu_rotate" />
-
-        <include layout="@layout/content_alerte_workflow" />
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

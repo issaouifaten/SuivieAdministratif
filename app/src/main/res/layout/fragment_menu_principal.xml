@@ -10,12 +10,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
 
-        <androidx.cardview.widget.CardView
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_margin="10dp"
@@ -36,14 +35,13 @@
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/img_soc"
                     android:layout_width="60dp"
                     android:layout_height="96dp"
                     android:src="@drawable/ic_depot"
-                    app:civ_border_width="1dp"
-                    app:civ_border_color="#FDFBFB"/>
+                    app:civ_border_color="#FDFBFB"
+                    app:civ_border_width="1dp" />
 
 
                 <ImageView
@@ -56,9 +54,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="I2S"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="15dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/colorPrimary"/>
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -68,7 +66,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="120dp"
             android:gravity="center">
 
 
@@ -119,9 +117,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
+                                android:gravity="center"
                                 android:text="Mouvement Vente"
                                 android:textSize="15dp"
-                                android:gravity="center"
                                 android:textStyle="bold" />
 
 
@@ -151,8 +149,6 @@
                             android:orientation="vertical">
 
 
-
-
                             <RelativeLayout
                                 android:layout_width="60dp"
                                 android:layout_height="60dp">
@@ -165,10 +161,12 @@
 
 
                             </RelativeLayout>
+
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="10dp"
                                 android:src="@drawable/line_h" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -184,7 +182,6 @@
 
 
                 </LinearLayout>
-
 
 
                 <LinearLayout
@@ -396,7 +393,6 @@
 
 
         </ScrollView>
-
 
 
     </LinearLayout>

@@ -3,6 +3,7 @@ package com.example.suivieadministratif.module.vente;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -27,8 +28,12 @@ import android.widget.Toast;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
+import com.example.suivieadministratif.activity.HomeActivity;
+import com.example.suivieadministratif.module.reglementClient.RapportEcheanceClientActivity;
+import com.example.suivieadministratif.module.reglementClient.ReglementClientActivity;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -99,6 +104,102 @@ public class EtatFactureVente extends AppCompatActivity {
         lv_list_historique_bc = (GridView) findViewById(R.id.lv_list_historique_bc);
         progressBar = (ProgressBar) findViewById(R.id.pb_bc);
         search_bar_client = (SearchView) findViewById(R.id.search_bar_client);
+        NavigationView nav_menu=findViewById(R.id.nav_view);
+        View root = nav_menu.getHeaderView(0);
+
+
+        CardView btn_devis_vente = (CardView) root.findViewById(R.id.btn_devis_vente)  ;
+        btn_devis_vente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent6 = new Intent(getApplicationContext(), EtatDevisVente.class);
+                startActivity(intent6);
+            }
+        });
+
+
+
+
+        CardView   btn_bon_livraison = (CardView) root.findViewById(R.id.btn_bon_livraison)  ;
+        btn_bon_livraison.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent6 = new Intent(getApplicationContext(), EtatLivraisonActivity.class);
+                startActivity(intent6);
+            }
+        });
+
+
+        CardView btn_bon_retour = (CardView) root.findViewById(R.id.btn_bon_retour)  ;
+        btn_bon_retour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent7 = new Intent(getApplicationContext(), EtatRetourActivity.class);
+                startActivity(intent7);
+            }
+        });
+
+
+        CardView  btn_bon_commande = (CardView) root.findViewById(R.id.btn_bon_commande) ;
+        btn_bon_commande.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent5 = new Intent(getApplicationContext(), EtatCommande.class);
+                startActivity(intent5);
+
+            }
+        });
+        CardView  btn_facture_vente = (CardView) root.findViewById(R.id.btn_facture_vente) ;
+        btn_facture_vente.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent5 = new Intent(getApplicationContext(), EtatFactureVente.class);
+                startActivity(intent5);
+
+            }
+        });
+
+        CardView  btn_mvmnt_vente_service= (CardView) root.findViewById(R.id.btn_mvmnt_vente_service) ;
+        btn_mvmnt_vente_service.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent5 = new Intent(getApplicationContext(), MouvementVenteServiceActivity.class);
+                startActivity(intent5);
+            }
+        });
+
+
+        CardView   btn_reglement_client = (CardView)  root.findViewById(R.id.btn_reg_client)  ;
+        btn_reglement_client.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent  intent1 = new Intent(getApplicationContext() , ReglementClientActivity.class) ;
+                startActivity(intent1);
+            }
+        });
+
+
+        CardView   btn_echeance_client = (CardView)   root.findViewById(R.id.btn_echeance_Client);
+        btn_echeance_client.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent  intent1 = new Intent(getApplicationContext() , RapportEcheanceClientActivity.class) ;
+                startActivity(intent1);
+            }
+        });
+        CardView   btn_home= (CardView) root.findViewById(R.id.btn_home );
+        btn_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toCaisseRecette  = new Intent(getApplicationContext() , HomeActivity.class) ;
+                startActivity(toCaisseRecette);
+
+            }
+        });
+
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");

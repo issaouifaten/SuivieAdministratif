@@ -3,15 +3,19 @@ package com.example.suivieadministratif.module.caisse;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import  com.example.suivieadministratif.R ;
+import com.example.suivieadministratif.activity.HomeActivity;
 import com.example.suivieadministratif.task.EtatDeCaisseTask;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -106,8 +110,39 @@ public class CaisseRecetteActivity extends AppCompatActivity {
 
          //   }
       //  });
+        NavigationView nav_menu=findViewById(R.id.nav_view);
+        View root = nav_menu.getHeaderView(0);
+        CardView btn_mvmnt_caisse_depense  = (CardView) root.findViewById(R.id.btn_mouvement_caisse_depense );
+        btn_mvmnt_caisse_depense.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent toMouvemntCaisseDep  = new Intent(getApplicationContext() , MouvementCaisseDepenseDetailActivity.class) ;
+                startActivity(toMouvemntCaisseDep);
+
+            }
+        });
 
 
+
+        CardView   btn_caisse_recette= (CardView) root.findViewById(R.id.btn_caisse_recette );
+        btn_caisse_recette.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toCaisseRecette  = new Intent(getApplicationContext() , CaisseRecetteActivity.class) ;
+                startActivity(toCaisseRecette);
+
+            }
+        });
+        CardView   btn_home= (CardView) root.findViewById(R.id.btn_home );
+        btn_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toCaisseRecette  = new Intent(getApplicationContext() , HomeActivity.class) ;
+                startActivity(toCaisseRecette);
+
+            }
+        });
 
         layoutBottomSheet = (RelativeLayout) findViewById(R.id.bottom_sheet);
 

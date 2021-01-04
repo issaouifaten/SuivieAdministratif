@@ -10,208 +10,203 @@
 
 
     <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <androidx.drawerlayout.widget.DrawerLayout
+            android:id="@+id/drawer_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            tools:openDrawer="start">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp">
-
-
-                <RelativeLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:layout_marginRight="2dp"
-                    android:background="@drawable/buttonround">
-
-
-                    <TextView
-                        android:id="@+id/txt_date_debut"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:background="#00000000"
-                        android:gravity="center"
-                        android:text="10/10/2019"
-                        android:textStyle="bold"
-                        android:textSize="15dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="40dp"
-                        android:textColor="@color/colorPrimary2"
-                        android:layout_toStartOf="@+id/img1"
-                        android:layout_centerVertical="true" />
-
-                    <ImageView
-
-                        android:layout_width="30dp"
-                        android:layout_height="40dp"
-                        android:layout_margin="10dp"
-                        android:layout_alignParentEnd="true"
-                        android:foregroundGravity="center"
-                        android:src="@drawable/ic_calendar"/>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:layout_marginRight="2dp"
-                    android:background="@drawable/buttonround">
-
-
-                    <TextView
-                        android:id="@+id/txt_date_fin"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:background="#00000000"
-                        android:gravity="center"
-                        android:text="10/10/2019"
-                        android:textStyle="bold"
-                        android:textSize="15dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="40dp"
-                        android:textColor="@color/colorPrimary2"
-                        android:layout_toStartOf="@+id/img1"
-                        android:layout_centerVertical="true" />
-
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="40dp"
-                        android:layout_margin="10dp"
-                        android:layout_alignParentEnd="true"
-                        android:foregroundGravity="center"
-                        android:src="@drawable/ic_calendar"/>
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
-
-            <RadioGroup
-                android:id="@+id/rg_type_caisse"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:orientation="horizontal">
-
-
-                <RadioButton
-                    android:id="@+id/rb_tout"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="@drawable/rbtn_selector_"
-                    android:button="@null"
-                    android:checked="true"
-                    android:gravity="center"
-                    android:text="Tout"
-                    android:textColor="@drawable/rbtn_textcolor_selector_" />
-
-
-                <RadioButton
-                    android:id="@+id/rb_personnel"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="@drawable/rbtn_selector_"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text=" Personnel "
-                    android:textColor="@drawable/rbtn_textcolor_selector_" />
-
-
-                <RadioButton
-                    android:id="@+id/rb_fournisseur"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="@drawable/rbtn_selector_"
-                    android:button="@null"
-                    android:checked="false"
-                    android:gravity="center"
-                    android:text=" Fournisseur "
-                    android:textColor="@drawable/rbtn_textcolor_selector_" />
-
-
-                <RadioButton
-                    android:id="@+id/rb_client"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:background="@drawable/rbtn_selector_"
-                    android:button="@null"
-                    android:checked="false"
-                    android:gravity="center"
-                    android:text=" Client "
-                    android:textColor="@drawable/rbtn_textcolor_selector_" />
-
-
-
-            </RadioGroup>
-
-
-
-
-            <RelativeLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center">
+                android:orientation="vertical">
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal">
 
-                <RelativeLayout
+
+                    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/buttonround"
+                        android:gravity="center">
+
+
+                        <TextView
+                            android:id="@+id/txt_date_debut"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="40dp"
+                            android:layout_toStartOf="@+id/img1"
+                            android:background="#00000000"
+                            android:gravity="center"
+                            android:text="10/10/2019"
+                            android:textColor="@color/colorPrimary2"
+                            android:textSize="15dp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="10dp"
+                            android:foregroundGravity="center"
+                            android:src="@drawable/ic_calendar" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/buttonround"
+                        android:gravity="center">
+
+
+                        <TextView
+                            android:id="@+id/txt_date_fin"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="40dp"
+                            android:layout_toStartOf="@+id/img1"
+                            android:background="#00000000"
+                            android:gravity="center"
+                            android:text="10/10/2019"
+                            android:textColor="@color/colorPrimary2"
+                            android:textSize="15dp"
+                            android:textStyle="bold" />
+
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="10dp"
+                            android:foregroundGravity="center"
+                            android:src="@drawable/ic_calendar" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+
+                <RadioGroup
+                    android:id="@+id/rg_type_caisse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+
+                    <RadioButton
+                        android:id="@+id/rb_tout"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/rbtn_selector_"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="Tout"
+                        android:textColor="@drawable/rbtn_textcolor_selector_" />
+
+
+                    <RadioButton
+                        android:id="@+id/rb_personnel"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/rbtn_selector_"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text=" Personnel "
+                        android:textColor="@drawable/rbtn_textcolor_selector_" />
+
+
+                    <RadioButton
+                        android:id="@+id/rb_fournisseur"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/rbtn_selector_"
+                        android:button="@null"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:text=" Fournisseur "
+                        android:textColor="@drawable/rbtn_textcolor_selector_" />
+
+
+                    <RadioButton
+                        android:id="@+id/rb_client"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/rbtn_selector_"
+                        android:button="@null"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:text=" Client "
+                        android:textColor="@drawable/rbtn_textcolor_selector_" />
+
+
+                </RadioGroup>
+
+
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center">
 
 
-
-
-                    <ListView
-                        android:id="@+id/lv_list_mvmnt_caisse"
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin ="5dp"
-                        android:gravity="center"
-                        android:divider="#00FFFFFF"
-                        android:stretchMode="columnWidth"/>
+                        android:gravity="center">
 
 
+                        <ListView
+                            android:id="@+id/lv_list_mvmnt_caisse"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="5dp"
+                            android:divider="#00FFFFFF"
+                            android:gravity="center"
+                            android:stretchMode="columnWidth" />
 
-                    <ProgressBar
-                        android:id="@+id/pb"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_centerInParent="true"/>
+
+                        <ProgressBar
+                            android:id="@+id/pb"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerInParent="true" />
 
 
-
-                    <!--  <ListView
+                        <!--  <ListView
                           android:id="@+id/lv_list_bon_transfert_en_attente"
                           android:layout_width="match_parent"
                           android:layout_height="match_parent"
@@ -223,17 +218,35 @@
                           -->
 
 
+                    </RelativeLayout>
+
+
                 </RelativeLayout>
 
+            </LinearLayout>
 
-
-            </RelativeLayout>
-
-        </LinearLayout>
+            <com.google.android.material.navigation.NavigationView
+                android:id="@+id/nav_view"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:background="?android:attr/textColorTertiaryInverse"
+                android:fitsSystemWindows="true"
+                app:headerLayout="@layout/menu_caisse" />
+        </androidx.drawerlayout.widget.DrawerLayout>
 
     </RelativeLayout>
 
     <include layout="@layout/bottom_sheet_depense" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <include layout="@layout/banniere_societe" />
+    </LinearLayout>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
