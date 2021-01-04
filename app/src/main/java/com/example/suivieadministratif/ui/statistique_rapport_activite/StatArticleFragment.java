@@ -130,50 +130,6 @@ public class StatArticleFragment extends Fragment {
 
 
 
-   /*
-        CardView  btn_bon_commande = (CardView) root.findViewById(R.id.btn_bon_commande) ;
-        btn_bon_commande.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent5 = new Intent(getActivity(), EtatCommande.class);
-                startActivity(intent5);
-
-            }
-        });
-
-
-        CardView  btn_mvmnt_vente_service= (CardView) root.findViewById(R.id.btn_mvmnt_vente_service) ;
-        btn_mvmnt_vente_service.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent5 = new Intent(getActivity(), MouvementVenteServiceActivity.class);
-                startActivity(intent5);
-            }
-        });
-
-
-        CardView   btn_reglement_client = (CardView)  root.findViewById(R.id.btn_reg_client)  ;
-        btn_reglement_client.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent  intent1 = new Intent(getActivity() , ReglementClientActivity.class) ;
-                startActivity(intent1);
-            }
-        });
-
-
-        CardView   btn_echeance_client = (CardView)   root.findViewById(R.id.btn_echeance_Client);
-        btn_echeance_client.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent  intent1 = new Intent(getActivity() , RapportEcheanceClientActivity.class) ;
-                startActivity(intent1);
-            }
-        });
-
-*/
 
         menuViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override

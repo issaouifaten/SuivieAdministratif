@@ -10,12 +10,9 @@ import android.widget.AdapterView;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.adapter.SpinnerAdapter;
-import com.example.suivieadministratif.model.Depot;
 import com.example.suivieadministratif.model.Fournisseur;
 import com.example.suivieadministratif.param.Param;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Fournisseur.CommandeFournisseurNonConforme;
-import com.example.suivieadministratif.ui.statistique_rapport_activite.Fournisseur.SuivieCommandeFrs;
-import com.example.suivieadministratif.ui.statistique_rapport_activite.StatArticleFragment;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.importation.SuivieDossierImportationActivity;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
@@ -24,7 +21,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class ListFournisseurTaskForSearchableSpinner extends AsyncTask<String,String,String> {
+public class ListDossierTaskForSearchableSpinner extends AsyncTask<String,String,String> {
 
     Connection con;
     String res ;
@@ -32,16 +29,20 @@ public class ListFournisseurTaskForSearchableSpinner extends AsyncTask<String,St
     Activity activity  ;
     SearchableSpinner sp_fournisseur ;
     String origine  ;
+    int cloture    ;
+    String  CodeFournisseur  ;
 
-    ArrayList<String> listRaison = new ArrayList<>() ;
-    ArrayList<Fournisseur> listFournisseur  = new ArrayList<Fournisseur>() ;
+    ArrayList<String> listNumeroDossier = new ArrayList<>() ;
+
 
     ConnectionClass connectionClass;
     String user, password, base, ip;
 
-    public ListFournisseurTaskForSearchableSpinner(Activity activity , SearchableSpinner sp_fournisseur , String origine) {
+    public ListDossierTaskForSearchableSpinner(Activity activity , SearchableSpinner sp_fournisseur ,   int cloture ,  String  CodeFournisseur ,String origine) {
         this.activity = activity  ;
         this.sp_fournisseur = sp_fournisseur  ;
+        this.cloture=cloture  ;
+        this.CodeFournisseur=CodeFournisseur ;
         this.origine=origine ;
 
 
@@ -85,11 +86,32 @@ public class ListFournisseurTaskForSearchableSpinner extends AsyncTask<String,St
 
                 if (origine .equals("SuivieDossierImportationActivity")) {
 
-                    CONDIION = CONDIION+"  and  inactif=0  and Etrange = 1 " ;
+                    if (cloture == 2 )
+                    {
+                        CONDIION=CONDIION+"" ;
+                    }
+                   else
+                    {
+                        CONDIION=CONDIION+"\n  and  Coturer =   "+ cloture+"  " ;
+                    }
+
+
+                   if (CodeFournisseur .equals(""))
+                   {
+                       CONDIION=CONDIION+"" ;
+                   }
+                   else {
+                       CONDIION=CONDIION+"\n  and  CodeFournisseur =   "+ CodeFournisseur+"  " ;
+                   }
+
+
+
 
                 }
 
-                String query = "  select  CodeFournisseur  , RaisonSociale  from  Fournisseur \n   where 1 =1  "+CONDIION ;
+                String query = " select * from  Dossier   where 1=1 " +
+                        CONDIION+
+                        "\nOrder by NumeroDossier desc  \n    "   ;
 
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
@@ -97,22 +119,20 @@ public class ListFournisseurTaskForSearchableSpinner extends AsyncTask<String,St
                 Log.e("query", query) ;
 
 
-                listRaison.clear();
+                listNumeroDossier.clear();
 
 
-                    listFournisseur.add(new Fournisseur("" ,"Tout les fournisseur")) ;
-                    listRaison.add("Tout les fournisseur")  ;
+
+                listNumeroDossier.add("Tout les dossiers")  ;
 
 
                 while ( rs.next() ) {
 
-                    String CodeFournisseur = rs.getString("CodeFournisseur") ;
-                    String RaisonSociale =rs.getString("RaisonSociale") ;
 
-                    Fournisseur  fournisseur  = new Fournisseur(CodeFournisseur ,RaisonSociale) ;
-                    listFournisseur.add(fournisseur) ;
-                    listRaison.add(fournisseur.getRaisonSocial())  ;
-                    Log.e("Fournisseur ", fournisseur.getCodeFournisseur() + " - " +fournisseur.getRaisonSocial()  );
+                    String NumeroDossier =rs.getString("NumeroDossier") ;
+
+                    listNumeroDossier.add( NumeroDossier )  ;
+
 
                 }
             }
@@ -133,7 +153,7 @@ public class ListFournisseurTaskForSearchableSpinner extends AsyncTask<String,St
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
 
-        SpinnerAdapter adapter = new SpinnerAdapter(activity  , listRaison)  ;
+        SpinnerAdapter adapter = new SpinnerAdapter(activity  , listNumeroDossier)  ;
         sp_fournisseur.setAdapter(adapter);
         sp_fournisseur.setSelection(0);
 
@@ -141,30 +161,20 @@ public class ListFournisseurTaskForSearchableSpinner extends AsyncTask<String,St
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 
-                Log.e("Depot_selected"  ,""+listFournisseur.get(position).toString())  ;
+                Log.e("Depot_selected"  ,""+listNumeroDossier.get(position).toString())  ;
 
-                if (origine .equals("CommandeFournisseurNonConforme"))
+
+
+
+                   if (origine .equals("SuivieDossierImportationActivity"))
                 {
-                    CommandeFournisseurNonConforme.CodeFournisseurSelected = listFournisseur.get(position).getCodeFournisseur() ;
+                    SuivieDossierImportationActivity.CodeDossierSelected = listNumeroDossier.get(position)  ;
 
-                    CommandeFrnsNonConformeTask commandeFrnsNonConformeTask = new CommandeFrnsNonConformeTask(activity ,  CommandeFournisseurNonConforme.rv_list_cmd_frns_nn_conforme , CommandeFournisseurNonConforme.pb , CommandeFournisseurNonConforme.date_debut, CommandeFournisseurNonConforme.date_fin , CommandeFournisseurNonConforme.CodeFournisseurSelected , CommandeFournisseurNonConforme. CodeRespAdmin) ;
-                    commandeFrnsNonConformeTask.execute() ;
-
-                }
-
-
-                else  if (origine .equals("SuivieDossierImportationActivity"))
-                {
-                    SuivieDossierImportationActivity.CodeFournisseurSelected = listFournisseur.get(position).getCodeFournisseur() ;
-
-
-                    ListDossierTaskForSearchableSpinner listDossierTaskForSearchableSpinner = new ListDossierTaskForSearchableSpinner(activity,   SuivieDossierImportationActivity.sp_dossier,   SuivieDossierImportationActivity.cloture,  SuivieDossierImportationActivity.CodeFournisseurSelected ,"SuivieDossierImportationActivity");
-                    listDossierTaskForSearchableSpinner.execute();
+                    SuivieDossierImportationTask  suivieDossierImportationTask= new SuivieDossierImportationTask(activity  ,    SuivieDossierImportationActivity.CodeDossierSelected  , SuivieDossierImportationActivity.lv_list_suivie_dossier ,SuivieDossierImportationActivity.pb);
+                    suivieDossierImportationTask.execute() ;
 
 
                 }
-
-
 
             }
             @Override
