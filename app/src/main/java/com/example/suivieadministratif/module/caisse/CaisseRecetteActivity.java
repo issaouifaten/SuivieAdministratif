@@ -112,6 +112,8 @@ public class CaisseRecetteActivity extends AppCompatActivity {
       //  });
         NavigationView nav_menu=findViewById(R.id.nav_view);
         View root = nav_menu.getHeaderView(0);
+
+
         CardView btn_mvmnt_caisse_depense  = (CardView) root.findViewById(R.id.btn_mouvement_caisse_depense );
         btn_mvmnt_caisse_depense.setOnClickListener(new View.OnClickListener() {
             @Override
