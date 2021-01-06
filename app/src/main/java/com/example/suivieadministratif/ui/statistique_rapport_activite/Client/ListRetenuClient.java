@@ -239,7 +239,14 @@ public class ListRetenuClient extends AppCompatActivity {
 
 
 
-            txt_tot_commande.setText(""+total_net);
+
+            final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+            instance.setMinimumFractionDigits(3);
+            instance.setMaximumFractionDigits(3);
+
+
+
+            txt_tot_commande.setText(instance.format(total_net));
             lv_list_historique_bc.setAdapter(ADA);
 
 
@@ -256,12 +263,18 @@ public class ListRetenuClient extends AppCompatActivity {
                 } else {
 
 
-                    String queryTable = " select RetenuFactureVente.CodeClient,\n" +
-                            "    (select RaisonSociale from Client where Client.CodeClient=RetenuFactureVente.CodeClient)as RaisonSociale ,\n" +
-                            "    sum(TotalRetenu ) as Retenu   ,SUM(TotalTTC) AS  Brut ,SUM(TotalTTC)-SUM(TotalRetenu)  as NET from RetenuFactureVente \n" +
-                            "    where DateCreation between '"+date_debut+"' and '"+date_fin+"'\n" +
-                            "    group by RetenuFactureVente.CodeClient\n" +
-                            "    order by RetenuFactureVente.CodeClient";
+                    String queryTable = "  SELECT RetenuFactureVente.DateRetenuVente, LigneRetenuFactureVente.TauxRetenu,\n" +
+                            "  Client.CodeClient, LigneRetenuFactureVente.CodeRetenu, RetenuFactureVente.RaisonSociale, \n" +
+                            " SUM( LigneRetenuFactureVente.MontantRetenu) as Retenu,SUM( LigneRetenuFactureVente.MontantTTC)as Brut,\n" +
+                            " SUM( LigneRetenuFactureVente.MontantTTC)- SUM( LigneRetenuFactureVente.MontantRetenu) as NET\n" +
+                            " FROM   (LigneRetenuFactureVente LigneRetenuFactureVente \n" +
+                            " INNER JOIN RetenuFactureVente RetenuFactureVente ON \n" +
+                            " LigneRetenuFactureVente.NumeroRetenu=RetenuFactureVente.NumeroRetenu)\n" +
+                            "  INNER JOIN Client Client ON RetenuFactureVente.CodeClient=Client.CodeClient\n" +
+                            " WHERE  (RetenuFactureVente.DateRetenuVente>='"+date_debut+"' \n" +
+                            " AND RetenuFactureVente.DateRetenuVente<'"+date_fin+"')\n" +
+                            " group by Client.CodeClient, RetenuFactureVente.RaisonSociale,LigneRetenuFactureVente.TauxRetenu, RetenuFactureVente.DateRetenuVente,LigneRetenuFactureVente.CodeRetenu\n" +
+                            " ORDER BY LigneRetenuFactureVente.TauxRetenu, Client.CodeClient, RetenuFactureVente.DateRetenuVente\n";
 
                     PreparedStatement ps = con.prepareStatement(queryTable);
                     Log.e("RetenuFacturevente", queryTable);

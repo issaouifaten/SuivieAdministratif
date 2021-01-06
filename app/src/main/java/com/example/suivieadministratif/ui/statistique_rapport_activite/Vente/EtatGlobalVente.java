@@ -33,6 +33,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -57,7 +58,7 @@ public class EtatGlobalVente extends AppCompatActivity {
     Spinner  spindepot;
     ProgressBar progressBar;
     String date_debut = "",date_fin="";
-    public TextView txt_date_debut, txt_date_fin;
+    public TextView txt_date_debut, txt_date_fin,txt_tot_commande;
     DatePicker datePicker;
     final Context co = this;
     String conditionFrs="",conditionDepot="",conditionArticle="";
@@ -70,6 +71,9 @@ public class EtatGlobalVente extends AppCompatActivity {
         String NomSociete = pref.getString("NomSociete", "");
         setTitle(NomSociete + " : Etat Global Vente");
 
+        txt_tot_commande = (TextView) findViewById(R.id.txt_tot_commande);
+        TextView txt_label = (TextView) findViewById(R.id.txt_gratuite);
+        txt_label.setText("Total HT");
 
         /// CONNECTION BASE
 
@@ -303,7 +307,7 @@ public class EtatGlobalVente extends AppCompatActivity {
         String z = "  ";
 
         List<Map<String, String>> prolist = new ArrayList<Map<String, String>>();
-
+        float total=0;
         @Override
         protected void onPreExecute() {
             //  Log.e("frs", querylist);
@@ -316,6 +320,15 @@ public class EtatGlobalVente extends AppCompatActivity {
         protected void onPostExecute(String r) {
             progressBar.setVisibility(View.GONE);
             //   Toast.makeText(getApplicationContext(), r, Toast.LENGTH_SHORT).show();
+
+            final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+            instance.setMinimumFractionDigits(3);
+            instance.setMaximumFractionDigits(3);
+
+
+
+            txt_tot_commande.setText(instance.format(total));
+
 
             String[] from = {"CodeArticle", "Quantite",    "TotalAchatHT","NBP","AImporter","Designation","NetImporter"};
             int[] views = {R.id.txt_code_article, R.id.txt_qt, R.id.txt_total_achat, R.id.txt_nbp, R.id.txt_aimporte,R.id.txt_designation_article,R.id.txt_net_importe};
@@ -362,7 +375,7 @@ public class EtatGlobalVente extends AppCompatActivity {
                         datanum.put("NBP", rs.getString("NBP"));
                         datanum.put("AImporter", rs.getString("AImporter"));
                         datanum.put("Quantite", rs.getString("Quantite"));
-
+                        total+=rs.getFloat("TotalAchatHT");
 
                         prolist.add(datanum);
                         z = "Success";

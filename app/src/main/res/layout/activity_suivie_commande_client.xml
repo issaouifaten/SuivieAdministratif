@@ -230,10 +230,35 @@
                         android:padding="10dp">
 
                         <TextView
+                            android:id="@+id/textView31"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="Total HT : "
+                            android:textColor="@color/blue_colisage"
+                            android:textStyle="bold|italic" />
+
+                        <TextView
+                            android:id="@+id/txt_total_ht"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:gravity="right"
+                            android:padding="5dp"
+                            android:text="0.000"
+                            android:textColor="@color/blue_colisage"
+                            android:textSize="20dp"
+                            android:textStyle="bold|italic" />
+
+                        <TextView
                             android:id="@+id/textView2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total : "
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="Total TTC: "
+                            android:textColor="@color/colorPrimary2"
                             android:textStyle="bold|italic" />
 
                         <TextView
@@ -243,6 +268,7 @@
                             android:gravity="right"
                             android:padding="5dp"
                             android:text="0.000"
+                            android:textColor="@color/colorPrimary2"
                             android:textSize="20dp"
                             android:textStyle="bold|italic" />
                     </LinearLayout>

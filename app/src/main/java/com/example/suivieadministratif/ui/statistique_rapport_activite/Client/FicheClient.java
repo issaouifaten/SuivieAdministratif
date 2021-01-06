@@ -21,6 +21,7 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -87,6 +88,8 @@ public class FicheClient extends AppCompatActivity {
 
         final ImageView btdatedebut = (ImageView) findViewById(R.id.btdatedebut);
         final ImageView btdatefin = (ImageView) findViewById(R.id.btdatefin);
+        final RelativeLayout layout_date_fin = (RelativeLayout) findViewById(R.id.layout_date_fin);
+        final RelativeLayout layout_date_debut = (RelativeLayout) findViewById(R.id.layout_date_debut);
 
 
         txtdatedebut = (TextView) findViewById(R.id.edtdatedebut);
@@ -140,12 +143,6 @@ public class FicheClient extends AppCompatActivity {
         });
 
 
-
-
-
-
-
-
         btdatedebut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -181,7 +178,47 @@ public class FicheClient extends AppCompatActivity {
             }
         });
 
-        btdatefin.setOnClickListener(new View.OnClickListener() {
+
+
+
+
+
+       txtdatedebut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                LayoutInflater li = LayoutInflater.from(co);
+                View px = li.inflate(R.layout.diagcalend, null);
+                AlertDialog.Builder alt = new AlertDialog.Builder(co);
+                alt.setIcon(R.drawable.i2s);
+                alt.setView(px);
+                alt.setTitle("date");
+                datePicker = (DatePicker) px.findViewById(R.id.datedebut);
+                alt.setPositiveButton("ok",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface di, int i) {
+
+                                Date d = new Date(datePicker.getYear() - 1900, datePicker.getMonth(), datePicker.getDayOfMonth());
+                                datedebut = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH)
+                                        .format(d);
+
+                                txtdatedebut.setText(datedebut);
+                                FicheClients ficheClients = new FicheClients();
+                                ficheClients.execute("");
+
+
+                            }
+                        });
+
+                AlertDialog dd = alt.create();
+                dd.show();
+
+
+            }
+        });
+
+        txtdatefin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -217,6 +254,40 @@ public class FicheClient extends AppCompatActivity {
         });
 
 
+        btdatefin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                LayoutInflater li = LayoutInflater.from(co);
+                View px = li.inflate(R.layout.diagcalend, null);
+                AlertDialog.Builder alt = new AlertDialog.Builder(co);
+                alt.setIcon(R.drawable.i2s);
+                alt.setView(px);
+                alt.setTitle("date");
+                datePicker = (DatePicker) px.findViewById(R.id.datedebut);
+                alt.setPositiveButton("ok",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface di, int i) {
+
+                                Date d = new Date(datePicker.getYear() - 1900, datePicker.getMonth(), datePicker.getDayOfMonth());
+                                datefin = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH)
+                                        .format(d);
+
+                                txtdatefin.setText(datefin);
+                                FicheClients ficheClients = new FicheClients();
+                                ficheClients.execute("");
+
+
+                            }
+                        });
+
+                AlertDialog dd = alt.create();
+                dd.show();
+
+
+            }
+        });
     }
 
     /////////////********************************************************/////////////

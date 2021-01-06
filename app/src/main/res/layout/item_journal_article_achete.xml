@@ -54,6 +54,7 @@
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:text="(22559988)"
+                            android:textColor="@color/colortxt2"
                             android:textSize="10dp"
                             android:typeface="serif" />
 
@@ -65,27 +66,28 @@
                             <TextView
                                 android:id="@+id/txt_des"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginRight="10dp"
                                 android:layout_weight="1"
                                 android:text="designation"
-                                android:textColor="@color/blue_ocean"
-                                android:textSize="14sp"
+                                android:textColor="@color/blue_colisage"
+                                android:textSize="12sp"
                                 android:textStyle="bold|italic"
                                 android:typeface="monospace" />
 
                             <TextView
                                 android:id="@+id/txt_qt"
-                                android:layout_width="wrap_content"
+                                android:layout_width="60dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="2dp"
                                 android:background="@drawable/buttonround"
+                                android:gravity="center"
                                 android:padding="3dp"
                                 android:text=" 2000"
                                 android:textAllCaps="false"
-                                android:textColor="@color/blue_colisage" />
+                                android:textColor="@color/ripple_lite" />
 
                         </LinearLayout>
 

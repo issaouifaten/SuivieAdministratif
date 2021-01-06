@@ -50,7 +50,7 @@ public class PieceNonPayeClient extends AppCompatActivity {
     ProgressBar progressBar;
     SearchView search_bar_client;
 
-    public TextView txt_date_debut, txt_date_fin;
+    public TextView txt_date_debut, txt_date_fin,txt_tot_restant;
     DatePicker datePicker;
     final Context co = this;
     String user, password, base, ip;
@@ -91,6 +91,7 @@ public class PieceNonPayeClient extends AppCompatActivity {
         txt_tot_commande = (TextView) findViewById(R.id.txt_tot_commande);
         txt_date_debut = findViewById(R.id.txt_date_debut);
         txt_date_fin = findViewById(R.id.txt_date_fin);
+        txt_tot_restant = findViewById(R.id.txt_tot_restant);
 
 
         lv_list_historique_bc = (GridView) findViewById(R.id.lv_list_historique_bc);
@@ -220,7 +221,7 @@ public class PieceNonPayeClient extends AppCompatActivity {
 
 
         List<Map<String, String>> prolist = new ArrayList<Map<String, String>>();
-        float totalMontant=0;
+        float totalMontant=0,totalrestant=0;
 
 
         @Override
@@ -244,7 +245,22 @@ public class PieceNonPayeClient extends AppCompatActivity {
 
 
 
-            txt_tot_commande.setText(""+totalMontant);
+
+            final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+            instance.setMinimumFractionDigits(3);
+            instance.setMaximumFractionDigits(3);
+
+
+
+            txt_tot_commande.setText(instance.format(totalMontant));
+            txt_tot_restant.setText(instance.format(totalrestant));
+
+
+
+
+
+
+
             lv_list_historique_bc.setAdapter(ADA);
 
 
@@ -285,9 +301,11 @@ public class PieceNonPayeClient extends AppCompatActivity {
                         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
                         datanum.put("DatePiece", df.format(rs.getDate("DatePiece")));
-                        totalMontant+=rs.getFloat("Debit");
-                        prolist.add(datanum);
-
+                        if(rs.getFloat("Debit")-rs.getFloat("Credit")!=0) {
+                            totalrestant+=restant;
+                            totalMontant += rs.getFloat("Debit");
+                            prolist.add(datanum);
+                        }
 
                         test = true;
 

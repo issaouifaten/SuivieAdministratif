@@ -1,5 +1,6 @@
 package com.example.suivieadministratif.ui.statistique_rapport_activite.Achat;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,6 +21,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,11 +29,14 @@ import android.widget.TextView;
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.param.Param;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -56,10 +61,14 @@ public class EtatJournalArticleAchete extends AppCompatActivity {
     Spinner  spindepot;
     ProgressBar progressBar;
     String date_debut = "",date_fin="";
-    public TextView txt_date_debut, txt_date_fin;
+    public TextView txt_date_debut, txt_date_fin,txt_tot_commande;
     DatePicker datePicker;
     final Context co = this;
     String conditionFrs="",conditionDepot="",conditionArticle="";
+    FloatingActionButton fab_arrow;
+    RelativeLayout layoutBottomSheet;
+    BottomSheetBehavior sheetBehavior;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +101,10 @@ public class EtatJournalArticleAchete extends AppCompatActivity {
         spindepot=(Spinner)findViewById(R.id.spin_depot);
         GetDataSpinner getDataSpinner=new GetDataSpinner();
         getDataSpinner.execute("");
+     txt_tot_commande = (TextView) findViewById(R.id.txt_tot_commande);
+     TextView txt_label = (TextView) findViewById(R.id.txt_gratuite);
+   txt_label.setText("Total TTC");
+
 
         txt_date_debut = findViewById(R.id.txt_date_debut);
         txt_date_fin = findViewById(R.id.txt_date_fin);
@@ -287,6 +300,25 @@ public class EtatJournalArticleAchete extends AppCompatActivity {
             }
         });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
 
@@ -302,7 +334,7 @@ public class EtatJournalArticleAchete extends AppCompatActivity {
         String z = "  ";
 
         List<Map<String, String>> prolist = new ArrayList<Map<String, String>>();
-
+float total=0;
         @Override
         protected void onPreExecute() {
             //  Log.e("frs", querylist);
@@ -316,6 +348,13 @@ public class EtatJournalArticleAchete extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
             //   Toast.makeText(getApplicationContext(), r, Toast.LENGTH_SHORT).show();
 
+            final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+            instance.setMinimumFractionDigits(3);
+            instance.setMaximumFractionDigits(3);
+
+
+
+            txt_tot_commande.setText(instance.format(total));
             String[] from = {"CodeArticle", "Quantite", "MontantHT",  "MontantTTC","TotalRemise","MontantFodec","Designation"};
             int[] views = {R.id.txt_code, R.id.txt_qt, R.id.txt_totalht, R.id.txt_ttc, R.id.txt_remise,R.id.txt_fodec,R.id.txt_des};
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
@@ -363,7 +402,7 @@ public class EtatJournalArticleAchete extends AppCompatActivity {
                         datanum.put("MontantFodec", rs.getString("MontantFodec"));
                         datanum.put("Quantite", rs.getString("Quantite"));
                         datanum.put("MontantHT", rs.getString("MontantHT"));
-
+                        total+=rs.getFloat("MontantTTC");
                         prolist.add(datanum);
                         z = "Success";
                     }

@@ -368,7 +368,7 @@ public class EtatJournalArticleVendu extends AppCompatActivity {
                             ",(select  Nom from Respensable where Respensable.CodeRespensable=Vue_ListeVenteGlobal.CodeRepresentant)as REPRESENTANT \n" +
                             ",(select  Designation from Article where Article.CodeArticle=Vue_ListeVenteGlobal.CodeArticle)as DesignationArticle " +
                             " from Vue_ListeVenteGlobal " +
-                            "where DatePiece in('"+datedebut+"','"+datefin+"') "+condition+conditionclient+")" +
+                            "where DatePiece between '"+datedebut+"' and '"+datefin+"'  "+condition+conditionclient+")" +
                             " as t "+ conditionArticle+" order by NumeroPiece, CodeClient";
 
                     PreparedStatement ps = con.prepareStatement(queryTable);

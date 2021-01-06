@@ -36,6 +36,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,7 +53,7 @@ public class SuivieCommandeClient extends AppCompatActivity {
     final Context co = this;
     String user, password, base, ip;
     GridView gridSituation;
-    TextView txt_datedebut, txt_datefin, txt_total;
+    TextView txt_datedebut, txt_datefin, txt_total,txt_total_ht;
     String datedebut = "", datefin = "";
     DatePicker datePicker;
     GridView gridEtat;
@@ -85,6 +86,7 @@ public class SuivieCommandeClient extends AppCompatActivity {
         password = pref.getString("password", password);
         base = pref.getString("base", base);
 
+        txt_total_ht = (TextView) findViewById(R.id.txt_total_ht);
         txt_datedebut = (TextView) findViewById(R.id.txt_date_debut);
         txt_datefin = (TextView) findViewById(R.id.txt_date_fin);
         txt_total = (TextView) findViewById(R.id.txt_total);
@@ -250,7 +252,7 @@ public class SuivieCommandeClient extends AppCompatActivity {
 
         ArrayList<Integer> list = new ArrayList<Integer>();
         List<Map<String, String>> prolist = new ArrayList<Map<String, String>>();
-        float total_gloabl = 0;
+        float total_gloabl = 0,total_MontantHT=0;
 
         @Override
         protected void onPreExecute() {
@@ -264,7 +266,23 @@ public class SuivieCommandeClient extends AppCompatActivity {
         protected void onPostExecute(String r) {
             progressBar.setVisibility(View.GONE);
             condition = "";
-            txt_total.setText("" + total_gloabl);
+
+
+
+            final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+            instance.setMinimumFractionDigits(3);
+            instance.setMaximumFractionDigits(3);
+            txt_total.setText(instance.format(total_gloabl));
+            txt_total_ht.setText(instance.format(total_MontantHT));
+
+
+
+
+
+
+
+
+
 
             String[] from = {"CodeClient", "RaisonSociale", "QuantiteLivrer", "QuantiteNonLivrer",
                     "NumeroBonCommandeVente", "MontantTTC", "CodeForceVente", "Quantite", "CodeArticle", "DesignationArticle", "DateLivraisonCommande"};
@@ -364,7 +382,7 @@ public class SuivieCommandeClient extends AppCompatActivity {
                 } else {
 
 
-                    String queryTable = " SELECT CodeClient,BonCommandeVente.NumeroBonCommandeVente,MontantTTC, " +
+                    String queryTable = " select * from( SELECT CodeClient,BonCommandeVente.NumeroBonCommandeVente,MontantTTC, " +
                             "convert(date,BonCommandeVente.DateBonCommandeVente,103)as DateBonCommandeVente,\n" +
                             "BonCommandeVente.RaisonSociale, LigneBonCommandeVente.DesignationArticle, \n" +
                             " convert(numeric(18,0),LigneBonCommandeVente.Quantite)as Quantite , " +
@@ -380,7 +398,7 @@ public class SuivieCommandeClient extends AppCompatActivity {
                             "ON LigneBonCommandeVente.NumeroBonCommandeVente=BonCommandeVente.NumeroBonCommandeVente\n" +
                             "WHERE  BonCommandeVente.DateBonCommandeVente between '" + datedebut + "' and '" + datefin + "' \n" +
                             "AND  NOT (BonCommandeVente.NumeroEtat=N'E00' OR BonCommandeVente.NumeroEtat=N'E22' \n" +
-                            "OR BonCommandeVente.NumeroEtat=N'E40')\n"+conditionclient+condition+conditionArticle;
+                            "OR BonCommandeVente.NumeroEtat=N'E40')\n"+conditionclient+condition+conditionArticle+" )as t where  not(Quantite=QuantiteLivrer) ";
 
                     PreparedStatement ps = con.prepareStatement(queryTable);
                     Log.e("query", queryTable);
@@ -396,6 +414,7 @@ public class SuivieCommandeClient extends AppCompatActivity {
                         datanum.put("RaisonSociale", rs.getString("RaisonSociale"));
                         datanum.put("NumeroBonCommandeVente", rs.getString("NumeroBonCommandeVente"));
                         datanum.put("MontantTTC", rs.getString("MontantTTC"));
+                        datanum.put("MontantHT", rs.getString("MontantHT"));
                         datanum.put("Quantite", rs.getString("Quantite"));
                         datanum.put("CodeArticle", rs.getString("CodeArticle"));
                         datanum.put("CodeForceVente", rs.getString("CodeForceVente"));
@@ -414,6 +433,7 @@ public class SuivieCommandeClient extends AppCompatActivity {
                         posi++;
 
                         total_gloabl += rs.getFloat("MontantTTC");
+                        total_MontantHT += rs.getFloat("MontantHT");
                         prolist.add(datanum);
 
 

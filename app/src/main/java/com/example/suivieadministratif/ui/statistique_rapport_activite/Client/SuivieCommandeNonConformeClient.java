@@ -35,6 +35,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -264,7 +265,16 @@ public class SuivieCommandeNonConformeClient extends AppCompatActivity {
         protected void onPostExecute(String r) {
             progressBar.setVisibility(View.GONE);
             condition = "";
-            txt_total.setText("" + total_gloabl);
+
+
+            final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+            instance.setMinimumFractionDigits(3);
+            instance.setMaximumFractionDigits(3);
+            txt_total.setText(instance.format(total_gloabl));
+
+
+
+
 
             String[] from = {"CodeClient", "RaisonSociale", "QuantiteBC", "QuantiteBL","NumeroBonLivraisonVente","DateBonCommandeVente","mnt","Observation",
                     "NumeroBonCommandeVente", "MontantHT", "CodeForceVente", "QuantiteStock", "CodeArticle", "DesignationArticle", "DateBonLivraisonVente"};
@@ -334,7 +344,7 @@ public class SuivieCommandeNonConformeClient extends AppCompatActivity {
                     txt_quantite_cmd.setText(QuantiteBC);
                     txt_codearticle.setText(CodeArticle);
                     txt_designation_article.setText(DesignationArticle);
-                    txt_montant_cmd.setText(MontantHT);
+                    txt_montant_cmd.setText(mnt);
                     txt_quantite_article.setText(QuantiteStock);
                     txt_code.setText(CodeClient);
                     txt_designation.setText(RaisonSociale);
@@ -430,7 +440,7 @@ public class SuivieCommandeNonConformeClient extends AppCompatActivity {
                         }
                         posi++;
 
-                        total_gloabl += rs.getFloat("MontantHT");
+                        total_gloabl += rs.getFloat("mnt");
                         prolist.add(datanum);
 
 

@@ -59,7 +59,7 @@ public class PieceNonPayeFrs extends AppCompatActivity {
     String user, password, base, ip;
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     NumberFormat formatter = new DecimalFormat("00");
-    public static TextView txt_tot_commande;
+    public static TextView txt_tot_commande,txt_tot_restant;
 
     FloatingActionButton fab_arrow;
     RelativeLayout layoutBottomSheet;
@@ -96,6 +96,7 @@ public class PieceNonPayeFrs extends AppCompatActivity {
         txt_tot_commande = (TextView) findViewById(R.id.txt_tot_commande);
         txt_date_debut = findViewById(R.id.txt_date_debut);
         txt_date_fin = findViewById(R.id.txt_date_fin);
+        txt_tot_restant = findViewById(R.id.txt_tot_restant);
 
 
         lv_list_historique_bc = (GridView) findViewById(R.id.lv_list_historique_bc);
@@ -225,7 +226,7 @@ public class PieceNonPayeFrs extends AppCompatActivity {
 
 
         List<Map<String, String>> prolist = new ArrayList<Map<String, String>>();
-        float totalMontant=0;
+        float totalMontant=0,total_restant=0;
 
 
         @Override
@@ -249,7 +250,14 @@ public class PieceNonPayeFrs extends AppCompatActivity {
 
 
 
-            txt_tot_commande.setText(""+totalMontant);
+
+            final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+            instance.setMinimumFractionDigits(3);
+            instance.setMaximumFractionDigits(3);
+            txt_tot_commande.setText(instance.format(totalMontant));
+            txt_tot_restant.setText(instance.format(total_restant));
+
+
             lv_list_historique_bc.setAdapter(ADA);
 
 
@@ -273,7 +281,7 @@ public class PieceNonPayeFrs extends AppCompatActivity {
 
                     ResultSet rs = ps.executeQuery();
                     z = "e";
-
+                    totalMontant=0;total_restant=0;
                     while (rs.next()) {
 
                         Map<String, String> datanum = new HashMap<String, String>();
@@ -290,10 +298,13 @@ public class PieceNonPayeFrs extends AppCompatActivity {
                         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
                         datanum.put("DatePiece", df.format(rs.getDate("DatePiece")));
-                        totalMontant+=rs.getFloat("Debit");
-                        prolist.add(datanum);
 
 
+                        if(rs.getFloat("Debit")-rs.getFloat("Credit")!=0) {
+                            prolist.add(datanum);
+                            totalMontant+=rs.getFloat("Debit");
+                            total_restant+=restant;
+                        }
                         test = true;
 
 

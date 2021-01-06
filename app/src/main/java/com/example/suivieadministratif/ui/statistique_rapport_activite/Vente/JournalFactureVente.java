@@ -30,6 +30,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,22 +43,23 @@ import java.util.Map;
 public class JournalFactureVente extends AppCompatActivity {
 
     String user, password, base, ip;
-    String CodeSociete, NomUtilisateur ;
-    String   CodeDepot = "", LibelleDepot = "";
+    String CodeSociete, NomUtilisateur;
+    String CodeDepot = "", LibelleDepot = "";
     Spinner spinfrs;
     ConnectionClass connectionClass;
     GridView gridArticle;
 
-    String querysearch="";
-    String Frs="Tout";
-    ArrayList<String> datalibelle,datacode,dataLibelleFRS,datacodeFRS;
-    Spinner  spindepot;
+    String querysearch = "";
+    String Frs = "Tout";
+    ArrayList<String> datalibelle, datacode, dataLibelleFRS, datacodeFRS;
+    Spinner spindepot;
     ProgressBar progressBar;
-    String date_debut = "",date_fin="";
-    public TextView txt_date_debut, txt_date_fin;
+    String date_debut = "", date_fin = "";
+    public TextView txt_date_debut, txt_date_fin, txt_remise, txt_ht, txt_fodec, txt_date_piece, txt_rs, txt_ttc, txt_fiscal;
     DatePicker datePicker;
     final Context co = this;
-    String conditionFrs="",conditionDepot="",conditionArticle="";
+    String conditionFrs = "", conditionDepot = "", conditionArticle = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,18 +85,22 @@ public class JournalFactureVente extends AppCompatActivity {
         SharedPreferences.Editor edte = prefe.edit();
         NomUtilisateur = prefe.getString("NomUtilisateur", NomUtilisateur);
         CodeSociete = prefe.getString("CodeSociete", CodeSociete);
-        progressBar=(ProgressBar)findViewById(R.id.progressBar);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         progressBar.setVisibility(View.GONE);
 
 
-
         txt_date_debut = findViewById(R.id.txt_date_debut);
         txt_date_fin = findViewById(R.id.txt_date_fin);
+        txt_remise = findViewById(R.id.txt_remise);
+        txt_ht = findViewById(R.id.txt_ht);
+        txt_fodec = findViewById(R.id.txt_fodec);
+        txt_ttc = findViewById(R.id.txt_ttc);
+        txt_fiscal = findViewById(R.id.txt_fiscal);
         spinfrs = (Spinner) findViewById(R.id.spinner);
 
-        gridArticle=(GridView)findViewById(R.id.grid_article) ;
-        Button btadd=(Button)findViewById(R.id.btadd);
+        gridArticle = (GridView) findViewById(R.id.grid_article);
+        Button btadd = (Button) findViewById(R.id.btadd);
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -173,13 +179,8 @@ public class JournalFactureVente extends AppCompatActivity {
         });
 
 
-
-
-
-
-
         ////////////////////////////////////////////////////
-        GetDataSpinnerClient GetDataSpinnerClient=new GetDataSpinnerClient();
+        GetDataSpinnerClient GetDataSpinnerClient = new GetDataSpinnerClient();
         GetDataSpinnerClient.execute("");
         spinfrs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -188,15 +189,13 @@ public class JournalFactureVente extends AppCompatActivity {
                                        int position, long id) {
 
 
-
                 Frs = datacodeFRS.get(position).toString();
 
-                if(position==0) {
-                    conditionFrs=" ";
+                if (position == 0) {
+                    conditionFrs = " ";
 
-                }
-                else {
-                    conditionFrs=" and CodeClient='"+ Frs+ "'";
+                } else {
+                    conditionFrs = " and CodeClient='" + Frs + "'";
                 }
 
 
@@ -215,26 +214,14 @@ public class JournalFactureVente extends AppCompatActivity {
         });
 
 
-
-
-
-
-
     }
-
-
-
-
-
-
-
-
 
 
     public class FillList extends AsyncTask<String, String, String> {
         String z = "  ";
 
         List<Map<String, String>> prolist = new ArrayList<Map<String, String>>();
+        float tot_remise = 0, tot_ht = 0, tot_fodec = 0, tot_ttc = 0, tot_fiscal = 0;
 
         @Override
         protected void onPreExecute() {
@@ -248,9 +235,18 @@ public class JournalFactureVente extends AppCompatActivity {
         protected void onPostExecute(String r) {
             progressBar.setVisibility(View.GONE);
             //   Toast.makeText(getApplicationContext(), r, Toast.LENGTH_SHORT).show();
+            final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+            instance.setMinimumFractionDigits(3);
+            instance.setMaximumFractionDigits(3);
 
-            String[] from = {"NumeroPiece", "TotalTVA",    "TotalRemiseg","TotalHT","TotalFodec","DatePiece","RaisonSociale","TotalTTC","TimbreFiscal"};
-            int[] views = {R.id.txt_num_piece, R.id.txt_qt, R.id.txt_remise, R.id.txt_ht, R.id.txt_fodec,R.id.txt_date_piece,R.id.txt_rs,R.id.txt_ttc,R.id.txt_fiscal};
+
+
+            txt_fiscal.setText(instance.format(tot_fiscal));
+            txt_ht.setText(instance.format(tot_ht));
+            txt_fodec.setText(instance.format(tot_fodec));
+            txt_ttc.setText(instance.format(tot_ttc));
+            String[] from = {"NumeroPiece", "TotalTVA", "TotalRemiseg", "TotalHT", "TotalFodec", "DatePiece", "RaisonSociale", "TotalTTC", "TimbreFiscal"};
+            int[] views = {R.id.txt_num_piece, R.id.txt_qt, R.id.txt_remise, R.id.txt_ht, R.id.txt_fodec, R.id.txt_date_piece, R.id.txt_rs, R.id.txt_ttc, R.id.txt_fiscal};
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
                     prolist, R.layout.item_journal_facture_achat, from,
                     views);
@@ -267,13 +263,13 @@ public class JournalFactureVente extends AppCompatActivity {
                 if (con == null) {
                     z = "Error in connection with SQL server";
                 } else {
-                    querysearch="select NumeroPiece,convert(date,DatePiece,103) as DatePiece ,RaisonSociale,TotalRemiseg,TotalHT,TotalFodec,TotalTVA," +
+                    querysearch = "select NumeroPiece,convert(date,DatePiece,103) as DatePiece ,RaisonSociale,TotalRemiseg,TotalHT,TotalFodec,TotalTVA," +
                             "TimbreFiscal,TotalTTC" +
-                            " from Vue_ListeVenteJournalier where DatePiece between '"+date_debut+"' and '"+date_fin+"'"+conditionFrs +
+                            " from Vue_ListeVenteJournalier where DatePiece between '" + date_debut + "' and '" + date_fin + "'" + conditionFrs +
                             " ";
 
                     PreparedStatement ps = con.prepareStatement(querysearch);
-                    Log.e("querysearch",querysearch);
+                    Log.e("querysearch", querysearch);
                     ResultSet rs = ps.executeQuery();
 
                     ArrayList data1 = new ArrayList();
@@ -290,6 +286,14 @@ public class JournalFactureVente extends AppCompatActivity {
                         datanum.put("TotalTTC", rs.getString("TotalTTC"));
 
 
+
+
+                        tot_remise += rs.getFloat("TotalRemiseg");
+                        tot_ht += rs.getFloat("TotalHT");
+                        tot_fodec += rs.getFloat("TotalFodec");
+                        tot_ttc += rs.getFloat("TotalTTC");
+                        tot_fiscal += rs.getFloat("TimbreFiscal");
+
                         prolist.add(datanum);
                         z = "Success";
                     }
@@ -305,15 +309,6 @@ public class JournalFactureVente extends AppCompatActivity {
             return z;
         }
     }
-
-
-
-
-
-
-
-
-
 
 
     public class GetDataSpinnerClient extends AsyncTask<String, String, String> {
@@ -342,11 +337,8 @@ public class JournalFactureVente extends AppCompatActivity {
             spinfrs.setAdapter(adapter);
 
 
-
-
-
-
         }
+
         @Override
         protected String doInBackground(String... params) {
 
@@ -360,7 +352,7 @@ public class JournalFactureVente extends AppCompatActivity {
                     dataLibelleFRS = new ArrayList<String>();
                     datacodeFRS = new ArrayList<String>();
 
-                    String querydepot="select RaisonSociale, CodeClient from Client";
+                    String querydepot = "select RaisonSociale, CodeClient from Client";
 
                     stmt = con.prepareStatement(querydepot);
                     ResultSet rsss = stmt.executeQuery();
@@ -368,9 +360,9 @@ public class JournalFactureVente extends AppCompatActivity {
                     dataLibelleFRS.add("Tout");
                     datacodeFRS.add("");
                     while (rsss.next()) {
-                        String libelle= rsss.getString("RaisonSociale");
+                        String libelle = rsss.getString("RaisonSociale");
                         dataLibelleFRS.add(libelle);
-                        String CodeFournisseur= rsss.getString("CodeClient");
+                        String CodeFournisseur = rsss.getString("CodeClient");
                         datacodeFRS.add(CodeFournisseur);
 
                     }
@@ -386,12 +378,6 @@ public class JournalFactureVente extends AppCompatActivity {
             return z;
         }
     }
-
-
-
-
-
-
 
 
 }
