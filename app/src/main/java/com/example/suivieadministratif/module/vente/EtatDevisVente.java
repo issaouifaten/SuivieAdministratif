@@ -388,7 +388,7 @@ public class EtatDevisVente extends AppCompatActivity {
                     String queryTable = "select NumeroDevisVente,DateCreation,NomUtilisateur,CodeClient,RaisonSociale,TotalTTC,Etat.Libelle as Etat\n" +
                             " from DevisVente\n" +
                             " inner join Etat on Etat.NumeroEtat=DevisVente.NumeroEtat\n" +
-                            " where DateCreation between '"+date_debut+"'and '"+date_fin+"' order by DateCreation desc";
+                            " where DateCreation between '"+date_debut+"'and '"+date_fin+"' order by NumeroDevisVente desc";
 
                     PreparedStatement ps = con.prepareStatement(queryTable);
                     Log.e("queryDevisVente", queryTable);

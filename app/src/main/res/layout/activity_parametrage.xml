@@ -79,7 +79,6 @@
                 </LinearLayout>
 
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -97,7 +96,6 @@
                         android:text="192.168.1.24" />
 
                 </LinearLayout>
-
 
 
                 <EditText
@@ -135,19 +133,17 @@
                     android:text="ideal2s" />
 
 
-
                 <Button
                     android:id="@+id/add"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
-                    android:padding="5dp"
                     android:background="@color/colorPrimary"
+                    android:padding="5dp"
                     android:text="valider Configuration"
                     android:textColor="@android:color/white"
                     android:textSize="15dp"
-                    android:textStyle="normal"/>
-
+                    android:textStyle="normal" />
 
 
             </LinearLayout>
