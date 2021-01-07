@@ -10,10 +10,10 @@ import android.widget.AdapterView;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.adapter.SpinnerAdapter;
-import com.example.suivieadministratif.model.Fournisseur;
+import com.example.suivieadministratif.model.Contact;
 import com.example.suivieadministratif.model.ResponsableAdministration;
 import com.example.suivieadministratif.param.Param;
-import com.example.suivieadministratif.ui.statistique_rapport_activite.Fournisseur.CommandeFournisseurNonConforme;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.StatSRMFragment;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.sql.Connection;
@@ -21,24 +21,25 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class ListRespAdministrationTaskForSearchableSpinner extends AsyncTask<String,String,String> {
+public class ListResponsableTaskForSearchableSpinner extends AsyncTask<String,String,String> {
 
     Connection con;
     String res ;
 
     Activity activity  ;
-    SearchableSpinner sp_resp_admin ;
+    SearchableSpinner sp_responsable ;
+
     String origine  ;
 
-    ArrayList<String> listNom= new ArrayList<>() ;
-    ArrayList<ResponsableAdministration> listResp = new ArrayList<ResponsableAdministration>() ;
+    ArrayList<String> listNomResponsable = new ArrayList<>() ;
+    ArrayList<ResponsableAdministration> listResponsable = new ArrayList<ResponsableAdministration>() ;
 
     ConnectionClass connectionClass;
     String user, password, base, ip;
 
-    public ListRespAdministrationTaskForSearchableSpinner(Activity activity , SearchableSpinner sp_resp_admin , String origine) {
+    public ListResponsableTaskForSearchableSpinner(Activity activity , SearchableSpinner sp_responsable ,  String origine) {
         this.activity = activity  ;
-        this.sp_resp_admin = sp_resp_admin  ;
+        this.sp_responsable = sp_responsable  ;
         this.origine=origine ;
 
 
@@ -78,11 +79,18 @@ public class ListRespAdministrationTaskForSearchableSpinner extends AsyncTask<St
                 res = "Check Your Internet Access!";
             } else {
 
+                String  CONDIION= "  " ;
 
-                String query = "  \n" +
-                        "select  CodeRespensable , Nom  \n" +
-                        "from Respensable \n" +
-                        "where CodeRespensable in (select MatriculePersonnel from  FonctionnaliterPersonnel where Actif=1 and Autoriser= 1 ) " ;
+                if (origine .equals("dialogSuivieRelationFournisseur")) {
+
+
+
+                }
+
+                String query = "   select CodeRespensable ,Nom  from  Respensable " +
+                        "\n   where 1 =1  "+CONDIION +
+                        "\n Order by CodeRespensable  "
+                     ;
 
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
@@ -90,11 +98,11 @@ public class ListRespAdministrationTaskForSearchableSpinner extends AsyncTask<St
                 Log.e("query", query) ;
 
 
-                listNom.clear();
+                listResponsable.clear();
+                listNomResponsable.clear();
 
-
-                    listResp.add(new ResponsableAdministration("" ,"Tout les Responsable")) ;
-                listNom.add("Tout les Responsable")  ;
+                listResponsable.add(new ResponsableAdministration("" ,"Tout les Responsables")) ;
+                listNomResponsable.add("Tout les Responsables")  ;
 
 
                 while ( rs.next() ) {
@@ -102,10 +110,12 @@ public class ListRespAdministrationTaskForSearchableSpinner extends AsyncTask<St
                     String CodeRespensable = rs.getString("CodeRespensable") ;
                     String Nom =rs.getString("Nom") ;
 
-                    ResponsableAdministration  responsableAdministration  = new ResponsableAdministration(CodeRespensable ,Nom) ;
-                    listResp.add ( responsableAdministration ) ;
-                    listNom.add  ( Nom )  ;
-                    Log.e("Responsable ", responsableAdministration.getCodeResponsable() + " - " +responsableAdministration.getNom() );
+                    ResponsableAdministration responsable  = new ResponsableAdministration(CodeRespensable ,Nom) ;
+
+                    listResponsable.add(new ResponsableAdministration( CodeRespensable  , Nom))  ;
+                    listNomResponsable.add(Nom) ;
+
+
 
                 }
             }
@@ -126,26 +136,21 @@ public class ListRespAdministrationTaskForSearchableSpinner extends AsyncTask<St
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
 
-        SpinnerAdapter adapter = new SpinnerAdapter(activity  , listNom)  ;
-        sp_resp_admin.setAdapter(adapter);
-        sp_resp_admin.setSelection(0);
+        SpinnerAdapter adapter = new SpinnerAdapter(activity  , listNomResponsable)  ;
+        sp_responsable.setAdapter(adapter);
+        sp_responsable.setSelection(0);
 
-        sp_resp_admin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        sp_responsable.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 
-                Log.e("resp_selected"  ,""+listResp.get(position).toString())  ;
+                Log.e("Responsable_selected"  ,""+listResponsable.get(position).toString())  ;
 
-                if (origine .equals("CommandeFournisseurNonConforme"))
+                if (origine.equals("dialogSuivieRelationFournisseur"))
                 {
-                    CommandeFournisseurNonConforme.CodeRespAdmin = listResp.get(position).getCodeResponsable() ;
-                    CommandeFrnsNonConformeTask commandeFrnsNonConformeTask = new CommandeFrnsNonConformeTask(activity ,  CommandeFournisseurNonConforme.rv_list_cmd_frns_nn_conforme , CommandeFournisseurNonConforme.pb , CommandeFournisseurNonConforme.date_debut, CommandeFournisseurNonConforme.date_fin , CommandeFournisseurNonConforme.CodeFournisseurSelected , CommandeFournisseurNonConforme. CodeRespAdmin,origine) ;
-                    commandeFrnsNonConformeTask.execute() ;
+                     StatSRMFragment.CodeRepresentant_selected = listResponsable.get(position).getCodeResponsable() ;
 
                 }
-
-
-
 
             }
             @Override

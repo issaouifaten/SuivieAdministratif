@@ -38,7 +38,7 @@
 
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_bon_livraison"
+                    android:id="@+id/btn_suivi_relation_fournisseur"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"

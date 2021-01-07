@@ -239,7 +239,7 @@ public class CommandeFournisseurNonConforme extends AppCompatActivity {
 
     public void updateData() {
 
-            CommandeFrnsNonConformeTask commandeFrnsNonConformeTask = new CommandeFrnsNonConformeTask(this , rv_list_cmd_frns_nn_conforme ,pb ,date_debut,date_fin ,CodeFournisseurSelected , CodeRespAdmin) ;
+            CommandeFrnsNonConformeTask commandeFrnsNonConformeTask = new CommandeFrnsNonConformeTask(this , rv_list_cmd_frns_nn_conforme ,pb ,date_debut,date_fin ,CodeFournisseurSelected , CodeRespAdmin , "CommandeFournisseurNonConforme") ;
             commandeFrnsNonConformeTask.execute() ;
     }
 }

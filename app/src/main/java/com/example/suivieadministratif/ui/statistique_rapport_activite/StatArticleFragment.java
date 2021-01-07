@@ -83,7 +83,7 @@ public class StatArticleFragment extends Fragment {
 
         menuViewModel =
                 ViewModelProviders.of(this).get(MenuViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_stat_article, container, false);
+        View root = inflater.inflate( R.layout.fragment_stat_article , container ,  false  );
 
 
         CardView btn_article_faible_rotation = (CardView) root.findViewById(R.id.btn_article_faible_rotation);
@@ -92,7 +92,6 @@ public class StatArticleFragment extends Fragment {
             public void onClick(View v)
             {
                 dialogChoixArtFaibleRotation(v) ;
-
             }
         });
 

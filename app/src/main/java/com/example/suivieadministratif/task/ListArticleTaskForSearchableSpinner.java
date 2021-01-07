@@ -152,7 +152,7 @@ public class ListArticleTaskForSearchableSpinner extends AsyncTask<String,String
 
 
 
-                    SuivieCMD_FournisseurTask  suivieCMD_fournisseurTask = new SuivieCMD_FournisseurTask(activity , SuivieCommandeFrs.rv_list_suivi_cmd_frns ,SuivieCommandeFrs.pb ,SuivieCommandeFrs.date_debut,SuivieCommandeFrs.date_fin ,SuivieCommandeFrs.CodeDepotSelected ,SuivieCommandeFrs.term_rech_art ,SuivieCommandeFrs.CodeNatureArticleSelected) ;
+                    SuivieCMD_FournisseurTask  suivieCMD_fournisseurTask = new SuivieCMD_FournisseurTask(activity , SuivieCommandeFrs.rv_list_suivi_cmd_frns ,SuivieCommandeFrs.pb ,SuivieCommandeFrs.date_debut,SuivieCommandeFrs.date_fin ,SuivieCommandeFrs.CodeDepotSelected ,SuivieCommandeFrs.term_rech_art ,SuivieCommandeFrs.CodeNatureArticleSelected,origine) ;
                     suivieCMD_fournisseurTask.execute() ;
                 }
 

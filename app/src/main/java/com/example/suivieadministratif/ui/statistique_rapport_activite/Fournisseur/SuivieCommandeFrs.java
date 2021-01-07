@@ -280,9 +280,9 @@ public class SuivieCommandeFrs extends AppCompatActivity {
 
     }
 
-    public  void  updateData(){
+    public  void  updateData()  {
 
-        SuivieCMD_FournisseurTask  suivieCMD_fournisseurTask = new SuivieCMD_FournisseurTask(this , rv_list_suivi_cmd_frns ,pb ,date_debut,date_fin , CodeDepotSelected , term_rech_art ,CodeNatureArticleSelected) ;
+        SuivieCMD_FournisseurTask  suivieCMD_fournisseurTask = new SuivieCMD_FournisseurTask(this , rv_list_suivi_cmd_frns ,pb ,date_debut,date_fin , CodeDepotSelected , term_rech_art ,CodeNatureArticleSelected, "SuivieCommandeFrs") ;
         suivieCMD_fournisseurTask.execute() ;
 
     }

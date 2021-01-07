@@ -52,11 +52,11 @@ public class SuivieCMD_FournisseurTask extends AsyncTask<String, String, String>
     String CodeDepot;
     String term_rech_article;
     String CodeNatureArticle;
+    String origine;
 
 
     ConnectionClass connectionClass;
     String user, password, base, ip;
-
 
 
     DateFormat dtfSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -67,17 +67,18 @@ public class SuivieCMD_FournisseurTask extends AsyncTask<String, String, String>
 
     double total_ = 0;
 
-    String  res  = "" ;
+    String res = "";
 
-    public SuivieCMD_FournisseurTask(Activity activity, RecyclerView rv_suivie_cmd_frns, ProgressBar pb, Date date_debut, Date date_fin, String codeDepot, String term_rech_article, String codeNatureArticle) {
+    public SuivieCMD_FournisseurTask(Activity activity, RecyclerView rv_suivie_cmd_frns, ProgressBar pb, Date date_debut, Date date_fin, String codeDepot, String term_rech_article, String codeNatureArticle, String origine) {
         this.activity = activity;
         this.rv_suivie_cmd_frns = rv_suivie_cmd_frns;
         this.pb = pb;
         this.date_debut = date_debut;
         this.date_fin = date_fin;
         CodeDepot = codeDepot;
-       this. term_rech_article = term_rech_article;
+        this.term_rech_article = term_rech_article;
         CodeNatureArticle = codeNatureArticle;
+        this.origine = origine;
 
         SharedPreferences prefe = activity.getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
         user = prefe.getString("user", user);
@@ -86,7 +87,6 @@ public class SuivieCMD_FournisseurTask extends AsyncTask<String, String, String>
         base = prefe.getString("base", base);
         connectionClass = new ConnectionClass();
     }
-
 
 
     @Override
@@ -104,21 +104,18 @@ public class SuivieCMD_FournisseurTask extends AsyncTask<String, String, String>
                 res = "Error in connection with SQL server";
             } else {
 
-                String  CONDITION = "  " ;
+                String CONDITION = "  ";
 
-                if (!CodeDepot.equals(""))
-                {
-                    CONDITION =  CONDITION + "   and CodeDepot  = '"+CodeDepot+"' " ;
+                if (!CodeDepot.equals("")) {
+                    CONDITION = CONDITION + "   and CodeDepot  = '" + CodeDepot + "' ";
                 }
-                 if (!term_rech_article.equals(""))
-                {
-                    CONDITION =  CONDITION + "   and (LigneBonCommandeAchat.DesignationArticle  like   '%"+term_rech_article+"%' \n" +
-                            "   or LigneBonCommandeAchat.CodeArticle like   '%"+term_rech_article+"%' ) \n " ;
+                if (!term_rech_article.equals("")) {
+                    CONDITION = CONDITION + "   and (LigneBonCommandeAchat.DesignationArticle  like   '%" + term_rech_article + "%' \n" +
+                            "   or LigneBonCommandeAchat.CodeArticle like   '%" + term_rech_article + "%' ) \n ";
                 }
 
-                if (!CodeNatureArticle.equals(""))
-                {
-                    CONDITION =  CONDITION + "  and Article.CodeNature = '"+CodeNatureArticle+"'  " ;
+                if (!CodeNatureArticle.equals("")) {
+                    CONDITION = CONDITION + "  and Article.CodeNature = '" + CodeNatureArticle + "'  ";
                 }
 
 
@@ -130,14 +127,14 @@ public class SuivieCMD_FournisseurTask extends AsyncTask<String, String, String>
                         "INNER JOIn Article on Article.CodeArticle =  LigneBonCommandeAchat.CodeArticle \n" +
                         " where 1=1 " +
 
-                        " and  DateBonCommandeAchat between  '"+df.format(date_debut)+"' and '"+df.format(date_fin)+"'\n" +
+                        " and  DateBonCommandeAchat between  '" + df.format(date_debut) + "' and '" + df.format(date_fin) + "'\n" +
 
                         " and  BonCommandeAchat.NumeroEtat<>  'E40' \n" +
                         " and ( BonCommandeAchat.NumeroEtat <>'E00' ) \n" +
                         " and ( BonCommandeAchat.NumeroEtat <>'E22') \n" +
                         " and ( BonCommandeAchat.NumeroEtat <>'E03')\n" +
 
-                        " \n" +CONDITION + " ";
+                        " \n" + CONDITION + " ";
 
 
                 Log.e("query_suivie_cmd_frns", "" + query_suivie_cmd_frns);
@@ -152,15 +149,12 @@ public class SuivieCMD_FournisseurTask extends AsyncTask<String, String, String>
                     double TotalHT = rs.getDouble("TotalHT");
                     Date DateBonCommandeAchat = dtfSQL.parse(rs.getString("DateBonCommandeAchat"));
 
-                    total_ = total_ + TotalHT ;
+
+                    SuiviCMD_frns suiviCMD_frns = new SuiviCMD_frns(NumeroBonCommandeAchat, DateBonCommandeAchat, CodeFournisseur, RaisonSociale, TotalHT);
 
 
-                    SuiviCMD_frns suiviCMD_frns = new SuiviCMD_frns(NumeroBonCommandeAchat ,DateBonCommandeAchat,CodeFournisseur ,RaisonSociale ,TotalHT ) ;
-
-
-
-                    String query_detail_suivie_cmd_frns = " select CodeArticle , DesignationArticle   , Quantite   , PrixAchatHT  , Livrer " +
-                            " from  LigneBonCommandeAchat   where NumeroBonCommandeAchat = '"+NumeroBonCommandeAchat+"' ";
+                    String query_detail_suivie_cmd_frns = " select CodeArticle , DesignationArticle   , Quantite   , PrixAchatHT, MontantHT  , Livrer ,  QuantiteNonLivrer   \n" +
+                            " from  LigneBonCommandeAchat   where NumeroBonCommandeAchat = '" + NumeroBonCommandeAchat + "' ";
 
 
                     Log.e("query_detail_livraison", query_detail_suivie_cmd_frns);
@@ -169,22 +163,35 @@ public class SuivieCMD_FournisseurTask extends AsyncTask<String, String, String>
                     ResultSet rs2 = stmt2.executeQuery(query_detail_suivie_cmd_frns);
                     ArrayList<LigneSuiviCMD_frns> listLigneSuiviCMD_frns = new ArrayList<>();
 
+
+                    double mont_ca_ht = 0;
                     while (rs2.next()) {
 
                         String CodeArticle = rs2.getString("CodeArticle");
                         String DesignationArticle = rs2.getString("DesignationArticle");
                         int Quantite = rs2.getInt("Quantite");
                         int Livrer = rs2.getInt("Livrer");
-                        double  PrixAchatHT = rs2.getDouble("PrixAchatHT");
+                        int QuantiteNonLivrer = rs2.getInt("QuantiteNonLivrer");
 
-                        LigneSuiviCMD_frns  ligneSuiviCMD_frns = new LigneSuiviCMD_frns(CodeArticle, DesignationArticle,PrixAchatHT, Quantite ,Livrer) ;
-                        listLigneSuiviCMD_frns.add(ligneSuiviCMD_frns) ;
+                        double MontantHT = rs2.getDouble("MontantHT");
+                        double PrixAchatHT = rs2.getDouble("PrixAchatHT");
 
+                        LigneSuiviCMD_frns ligneSuiviCMD_frns = new LigneSuiviCMD_frns(CodeArticle, DesignationArticle, MontantHT, PrixAchatHT, Quantite, Livrer, QuantiteNonLivrer);
+                        listLigneSuiviCMD_frns.add(ligneSuiviCMD_frns);
+
+                        if (QuantiteNonLivrer > 0) {
+                            mont_ca_ht = mont_ca_ht + QuantiteNonLivrer * PrixAchatHT;
+
+                        }
                     }
+
+                    suiviCMD_frns.setTotalHT(mont_ca_ht);
 
 
                     suiviCMD_frns.setListLigneSuiviCMD_frns(listLigneSuiviCMD_frns);
                     listSuiviCMD_frns.add(suiviCMD_frns);
+
+                    total_ = total_ + suiviCMD_frns.getTotalHT();
 
                 }
 
@@ -202,7 +209,7 @@ public class SuivieCMD_FournisseurTask extends AsyncTask<String, String, String>
 
         pb.setVisibility(View.INVISIBLE);
 
-        BonAchatSuiviCMDRVAdapter  adapter = new BonAchatSuiviCMDRVAdapter(activity, listSuiviCMD_frns);
+        BonAchatSuiviCMDRVAdapter adapter = new BonAchatSuiviCMDRVAdapter(activity, listSuiviCMD_frns, origine);
         rv_suivie_cmd_frns.setAdapter(adapter);
 
         DecimalFormat decF = new DecimalFormat("0.000");

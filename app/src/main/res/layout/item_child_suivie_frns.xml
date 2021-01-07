@@ -52,7 +52,7 @@
                         android:src="@drawable/ic_achat" />
 
                     <TextView
-                        android:id="@+id/txt_num_ba"
+                        android:id="@+id/txt_num_relation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -83,36 +83,44 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_gravity="right">
+                android:layout_gravity="left">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="left"
                 android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12dp"
+                    android:textColor="@color/blue"
+                    android:text="Contact "
+                    android:typeface="serif"/>
 
 
                 <TextView
-                    android:id="@+id/txt_libelle"
+                    android:id="@+id/txt_contact"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15dp"
                     android:textColor="@color/blue"
-                    android:text="Achat"
-
+                    android:text="abs "
+                    android:layout_marginLeft="10dp"
+                    android:textStyle="bold"
                     android:typeface="serif"/>
 
 
             </LinearLayout>
 
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_below="@+id/NumCmd"
-                android:layout_marginTop="5dp"
-                android:background="#d9d9d9"
-                android:padding="15dp" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:src="@drawable/line_h"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -123,34 +131,33 @@
 
 
                     <TextView
-                        android:id="@+id/txt_code_frns"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="10dp"
-                        android:text="d12596"
+                        android:text="Representant"
                         android:typeface="serif"
                         android:textColor="@color/colorPrimary"/>
 
-
-                    <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="15dp"
-                        android:src="@drawable/ic_transfert_5"
-                   />
-
-
                     <TextView
-                        android:id="@+id/txt_raison_fournisseur"
+                        android:id="@+id/txt_representant"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="15dp"
                         android:textStyle="bold"
-                        android:text="DEPOT 02"
+                        android:text="representant"
                         android:typeface="serif"
+                        android:layout_marginLeft="10dp"
                         android:textColor="@color/colorPrimary"/>
 
                 </LinearLayout>
 
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:src="@drawable/line_h"/>
             </LinearLayout>
 
 
@@ -162,70 +169,15 @@
 
 
                 <TextView
-                    android:id="@+id/txt_detail_libelle"
+                    android:id="@+id/txt_objet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" Détail Achat "
+                    android:text=" Bon Commande "
                     android:typeface="monospace"
-                    android:gravity="center"
+                    android:gravity="left"
+                    android:textStyle="bold"
                     android:layout_gravity="center"/>
 
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    card_view:cardBackgroundColor="#edfff8f8"
-                    card_view:cardCornerRadius="10dp"
-                    card_view:cardElevation="6dp"
-                    card_view:cardMaxElevation="6dp"
-                    card_view:contentPadding="5dp">
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="190dp"
-                            android:layout_height="wrap_content"
-                            android:textSize="10dp"
-                            android:text="Designation Article"
-                            android:typeface="serif"
-                            android:layout_weight="1"/>
-
-
-                        <TextView
-                            android:layout_width="80dp"
-                            android:layout_height="match_parent"
-                            android:text="Qt cmd"
-                            android:textSize="10dp"
-                            android:layout_weight="1"
-                            android:typeface="serif" />
-
-                        <TextView
-                            android:layout_width="80dp"
-                            android:layout_height="match_parent"
-                            android:text="Qt livré"
-                            android:textSize="10dp"
-                            android:layout_weight="1"
-                            android:typeface="serif" />
-
-                        <TextView
-                            android:id="@+id/txt_libelle_rep_stock"
-                            android:layout_width="80dp"
-                            android:layout_height="match_parent"
-                            android:text="Reliquat"
-                            android:textSize="10dp"
-                            android:layout_weight="1"
-                            android:typeface="serif" />
-
-                    </LinearLayout>
-
-
-                </androidx.cardview.widget.CardView>
 
 
                 <androidx.cardview.widget.CardView
@@ -243,17 +195,27 @@
 
 
                   <LinearLayout
-                        android:id="@+id/ll_list_detail_achat"
+
                         android:layout_width="match_parent"
                         android:orientation="vertical"
                         android:layout_height="wrap_content">
 
-                    <ListView
-                        android:id="@+id/lv_list_detail_achat"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
 
-                   </LinearLayout>
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="Observation :"/>
+
+                      <TextView
+                          android:id="@+id/txt_observation"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="Observation :"
+                          android:layout_gravity="center"
+                          android:layout_marginBottom="10dp"/>
+
+
+                  </LinearLayout>
 
 
                 </androidx.cardview.widget.CardView>
@@ -270,7 +232,7 @@
 
 
             <TextView
-                android:id="@+id/txt_date_bon_achat"
+                android:id="@+id/txt_date_piece"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -282,11 +244,11 @@
 
 
             <TextView
-                android:id="@+id/txt_tot_ht"
+                android:id="@+id/txt_etat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="10.2255"
+                android:text="Sans Suivie"
                 android:textColor="@color/colortxt"
                 android:textSize="15dp"
                 android:textStyle="italic|bold"
@@ -296,11 +258,11 @@
 
 
             <TextView
-                android:id="@+id/txt_etablie_par"
+                android:id="@+id/txt_moyen_nature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="Etablie  par : ---"
+                android:text="Moyen nature"
                 android:textColor="@color/colortxt"
                 android:textSize="10dp"
                 android:textStyle="italic|bold"

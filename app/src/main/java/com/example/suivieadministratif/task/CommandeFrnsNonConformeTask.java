@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.adapter.BonAchatSuiviCMDRVAdapter;
+import com.example.suivieadministratif.model.LigneCMDFrnsNonConforme;
 import com.example.suivieadministratif.model.LigneSuiviCMD_frns;
 import com.example.suivieadministratif.model.SuiviCMD_frns;
 import com.example.suivieadministratif.param.Param;
@@ -40,13 +41,10 @@ public class CommandeFrnsNonConformeTask extends AsyncTask<String, String, Strin
 
     String CodeFournisseur;
     String CodeResponsable;
-
-
+    String  Origine  ;
 
     ConnectionClass connectionClass;
     String user, password, base, ip;
-
-
 
     DateFormat dtfSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -58,7 +56,7 @@ public class CommandeFrnsNonConformeTask extends AsyncTask<String, String, Strin
 
     String  res  = "" ;
 
-    public CommandeFrnsNonConformeTask(Activity activity, RecyclerView rv_suivie_cmd_frns, ProgressBar pb, Date date_debut, Date date_fin, String CodeFournisseur, String CodeResponsable ) {
+    public CommandeFrnsNonConformeTask(Activity activity, RecyclerView rv_suivie_cmd_frns, ProgressBar pb, Date date_debut, Date date_fin, String CodeFournisseur, String CodeResponsable ,String  Origine ) {
         this.activity = activity;
         this.rv_suivie_cmd_frns = rv_suivie_cmd_frns;
         this.pb = pb;
@@ -66,7 +64,7 @@ public class CommandeFrnsNonConformeTask extends AsyncTask<String, String, Strin
         this.date_fin = date_fin;
         this.CodeFournisseur=CodeFournisseur  ;
         this.CodeResponsable=CodeResponsable ;
-
+        this.Origine=Origine;
 
 
         SharedPreferences prefe = activity.getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
@@ -131,17 +129,18 @@ public class CommandeFrnsNonConformeTask extends AsyncTask<String, String, Strin
                         "    INNER  JOIN Fournisseur on Fournisseur.CodeFournisseur= BonCommandeAchat.CodeFournisseur\n" +
                         "     WHERE  ( BonCommandeAchat . DateBonCommandeAchat  between  '"+df.format(date_debut)+"' and  '"+df.format(date_fin)+"' )\n" +
                         "        \n" +
-                        "         and ( BonCommandeAchat.NumeroEtat<> 'E40')\n" +
-                        "         and ( BonCommandeAchat.NumeroEtat <>'E00') \n" +
-                        "         and ( BonCommandeAchat.NumeroEtat <>'E22') \n" +
-                        "         and ( BonCommandeAchat.NumeroEtat <>'E03')\n" +
+
                         "         \n" +
                         "        and    LigneBonLivraisonAchat.Quantite <> LigneBonCommandeAchat.Quantite \n" +
                         "        \n" +CONDITION+
-
-
-                        "     ORDER BY  LigneBonLivraisonAchat.NumeroBonLivraisonAchat \n" +
-                        "\n"    ;
+                        "           \n " +
+                        "" +
+                        "            group BY  BonCommandeAchat . NumeroBonCommandeAchat   , BonCommandeAchat . DateBonCommandeAchat , \n" +
+                        "            BonLivraisonAchat . CodeFournisseur   , \n" +
+                        "            BonLivraisonAchat . RaisonSociale ,  \n" +
+                        "            BonCommandeAchat . TotalHT ,  \n" +
+                        "            BonLivraisonAchat . DateBonLivraisonAchat \n \n" +
+                        "\n"  ;
 
 
                 Log.e("query_suivie_cmd_frns", "" + query_suivie_cmd_frns);
@@ -153,43 +152,71 @@ public class CommandeFrnsNonConformeTask extends AsyncTask<String, String, Strin
                     String NumeroBonCommandeAchat = rs.getString("NumeroBonCommandeAchat");
                     String CodeFournisseur = rs.getString("CodeFournisseur");
                     String RaisonSociale = rs.getString("RaisonSociale");
-                    double TotalHT = rs.getDouble("TotalHT");
+                    double TotalHT =0;//= rs.getDouble("TotalHT");
                     Date DateBonCommandeAchat = dtfSQL.parse(rs.getString("DateBonCommandeAchat"));
 
-                    total_ = total_ + TotalHT ;
+
 
 
                     SuiviCMD_frns suiviCMD_frns = new SuiviCMD_frns(NumeroBonCommandeAchat ,DateBonCommandeAchat,CodeFournisseur ,RaisonSociale ,TotalHT ) ;
 
 
 
-                    String query_detail_suivie_cmd_frns = " select CodeArticle , DesignationArticle   , Quantite   , PrixAchatHT  , Livrer " +
-                            " from  LigneBonCommandeAchat   where NumeroBonCommandeAchat = '"+NumeroBonCommandeAchat+"' ";
+                    String query_detail_suivie_cmd_frns = "  SELECT     LigneBonCommandeAchat . CodeArticle ,\n" +
+                            "\t LigneBonCommandeAchat . DesignationArticle , \n" +
+                            "            LigneBonLivraisonAchat . Quantite  as qtLivrer ,  \n" +
+                            "            LigneBonCommandeAchat . Quantite as qtCMD ,  \n" +
+                            "             Stock . Quantite as qtStock ,   \n" +
+                            "             LigneBonCommandeAchat . MontantHT , \n" +
+                            "             LigneBonCommandeAchat . PrixAchatHT    \n" +
+                            "             \n" +
+                            "             \n" +
+                            " FROM   (  LigneBonCommandeAchat   LigneBonCommandeAchat  LEFT OUTER JOIN ((  Stock   Stock  INNER JOIN   LigneBonLivraisonAchat   LigneBonLivraisonAchat  ON  Stock . CodeArticle = LigneBonLivraisonAchat . CodeArticle ) INNER JOIN   BonLivraisonAchat   BonLivraisonAchat  ON ( Stock . CodeDepot = BonLivraisonAchat . CodeDepot ) AND ( LigneBonLivraisonAchat . NumeroBonLivraisonAchat = BonLivraisonAchat . NumeroBonLivraisonAchat )) ON ( LigneBonCommandeAchat . CodeArticle = LigneBonLivraisonAchat . CodeArticle ) AND ( LigneBonCommandeAchat . NumeroBonCommandeAchat = LigneBonLivraisonAchat . NumeroBonCommandeAchat )) INNER JOIN   BonCommandeAchat   BonCommandeAchat  ON  LigneBonLivraisonAchat . NumeroBonCommandeAchat = BonCommandeAchat . NumeroBonCommandeAchat \n" +
+                            "\n" +
+                            "\n" +
+                            " WHERE   LigneBonLivraisonAchat . NumeroBonCommandeAchat = '"+NumeroBonCommandeAchat+"'\n" +
+                            " \n" +
+                            " and LigneBonLivraisonAchat.Quantite<>LigneBonCommandeAchat.Quantite  ";
 
 
                     Log.e("query_detail_livraison", query_detail_suivie_cmd_frns);
 
                     Statement stmt2 = con.createStatement();
                     ResultSet rs2 = stmt2.executeQuery(query_detail_suivie_cmd_frns);
-                    ArrayList<LigneSuiviCMD_frns> listLigneSuiviCMD_frns = new ArrayList<>();
-
+                    ArrayList<LigneCMDFrnsNonConforme> listLigneCMDFrnsNonConformes = new ArrayList<>();
+                    double  montant_HT =0 ;
                     while (rs2.next()) {
 
                         String CodeArticle = rs2.getString("CodeArticle");
                         String DesignationArticle = rs2.getString("DesignationArticle");
-                        int Quantite = rs2.getInt("Quantite");
-                        int Livrer = rs2.getInt("Livrer");
+                        int qtLivrer = rs2.getInt("qtLivrer");
+                        int qtCMD = rs2.getInt("qtCMD");
+                        int qtStock = rs2.getInt("qtStock");
+
+                        double  MontantHT = rs2.getDouble("MontantHT");
                         double  PrixAchatHT = rs2.getDouble("PrixAchatHT");
 
-                        LigneSuiviCMD_frns  ligneSuiviCMD_frns = new LigneSuiviCMD_frns(CodeArticle, DesignationArticle,PrixAchatHT, Quantite ,Livrer) ;
-                        listLigneSuiviCMD_frns.add(ligneSuiviCMD_frns) ;
+
+                        LigneCMDFrnsNonConforme ligneSuiviCMD_frns = new LigneCMDFrnsNonConforme(CodeArticle, DesignationArticle,qtLivrer, qtCMD,qtStock,MontantHT ,PrixAchatHT ) ;
+                        listLigneCMDFrnsNonConformes.add(ligneSuiviCMD_frns) ;
+
+
+                        if(qtLivrer == qtCMD)
+                        {
+                            montant_HT=0 ;
+                        }
+                        else {
+                            montant_HT = (qtCMD-qtLivrer ) * PrixAchatHT ;
+                        }
+
+                        TotalHT=TotalHT+montant_HT ;
 
                     }
 
-
-                    suiviCMD_frns.setListLigneSuiviCMD_frns(listLigneSuiviCMD_frns);
+                    suiviCMD_frns.setTotalHT(TotalHT);
+                    suiviCMD_frns.setListCmdFrnsNonConformes(listLigneCMDFrnsNonConformes);
                     listSuiviCMD_frns.add(suiviCMD_frns);
-
+                    total_ = total_ + suiviCMD_frns.getTotalHT() ;
                 }
 
                 res = "Success";
@@ -206,7 +233,7 @@ public class CommandeFrnsNonConformeTask extends AsyncTask<String, String, Strin
 
         pb.setVisibility(View.INVISIBLE);
 
-        BonAchatSuiviCMDRVAdapter  adapter = new BonAchatSuiviCMDRVAdapter(activity, listSuiviCMD_frns);
+        BonAchatSuiviCMDRVAdapter  adapter = new BonAchatSuiviCMDRVAdapter(activity, listSuiviCMD_frns,Origine);
         rv_suivie_cmd_frns.setAdapter(adapter);
 
         DecimalFormat decF = new DecimalFormat("0.000");
