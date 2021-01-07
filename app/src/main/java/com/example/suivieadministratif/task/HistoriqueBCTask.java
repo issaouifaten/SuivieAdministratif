@@ -32,6 +32,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class HistoriqueBCTask extends AsyncTask<String, String, String> {
 
@@ -143,7 +144,11 @@ public class HistoriqueBCTask extends AsyncTask<String, String, String> {
         lv_hist_bc.setAdapter(EtatCommande.bcAdapter);
 
         DecimalFormat  decF  = new DecimalFormat("0.000") ;
-        EtatCommande.txt_tot_commande.setText(decF.format(total_bc)+" Dt");
+      //  EtatCommande.txt_tot_commande.setText(decF.format(total_bc)+" Dt");
+        final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+        instance.setMinimumFractionDigits(3);
+        instance.setMaximumFractionDigits(3);
+        EtatCommande. txt_tot_commande.setText(instance.format(total_bc));
 
         listOnClick(listBonCommandeVente);
         search_bar_client.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -244,7 +249,11 @@ public class HistoriqueBCTask extends AsyncTask<String, String, String> {
         }
 
         DecimalFormat  decF  = new DecimalFormat("0.000") ;
-        EtatCommande.txt_tot_commande.setText(decF.format(total_bc)+" Dt");
+       // EtatCommande.txt_tot_commande.setText(decF.format(total_bc)+" Dt");
+        final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+        instance.setMinimumFractionDigits(3);
+        instance.setMaximumFractionDigits(3);
+        EtatCommande. txt_tot_commande.setText(instance.format(total_bc));
         return filetrListClient;
 
     }

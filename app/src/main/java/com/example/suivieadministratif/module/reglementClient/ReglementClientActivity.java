@@ -165,7 +165,7 @@ public class ReglementClientActivity extends AppCompatActivity {
         btn_echeance_client.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent  intent1 = new Intent(getApplicationContext() , RapportEcheanceClientActivity.class) ;
+                        Intent  intent1 = new Intent(getApplicationContext() , RapportEcheanceClientActivity.class) ;
                 startActivity(intent1);
             }
         });

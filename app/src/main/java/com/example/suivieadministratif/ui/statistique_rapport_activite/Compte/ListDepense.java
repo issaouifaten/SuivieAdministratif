@@ -33,6 +33,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -239,8 +240,12 @@ public class ListDepense extends AppCompatActivity {
         protected void onPostExecute(String r) {
             progressBar.setVisibility(View.GONE);
             condition="";
-            txt_total.setText(""+total_gloabl);
+         //   txt_total.setText(""+total_gloabl);
 
+            final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+            instance.setMinimumFractionDigits(3);
+            instance.setMaximumFractionDigits(3);
+            txt_total.setText(instance.format(total_gloabl));
             String[] from = { "CodeCompte", "Libelle", "NumeroMouvement", "TotalPayer", "RaisonSociale","DateMouvement","Caisse"};
             int[] views = {R.id.txt_codecompte, R.id.txt_libelle,  R.id.txt_num_, R.id.txt_total_montant,R.id.txt_nom,R.id.txt_date,R.id.txt_caisse};
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
@@ -265,7 +270,7 @@ public class ListDepense extends AppCompatActivity {
                 } else {
 
 
-                    String queryTable = "select NumeroMouvement,CONVERT(date,DateMouvement,103) as DateMouvement,CodeCompte,Caisse," +
+                    String queryTable = "select distinct NumeroMouvement,CONVERT(date,DateMouvement,103) as DateMouvement,CodeCompte,Caisse," +
                             "CodeTiers,RaisonSociale,Libelle,TotalPayer\n" +
                             "  from Vue_ListeMouvementCaisseDepense where DateMouvement between '"+datedebut+"' and '"+datefin+"'"+condition+conditionDepense;
 

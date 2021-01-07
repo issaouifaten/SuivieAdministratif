@@ -351,9 +351,6 @@ float total=0;
             final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
             instance.setMinimumFractionDigits(3);
             instance.setMaximumFractionDigits(3);
-
-
-
             txt_tot_commande.setText(instance.format(total));
             String[] from = {"CodeArticle", "Quantite", "MontantHT",  "MontantTTC","TotalRemise","MontantFodec","Designation"};
             int[] views = {R.id.txt_code, R.id.txt_qt, R.id.txt_totalht, R.id.txt_ttc, R.id.txt_remise,R.id.txt_fodec,R.id.txt_des};

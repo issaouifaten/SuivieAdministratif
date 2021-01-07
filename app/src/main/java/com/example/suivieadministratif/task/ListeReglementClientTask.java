@@ -23,6 +23,7 @@ import com.example.suivieadministratif.model.ReglementClient;
 import com.example.suivieadministratif.module.reglementClient.DetailReglementClientActivity;
 import com.example.suivieadministratif.module.reglementClient.ReglementClientActivity;
 import com.example.suivieadministratif.module.vente.HistoriqueLigneBonLivraisonActivity;
+import com.example.suivieadministratif.module.vente.MouvementVenteServiceActivity;
 import com.example.suivieadministratif.param.Param;
 
 import java.sql.Connection;
@@ -34,9 +35,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
-
-
+import java.util.Locale;
 
 
 public class ListeReglementClientTask extends AsyncTask<String, String, String> {
@@ -153,7 +152,13 @@ public class ListeReglementClientTask extends AsyncTask<String, String, String> 
 
         ReglementClientAdapterLV adapterLV = new ReglementClientAdapterLV(activity , listReglementClient) ;
         lv_reglement_client.setAdapter(adapterLV);
-        ReglementClientActivity.txt_tot_reglement.setText(decF.format(total_reglement) +" Dt");
+        //ReglementClientActivity.txt_tot_reglement.setText(decF.format(total_reglement) +" Dt");
+        final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+        instance.setMinimumFractionDigits(3);
+        instance.setMaximumFractionDigits(3);
+        ReglementClientActivity.txt_tot_reglement.setText(instance.format(total_reglement));
+
+
         listOnClick(listReglementClient);
 
 
@@ -233,7 +238,11 @@ public class ListeReglementClientTask extends AsyncTask<String, String, String> 
             }
         }
         DecimalFormat  decF  = new DecimalFormat("0.000") ;
-        ReglementClientActivity.txt_tot_reglement.setText(decF.format(mnt_reg_client) +" Dt");
+        //ReglementClientActivity.txt_tot_reglement.setText(decF.format(mnt_reg_client) +" Dt");
+        final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+        instance.setMinimumFractionDigits(3);
+        instance.setMaximumFractionDigits(3);
+        ReglementClientActivity.txt_tot_reglement.setText(instance.format(mnt_reg_client));
         return filetrReglementClient;
 
     }

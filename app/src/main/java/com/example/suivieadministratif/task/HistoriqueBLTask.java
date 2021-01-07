@@ -16,6 +16,7 @@ import android.widget.SearchView;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
+import com.example.suivieadministratif.module.vente.EtatCommande;
 import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
 import com.example.suivieadministratif.module.vente.HistoriqueLigneBonLivraisonActivity;
 import com.example.suivieadministratif.adapter.BonLivraisonAdapter;
@@ -30,6 +31,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class HistoriqueBLTask extends AsyncTask<String, String, String> {
 
@@ -148,7 +150,11 @@ public class HistoriqueBLTask extends AsyncTask<String, String, String> {
 
 
         DecimalFormat  decF  = new DecimalFormat("0.000") ;
-        EtatLivraisonActivity.txt_tot_livraison.setText(decF.format(tot_liv)+" Dt");
+       // EtatLivraisonActivity.txt_tot_livraison.setText(decF.format(tot_liv)+" Dt");
+        final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+        instance.setMinimumFractionDigits(3);
+        instance.setMaximumFractionDigits(3);
+        EtatLivraisonActivity. txt_tot_livraison.setText(instance.format(tot_liv));
 
         listOnClick(listBonLivraisonVentes);
 
@@ -251,7 +257,11 @@ public class HistoriqueBLTask extends AsyncTask<String, String, String> {
         }
 
         DecimalFormat  decF  = new DecimalFormat("0.000") ;
-        EtatLivraisonActivity.txt_tot_livraison.setText(decF.format(tot_liv)+" Dt");
+       // EtatLivraisonActivity.txt_tot_livraison.setText(decF.format(tot_liv)+" Dt");
+        final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+        instance.setMinimumFractionDigits(3);
+        instance.setMaximumFractionDigits(3);
+        EtatLivraisonActivity. txt_tot_livraison.setText(instance.format(tot_liv));
         return filetrListClient;
 
     }

@@ -21,7 +21,9 @@ import com.example.suivieadministratif.adapter.MvmentVenteServiceAdapterLV;
 import com.example.suivieadministratif.model.BonCommandeVente;
 import com.example.suivieadministratif.model.MouvementVenteService;
 import com.example.suivieadministratif.module.vente.EtatCommande;
+import com.example.suivieadministratif.module.vente.EtatRetourActivity;
 import com.example.suivieadministratif.module.vente.HistoriqueLigneBonCommandeActivity;
+import com.example.suivieadministratif.module.vente.MouvementVenteServiceActivity;
 import com.example.suivieadministratif.param.Param;
 
 import java.sql.Connection;
@@ -33,9 +35,9 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class MouvementVenteServiceTask extends AsyncTask<String, String, String> {
-
 
     Activity activity;
 
@@ -47,6 +49,7 @@ public class MouvementVenteServiceTask extends AsyncTask<String, String, String>
     ConnectionClass connectionClass;
     String user, password, base, ip;
 
+    float total=0;
     String NomUtilisateur;
     Date  date_debut , date_fin  ;
     DateFormat dtfSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -81,11 +84,11 @@ public class MouvementVenteServiceTask extends AsyncTask<String, String, String>
 
     }
 
-
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
         pb.setVisibility(View.VISIBLE);
+
     }
 
     @Override
@@ -121,6 +124,7 @@ public class MouvementVenteServiceTask extends AsyncTask<String, String, String>
                     int  Quantite = rs.getInt("Quantite");
                     double MontantTTC = rs.getDouble("MontantTTC");
                     String NomUtilisateur = rs.getString("NomUtilisateur");
+                    total+=MontantTTC;
 
                     MouvementVenteService  mouvementVenteService = new MouvementVenteService(Frs , CodeClient ,RaisonSociale ,NumeroPiece ,CodeArticle ,DesignationArticle ,DatePiece ,Quantite ,MontantTTC ,NomUtilisateur);
                     listMouvementServiceVente.add(mouvementVenteService);
@@ -144,6 +148,14 @@ public class MouvementVenteServiceTask extends AsyncTask<String, String, String>
 
         MvmentVenteServiceAdapterLV mvmentVenteServiceAdapterLV  = new MvmentVenteServiceAdapterLV(activity, listMouvementServiceVente);
         lv_mvmnt_vente_service.setAdapter(mvmentVenteServiceAdapterLV);
+      //  txt_tot_mvmnt_vente_service
+
+
+
+        final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+        instance.setMinimumFractionDigits(3);
+        instance.setMaximumFractionDigits(3);
+        MouvementVenteServiceActivity.txt_tot_mvmnt_vente_service.setText(instance.format(total));
 
         //listOnClick(listBonCommandeVente);
 

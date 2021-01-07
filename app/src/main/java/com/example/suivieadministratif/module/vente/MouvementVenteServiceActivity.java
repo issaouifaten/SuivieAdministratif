@@ -38,8 +38,8 @@ public class MouvementVenteServiceActivity extends AppCompatActivity {
     ProgressBar pb_bc;
     SearchView search_bar_client;
 
-    public TextView txt_date_debut, txt_date_fin;
-
+    public TextView txt_date_debut, txt_date_fin ;
+    public static TextView txt_tot_mvmnt_vente_service;
 
     final Context co = this;
     String user, password, base, ip;
@@ -166,6 +166,7 @@ public class MouvementVenteServiceActivity extends AppCompatActivity {
 
         txt_date_debut = findViewById(R.id.txt_date_debut);
         txt_date_fin = findViewById(R.id.txt_date_fin);
+        txt_tot_mvmnt_vente_service = findViewById(R.id.txt_tot_mvmnt_vente_service);
 
         lv_list_mvmnt_service = (ListView) findViewById(R.id.lv_list_mvmnt_vente_service);
         pb_bc = (ProgressBar) findViewById(R.id.pb_bc);

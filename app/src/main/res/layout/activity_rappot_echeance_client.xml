@@ -163,7 +163,7 @@
                 android:layout_gravity="right"
                 android:background="?android:attr/textColorTertiaryInverse"
                 android:fitsSystemWindows="true"
-                app:headerLayout="@layout/menu_achat" />
+                app:headerLayout="@layout/menu_vente" />
         </androidx.drawerlayout.widget.DrawerLayout>
 
     </RelativeLayout>

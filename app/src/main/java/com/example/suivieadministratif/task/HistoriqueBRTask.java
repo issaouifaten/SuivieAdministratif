@@ -18,6 +18,7 @@ import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.adapter.BonRetourAdapter;
 import com.example.suivieadministratif.model.BonRetourVente;
+import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
 import com.example.suivieadministratif.module.vente.EtatRetourActivity;
 import com.example.suivieadministratif.module.vente.HistoriqueLigneBonRetourActivity;
 
@@ -30,6 +31,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class HistoriqueBRTask extends AsyncTask<String, String, String> {
 
@@ -148,8 +150,11 @@ public class HistoriqueBRTask extends AsyncTask<String, String, String> {
 
 
         DecimalFormat decF = new DecimalFormat("0.000");
-        EtatRetourActivity.txt_tot_retour.setText(decF.format(tot_retour) + " Dt");
-
+     //   EtatRetourActivity.txt_tot_retour.setText(decF.format(tot_retour) + " Dt");
+        final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+        instance.setMinimumFractionDigits(3);
+        instance.setMaximumFractionDigits(3);
+        EtatRetourActivity.txt_tot_retour.setText(instance.format(tot_retour));
         listOnClick(listBonRetourVente);
 
         search_bar_client.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -251,7 +256,11 @@ public class HistoriqueBRTask extends AsyncTask<String, String, String> {
         }
 
         DecimalFormat decF = new DecimalFormat("0.000");
-        EtatRetourActivity.txt_tot_retour.setText(decF.format(tot_retour) + " Dt");
+       // EtatRetourActivity.txt_tot_retour.setText(decF.format(tot_retour) + " Dt");
+        final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+        instance.setMinimumFractionDigits(3);
+        instance.setMaximumFractionDigits(3);
+        EtatRetourActivity.txt_tot_retour.setText(instance.format(tot_retour));
         return filetrListClient;
 
     }

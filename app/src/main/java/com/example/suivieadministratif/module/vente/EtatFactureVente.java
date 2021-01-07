@@ -13,11 +13,14 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -70,7 +73,7 @@ public class EtatFactureVente extends AppCompatActivity {
 
 
 
-    String date_debut = "",date_fin="";
+    String date_debut = "",date_fin="",queryTable="";
 
     ConnectionClass connectionClass;
     String CodeSociete, NomUtilisateur, CodeLivreur;
@@ -103,9 +106,42 @@ public class EtatFactureVente extends AppCompatActivity {
 
         lv_list_historique_bc = (GridView) findViewById(R.id.lv_list_historique_bc);
         progressBar = (ProgressBar) findViewById(R.id.pb_bc);
-        search_bar_client = (SearchView) findViewById(R.id.search_bar_client);
+
         NavigationView nav_menu=findViewById(R.id.nav_view);
         View root = nav_menu.getHeaderView(0);
+
+        EditText editText=(EditText)findViewById(R.id.search_bar_client) ;
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                queryTable = "select NumeroFactureVente,RaisonSociale,CodeClient,TotalTTC,DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
+                        "from FactureVente \n" +
+                        "inner join Etat on Etat.NumeroEtat=FactureVente.NumeroEtat\n" +
+                        "where DateCreation between '"+date_debut+"' and '"+date_fin+"'   and ( NumeroFactureVente like'%"+s+"%' OR RaisonSociale LIKE'%"+s+"%') \n" +
+                        "order by DateCreation desc";
+             FillList fillList = new  FillList();
+                fillList.execute("");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+
+
+
+
+
+
 
 
         CardView btn_devis_vente = (CardView) root.findViewById(R.id.btn_devis_vente)  ;
@@ -210,6 +246,12 @@ public class EtatFactureVente extends AppCompatActivity {
         txt_date_fin.setText(date_fin);
         TextView txt_gratuite =(TextView)findViewById(R.id.txt_gratuite);
         txt_gratuite.setText("Total Facture");
+
+        queryTable = "select NumeroFactureVente,RaisonSociale,CodeClient,TotalTTC,DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
+                "from FactureVente \n" +
+                "inner join Etat on Etat.NumeroEtat=FactureVente.NumeroEtat\n" +
+                "where DateCreation between '"+date_debut+"' and '"+date_fin+"'\n" +
+                "order by DateCreation desc";
          FillList fillList = new  FillList();
          fillList.execute("");
 
@@ -348,7 +390,11 @@ public class EtatFactureVente extends AppCompatActivity {
 
 
 
-            txt_tot_commande.setText(""+total_devis);
+            final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+            instance.setMinimumFractionDigits(3);
+            instance.setMaximumFractionDigits(3);
+            txt_tot_commande.setText(instance.format(total_devis));
+
             lv_list_historique_bc.setAdapter(ADA);
             lv_list_historique_bc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -389,11 +435,6 @@ public class EtatFactureVente extends AppCompatActivity {
                 } else {
 
 
-                    String queryTable = "select NumeroFactureVente,RaisonSociale,CodeClient,TotalTTC,DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
-                            "from FactureVente \n" +
-                            "inner join Etat on Etat.NumeroEtat=FactureVente.NumeroEtat\n" +
-                            "where DateCreation between '"+date_debut+"' and '"+date_fin+"'\n" +
-                            "order by DateCreation desc";
 
                     PreparedStatement ps = con.prepareStatement(queryTable);
                     Log.e("queryDevisVente", queryTable);
