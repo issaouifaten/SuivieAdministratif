@@ -12,12 +12,9 @@ import android.widget.SearchView;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.adapter.ArticleFaibleRotationAdapterLV;
-import com.example.suivieadministratif.adapter.BonLivraisonAdapter;
-import com.example.suivieadministratif.adapter.EcheanceFournisseurAdapterLV;
+
 import com.example.suivieadministratif.model.ArticleFaibleRotation;
-import com.example.suivieadministratif.model.BonLivraisonVente;
-import com.example.suivieadministratif.module.reglementFournisseur.RapportEcheanceFournisseurActivity;
-import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
+
 import com.example.suivieadministratif.param.Param;
 
 import java.sql.Connection;
@@ -37,16 +34,16 @@ public class ArticleFaibleRotationTask extends AsyncTask<String, String, String>
     Activity activity;
 
     ListView lv_article_faible_rotation;
-    SearchView  search_bar  ;
+    SearchView search_bar;
     ProgressBar pb;
 
-    String CodeDepot  ;
-    String  DateDebut ;
-    String  DateFin   ;
+    String CodeDepot;
+    String DateDebut;
+    String DateFin;
 
-    String CodeFrns   ;
-    String CodeFamille   ;
-    int FrnsEtranger ;
+    String CodeFrns;
+    String CodeFamille;
+    int FrnsEtranger;
 
 
     String z = "";
@@ -55,23 +52,23 @@ public class ArticleFaibleRotationTask extends AsyncTask<String, String, String>
 
     ArrayList<ArticleFaibleRotation> listArticleFaibleRotation = new ArrayList<>();
 
-    SimpleDateFormat  sdf  = new SimpleDateFormat("dd/MM/yyyy") ;
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     double CA = 0;
     double Benif = 0;
 
-    public ArticleFaibleRotationTask(Activity activity, ListView lv_article_faible_rotation ,SearchView  search_bar  ,ProgressBar pb ,
-       String DateDebut  ,    String DateFin,  String CodeDepot    , String CodeFrns   ,   String CodeFamille    ,  int FrnsEtranger  ) {
+    public ArticleFaibleRotationTask(Activity activity, ListView lv_article_faible_rotation, SearchView search_bar, ProgressBar pb,
+                                     String DateDebut, String DateFin, String CodeDepot, String CodeFrns, String CodeFamille, int FrnsEtranger) {
         this.activity = activity;
-        this.lv_article_faible_rotation=lv_article_faible_rotation ;
-        this.pb =pb  ;
-        this.DateDebut=DateDebut ;
-        this.DateFin=DateFin ;
-        this.search_bar =search_bar ;
-        this.CodeFrns=CodeFrns;
-        this.CodeFamille=CodeFamille ;
-        this.CodeDepot=CodeDepot ;
-        this.FrnsEtranger =FrnsEtranger ;
+        this.lv_article_faible_rotation = lv_article_faible_rotation;
+        this.pb = pb;
+        this.DateDebut = DateDebut;
+        this.DateFin = DateFin;
+        this.search_bar = search_bar;
+        this.CodeFrns = CodeFrns;
+        this.CodeFamille = CodeFamille;
+        this.CodeDepot = CodeDepot;
+        this.FrnsEtranger = FrnsEtranger;
 
     /*    this.date_debut = date_debut;
         this.date_fin = date_fin;
@@ -95,7 +92,7 @@ public class ArticleFaibleRotationTask extends AsyncTask<String, String, String>
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-         pb.setVisibility(View.VISIBLE);
+        pb.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -108,14 +105,14 @@ public class ArticleFaibleRotationTask extends AsyncTask<String, String, String>
             } else {
 
 
-                String  QueryProc  = " DECLARE\t@return_value int \n" +
+                String QueryProc = " DECLARE\t@return_value int \n" +
                         "EXEC\t" +
                         "@return_value = [dbo].[ArticlesNonMouvementeParPeriodeParDepot]\n" +
-                        "\t\t@CodeDepot = N'"+CodeDepot+"',\n" +
-                        "\t\t@DateDebut = '"+ DateDebut +"',\n" +
-                        "\t\t@DateFin = '"+ DateFin +"'\n" +
+                        "\t\t@CodeDepot = N'" + CodeDepot + "',\n" +
+                        "\t\t@DateDebut = '" + DateDebut + "',\n" +
+                        "\t\t@DateFin = '" + DateFin + "'\n" +
                         "\n" +
-                        "SELECT\t'Return Value' = @return_value\n"  ;
+                        "SELECT\t'Return Value' = @return_value\n";
 
 
                 Log.e("QueryProc", "" + QueryProc);
@@ -123,75 +120,66 @@ public class ArticleFaibleRotationTask extends AsyncTask<String, String, String>
                 ps1.executeQuery();
 
 
-                String  CONDITION = "  " ;
+                String CONDITION = "  ";
 
-                if (CodeFrns.equals(""))
-                {
-                    CONDITION=CONDITION+"" ;
+                if (CodeFrns.equals("")) {
+                    CONDITION = CONDITION + "";
 
-                }else {
+                } else {
 
-                    CONDITION = CONDITION+ "\n and    CodeFournisseur  =  '"+CodeFrns+"'   " ;
+                    CONDITION = CONDITION + "\n and    CodeFournisseur  =  '" + CodeFrns + "'   ";
                 }
 
-                if (CodeFamille.equals(""))
-                {
-                    CONDITION=CONDITION+"" ;
-                }
-                else {
-                    CONDITION = CONDITION+ "\n and    CodeFamille    =  '"+CodeFamille+"'   " ;
+                if (CodeFamille.equals("")) {
+                    CONDITION = CONDITION + "";
+                } else {
+                    CONDITION = CONDITION + "\n and    CodeFamille    =  '" + CodeFamille + "'   ";
                 }
 
 
-
-
-
-                if (FrnsEtranger ==2 )
-                {
-                    CONDITION=CONDITION+"" ;
-                }
-                else {
-                    CONDITION = CONDITION+ "\n and    Etrange    =  '"+FrnsEtranger+"'   " ;
+                if (FrnsEtranger == 2) {
+                    CONDITION = CONDITION + "";
+                } else {
+                    CONDITION = CONDITION + "\n and    Etrange    =  '" + FrnsEtranger + "'   ";
                 }
 
 
-
-                String query_art_nn_mvmnt_periode_depot  =
+                String query_art_nn_mvmnt_periode_depot =
                         " select  0.00  As TauxRotation,\n" +
-                        "0.00 As TauxBenifice,\n" +
-                        "0.00 As TauxCA ,\n" +
-                        "0.00 As PourCBenifice,\n" +
-                        "0.00 As Coeff, \n" +
-                        "RotationArticle.CodeDepot,\n" +
-                        "RotationArticle.CodeArticle,\n" +
-                        "RotationArticle.Quantite,\n" +
-                        "RotationArticle.PrixAchatHT,\n" +
-                        "RotationArticle.ValeurStock,\n" +
-                        "RotationArticle.QuantiteVendu,\n" +
-                        "RotationArticle.ValeurVenteHT,\n" +
-                        "RotationArticle.ValeurAchatHT,\n" +
-                        "RotationArticle.AchatMoin20j,\n" +
-                        "RotationArticle.TauxRotationCalculer,\n" +
-                        "Article.Designation,CodeFamille,\n" +
-                        "CodeFournisseur,\n" +
-                        "Article.PrixAchatHT as  PrixAchatHTArticle ,\n" +
-                        "PrixVenteHT, \n" +
-                        "ISNULL(NonMouvementArticle.ValeurStock,0) As ValeurStockNonMouvementer \n" +
-                        "from  RotationArticle \n" +
-                        "inner join Article  on Article.CodeArticle= RotationArticle.CodeArticle\n" +
-                        "left  join NonMouvementArticle on NonMouvementArticle.CodeArticle = RotationArticle.CodeArticle \n" +
-                        "where 1= 1 " +CONDITION ;
-
+                                "0.00 As TauxBenifice,\n" +
+                                "0.00 As TauxCA ,\n" +
+                                "0.00 As PourCBenifice,\n" +
+                                "0.00 As Coeff, \n" +
+                                "RotationArticle.CodeDepot,\n" +
+                                "RotationArticle.CodeArticle,\n" +
+                                "RotationArticle.Quantite,\n" +
+                                "RotationArticle.PrixAchatHT,\n" +
+                                "RotationArticle.ValeurStock,\n" +
+                                "RotationArticle.QuantiteVendu,\n" +
+                                "RotationArticle.ValeurVenteHT,\n" +
+                                "RotationArticle.ValeurAchatHT,\n" +
+                                "RotationArticle.AchatMoin20j,\n" +
+                                "RotationArticle.TauxRotationCalculer,\n" +
+                                "Article.Designation,CodeFamille,\n" +
+                                "CodeFournisseur,\n" +
+                                "Article.PrixAchatHT as  PrixAchatHTArticle ,\n" +
+                                "PrixVenteHT, \n" +
+                                "ISNULL(NonMouvementArticle.ValeurStock,0) As ValeurStockNonMouvementer \n" +
+                                "from  RotationArticle \n" +
+                                "inner join Article  on Article.CodeArticle= RotationArticle.CodeArticle\n" +
+                                "left  join NonMouvementArticle on NonMouvementArticle.CodeArticle = RotationArticle.CodeArticle \n" +
+                                "where 1= 1 " + CONDITION;
 
 
                 Log.e("query_art_nn_mvmnt", "" + query_art_nn_mvmnt_periode_depot);
                 PreparedStatement ps = con.prepareStatement(query_art_nn_mvmnt_periode_depot);
                 ResultSet rs = ps.executeQuery();
 
-                CA =0 ;
-                Benif =0 ;
+                CA = 0;
+                Benif = 0;
 
 
+                int order = 1;
                 while (rs.next()) {
 
 
@@ -225,15 +213,16 @@ public class ArticleFaibleRotationTask extends AsyncTask<String, String, String>
                     int ValeurStockNonMouvementer = rs.getInt("ValeurStockNonMouvementer");
 
 
-                    CA=CA+ValeurVenteHT ;
-                    Benif =Benif+ValeurVenteHT-ValeurAchatHT ;
+                    CA = CA + ValeurVenteHT;
+                    Benif = Benif + ValeurVenteHT - ValeurAchatHT;
 
 
-                    ArticleFaibleRotation articleFaibleRotation = new ArticleFaibleRotation(TauxRotation ,TauxBenifice ,TauxCA ,PourCBenifice ,Coeff ,CodeDepot ,
-                            CodeArticle , Quantite ,  PrixAchatHT  , QuantiteVendu ,ValeurVenteHT ,ValeurAchatHT ,AchatMoin20j ,TauxRotationCalculer ,
-                            Designation , CodeFamille ,CodeFournisseur ,PrixAchatHTArticle ,PrixVenteHT ,ValeurStockNonMouvementer);
+                    ArticleFaibleRotation articleFaibleRotation = new ArticleFaibleRotation(TauxRotation, TauxBenifice, TauxCA, PourCBenifice, Coeff, CodeDepot,
+                            CodeArticle, Quantite, PrixAchatHT, QuantiteVendu, ValeurVenteHT, ValeurAchatHT, AchatMoin20j, TauxRotationCalculer,
+                            Designation, CodeFamille, CodeFournisseur, PrixAchatHTArticle, PrixVenteHT, ValeurStockNonMouvementer, order);
 
-                    listArticleFaibleRotation.add(articleFaibleRotation) ;
+                    listArticleFaibleRotation.add(articleFaibleRotation);
+                    order++;
 
                 }
 
@@ -253,83 +242,76 @@ public class ArticleFaibleRotationTask extends AsyncTask<String, String, String>
         pb.setVisibility(View.INVISIBLE);
 
 
-      //  final ArrayList<ArticleFaibleRotation>  list_art_faible_rot = new ArrayList<>()  ;
+        //  final ArrayList<ArticleFaibleRotation>  list_art_faible_rot = new ArrayList<>()  ;
 
-        for(ArticleFaibleRotation   art  : listArticleFaibleRotation)
-        {
+        for (ArticleFaibleRotation art : listArticleFaibleRotation) {
 
-            if (art.getQuantite() > art.getAchatMoin20j () )
-            {
-                if (art.getQuantiteVendu() * 0.2 > (  art.getQuantite() - art.getAchatMoin20j())  )
-                {
-                   art.setTauxRotation  ( (Math.round( art.getQuantiteVendu() / art.getQuantiteVendu() )) * 100);
+            if (art.getQuantite() > art.getAchatMoin20j()) {
+                if ((art.getQuantiteVendu() * 0.2) > (art.getQuantite() - art.getAchatMoin20j())) {
+                    art.setTauxRotation((Math.round(art.getQuantiteVendu() / art.getQuantiteVendu())) * 100);
+
+                    Log.e("" + art.getDesignation(), "COND1 " + art.getTauxRotation());
+                } else {
+
+                    double _taux_rotation =     (double ) ((double )art.getQuantiteVendu() / (double ) (art.getQuantite() - art.getAchatMoin20j())  )* 100;
+
+                    double __taux_rotation = Math.round( _taux_rotation *100) /100  ;
+                    art.setTauxRotation(__taux_rotation);
+
+
+                    Log.e("" + art.getDesignation(), "COND2 " + art.getTauxRotation());
                 }
-                else
-                {
-                    art.setTauxRotation  (  Math.round(art.getQuantiteVendu() / (art.getQuantite() - art.getAchatMoin20j()) ) * 100 );
+            } else {
+
+                if (art.getQuantite() != 0 && art.getQuantite() < art.getAchatMoin20j()) {
+                    if (art.getQuantiteVendu() * 0.2 > art.getQuantite() && art.getQuantiteVendu() != 0)///modifier par marwa le 05/10/2019 tentative division par 0
+                    {
+                        art.setTauxRotation((Math.round(art.getQuantiteVendu() / art.getQuantiteVendu())) * 100);
+
+                        Log.e("" + art.getDesignation(), "COND3 " + art.getTauxRotation());
+                    } else {
+                        art.setTauxRotation(Math.round(art.getQuantiteVendu() / art.getQuantite()) * 100);
+                        Log.e("" + art.getDesignation(), "COND4 " + art.getTauxRotation());
+                    }
                 }
+                if (art.getQuantite() == 0 && art.getQuantiteVendu() != 0) {
+                    art.setTauxRotation(100);
+                    Log.e("" + art.getDesignation(), "COND5 " + art.getTauxRotation());
+                }
+
             }
 
-            else
-            {
 
-                if (art.getQuantite() != 0  &&   art.getQuantite() < art.getAchatMoin20j() )
-                {
-                    if (art.getQuantiteVendu() * 0.2  > art.getQuantite() && art.getQuantiteVendu()!=0)///modifier par marwa le 05/10/2019 tentative division par 0
-                    {
-                         art.setTauxRotation  ( (Math.round(art.getQuantiteVendu() /  art.getQuantiteVendu() )) * 100 );
-                    }
-                    else
-                    {
-                        art.setTauxRotation (  Math.round(art.getQuantiteVendu() /  art.getQuantite()   ) * 100  );
-                    }
-                }
-                if (art.getQuantite() == 0 && art.getQuantiteVendu() != 0)
-                {
-                    art.setTauxRotation (   100 );
-                }
-
-            }
-
-
-
-            if (art.getValeurAchatHT() != 0)
-            {
+            if (art.getValeurAchatHT() != 0) {
                 if (art.getValeurVenteHT() != 0)
-                 art.setTauxBenifice  ( (((art.getValeurVenteHT() - art.getValeurAchatHT()) / art.getValeurVenteHT())) * 100 );
+                    art.setTauxBenifice((((art.getValeurVenteHT() - art.getValeurAchatHT()) / art.getValeurVenteHT())) * 100);
             }
-            if (CA != 0)
-            {
-                art.setTauxCA  ( ((art.getValeurVenteHT() / CA)) * 100 );
+            if (CA != 0) {
+                art.setTauxCA(((art.getValeurVenteHT() / CA)) * 100);
 
             }
-            if (Benif != 0)
-            {
-                art.setPourCBenifice  ( (((art.getValeurVenteHT() - art.getValeurAchatHT()) / Benif)) * 100  );
+            if (Benif != 0) {
+                art.setPourCBenifice((((art.getValeurVenteHT() - art.getValeurAchatHT()) / Benif)) * 100);
             }
 
-            if (art.getAchatMoin20j() != 0)
-            {
-                art.setCoeff ( (  ( art.getTauxCA()  * 60) + (  art.getPourCBenifice()  * 30) +   art.getTauxRotation()    ) / 10 ); // * (Convert.ToDecimal(DD["TauxCA"]))
-            }
-            else
-            {
-                art.setCoeff  ((  (  art.getTauxCA()   * 60) + ( art.getPourCBenifice()  * 30) +  art.getTauxRotation()    ) / 12 ); //* (Convert.ToDecimal(DD["TauxCA"]))
+
+            if (art.getAchatMoin20j() != 0) {
+                art.setCoeff(((art.getTauxCA() * 60) + (art.getPourCBenifice() * 30) + art.getTauxRotation()) / 10); // * (Convert.ToDecimal(DD["TauxCA"]))
+            } else {
+                art.setCoeff(((art.getTauxCA() * 60) + (art.getPourCBenifice() * 30) + art.getTauxRotation()) / 12); //* (Convert.ToDecimal(DD["TauxCA"]))
             }
 
-            if (art.getTauxRotation()>0)
-            {
+            if (art.getTauxRotation() > 0) {
                 //list_art_faible_rot.add(art)    ;
             }
 
         }
 
-       // Log.e("art_faible_rot",""+list_art_faible_rot.size()) ;
-       // Log.e("art_faible_rot",""+list_art_faible_rot.toString()) ;
+        // Log.e("art_faible_rot",""+list_art_faible_rot.size()) ;
+        // Log.e("art_faible_rot",""+list_art_faible_rot.toString()) ;
 
-        ArticleFaibleRotationAdapterLV  adapterLV  = new ArticleFaibleRotationAdapterLV(activity  ,listArticleFaibleRotation) ;
+        ArticleFaibleRotationAdapterLV adapterLV = new ArticleFaibleRotationAdapterLV(activity, listArticleFaibleRotation);
         lv_article_faible_rotation.setAdapter(adapterLV);
-
 
 
         search_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -345,15 +327,13 @@ public class ArticleFaibleRotationTask extends AsyncTask<String, String, String>
             @Override
             public boolean onQueryTextChange(String query) {
 
-                if(query.equals(""))
-                {
-                    ArticleFaibleRotationAdapterLV  adapterLV  = new ArticleFaibleRotationAdapterLV(activity  ,listArticleFaibleRotation) ;
+                if (query.equals("")) {
+                    ArticleFaibleRotationAdapterLV adapterLV = new ArticleFaibleRotationAdapterLV(activity, listArticleFaibleRotation);
                     lv_article_faible_rotation.setAdapter(adapterLV);
-                }
-                else {
+                } else {
 
-                    final ArrayList<ArticleFaibleRotation> fitlerArtFR = filterArticleFR(listArticleFaibleRotation, query);
-                    ArticleFaibleRotationAdapterLV  adapterLV  = new ArticleFaibleRotationAdapterLV(activity  ,fitlerArtFR) ;
+                    final ArrayList<ArticleFaibleRotation> fitlerArtFR = filterArticleFR1(listArticleFaibleRotation, query);
+                    ArticleFaibleRotationAdapterLV adapterLV = new ArticleFaibleRotationAdapterLV(activity, fitlerArtFR);
                     lv_article_faible_rotation.setAdapter(adapterLV);
 
                 }
@@ -364,27 +344,45 @@ public class ArticleFaibleRotationTask extends AsyncTask<String, String, String>
         });
 
 
-
     }
 
 
-    private ArrayList<ArticleFaibleRotation> filterArticleFR (ArrayList<ArticleFaibleRotation> listArtFR, String term) {
+    private ArrayList<ArticleFaibleRotation> filterArticleFR1(ArrayList<ArticleFaibleRotation> listArtFR, String term) {
 
         term = term.toLowerCase();
         final ArrayList<ArticleFaibleRotation> filetrListArtFR = new ArrayList<>();
 
-        ArrayList<String> aList= new ArrayList(Arrays.asList(term.split(" ")));
+        for (ArticleFaibleRotation a : listArtFR) {
+
+            String txtDesign = a.getDesignation().toLowerCase().toString();
+            if (txtDesign.contains(term)) {
+                filetrListArtFR.add(a);
+            }
+
+
+        }
+
+
+        return filetrListArtFR;
+
+    }
+
+    private ArrayList<ArticleFaibleRotation> filterArticleFR(ArrayList<ArticleFaibleRotation> listArtFR, String term) {
+
+        term = term.toLowerCase();
+        final ArrayList<ArticleFaibleRotation> filetrListArtFR = new ArrayList<>();
+
+        ArrayList<String> aList = new ArrayList(Arrays.asList(term.split(" ")));
 
         Iterator<String> iterator = aList.iterator();
 
 
-        while (iterator.hasNext())
-        {
+        while (iterator.hasNext()) {
 
-            String  t = iterator.next() ;
+            String t = iterator.next();
 
             if (t.contains(" "))
-                t.replace(" ","");
+                t.replace(" ", "");
             t.trim();
 
             if (t.equals(""))
@@ -393,16 +391,14 @@ public class ArticleFaibleRotationTask extends AsyncTask<String, String, String>
         }
 
 
-        Log.e("aList",aList.toString()) ;
+        Log.e("aList", aList.toString());
 
         for (ArticleFaibleRotation a : listArtFR) {
 
             final String txtDesign = a.getDesignation().toLowerCase();
 
-            for (String  input :aList )
-            {
-                if ( txtDesign.contains ( input )    )
-                {
+            for (String input : aList) {
+                if (txtDesign.contains(input)) {
                     filetrListArtFR.add(a);
                     break;
                 }

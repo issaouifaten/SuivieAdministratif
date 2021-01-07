@@ -99,8 +99,6 @@ public class ReglementClientActivity extends AppCompatActivity {
         });
 
 
-
-
         CardView   btn_bon_livraison = (CardView) root.findViewById(R.id.btn_bon_livraison)  ;
         btn_bon_livraison.setOnClickListener(new View.OnClickListener() {
             @Override

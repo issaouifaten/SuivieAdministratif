@@ -13,6 +13,8 @@ public class SuiviCMD_frns {
 
     private ArrayList<LigneSuiviCMD_frns> listLigneSuiviCMD_frns ;
 
+    private ArrayList<LigneCMDFrnsNonConforme>   listCmdFrnsNonConformes ;
+
     public SuiviCMD_frns(String numeroBonAchat, Date dateBonCommandeAchat, String CodeFournisseur, String raisonSocial, double totalHT) {
         NumeroBonAchat = numeroBonAchat;
         DateBonCommandeAchat = dateBonCommandeAchat;
@@ -69,6 +71,14 @@ public class SuiviCMD_frns {
 
     public void setListLigneSuiviCMD_frns(ArrayList<LigneSuiviCMD_frns> listLigneSuiviCMD_frns) {
         this.listLigneSuiviCMD_frns = listLigneSuiviCMD_frns;
+    }
+
+    public ArrayList<LigneCMDFrnsNonConforme> getListCmdFrnsNonConformes() {
+        return listCmdFrnsNonConformes;
+    }
+
+    public void setListCmdFrnsNonConformes(ArrayList<LigneCMDFrnsNonConforme> listCmdFrnsNonConformes) {
+        this.listCmdFrnsNonConformes = listCmdFrnsNonConformes;
     }
 
     @Override

@@ -16,6 +16,7 @@ import com.example.suivieadministratif.param.Param;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Fournisseur.CommandeFournisseurNonConforme;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Fournisseur.SuivieCommandeFrs;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.StatArticleFragment;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.StatSRMFragment;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.importation.SuivieDossierImportationActivity;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
@@ -147,7 +148,7 @@ public class ListFournisseurTaskForSearchableSpinner extends AsyncTask<String,St
                 {
                     CommandeFournisseurNonConforme.CodeFournisseurSelected = listFournisseur.get(position).getCodeFournisseur() ;
 
-                    CommandeFrnsNonConformeTask commandeFrnsNonConformeTask = new CommandeFrnsNonConformeTask(activity ,  CommandeFournisseurNonConforme.rv_list_cmd_frns_nn_conforme , CommandeFournisseurNonConforme.pb , CommandeFournisseurNonConforme.date_debut, CommandeFournisseurNonConforme.date_fin , CommandeFournisseurNonConforme.CodeFournisseurSelected , CommandeFournisseurNonConforme. CodeRespAdmin) ;
+                    CommandeFrnsNonConformeTask commandeFrnsNonConformeTask = new CommandeFrnsNonConformeTask(activity ,  CommandeFournisseurNonConforme.rv_list_cmd_frns_nn_conforme , CommandeFournisseurNonConforme.pb , CommandeFournisseurNonConforme.date_debut, CommandeFournisseurNonConforme.date_fin , CommandeFournisseurNonConforme.CodeFournisseurSelected , CommandeFournisseurNonConforme. CodeRespAdmin,origine) ;
                     commandeFrnsNonConformeTask.execute() ;
 
                 }
@@ -160,6 +161,19 @@ public class ListFournisseurTaskForSearchableSpinner extends AsyncTask<String,St
 
                     ListDossierTaskForSearchableSpinner listDossierTaskForSearchableSpinner = new ListDossierTaskForSearchableSpinner(activity,   SuivieDossierImportationActivity.sp_dossier,   SuivieDossierImportationActivity.cloture,  SuivieDossierImportationActivity.CodeFournisseurSelected ,"SuivieDossierImportationActivity");
                     listDossierTaskForSearchableSpinner.execute();
+
+
+                }
+
+
+                else  if(origine.equals("dialogSuivieRelationFournisseur"))
+                {
+
+                    StatSRMFragment.CodeFrns_selected =  listFournisseur.get(position).getCodeFournisseur() ;
+
+                    //  contact   fournisseur
+                    ListContactTaskForSearchableSpinner   listContactTaskForSearchableSpinner = new ListContactTaskForSearchableSpinner(activity  , StatSRMFragment.sp_contact, StatSRMFragment.CodeFrns_selected  ,"dialogSuivieRelationFournisseur");
+                    listContactTaskForSearchableSpinner.execute() ;
 
 
                 }

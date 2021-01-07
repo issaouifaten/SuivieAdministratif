@@ -24,8 +24,10 @@ public class ArticleFaibleRotation {
     private double PrixVenteHT;
     private double ValeurStockNonMouvementer;
 
+    int   order  ;
 
-    public ArticleFaibleRotation(double tauxRotation, double tauxBenifice, double tauxCA, double pourCBenifice, double coeff, String codeDepot, String codeArticle, int quantite, double prixAchatHT,   int quantiteVendu, double valeurVenteHT, double valeurAchatHT, int achatMoin20j, double tauxRotationCalculer, String designation, String codeFamille, String codeFournisseur, double prixAchatHTArticle, double prixVenteHT, double valeurStockNonMouvementer) {
+
+    public ArticleFaibleRotation(double tauxRotation, double tauxBenifice, double tauxCA, double pourCBenifice, double coeff, String codeDepot, String codeArticle, int quantite, double prixAchatHT,   int quantiteVendu, double valeurVenteHT, double valeurAchatHT, int achatMoin20j, double tauxRotationCalculer, String designation, String codeFamille, String codeFournisseur, double prixAchatHTArticle, double prixVenteHT, double valeurStockNonMouvementer, int   order ) {
         TauxRotation = tauxRotation;
         TauxBenifice = tauxBenifice;
         TauxCA = tauxCA;
@@ -47,6 +49,8 @@ public class ArticleFaibleRotation {
         PrixAchatHTArticle = prixAchatHTArticle;
         PrixVenteHT = prixVenteHT;
         ValeurStockNonMouvementer = valeurStockNonMouvementer;
+
+        this.order = order  ;
     }
 
 
@@ -210,6 +214,14 @@ public class ArticleFaibleRotation {
 
     public void setValeurStockNonMouvementer(double valeurStockNonMouvementer) {
         ValeurStockNonMouvementer = valeurStockNonMouvementer;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 
     @Override

@@ -14,6 +14,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.suivieadministratif.R;
+import com.example.suivieadministratif.model.LigneCMDFrnsNonConforme;
 import com.example.suivieadministratif.model.LigneSuiviCMD_frns;
 import com.example.suivieadministratif.model.SuiviCMD_frns;
 
@@ -27,16 +28,20 @@ public class BonAchatSuiviCMDRVAdapter extends RecyclerView.Adapter<BonAchatSuiv
 
     private Activity activity;
     private final ArrayList<SuiviCMD_frns> list_SuiviCMD_frns  ; //= new ArrayList<>();
+    String origine  ;
     DecimalFormat numberFormat = new DecimalFormat("0.000");
-    public static String login;
+    public static String login ;
+
+
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     DateFormat heureFormat = new SimpleDateFormat("HH:mm");
 
-    public BonAchatSuiviCMDRVAdapter(Activity activity, ArrayList<SuiviCMD_frns> list_SuiviCMD_frns) {
+    public BonAchatSuiviCMDRVAdapter(Activity activity, ArrayList<SuiviCMD_frns> list_SuiviCMD_frns,   String origine ) {
 
         this.activity = activity;
         this.list_SuiviCMD_frns = list_SuiviCMD_frns;
+        this.origine= origine ;
 
     }
 
@@ -62,36 +67,40 @@ public class BonAchatSuiviCMDRVAdapter extends RecyclerView.Adapter<BonAchatSuiv
         holder.txt_tot_ht.setText(numberFormat.format (suiviCMD_frns.getTotalHT()));
 
 
-        /*
-      else    if (bonLivraisonVente.getNumeroEtatPaiment().equals("E08"))  // payé
 
-            holder.item_bl.setCardBackgroundColor(activity.getResources().getColor(R.color.back_card_green));
 
-        else if (bonLivraisonVente.getNumeroEtatPaiment().equals("E30")) // Partiellement Payé
 
-            holder.item_bl.setCardBackgroundColor(activity.getResources().getColor(R.color.back_card_orange)) ;
+        if (origine.equals("SuivieCommandeFrs"))
+        {
+            holder.txt_libelle_rep_stock.setText("Repliquat");
+            int nbr_ligne = suiviCMD_frns.getListLigneSuiviCMD_frns().size();
+            int height = nbr_ligne * 90;
 
-         else if (!bonLivraisonVente.isDraft())
-         {
-             holder.ll_draft.setVisibility(View.GONE);
-             holder.item_bl.setCardBackgroundColor(activity.getResources().getColor(R.color.white));
-         }
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
+
+            params.height = height;
+            holder.lv_list_detail_achat.setLayoutParams(params);
+
+            Detail_BL_Adapter1 detail_bt_adapter1 = new Detail_BL_Adapter1(suiviCMD_frns.getListLigneSuiviCMD_frns());
+            holder.lv_list_detail_achat.setAdapter(detail_bt_adapter1);
+        }
         else
+        if (origine.equals("CommandeFournisseurNonConforme"))
+        {
+            holder.txt_libelle_rep_stock.setText("Qt Stock");
+            int nbr_ligne = suiviCMD_frns.getListCmdFrnsNonConformes().size();
+            int height = nbr_ligne * 90;
 
-            holder.item_bl.setCardBackgroundColor(activity.getResources().getColor(R.color.white));
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
 
-        */
+            params.height = height;
+            holder.lv_list_detail_achat.setLayoutParams(params);
 
-        int nbr_ligne = suiviCMD_frns.getListLigneSuiviCMD_frns().size();
-        int height = nbr_ligne * 80;
+            Detail_BL_Adapter2 detail_bt_adapter2 = new Detail_BL_Adapter2(suiviCMD_frns.getListCmdFrnsNonConformes());
+            holder.lv_list_detail_achat.setAdapter(detail_bt_adapter2);
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height);
+        }
 
-        params.height = height;
-        holder.lv_list_detail_achat.setLayoutParams(params);
-
-        Detail_BL_Adapter1 detail_bt_adapter1 = new Detail_BL_Adapter1(suiviCMD_frns.getListLigneSuiviCMD_frns());
-        holder.lv_list_detail_achat.setAdapter(detail_bt_adapter1);
 
     }
 
@@ -116,11 +125,14 @@ public class BonAchatSuiviCMDRVAdapter extends RecyclerView.Adapter<BonAchatSuiv
         public TextView txt_tot_ht ;
         public TextView txt_etablie_par;
 
+        public TextView  txt_libelle_rep_stock ;
         public ViewHolder(View itemView) {
             super(itemView);
 
             item_bon_commande_achat = (CardView) itemView.findViewById(R.id.item_bon_commande_achat);
 
+
+            txt_libelle_rep_stock  = (TextView)  itemView.findViewById(R.id.txt_libelle_rep_stock);
             txt_num_ba = (TextView) itemView.findViewById(R.id.txt_num_ba);
             txt_date_bon_achat = (TextView) itemView.findViewById(R.id.txt_date_bon_achat);
 
@@ -144,12 +156,12 @@ public class BonAchatSuiviCMDRVAdapter extends RecyclerView.Adapter<BonAchatSuiv
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-        private final ArrayList<LigneSuiviCMD_frns> list_ligneSuiviCMD_frns;
+        private final ArrayList<LigneSuiviCMD_frns> list_LigneSuiviCMD_frns   ;
 
-        public Detail_BL_Adapter1(ArrayList<LigneSuiviCMD_frns> list_ligneSuiviCMD_frns) {
-            super(activity, R.layout.item_detail_bon_cmd_achat, list_ligneSuiviCMD_frns);
+        public Detail_BL_Adapter1(ArrayList<LigneSuiviCMD_frns> list_LigneSuiviCMD_frns) {
+            super(activity, R.layout.item_detail_bon_cmd_achat  , list_LigneSuiviCMD_frns);
 
-            this.list_ligneSuiviCMD_frns = list_ligneSuiviCMD_frns;
+            this.list_LigneSuiviCMD_frns = list_LigneSuiviCMD_frns;
 
         }
 
@@ -159,16 +171,19 @@ public class BonAchatSuiviCMDRVAdapter extends RecyclerView.Adapter<BonAchatSuiv
 
             View rowView = inflater.inflate(R.layout.item_detail_bon_cmd_achat, null, true);
 
-            LigneSuiviCMD_frns ligneSuiviCMD_frns = list_ligneSuiviCMD_frns.get(position);
+            LigneSuiviCMD_frns ligneSuiviCMD_frns = list_LigneSuiviCMD_frns.get(position);
 
             TextView txt_designation = (TextView) rowView.findViewById(R.id.txt_designation_article);
+
             TextView txt_qt_cmd      = (TextView) rowView.findViewById(R.id.txt_qt_cmd);
             TextView txt_qt_livre    = (TextView) rowView.findViewById(R.id.txt_qt_livre);
-
+            TextView txt_qt_nn_livre   = (TextView) rowView.findViewById(R.id.txt_qt_nn_livre);
 
             txt_designation.setText(ligneSuiviCMD_frns.getDesignation());
             txt_qt_cmd.setText     (ligneSuiviCMD_frns.getQt_cmd() + "");
             txt_qt_livre.setText   (ligneSuiviCMD_frns.getQt_livre() + "");
+            txt_qt_nn_livre.setText   (ligneSuiviCMD_frns.getQuantiteNonLivrer() + "");
+
 
             return rowView;
 
@@ -176,6 +191,44 @@ public class BonAchatSuiviCMDRVAdapter extends RecyclerView.Adapter<BonAchatSuiv
 
     }
 
+    public class Detail_BL_Adapter2 extends ArrayAdapter<LigneCMDFrnsNonConforme> {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+        private final ArrayList<LigneCMDFrnsNonConforme> list_LigneCMDFrnsNonConformes    ;
+
+        public Detail_BL_Adapter2(ArrayList<LigneCMDFrnsNonConforme> list_LigneCMDFrnsNonConformes) {
+            super(activity, R.layout.item_detail_bon_cmd_achat  , list_LigneCMDFrnsNonConformes);
+
+            this.list_LigneCMDFrnsNonConformes = list_LigneCMDFrnsNonConformes;
+
+        }
+
+        public View getView(int position, View view, ViewGroup parent) {
+
+            LayoutInflater inflater = activity.getLayoutInflater();
+
+            View rowView = inflater.inflate(R.layout.item_detail_bon_cmd_achat, null, true);
+
+            LigneCMDFrnsNonConforme ligneCMDFrnsNonConforme = list_LigneCMDFrnsNonConformes.get(position);
+
+            TextView txt_designation = (TextView) rowView.findViewById(R.id.txt_designation_article);
+
+            TextView txt_qt_cmd      = (TextView) rowView.findViewById(R.id.txt_qt_cmd);
+            TextView txt_qt_livre    = (TextView) rowView.findViewById(R.id.txt_qt_livre);
+            TextView txt_qt_stock   = (TextView) rowView.findViewById(R.id.txt_qt_nn_livre);
+
+            txt_designation.setText(ligneCMDFrnsNonConforme.getDesignation());
+            txt_qt_cmd.setText     (ligneCMDFrnsNonConforme.getQtCMD() + "");
+            txt_qt_livre.setText   (ligneCMDFrnsNonConforme.getQtLivrer() + "");
+            txt_qt_stock.setText   (ligneCMDFrnsNonConforme.getQtStock() + "");
+
+
+            return rowView;
+
+        }
+
+    }
 
 }
 

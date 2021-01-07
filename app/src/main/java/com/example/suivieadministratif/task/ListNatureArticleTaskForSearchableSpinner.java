@@ -126,7 +126,7 @@ public class ListNatureArticleTaskForSearchableSpinner extends AsyncTask<String,
         listArticleTaskForSearchableSpinner.execute();*/
 
 
-        SuivieCMD_FournisseurTask  suivieCMD_fournisseurTask = new SuivieCMD_FournisseurTask(activity , SuivieCommandeFrs.rv_list_suivi_cmd_frns ,SuivieCommandeFrs.pb ,SuivieCommandeFrs.date_debut,SuivieCommandeFrs.date_fin ,SuivieCommandeFrs.CodeDepotSelected ,SuivieCommandeFrs.term_rech_art ,SuivieCommandeFrs.CodeNatureArticleSelected) ;
+        SuivieCMD_FournisseurTask  suivieCMD_fournisseurTask = new SuivieCMD_FournisseurTask(activity , SuivieCommandeFrs.rv_list_suivi_cmd_frns ,SuivieCommandeFrs.pb ,SuivieCommandeFrs.date_debut,SuivieCommandeFrs.date_fin ,SuivieCommandeFrs.CodeDepotSelected ,SuivieCommandeFrs.term_rech_art ,SuivieCommandeFrs.CodeNatureArticleSelected,origine) ;
         suivieCMD_fournisseurTask.execute() ;
 
 
@@ -141,7 +141,7 @@ public class ListNatureArticleTaskForSearchableSpinner extends AsyncTask<String,
                     SuivieCommandeFrs.CodeNatureArticleSelected= listNatureArticle.get(position).getCodeNature() ;
                   //  SuivieCommandeFrs.DepotSelected  = listArticle.get(position).getDesignationArticle() ;
 
-                    SuivieCMD_FournisseurTask  suivieCMD_fournisseurTask = new SuivieCMD_FournisseurTask(activity , SuivieCommandeFrs.rv_list_suivi_cmd_frns ,SuivieCommandeFrs.pb ,SuivieCommandeFrs.date_debut,SuivieCommandeFrs.date_fin ,SuivieCommandeFrs.CodeDepotSelected ,SuivieCommandeFrs.term_rech_art ,SuivieCommandeFrs.CodeNatureArticleSelected) ;
+                    SuivieCMD_FournisseurTask  suivieCMD_fournisseurTask = new SuivieCMD_FournisseurTask(activity , SuivieCommandeFrs.rv_list_suivi_cmd_frns ,SuivieCommandeFrs.pb ,SuivieCommandeFrs.date_debut,SuivieCommandeFrs.date_fin ,SuivieCommandeFrs.CodeDepotSelected ,SuivieCommandeFrs.term_rech_art ,SuivieCommandeFrs.CodeNatureArticleSelected,origine) ;
                     suivieCMD_fournisseurTask.execute() ;
 
                  /*   ListArticleTaskForSearchableSpinner listArticleTaskForSearchableSpinner = new ListArticleTaskForSearchableSpinner(activity,  SuivieCommandeFrs.sp_article ,  SuivieCommandeFrs.CodeNatureArticleSelected ,"SuivieCommandeFrs");

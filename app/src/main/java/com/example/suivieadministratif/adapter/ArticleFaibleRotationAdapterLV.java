@@ -42,10 +42,13 @@ public class ArticleFaibleRotationAdapterLV extends ArrayAdapter<ArticleFaibleRo
         ArticleFaibleRotation artFaibleRot = listArticleFaibleRotation.get(position);
 
 
+        TextView txt_order  = (TextView) rowView.findViewById(R.id.order);
+
         TextView txt_designation = (TextView) rowView.findViewById(R.id.txt_des_art);
         TextView txt_code_art = (TextView) rowView.findViewById(R.id.txt_code_art);
 
 
+        TextView txt_p_achat_ht = (TextView) rowView.findViewById(R.id.txt_prix_achat_ht);
         TextView txt_t_achat = (TextView) rowView.findViewById(R.id.txt_t_achat);
         TextView txt_t_vente = (TextView) rowView.findViewById(R.id.txt_t_vente);
 
@@ -58,20 +61,24 @@ public class ArticleFaibleRotationAdapterLV extends ArrayAdapter<ArticleFaibleRo
 
 
         DecimalFormat decF = new DecimalFormat("0.000");
-
+        DecimalFormat decF1 = new DecimalFormat("0.00");
         try {
+
+            txt_order .setText(artFaibleRot.getOrder()+"");
 
             txt_designation.setText(artFaibleRot.getDesignation());
             txt_code_art.setText( artFaibleRot.getCodeArticle());
 
-            txt_t_achat .setText( decF.format(artFaibleRot.getPrixAchatHT() )  );
-            txt_t_vente .setText( decF.format(artFaibleRot.getValeurVenteHT()  )  );
+            txt_t_achat .setText( decF.format(artFaibleRot.getValeurAchatHT() )  );
+            txt_t_vente .setText( decF.format(artFaibleRot.getValeurVenteHT()  ) );
 
-            txt_benefice.setText(decF.format(artFaibleRot.getTauxBenifice()) +""  );
-            txt_taux_ca.setText( decF.format(artFaibleRot.getTauxCA()  )  );
+            txt_p_achat_ht .setText( decF.format(artFaibleRot.getPrixAchatHTArticle())  );
 
-            txt_taux_rotation.setText(  decF.format( artFaibleRot.getTauxRotation()) +"");
-            txt_coeff.setText(decF.format(artFaibleRot.getCoeff()) +"");
+            txt_benefice.setText(decF1.format(artFaibleRot.getTauxBenifice()) +""  );
+            txt_taux_ca.setText( decF1.format(artFaibleRot.getTauxCA()  )  );
+
+            txt_taux_rotation.setText(  decF1.format( artFaibleRot.getTauxRotation()) +"");
+            txt_coeff.setText(decF1.format(artFaibleRot.getCoeff()) +"");
 
 
         } catch (Exception ex) {
@@ -79,27 +86,8 @@ public class ArticleFaibleRotationAdapterLV extends ArrayAdapter<ArticleFaibleRo
         }
 
 
-/*
-        TextView txt_num_piece = (TextView) rowView.findViewById(R.id.txt_piece);
-        TextView txt_date_piece = (TextView) rowView.findViewById(R.id.txt_date_piece);
 
 
-        TextView txt_code_client  = (TextView) rowView.findViewById(R.id.txt_code_client);
-        TextView txt_raison_client  = (TextView) rowView.findViewById(R.id.txt_raison_client);
-
-
-        TextView txt_code_article  = (TextView) rowView.findViewById(R.id.txt_code_article);
-        TextView txt_design_article  = (TextView) rowView.findViewById(R.id.txt_design_article);
-        TextView txt_qt_article  = (TextView) rowView.findViewById(R.id.txt_qt);
-
-
-        TextView  txt_fournisseur = (TextView) rowView.findViewById(R.id.txt_frns);
-
-        TextView txt_montant = (TextView) rowView.findViewById(R.id.txt_total_montant);
-
-
-
-*/
 
         return rowView;
 

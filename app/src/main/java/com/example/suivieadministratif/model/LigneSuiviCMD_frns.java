@@ -6,17 +6,23 @@ public class LigneSuiviCMD_frns {
     private String CodeArticle;
     private String Designation;
     private double MontantHT;
+    private double PrixAchatHT ;
     private int qt_cmd;
     private int qt_livre;
+    private int QuantiteNonLivrer ;
 
 
-    public LigneSuiviCMD_frns(String codeArticle, String designation, double montantHT, int qt_cmd, int qt_livre) {
+    public LigneSuiviCMD_frns(String codeArticle, String designation, double montantHT, double prixAchatHT, int qt_cmd, int qt_livre, int quantiteNonLivrer) {
         CodeArticle = codeArticle;
         Designation = designation;
         MontantHT = montantHT;
+        PrixAchatHT = prixAchatHT;
         this.qt_cmd = qt_cmd;
         this.qt_livre = qt_livre;
+        QuantiteNonLivrer = quantiteNonLivrer;
     }
+
+
 
     public String getCodeArticle() {
         return CodeArticle;
@@ -56,6 +62,22 @@ public class LigneSuiviCMD_frns {
 
     public void setQt_livre(int qt_livre) {
         this.qt_livre = qt_livre;
+    }
+
+    public int getQuantiteNonLivrer() {
+        return QuantiteNonLivrer;
+    }
+
+    public void setQuantiteNonLivrer(int quantiteNonLivrer) {
+        QuantiteNonLivrer = quantiteNonLivrer;
+    }
+
+    public double getPrixAchatHT() {
+        return PrixAchatHT;
+    }
+
+    public void setPrixAchatHT(double prixAchatHT) {
+        PrixAchatHT = prixAchatHT;
     }
 
     @Override

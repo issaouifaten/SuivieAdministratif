@@ -156,7 +156,7 @@ public class ListDepotTaskForSearchableSpinner extends AsyncTask<String,String,S
                     SuivieCommandeFrs.CodeDepotSelected = listDepot.get(position).getCodeDepot() ;
                     SuivieCommandeFrs.DepotSelected  = listDepot.get(position).getLibelle() ;
 
-                    SuivieCMD_FournisseurTask  suivieCMD_fournisseurTask = new SuivieCMD_FournisseurTask(activity , SuivieCommandeFrs.rv_list_suivi_cmd_frns ,SuivieCommandeFrs.pb ,SuivieCommandeFrs.date_debut,SuivieCommandeFrs.date_fin ,SuivieCommandeFrs.CodeDepotSelected ,SuivieCommandeFrs.term_rech_art ,SuivieCommandeFrs.CodeNatureArticleSelected) ;
+                    SuivieCMD_FournisseurTask  suivieCMD_fournisseurTask = new SuivieCMD_FournisseurTask(activity , SuivieCommandeFrs.rv_list_suivi_cmd_frns ,SuivieCommandeFrs.pb ,SuivieCommandeFrs.date_debut,SuivieCommandeFrs.date_fin ,SuivieCommandeFrs.CodeDepotSelected ,SuivieCommandeFrs.term_rech_art ,SuivieCommandeFrs.CodeNatureArticleSelected,origine) ;
                     suivieCMD_fournisseurTask.execute() ;
                 }
 

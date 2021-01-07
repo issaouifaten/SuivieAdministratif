@@ -15,6 +15,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/back_echek_2"
+    android:layout_marginBottom="40dp"
     tools:context=".ui.statistique_rapport_activite.Fournisseur.SuivieCommandeFrs">
 
 
@@ -299,12 +300,12 @@
                     <Button
                         android:id="@+id/btn_pourcent"
                         android:layout_width="70dp"
-                        android:layout_height="50dp"
+                        android:layout_height="40dp"
                         android:text="%"
-                        android:background="@color/colorPrimary2"
+                        android:background="@drawable/buttonround"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:textColor="@color/white"></Button>
+                        android:textColor="@color/colorPrimary2"></Button>
 
                 </LinearLayout>
 
