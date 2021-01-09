@@ -17,6 +17,7 @@ public class StatistiqueMenuActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistique_menu);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
@@ -26,5 +27,7 @@ public class StatistiqueMenuActivity extends AppCompatActivity {
         tabs.setupWithViewPager(viewPager);
 
 
+
     }
+
 }

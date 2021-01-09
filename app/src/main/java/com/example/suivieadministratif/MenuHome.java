@@ -22,9 +22,10 @@ import com.example.suivieadministratif.module.vente.EtatCommande;
 import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
 import com.example.suivieadministratif.module.vente.EtatRetourActivity;
 import com.example.suivieadministratif.activity.LoginActivity;
-import com.example.suivieadministratif.fragment.PrincipalFragment;
+
 import com.example.suivieadministratif.param.Param;
 import com.example.suivieadministratif.param.Parametrage;
+import com.example.suivieadministratif.ui.menu.MenuPrincipalFragment;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Vente.EtatChiffreAffaire;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.article.EtatJournalArticleVendu;
 import com.google.android.material.navigation.NavigationView;
@@ -147,7 +148,7 @@ public class MenuHome extends AppCompatActivity implements NavigationView.OnNavi
 
             case R.id.nav_principal:
 
-                fragment = new PrincipalFragment();
+                fragment = new MenuPrincipalFragment();
                 break;
 
             case R.id.nav_etat_chiffre_affaire:
@@ -184,21 +185,20 @@ public class MenuHome extends AppCompatActivity implements NavigationView.OnNavi
             case R.id.nav_livraison_vente :
                 Intent intent6 = new Intent(getApplicationContext(), EtatLivraisonActivity.class);
                 startActivity(intent6);
-
                 break;
 
             case R.id.nav_retour_vente:
                 Intent intent7 = new Intent(getApplicationContext(), EtatRetourActivity.class);
                 startActivity(intent7);
 
-
             case R.id.nav_deconnexion:
                 deconnexion  () ;
 
             case R.id.nav_param_server:
                 Parametrage  () ;
-
                 break;
+
+
         }
 
         //replacing the fragment

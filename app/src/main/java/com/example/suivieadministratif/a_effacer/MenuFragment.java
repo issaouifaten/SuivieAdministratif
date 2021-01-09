@@ -1,4 +1,4 @@
-package com.example.suivieadministratif.ui.menu;
+package com.example.suivieadministratif.a_effacer;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.suivieadministratif.ChiffreAffaireGlobale;
+import com.example.suivieadministratif.ui.menu.MenuViewModel;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Vente.EtatChiffreAffaire;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.article.EtatJournalArticleVendu;
 import com.example.suivieadministratif.R;

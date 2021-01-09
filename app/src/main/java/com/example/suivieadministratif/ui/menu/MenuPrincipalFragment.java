@@ -66,6 +66,8 @@ public class MenuPrincipalFragment extends Fragment {
         btn_vente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 Fragment fragment = new MenuVenteFragment();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 if (fragment != null) {

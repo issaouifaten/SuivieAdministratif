@@ -13,6 +13,8 @@ import com.example.suivieadministratif.module.vente.EtatCommande;
 import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
 import com.example.suivieadministratif.module.vente.EtatRetourActivity;
 import com.example.suivieadministratif.module.vente.MouvementVenteServiceActivity;
+import com.example.suivieadministratif.ui.diagramme.MenuDiagrammeFragment;
+import com.example.suivieadministratif.ui.menu.MenuVenteFragment;
 import com.example.suivieadministratif.ui.menu.MenuViewModel;
 import com.example.suivieadministratif.ui.menu.StatistiqueMenuActivity;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Graphique.Diagramme;
@@ -21,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -41,8 +44,19 @@ public class MenuStatiqtiqueEtRapportActiviteFragment extends Fragment {
         btn_rapport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent6 = new Intent(getActivity(), Diagramme.class);
-              startActivity(intent6);
+
+
+
+
+                Fragment fragment = new MenuDiagrammeFragment();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                if (fragment != null) {
+                    ft.replace(R.id.nav_host_fragment, fragment);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
+
+
             }
         });
 
