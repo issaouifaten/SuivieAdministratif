@@ -72,17 +72,16 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_vente_parametrable"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
                     android:layout_margin="10dp"
-                    card_view:cardCornerRadius="2dp"
-                    card_view:contentPadding="10dp"
-                    card_view:cardBackgroundColor="#66FCF9F9"
-                    card_view:cardElevation="2dp"
-                    card_view:cardMaxElevation="6dp">
+                    app:cardCornerRadius="2dp"
+                    app:contentPadding="10dp"
+                    app:cardBackgroundColor="#66FCF9F9"
+                    app:cardElevation="2dp"
+                    app:cardMaxElevation="6dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -104,72 +103,17 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
                             android:layout_marginTop="5dp"
-                            android:textSize="15dp"
                             android:gravity="center"
-                            android:text="Vente paramètrable"/>
-
-
-                    </LinearLayout>
-
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_var_ca_par_periode"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
-                    android:layout_margin="10dp"
-                    card_view:cardCornerRadius="2dp"
-                    card_view:contentPadding="10dp"
-                    card_view:cardBackgroundColor="#66FCF9F9"
-                    card_view:cardElevation="2dp"
-                    card_view:cardMaxElevation="6dp">
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center">
-
-
-                        <RelativeLayout
-                            android:layout_width="60dp"
-                            android:layout_height="60dp">
-
-                            <ImageView
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:src="@drawable/ic_bon_commande"
-                                android:padding="15dp"/>
-
-                        </RelativeLayout>
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="10dp"
-                            android:src="@drawable/line_h"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-
-                            android:layout_marginTop="5dp"
+                            android:text="Graphique Vente"
                             android:textSize="15dp"
-                            android:text="Variation CA par période"
-
-                            android:gravity="center"/>
+                            android:textStyle="bold" />
 
 
                     </LinearLayout>
-                </androidx.cardview.widget.CardView>
 
+
+                </androidx.cardview.widget.CardView>
 
 
             </LinearLayout>
@@ -227,313 +171,6 @@
 
 
                 </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_var_ca_en_annee"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
-                    android:layout_margin="10dp"
-                    card_view:cardCornerRadius="2dp"
-                    card_view:contentPadding="10dp"
-                    card_view:cardBackgroundColor="#66FCF9F9"
-                    card_view:cardElevation="2dp"
-                    card_view:cardMaxElevation="6dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:src="@drawable/ic_retour"
-                            android:padding="15dp"/>
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="10dp"
-                            android:src="@drawable/line_h"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:layout_marginTop="5dp"
-                            android:textSize="15dp"
-                            android:text="Variation CA en Année"
-
-                            android:gravity="center"/>
-
-
-
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_ca_par_force_vente"
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
-                    android:layout_margin="10dp"
-                    android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:cardBackgroundColor="#66FCF9F9"
-                    app:cardCornerRadius="2dp"
-                    app:cardElevation="2dp"
-                    app:cardMaxElevation="6dp"
-                    app:contentPadding="10dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/ic_mvt_vente_service" />
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="10dp"
-                            android:src="@drawable/line_h" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:gravity="center"
-                            android:text="CA par force de Vente"
-                            android:textSize="13dp"
-                            android:textStyle="bold" />
-
-
-                    </LinearLayout>
-
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_variation_en_nbr_ticket"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
-                    android:layout_margin="10dp"
-                    app:cardCornerRadius="2dp"
-                    app:contentPadding="10dp"
-                    app:cardBackgroundColor="#66FCF9F9"
-                    app:cardElevation="2dp"
-                    app:cardMaxElevation="6dp">
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:padding="15dp"
-                            android:src="@drawable/ic_facture" />
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="10dp"
-                            android:src="@drawable/line_h"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:layout_marginTop="5dp"
-                            android:textSize="15dp"
-                            android:text="Variation en Nombre Ticket"
-
-                            android:gravity="center"/>
-
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_bon_avoir"
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
-                    android:layout_margin="10dp"
-                    android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:visibility="gone"
-                    app:cardBackgroundColor="#66FCF9F9"
-                    app:cardCornerRadius="2dp"
-                    app:cardElevation="2dp"
-                    app:cardMaxElevation="6dp"
-                    app:contentPadding="10dp">
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:padding="15dp"
-                            android:src="@drawable/ic_avoir_vente" />
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="10dp"
-                            android:src="@drawable/line_h" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center"
-                            android:text="Bon Avoir"
-                            android:textSize="15dp"
-
-                            android:textStyle="bold" />
-
-
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_client_nn_mouvemente"
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
-                    android:layout_margin="10dp"
-                    android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:visibility="gone"
-                    app:cardBackgroundColor="#66FCF9F9"
-                    app:cardCornerRadius="2dp"
-                    app:cardElevation="2dp"
-                    app:cardMaxElevation="6dp"
-                    app:contentPadding="10dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-
-                        <ImageView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:padding="5dp"
-                            android:src="@drawable/ic_client_nn_mouvemente" />
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="10dp"
-                            android:src="@drawable/line_h" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center"
-                            android:text="Client non mouvementé"
-                            android:textSize="15dp"
-                            android:textStyle="bold" />
-
-
-                    </LinearLayout>
-
-
-                </androidx.cardview.widget.CardView>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_vente_article_qt"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:clickable="true"
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
-                    android:layout_margin="10dp"
-                    card_view:cardCornerRadius="2dp"
-                    card_view:contentPadding="10dp"
-                    card_view:cardBackgroundColor="#66FCF9F9"
-                    card_view:cardElevation="2dp"
-                    card_view:cardMaxElevation="6dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:src="@drawable/ic_reg_client"
-                            android:padding="5dp"/>
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="10dp"
-                            android:src="@drawable/line_h"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:layout_marginTop="5dp"
-                            android:textSize="15dp"
-                            android:gravity="center"
-                            android:text="Vente / Article (Quantité)"/>
-
-
-                    </LinearLayout>
-
-
-                </androidx.cardview.widget.CardView>
-
-
 
             </LinearLayout>
 

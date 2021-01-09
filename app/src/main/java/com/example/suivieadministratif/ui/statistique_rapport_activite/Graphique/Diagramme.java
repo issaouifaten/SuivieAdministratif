@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.Checkable;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.param.Param;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.SuivieCommandeClient;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Stock.Etat_indic_dispo_stock;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -59,6 +61,10 @@ public class Diagramme extends AppCompatActivity {
     String datedebut = "", datefin = "";
     DatePicker datePicker;
     final Context co = this;
+    ArrayList<String> data_CodeRespensable, data_NomRespensable;
+    ArrayList<String> data_CodeVille, data_LibelleVille;
+    Spinner spinRespensable, spinVille;
+    String conditionRep="",conditionVille="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,7 +105,8 @@ public class Diagramme extends AppCompatActivity {
         txt_datedebut = (TextView) findViewById(R.id.txt_date_debut);
         txt_datefin = (TextView) findViewById(R.id.txt_date_fin);
 
-
+        spinRespensable = (Spinner) findViewById(R.id.spinnerrepresentant);
+        spinVille= (Spinner) findViewById(R.id.spinnerville);
 
 
         chart = findViewById(R.id.barchart);
@@ -179,9 +186,11 @@ public class Diagramme extends AppCompatActivity {
         txt_datefin.setText(datefin);
 
 
+        GetDataSpinnerRep getDataSpinnerRep=new GetDataSpinnerRep();
+        getDataSpinnerRep.execute( "");
 
-
-
+        GetDataSpinnerVille getDataSpinnerVille=new GetDataSpinnerVille();
+        getDataSpinnerVille.execute( "");
         bt_montantremise.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -212,6 +221,48 @@ public class Diagramme extends AppCompatActivity {
                 getDataGraphe.execute("");
             }
         });
+        spinVille.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != 0) {
+                    String Codeville= data_CodeVille.get(position);
+                    conditionVille = "  and ( CodeVille='" + Codeville + "'  ) ";
+                    GetDataGraphe getDataGraphe=new GetDataGraphe();
+                    getDataGraphe.execute("");
+                } else {
+                    conditionVille = "";
+                    GetDataGraphe getDataGraphe=new GetDataGraphe();
+                    getDataGraphe.execute("");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinRespensable.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != 0) {
+                    String Coderep= data_CodeRespensable.get(position);
+                    conditionRep = "  and ( CodeRepresentant='" + Coderep + "'  ) ";
+                    GetDataGraphe getDataGraphe=new GetDataGraphe();
+                    getDataGraphe.execute("");
+                } else {
+                    conditionRep = "";
+                    GetDataGraphe getDataGraphe=new GetDataGraphe();
+                    getDataGraphe.execute("");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
 
 
@@ -330,7 +381,7 @@ public class Diagramme extends AppCompatActivity {
                             " convert(numeric(18,3),sum (Benifice) )as Benifice \n" +
                             " ,convert(numeric(18,3),sum(BenificeNet) )as BenificeNet\n" +
                             "  ,convert(numeric(18,3),sum(PrixRevient ))as PrixRevient\n" +
-                            " from Vue_ListeVenteGlobalDetailler where DatePiece between '"+datedebut+"' and '"+datefin+"'";
+                            " from Vue_ListeVenteGlobalDetailler where DatePiece between '"+datedebut+"' and '"+datefin+"'"+conditionRep+conditionVille;
 
                     stmt = con.prepareStatement(querydepot);
                     ResultSet rsss = stmt.executeQuery();
@@ -359,11 +410,130 @@ public class Diagramme extends AppCompatActivity {
 
 
 
+    public class GetDataSpinnerRep extends AsyncTask<String, String, String> {
+        String z = "  ";
+
+        List<Map<String, String>> prolist = new ArrayList<Map<String, String>>();
+
+        @Override
+        protected void onPreExecute() {
+            //  Log.e("frs", querylist);
+            // pbbar.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected void onPostExecute(String r) {
+            progressBar.setVisibility(View.GONE);
+
+            ArrayAdapter<CharSequence> adapter = new ArrayAdapter(getApplicationContext(),
+                    R.layout.spinner, data_NomRespensable);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+
+            spinRespensable.setAdapter(adapter);
+
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                Connection con = connectionClass.CONN(ip, password, user, base);
+                if (con == null) {
+                    z = "Error in connection with SQL server";
+                } else {
+
+                    PreparedStatement stmt, stmt2;
+                    data_CodeRespensable = new ArrayList<String>();
+                    data_NomRespensable = new ArrayList<String>();
+                    stmt = con.prepareStatement("select  CodeRespensable,Nom from Respensable where Actif=1");
+                    ResultSet rsss = stmt.executeQuery();
+                    data_CodeRespensable.add("");
+                    data_NomRespensable.add("Tout");
+                    while (rsss.next()) {
+                        String id = rsss.getString("CodeRespensable");
+                        String designation = rsss.getString("Nom");
+                        data_CodeRespensable.add(id);
+                        data_NomRespensable.add(designation);
+
+                    }
+
+
+                }
+            } catch (SQLException ex) {
+                z = "list" + ex.toString();
+
+            } catch (Exception e) {
+
+            }
+            return z;
+        }
+    }
 
 
 
+    public class GetDataSpinnerVille extends AsyncTask<String, String, String> {
+        String z = "  ";
+
+        List<Map<String, String>> prolist = new ArrayList<Map<String, String>>();
+
+        @Override
+        protected void onPreExecute() {
+            //  Log.e("frs", querylist);
+            // pbbar.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected void onPostExecute(String r) {
+            progressBar.setVisibility(View.GONE);
+
+            ArrayAdapter<CharSequence> adapter = new ArrayAdapter(getApplicationContext(),
+                    R.layout.spinner, data_LibelleVille);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
+            spinVille.setAdapter(adapter);
 
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                Connection con = connectionClass.CONN(ip, password, user, base);
+                if (con == null) {
+                    z = "Error in connection with SQL server";
+                } else {
+
+                    PreparedStatement stmt, stmt2;
+                    data_CodeVille = new ArrayList<String>();
+                    data_LibelleVille= new ArrayList<String>();
+                    stmt = con.prepareStatement("select  CodeVille,DesignationVille  from Ville");
+                    ResultSet rsss = stmt.executeQuery();
+                    data_CodeVille.add("");
+                    data_LibelleVille.add("Tout");
+                    while (rsss.next()) {
+                        String id = rsss.getString("CodeVille");
+                        String designation = rsss.getString("DesignationVille");
+                        data_CodeVille.add(id);
+                        data_LibelleVille.add(designation);
+
+                    }
+
+
+                }
+            } catch (SQLException ex) {
+                z = "list" + ex.toString();
+
+            } catch (Exception e) {
+
+            }
+            return z;
+        }
+    }
 
 }
