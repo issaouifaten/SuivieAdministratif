@@ -39,7 +39,7 @@ public class RapportEcheanceClientActivity extends AppCompatActivity {
 
 
     ProgressBar pb;
-    ListView lv_list_echeance_client  ;
+    ListView lv_list_echeance_client;
     public TextView txt_date_debut, txt_date_fin;
 
     int id_DatePickerDialog = 0;
@@ -48,11 +48,11 @@ public class RapportEcheanceClientActivity extends AppCompatActivity {
     public static int year_x2, month_x2, day_x2;
 
     public static Date date_debut = null;
-    public static Date date_fin   = null;
+    public static Date date_fin = null;
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     NumberFormat formatter = new DecimalFormat("00");
 
-    public  static  TextView  txt_tot_echeance ;
+    public static TextView txt_tot_echeance;
 
     FloatingActionButton fab_arrow;
     RelativeLayout layoutBottomSheet;
@@ -67,18 +67,18 @@ public class RapportEcheanceClientActivity extends AppCompatActivity {
         txt_date_debut = findViewById(R.id.txt_date_debut);
         txt_date_fin = findViewById(R.id.txt_date_fin);
 
-        lv_list_echeance_client  = findViewById( R.id.lv_list_echeance_client) ;
+        lv_list_echeance_client = findViewById(R.id.lv_list_echeance_client);
 
         pb = (ProgressBar) findViewById(R.id.pb);
 
-        txt_tot_echeance = (TextView) findViewById(R.id.txt_tot_echeance_client) ;
+        txt_tot_echeance = (TextView) findViewById(R.id.txt_tot_echeance_client);
 
         final Calendar cal1 = Calendar.getInstance();
         cal1.setTime(currentDate);
         //cal1.add(Calendar.DAY_OF_YEAR, -7);
-        year_x1  = cal1.get(Calendar.YEAR);
+        year_x1 = cal1.get(Calendar.YEAR);
         month_x1 = cal1.get(Calendar.MONTH);
-        day_x1   = cal1.get(Calendar.DAY_OF_MONTH);
+        day_x1 = cal1.get(Calendar.DAY_OF_MONTH);
 
 
         final Calendar cal2 = Calendar.getInstance();
@@ -97,12 +97,11 @@ public class RapportEcheanceClientActivity extends AppCompatActivity {
         txt_date_fin.setText(_date_au);
 
 
-
-        NavigationView nav_menu=findViewById(R.id.nav_view);
+        NavigationView nav_menu = findViewById(R.id.nav_view);
         View root = nav_menu.getHeaderView(0);
 
 
-        CardView btn_devis_vente = (CardView) root.findViewById(R.id.btn_devis_vente)  ;
+        CardView btn_devis_vente = (CardView) root.findViewById(R.id.btn_devis_vente);
         btn_devis_vente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,9 +111,7 @@ public class RapportEcheanceClientActivity extends AppCompatActivity {
         });
 
 
-
-
-        CardView   btn_bon_livraison = (CardView) root.findViewById(R.id.btn_bon_livraison)  ;
+        CardView btn_bon_livraison = (CardView) root.findViewById(R.id.btn_bon_livraison);
         btn_bon_livraison.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,7 +121,7 @@ public class RapportEcheanceClientActivity extends AppCompatActivity {
         });
 
 
-        CardView btn_bon_retour = (CardView) root.findViewById(R.id.btn_bon_retour)  ;
+        CardView btn_bon_retour = (CardView) root.findViewById(R.id.btn_bon_retour);
         btn_bon_retour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,7 +131,7 @@ public class RapportEcheanceClientActivity extends AppCompatActivity {
         });
 
 
-        CardView  btn_bon_commande = (CardView) root.findViewById(R.id.btn_bon_commande) ;
+        CardView btn_bon_commande = (CardView) root.findViewById(R.id.btn_bon_commande);
         btn_bon_commande.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,7 +141,7 @@ public class RapportEcheanceClientActivity extends AppCompatActivity {
 
             }
         });
-        CardView  btn_facture_vente = (CardView) root.findViewById(R.id.btn_facture_vente) ;
+        CardView btn_facture_vente = (CardView) root.findViewById(R.id.btn_facture_vente);
         btn_facture_vente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,7 +152,7 @@ public class RapportEcheanceClientActivity extends AppCompatActivity {
             }
         });
 
-        CardView  btn_mvmnt_vente_service= (CardView) root.findViewById(R.id.btn_mvmnt_vente_service) ;
+        CardView btn_mvmnt_vente_service = (CardView) root.findViewById(R.id.btn_mvmnt_vente_service);
         btn_mvmnt_vente_service.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,53 +163,41 @@ public class RapportEcheanceClientActivity extends AppCompatActivity {
         });
 
 
-        CardView   btn_reglement_client = (CardView)  root.findViewById(R.id.btn_reg_client)  ;
+        CardView btn_reglement_client = (CardView) root.findViewById(R.id.btn_reg_client);
         btn_reglement_client.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent  intent1 = new Intent(getApplicationContext() , ReglementClientActivity.class) ;
+                Intent intent1 = new Intent(getApplicationContext(), ReglementClientActivity.class);
                 startActivity(intent1);
             }
         });
 
 
-        CardView   btn_echeance_client = (CardView)   root.findViewById(R.id.btn_echeance_Client);
+        CardView btn_echeance_client = (CardView) root.findViewById(R.id.btn_echeance_Client);
         btn_echeance_client.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent  intent1 = new Intent(getApplicationContext() , RapportEcheanceClientActivity.class) ;
+                Intent intent1 = new Intent(getApplicationContext(), RapportEcheanceClientActivity.class);
                 startActivity(intent1);
             }
         });
 
-        CardView   btn_home= (CardView) root.findViewById(R.id.btn_home );
+        CardView btn_home = (CardView) root.findViewById(R.id.btn_home);
         btn_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toCaisseRecette  = new Intent(getApplicationContext() , HomeActivity.class) ;
+                Intent toCaisseRecette = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(toCaisseRecette);
 
             }
         });
 
 
+        updateData();
 
-
-
-
-
-
-
-
-
-
-
-
-        updateData () ;
-
-        txt_date_debut.setOnClickListener(new View.OnClickListener  ()  {
+        txt_date_debut.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)  {
+            public void onClick(View v) {
 
                 id_DatePickerDialog = 0;
                 Log.e("month_x1", "On picker  : " + month_x1);
@@ -235,7 +220,7 @@ public class RapportEcheanceClientActivity extends AppCompatActivity {
                                 date_debut = df.parse(_date_du);
                                 date_fin = df.parse(_date_au);
 
-                                updateData () ;
+                                updateData();
 
 
                             } catch (Exception e) {
@@ -249,8 +234,7 @@ public class RapportEcheanceClientActivity extends AppCompatActivity {
         });
 
 
-
-        txt_date_fin.setOnClickListener(new View.OnClickListener()  {
+        txt_date_fin.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -275,7 +259,7 @@ public class RapportEcheanceClientActivity extends AppCompatActivity {
                                 date_debut = df.parse(_date_du);
                                 date_fin = df.parse(_date_au);
 
-                                updateData () ;
+                                updateData();
 
                             } catch (Exception e) {
                                 Log.e("Exception --", " " + e.getMessage());
@@ -289,55 +273,13 @@ public class RapportEcheanceClientActivity extends AppCompatActivity {
         });
 
 
-
-        layoutBottomSheet = (RelativeLayout)  findViewById(R.id.bottom_sheet);
-        fab_arrow = (FloatingActionButton)  findViewById(R.id.fab_arrow);
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setHideable(false);
-
-        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                switch (newState) {
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED: {
-
-                        // Toast.makeText(getActivity() , "Close Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_down);
-
-                      /* ReptureStockClientTaskTask reptureStockClientTaskTask = new ReptureStockClientTaskTask(getActivity() ,"1" , exptens_lv_stock_en_repture) ;
-                        reptureStockClientTaskTask.execute() ;*/
-
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_COLLAPSED: {
-                        // Toast.makeText(getActivity() , "Expand Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_up);
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_DRAGGING:
-                        break;
-                    case BottomSheetBehavior.STATE_SETTLING:
-                        break;
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
-            }
-        });
-
     }
 
 
+    public void updateData() {
 
-    public   void   updateData ()
-    {
-
-        EcheanceClientTask echeanceClientTask  = new EcheanceClientTask(this  ,date_debut ,date_fin,lv_list_echeance_client , pb  ) ;
-        echeanceClientTask.execute() ;
+        EcheanceClientTask echeanceClientTask = new EcheanceClientTask(this, date_debut, date_fin, lv_list_echeance_client, pb);
+        echeanceClientTask.execute();
 
     }
 

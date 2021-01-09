@@ -33,6 +33,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -238,7 +239,13 @@ public class SuivieArretCaisse extends AppCompatActivity {
         protected void onPostExecute(String r) {
             progressBar.setVisibility(View.GONE);
             condition="";
-            txt_total.setText(""+total_gloabl);
+
+            final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+            instance.setMinimumFractionDigits(3);
+            instance.setMaximumFractionDigits(3);
+            txt_total.setText(instance.format(total_gloabl));
+
+            //txt_total.setText(""+total_gloabl);
 
             String[] from = {"CodeVoiture", "Porteur", "CodeCompte", "NumeroArretCaisse", "MontantRecu","Reference","DateArret",
                     "Libelle","CodeBanque"};

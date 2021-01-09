@@ -7,7 +7,7 @@
     android:background="@drawable/back_echek_2"
     tools:context=".module.achat.BonCommandeAchatActivity">
 
-    <RelativeLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -183,15 +183,12 @@
                 app:headerLayout="@layout/menu_achat" />
         </androidx.drawerlayout.widget.DrawerLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="bottom"
-            android:orientation="vertical">
+        <include layout="@layout/bottom_sheet_livraison" />
 
-            <include layout="@layout/banniere_societe" />
-        </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    </RelativeLayout>
+    <include
+        layout="@layout/banniere_societe"
+        tools:layout_editor_absoluteY="691dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

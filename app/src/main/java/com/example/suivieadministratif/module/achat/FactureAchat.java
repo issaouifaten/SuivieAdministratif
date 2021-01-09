@@ -333,8 +333,11 @@ public class FactureAchat extends AppCompatActivity {
                     views);
 
 
+            final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+            instance.setMinimumFractionDigits(3);
+            instance.setMaximumFractionDigits(3);
+            txt_tot_commande.setText(instance.format(total_devis));
 
-            txt_tot_commande.setText(""+total_devis);
             lv_list_historique_bc.setAdapter(ADA);
             lv_list_historique_bc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -376,7 +379,7 @@ public class FactureAchat extends AppCompatActivity {
 
 
                     String queryTable = "select NumeroFactureAchat,RaisonSociale,CodeFournisseur,TotalTTC,DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
-                            "from FactureAchat \n" +
+                            ",Etat.NumeroEtat from FactureAchat \n" +
                             "inner join Etat on Etat.NumeroEtat=FactureAchat.NumeroEtat\n" +
                             "where DateCreation between '"+date_debut+"' and '"+date_fin+"'\n" +
                             "order by DateCreation desc";
@@ -396,10 +399,13 @@ public class FactureAchat extends AppCompatActivity {
                         datanum.put("RaisonSociale", rs.getString("RaisonSociale"));
                         datanum.put("TotalTTC", rs.getString("TotalTTC"));
                         datanum.put("Etat", rs.getString("Etat"));
+                        datanum.put("NumeroEtat", rs.getString("NumeroEtat"));
 
                         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
                         datanum.put("DateCreation", df.format(rs.getDate("DateCreation")));
+
+                        if(!(rs.getString("NumeroEtat").equals("E00")||rs.getString("NumeroEtat").equals("E40")))
                         total_devis+=rs.getFloat("TotalTTC");
                         prolist.add(datanum);
 

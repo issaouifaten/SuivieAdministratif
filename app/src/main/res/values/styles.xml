@@ -26,6 +26,8 @@
     <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowBackground">@drawable/popup_background</item>
     </style>
-
+    <style name="ColorCheck">
+        <item name="colorAccent">#F8F8F8</item>
+    </style>
 
 </resources>

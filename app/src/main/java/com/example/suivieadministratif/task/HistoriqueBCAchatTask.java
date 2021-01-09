@@ -18,9 +18,10 @@ import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.adapter.BonCommandeAdapter;
 import com.example.suivieadministratif.model.BonCommandeVente;
+import com.example.suivieadministratif.module.achat.BonCommandeAchatActivity;
 import com.example.suivieadministratif.module.achat.LigneBonCommandeAchatActivity;
-import com.example.suivieadministratif.module.vente.EtatCommande;
-import com.example.suivieadministratif.module.vente.HistoriqueLigneBonCommandeActivity;
+
+import com.example.suivieadministratif.module.vente.MouvementVenteServiceActivity;
 import com.example.suivieadministratif.param.Param;
 
 import java.sql.Connection;
@@ -32,6 +33,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class HistoriqueBCAchatTask extends AsyncTask<String, String, String> {
 
@@ -51,7 +53,7 @@ public class HistoriqueBCAchatTask extends AsyncTask<String, String, String> {
     DateFormat dtfSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-
+float total=0;
     ArrayList<BonCommandeVente> listBonCommandeVente = new ArrayList<>();
 
     public HistoriqueBCAchatTask(Activity activity, Date  date_debut , Date date_fin  , ListView lv_hist_bc, ProgressBar pb, SearchView search_bar_client) {
@@ -97,7 +99,7 @@ public class HistoriqueBCAchatTask extends AsyncTask<String, String, String> {
             } else {
 
                 String queryHis_bc = "  select NumeroBonCommandeAchat  ,RaisonSociale  ,TotalTTC  , Etat.NumeroEtat ,Etat.Libelle  , DateBonCommandeAchat   from BonCommandeAchat  \n" +
-                        "inner JOIN Etat  on Etat.NumeroEtat =  BonCommandeVente.NumeroEtat    \n" +
+                        "inner JOIN Etat  on Etat.NumeroEtat =  BonCommandeAchat.NumeroEtat    \n" +
                         "where CONVERT (Date  , DateBonCommandeAchat)  between  '"+df.format(date_debut)+"'  and  '"+df.format(date_fin)+"'\n" +
                         "order by DateBonCommandeAchat desc  \n ";
 
@@ -114,6 +116,7 @@ public class HistoriqueBCAchatTask extends AsyncTask<String, String, String> {
                     Date DateBonCommandeVente = dtfSQL.parse(rs.getString("DateBonCommandeAchat"));
                     String NumeroEtat = rs.getString("NumeroEtat");
                     String Libelle = rs.getString("Libelle");
+                    total+=TotalTTC;
 
                     BonCommandeVente bonCommandeVente = new BonCommandeVente(NumeroBonCommandeVente, DateBonCommandeVente, RaisonSociale, TotalTTC, NumeroEtat,Libelle);
                     listBonCommandeVente.add(bonCommandeVente);
@@ -135,11 +138,15 @@ public class HistoriqueBCAchatTask extends AsyncTask<String, String, String> {
         pb.setVisibility(View.INVISIBLE);
 
 
-        EtatCommande.bcAdapter = new BonCommandeAdapter(activity, listBonCommandeVente);
-        lv_hist_bc.setAdapter(EtatCommande.bcAdapter);
+        BonCommandeAchatActivity.bcAdapter = new BonCommandeAdapter(activity, listBonCommandeVente);
+        lv_hist_bc.setAdapter(BonCommandeAchatActivity.bcAdapter);
 
         listOnClick(listBonCommandeVente);
 
+        final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+        instance.setMinimumFractionDigits(3);
+        instance.setMaximumFractionDigits(3);
+        BonCommandeAchatActivity.txt_tot.setText(instance.format(total));
         search_bar_client.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -154,8 +161,8 @@ public class HistoriqueBCAchatTask extends AsyncTask<String, String, String> {
             public boolean onQueryTextChange(String query) {
 
                 final ArrayList<BonCommandeVente> fitlerClientList = filterClientCMD(listBonCommandeVente, query);
-                EtatCommande.bcAdapter = new BonCommandeAdapter(activity, fitlerClientList);
-                lv_hist_bc.setAdapter(EtatCommande.bcAdapter);
+                BonCommandeAchatActivity.bcAdapter = new BonCommandeAdapter(activity, fitlerClientList);
+                lv_hist_bc.setAdapter(BonCommandeAchatActivity.bcAdapter);
                 listOnClick(fitlerClientList);
 
                 return false;

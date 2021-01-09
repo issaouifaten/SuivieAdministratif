@@ -123,7 +123,7 @@
                     android:layout_margin="10dp"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:cardBackgroundColor="#66FCF9F9"
                     app:cardCornerRadius="2dp"
                     app:cardElevation="2dp"
@@ -161,7 +161,7 @@
                             android:layout_marginTop="10dp"
 
                             android:gravity="center"
-                            android:text="Rapport Activité"
+                            android:text="Diagramme"
                             android:textSize="15dp"
 
                             android:textStyle="bold" />

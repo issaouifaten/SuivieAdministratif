@@ -3,6 +3,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@android:color/white"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
@@ -14,8 +15,8 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="5dp"
         android:foreground="?android:attr/selectableItemBackground"
-        card_view:cardBackgroundColor="#66FCF9F9"
-        card_view:cardCornerRadius="2dp"
+        card_view:cardBackgroundColor="#F8F8F8"
+        card_view:cardCornerRadius="5dp"
         card_view:cardElevation="2dp"
         card_view:cardMaxElevation="6dp"
         card_view:contentPadding="8dp">
@@ -38,7 +39,8 @@
                     android:id="@+id/txt_num_mission"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textStyle="bold|italic" />
 
                 <LinearLayout
                     android:id="@+id/l_chauffeur"
@@ -49,23 +51,26 @@
                     <TextView
                         android:id="@+id/txt_nom_Chauffeur"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:text="chauffeur"
-                        android:textColor="@color/color_g_1"
+                        android:textColor="@color/blue_colisage"
                         android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/imageView10"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         card_view:srcCompat="@drawable/icon_camion" />
 
                     <TextView
                         android:id="@+id/txt_designation"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:gravity="center_vertical"
+                        android:text="TextView"
+                        android:textStyle="bold|italic" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -78,8 +83,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:orientation="vertical"
         android:padding="10dp">
 

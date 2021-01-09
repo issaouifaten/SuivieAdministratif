@@ -11,7 +11,8 @@
         android:roundIcon="@drawable/i2s"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.statistique_rapport_activite.SRM.SuivieRelationFournisseurActivity"></activity>
+        <activity android:name=".ui.statistique_rapport_activite.Graphique.Diagramme"></activity>
+        <activity android:name=".ui.statistique_rapport_activite.SRM.SuivieRelationFournisseurActivity" />
         <activity android:name=".ui.statistique_rapport_activite.importation.SuivieDossierImportationActivity" />
         <activity android:name=".ui.statistique_rapport_activite.Stock.Etat_Stock" />
         <activity android:name=".ui.statistique_rapport_activite.Stock.Etat_indic_dispo_stock" />

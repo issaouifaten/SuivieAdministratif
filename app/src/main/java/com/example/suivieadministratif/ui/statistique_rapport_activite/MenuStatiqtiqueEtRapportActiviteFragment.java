@@ -15,6 +15,7 @@ import com.example.suivieadministratif.module.vente.EtatRetourActivity;
 import com.example.suivieadministratif.module.vente.MouvementVenteServiceActivity;
 import com.example.suivieadministratif.ui.menu.MenuViewModel;
 import com.example.suivieadministratif.ui.menu.StatistiqueMenuActivity;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Graphique.Diagramme;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,8 +41,8 @@ public class MenuStatiqtiqueEtRapportActiviteFragment extends Fragment {
         btn_rapport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent6 = new Intent(getActivity(), EtatLivraisonActivity.class);
-               // startActivity(intent6);
+                Intent intent6 = new Intent(getActivity(), Diagramme.class);
+              startActivity(intent6);
             }
         });
 
