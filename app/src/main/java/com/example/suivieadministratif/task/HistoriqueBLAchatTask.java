@@ -19,7 +19,9 @@ import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.adapter.BonLivraisonAdapter;
 import com.example.suivieadministratif.model.BonLivraisonVente;
 import com.example.suivieadministratif.model.LigneBonLivraisonVente;
+import com.example.suivieadministratif.module.achat.BonLivraisonAchatActivity;
 import com.example.suivieadministratif.module.achat.LigneBonLivraisonAchatActivity;
+import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
 import com.example.suivieadministratif.module.vente.HistoriqueLigneBonLivraisonActivity;
 
 import java.sql.Connection;
@@ -31,6 +33,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class HistoriqueBLAchatTask extends AsyncTask<String, String, String> {
 
@@ -52,7 +55,7 @@ public class HistoriqueBLAchatTask extends AsyncTask<String, String, String> {
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
     ArrayList<BonLivraisonVente> listBonLivraisonVentes = new ArrayList<>();
-
+    double  tot_liv  =0  ;
     public HistoriqueBLAchatTask(Activity activity, Date  date_debut , Date date_fin  , ListView lv_hist_bc, ProgressBar pb, SearchView search_bar_client) {
         this.activity = activity;
         this.date_debut = date_debut  ;
@@ -109,6 +112,12 @@ public class HistoriqueBLAchatTask extends AsyncTask<String, String, String> {
                     Date DateBonLivraisonVente = dtfSQL.parse(rs.getString("DateBonLivraisonAchat"));
                     String NumeroEtat = rs.getString("NumeroEtat");
                     String LibelleEtat = rs.getString("Libelle");
+                    if (!NumeroEtat.equals("E00"))
+                    {
+                        tot_liv=tot_liv+TotalTTC ;
+                    }
+
+
                     BonLivraisonVente bonLivraisonVente = new BonLivraisonVente(NumeroBonLivraisonVente, DateBonLivraisonVente, RaisonSociale, TotalTTC, NumeroEtat, LibelleEtat);
                     listBonLivraisonVentes.add(bonLivraisonVente);
 
@@ -132,7 +141,10 @@ public class HistoriqueBLAchatTask extends AsyncTask<String, String, String> {
 
         BonLivraisonAdapter bonLivraisonAdapter  = new BonLivraisonAdapter(activity  , listBonLivraisonVentes)  ;
         lv_hist_bc.setAdapter(bonLivraisonAdapter);
-
+        final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+        instance.setMinimumFractionDigits(3);
+        instance.setMaximumFractionDigits(3);
+        BonLivraisonAchatActivity. txt_tot_livraison.setText(instance.format(tot_liv));
         listOnClick(listBonLivraisonVentes);
 
         search_bar_client.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

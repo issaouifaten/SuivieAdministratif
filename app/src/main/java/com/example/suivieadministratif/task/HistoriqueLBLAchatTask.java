@@ -80,7 +80,7 @@ public class HistoriqueLBLAchatTask extends AsyncTask <String, String, String> {
                 z = "Error in connection with SQL server";
             } else {
                 String queryAchat = " select \n" +
-                        "NumeroBonLivraisonAchat  , CodeArticle  ,Quantite   , MontantTTC \n" +
+                        "NumeroBonLivraisonAchat  , CodeArticle  ,Quantite   , MontantTTC,DesignationArticle \n" +
                         " from  LigneBonLivraisonAchat    where NumeroBonLivraisonAchat  = '"+NumeroBL+"'   " ;
 
                 PreparedStatement ps = con.prepareStatement(queryAchat);
@@ -91,7 +91,7 @@ public class HistoriqueLBLAchatTask extends AsyncTask <String, String, String> {
                 while (rs.next()) {
 
                     String NumeroBonLivraisonVente = rs.getString("NumeroBonLivraisonAchat");
-                    String CodeArticle = rs.getString("CodeArticle");
+                    String CodeArticle = rs.getString("DesignationArticle");
                     int Quantite = rs.getInt("Quantite");
                     double MontantTTC = rs.getDouble("MontantTTC");
 

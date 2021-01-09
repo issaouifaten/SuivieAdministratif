@@ -121,7 +121,7 @@ public class EtatFactureVente extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 queryTable = "select NumeroFactureVente,RaisonSociale,CodeClient,TotalTTC,DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
-                        "from FactureVente \n" +
+                        ",Etat.NumeroEtat  from FactureVente \n" +
                         "inner join Etat on Etat.NumeroEtat=FactureVente.NumeroEtat\n" +
                         "where DateCreation between '"+date_debut+"' and '"+date_fin+"'   and ( NumeroFactureVente like'%"+s+"%' OR RaisonSociale LIKE'%"+s+"%') \n" +
                         "order by DateCreation desc";
@@ -248,7 +248,7 @@ public class EtatFactureVente extends AppCompatActivity {
         txt_gratuite.setText("Total Facture");
 
         queryTable = "select NumeroFactureVente,RaisonSociale,CodeClient,TotalTTC,DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
-                "from FactureVente \n" +
+                ",Etat.NumeroEtat from FactureVente \n" +
                 "inner join Etat on Etat.NumeroEtat=FactureVente.NumeroEtat\n" +
                 "where DateCreation between '"+date_debut+"' and '"+date_fin+"'\n" +
                 "order by DateCreation desc";
@@ -437,7 +437,7 @@ public class EtatFactureVente extends AppCompatActivity {
 
 
                     PreparedStatement ps = con.prepareStatement(queryTable);
-                    Log.e("queryDevisVente", queryTable);
+                        Log.e("queryfACTUREVente", queryTable);
 
                     ResultSet rs = ps.executeQuery();
                     z = "e";
@@ -455,6 +455,7 @@ public class EtatFactureVente extends AppCompatActivity {
                         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
                         datanum.put("DateCreation", df.format(rs.getDate("DateCreation")));
+                        if(!(rs.getString("NumeroEtat").equals("E00")||rs.getString("NumeroEtat").equals("E40")))
                         total_devis+=rs.getFloat("TotalTTC");
                         prolist.add(datanum);
 

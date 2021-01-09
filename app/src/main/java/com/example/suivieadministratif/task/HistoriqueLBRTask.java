@@ -82,7 +82,7 @@ public class HistoriqueLBRTask extends AsyncTask <String, String, String> {
             } else {
 
                 String queryClient = "  select \n" +
-                        "NumeroBonRetourVente  , CodeArticle  ,Quantite   , MontantTTC \n" +
+                        "NumeroBonRetourVente  , CodeArticle  ,Quantite   , MontantTTC,DesignationArticle \n" +
                         " from  LigneBonRetourVente    where NumeroBonRetourVente  = '"+NumeroBR+"'   " ;
 
                 PreparedStatement ps = con.prepareStatement(queryClient);
@@ -93,7 +93,7 @@ public class HistoriqueLBRTask extends AsyncTask <String, String, String> {
                 while (rs.next()) {
 
                     String NumeroBonRetourVente = rs.getString("NumeroBonRetourVente");
-                    String CodeArticle = rs.getString("CodeArticle");
+                    String CodeArticle = rs.getString("DesignationArticle");
                     int Quantite = rs.getInt("Quantite");
                     double MontantTTC = rs.getDouble("MontantTTC");
 

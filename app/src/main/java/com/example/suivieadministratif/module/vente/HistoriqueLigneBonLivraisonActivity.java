@@ -48,9 +48,12 @@ public class HistoriqueLigneBonLivraisonActivity extends AppCompatActivity {
         txt_ttc.setText(decF.format(ttc));
         txt_date_bc.setText(date_cmd);
         txt_num_bl.setText(NumeroBL);
+//
+//        HistoriqueLBLAchatTask historiqueLBLTask  = new HistoriqueLBLAchatTask (this  ,lv_ligne_bc ,NumeroBL , pb) ;
+//        historiqueLBLTask.execute();
+        HistoriqueLBLTask historiqueLBLTask  = new HistoriqueLBLTask (this  ,lv_ligne_bc ,NumeroBL , pb) ;
+         historiqueLBLTask.execute();
 
-        HistoriqueLBLAchatTask historiqueLBLTask  = new HistoriqueLBLAchatTask (this  ,lv_ligne_bc ,NumeroBL , pb) ;
-        historiqueLBLTask.execute();
 
     }
 }

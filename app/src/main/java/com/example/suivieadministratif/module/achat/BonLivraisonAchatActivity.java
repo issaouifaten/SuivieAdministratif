@@ -1,5 +1,6 @@
 package com.example.suivieadministratif.module.achat;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -10,6 +11,8 @@ import com.example.suivieadministratif.module.reglementFournisseur.ReglementFour
 import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
 import com.example.suivieadministratif.task.HistoriqueBLAchatTask;
 import com.example.suivieadministratif.task.HistoriqueBLTask;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import android.app.DatePickerDialog;
@@ -22,6 +25,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -49,8 +53,11 @@ public class BonLivraisonAchatActivity extends AppCompatActivity {
     public static Date date_fin   = null;
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     NumberFormat formatter = new DecimalFormat("00");
+    public static TextView txt_tot_livraison;
 
-
+    FloatingActionButton fab_arrow   ;
+    RelativeLayout layoutBottomSheet ;
+    BottomSheetBehavior sheetBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +79,7 @@ public class BonLivraisonAchatActivity extends AppCompatActivity {
         pb_bc  = (ProgressBar)  findViewById(R.id.pb_bc) ;
         search_bar_client = (SearchView)   findViewById(R.id.search_bar_client) ;
 
-
+        txt_tot_livraison = (TextView) findViewById(R.id.txt_tot_livraison);
 
         final Calendar cal1 = Calendar.getInstance();
         cal1.setTime(currentDate);
@@ -262,6 +269,41 @@ public class BonLivraisonAchatActivity extends AppCompatActivity {
             }
         });
 
+
+
+        layoutBottomSheet = (RelativeLayout) findViewById(R.id.bottom_sheet);
+        fab_arrow = (FloatingActionButton) findViewById(R.id.fab_arrow);
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        sheetBehavior.setHideable(false);
+
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+                        // Toast.makeText(getActivity() , "Close Sheet" ,Toast.LENGTH_LONG).show();
+                        fab_arrow.setImageResource(R.drawable.ic_arrow_down);
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+                        // Toast.makeText(getActivity() , "Expand Sheet" ,Toast.LENGTH_LONG).show();
+                        fab_arrow.setImageResource(R.drawable.ic_arrow_up);
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
 
 
 

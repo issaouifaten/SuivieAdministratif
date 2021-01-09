@@ -54,14 +54,6 @@ public class MenuDiagrammeFragment extends Fragment {
 
 
 
-        CardView   btn_var_ca_par_periode = (CardView) root.findViewById(R.id.btn_var_ca_par_periode)  ;
-        btn_var_ca_par_periode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*Intent intent6 = new Intent(getActivity(), EtatLivraisonActivity.class);
-                startActivity(intent6);*/
-            }
-        });
 
 
         CardView btn_var_ca_en_mois = (CardView) root.findViewById(R.id.btn_var_ca_en_mois)  ;
@@ -70,48 +62,6 @@ public class MenuDiagrammeFragment extends Fragment {
             public void onClick(View v) {
                /* Intent intent7 = new Intent(getActivity(), EtatRetourActivity.class);
                 startActivity(intent7);*/
-            }
-        });
-
-
-        CardView  btn_var_ca_en_annee = (CardView) root.findViewById(R.id.btn_var_ca_en_annee) ;
-        btn_var_ca_en_annee.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                /*Intent intent5 = new Intent(getActivity(), EtatCommande.class);
-                startActivity(intent5);*/
-
-            }
-        });
-        CardView  btn_ca_par_force_vente = (CardView) root.findViewById(R.id.btn_ca_par_force_vente) ;
-        btn_ca_par_force_vente.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-               /* Intent intent5 = new Intent(getActivity(), EtatFactureVente.class);
-                startActivity(intent5);*/
-
-            }
-        });
-
-        CardView  btn_variation_en_nbr_ticket= (CardView) root.findViewById(R.id.btn_variation_en_nbr_ticket) ;
-        btn_variation_en_nbr_ticket.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                /*Intent intent5 = new Intent(getActivity(), MouvementVenteServiceActivity.class);
-                startActivity(intent5);*/
-            }
-        });
-
-
-        CardView   btn_vente_article_qt = (CardView)  root.findViewById(R.id.btn_vente_article_qt)  ;
-        btn_vente_article_qt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               /* Intent  intent1 = new Intent(getActivity() , ReglementClientActivity.class) ;
-                startActivity(intent1);*/
             }
         });
 

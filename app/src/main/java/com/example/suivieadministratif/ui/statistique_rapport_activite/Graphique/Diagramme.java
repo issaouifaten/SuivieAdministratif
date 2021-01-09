@@ -448,7 +448,7 @@ public class Diagramme extends AppCompatActivity {
                     PreparedStatement stmt, stmt2;
                     data_CodeRespensable = new ArrayList<String>();
                     data_NomRespensable = new ArrayList<String>();
-                    stmt = con.prepareStatement("select  CodeRespensable,Nom from Respensable where Actif=1");
+                    stmt = con.prepareStatement("select  CodeRespensable,Nom from Respensable where Actif=1 order by Nom");
                     ResultSet rsss = stmt.executeQuery();
                     data_CodeRespensable.add("");
                     data_NomRespensable.add("Tout");
@@ -512,7 +512,7 @@ public class Diagramme extends AppCompatActivity {
                     PreparedStatement stmt, stmt2;
                     data_CodeVille = new ArrayList<String>();
                     data_LibelleVille= new ArrayList<String>();
-                    stmt = con.prepareStatement("select  CodeVille,DesignationVille  from Ville");
+                    stmt = con.prepareStatement("select  CodeVille,DesignationVille  from Ville order by  DesignationVille");
                     ResultSet rsss = stmt.executeQuery();
                     data_CodeVille.add("");
                     data_LibelleVille.add("Tout");
