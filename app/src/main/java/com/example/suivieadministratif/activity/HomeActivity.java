@@ -34,9 +34,23 @@ public class HomeActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        BottomNavigationView navView = findViewById(R.id.nav_view_bottom);
+        BottomNavigationView navViewBottom = findViewById(R.id.nav_view_bottom);
+
+
+        //  latéral
         NavigationView  nav_menu=findViewById(R.id.nav_view);
         View headerView = nav_menu.getHeaderView(0);
+
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder
+                (R.id.navigation_menu,   R.id.navigation_workflow ,  R.id.navigation_parametrage)
+                .build();
+
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(navViewBottom, navController);
+
 
 
         CardView btn_achat = (CardView)   headerView.findViewById(R.id.btn_achat) ;
@@ -103,14 +117,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder
-                (R.id.navigation_home, R.id.navigation_dashboard , R.id.navigation_workflow , R.id.navigation_notifications , R.id.navigation_parametrage)
-                .build();
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navView, navController);
 
     }
 

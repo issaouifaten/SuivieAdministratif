@@ -6,8 +6,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back">
-
+    >
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
@@ -16,6 +15,7 @@
         android:fitsSystemWindows="true"
         tools:layout_editor_absoluteX="-159dp"
         tools:layout_editor_absoluteY="-331dp"
+        android:layout_marginBottom="95dp"
         tools:openDrawer="start">
 
         <ScrollView
@@ -28,13 +28,18 @@
                 android:orientation="vertical">
 
                 <fragment
+
+
+
                     android:id="@+id/nav_host_fragment"
                     android:name="androidx.navigation.fragment.NavHostFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
                     app:defaultNavHost="true"
                     app:navGraph="@navigation/mobile_navigation" />
+
+
+
             </LinearLayout>
         </ScrollView>
 
@@ -48,19 +53,17 @@
             app:headerLayout="@layout/menu" />
     </androidx.drawerlayout.widget.DrawerLayout>
 
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view_bottom"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
         android:layout_marginBottom="40dp"
         android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/bottom_nav_menu" />
-
 
     <include layout="@layout/banniere_societe" />
 

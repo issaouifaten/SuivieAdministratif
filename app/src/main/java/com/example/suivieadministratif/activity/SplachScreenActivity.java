@@ -57,7 +57,6 @@ public class SplachScreenActivity extends AppCompatActivity {
         logo.setAnimation(topAnim);
 
 
-
         SharedPreferences prefUser = getSharedPreferences(Param.PREF_USER, Context.MODE_PRIVATE);
 
         //  get PARAM USER
