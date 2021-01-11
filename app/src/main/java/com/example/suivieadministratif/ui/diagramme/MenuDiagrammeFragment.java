@@ -24,6 +24,7 @@ import com.example.suivieadministratif.module.vente.EtatRetourActivity;
 import com.example.suivieadministratif.module.vente.MouvementVenteServiceActivity;
 import com.example.suivieadministratif.ui.menu.MenuViewModel;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Graphique.Diagramme;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Graphique.VariationCAEnMoisActivity;
 
 public class MenuDiagrammeFragment extends Fragment {
 
@@ -46,13 +47,10 @@ public class MenuDiagrammeFragment extends Fragment {
         btn_vente_parametrable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 Intent intent6 = new Intent(getActivity(), Diagramme.class);
+              Intent intent6 = new Intent(getActivity(), Diagramme.class);
               startActivity(intent6);
             }
         });
-
-
-
 
 
 
@@ -60,8 +58,8 @@ public class MenuDiagrammeFragment extends Fragment {
         btn_var_ca_en_mois.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* Intent intent7 = new Intent(getActivity(), EtatRetourActivity.class);
-                startActivity(intent7);*/
+               Intent intent7 = new Intent(getActivity(), VariationCAEnMoisActivity.class);
+                startActivity(intent7);
             }
         });
 

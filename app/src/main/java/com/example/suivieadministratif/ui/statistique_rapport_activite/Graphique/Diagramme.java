@@ -293,7 +293,7 @@ public class Diagramme extends AppCompatActivity {
             //   Toast.makeText(getApplicationContext(), r, Toast.LENGTH_SHORT).show();
 
             //donnee
-            ArrayList arrayListData = new ArrayList();
+            ArrayList<BarEntry> arrayListData = new ArrayList();
             String label="";
             int longeur=0;
             int[] colors = {Color.rgb(204, 41, 0), Color.rgb(255, 162, 10),
@@ -302,7 +302,7 @@ public class Diagramme extends AppCompatActivity {
             if(bt_benificenet.isChecked()) {
                 bt_benificenet.setBackgroundColor(colors[longeur]);
                 longeur++;
-                arrayListData.add(new BarEntry( longeur,BenificeNet));
+                arrayListData.add(new BarEntry( longeur, BenificeNet));
                 label+=" BenificeNet="+BenificeNet+";";
 
             }else{

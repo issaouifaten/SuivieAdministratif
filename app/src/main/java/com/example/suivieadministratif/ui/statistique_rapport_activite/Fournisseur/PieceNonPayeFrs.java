@@ -70,7 +70,7 @@ public class PieceNonPayeFrs extends AppCompatActivity {
     String date_debut = "",date_fin="";
 
     ConnectionClass connectionClass;
-    String CodeSociete, NomUtilisateur, CodeLivreur;
+    String CodeSociete, NomUtilisateur ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +83,7 @@ public class PieceNonPayeFrs extends AppCompatActivity {
         connectionClass = new ConnectionClass();
 
         SharedPreferences prefe = getSharedPreferences("usersession", Context.MODE_PRIVATE);
-        SharedPreferences.Editor edte = prefe.edit();
+
         NomUtilisateur = prefe.getString("NomUtilisateur", NomUtilisateur);
 
         // SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);

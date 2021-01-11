@@ -66,7 +66,7 @@ public class SuivieCommandeFrs extends AppCompatActivity {
 
     SearchView search_bar_article;
 
-   // public static SearchableSpinner sp_article ;
+
 
     public   static   String  CodeDepotSelected  = "" ;
     public   static   String  DepotSelected  = "" ;
