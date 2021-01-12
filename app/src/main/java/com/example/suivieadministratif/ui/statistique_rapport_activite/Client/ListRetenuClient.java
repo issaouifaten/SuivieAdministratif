@@ -243,9 +243,6 @@ public class ListRetenuClient extends AppCompatActivity {
             final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
             instance.setMinimumFractionDigits(3);
             instance.setMaximumFractionDigits(3);
-
-
-
             txt_tot_commande.setText(instance.format(total_net));
             lv_list_historique_bc.setAdapter(ADA);
 

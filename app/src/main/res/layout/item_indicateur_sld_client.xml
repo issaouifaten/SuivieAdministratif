@@ -76,16 +76,26 @@
                                 android:typeface="monospace" />
 
                             <TextView
+                                android:id="@+id/textView33"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="CA : "
+                                android:textColor="@color/colorPrimary2"
+                                android:textStyle="bold|italic" />
+
+                            <TextView
                                 android:id="@+id/txt_ca"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="2dp"
-                                android:background="@drawable/buttonround"
+                                android:layout_marginRight="2dp"
+                                android:background="@drawable/cadre_jaune"
                                 android:padding="3dp"
                                 android:text=" 2000"
                                 android:textAllCaps="false"
-                                android:textColor="@color/blue_colisage" />
+                                android:textColor="@color/colorPrimary2" />
 
                         </LinearLayout>
 
@@ -120,8 +130,8 @@
                             android:gravity="left"
                             android:text="Solde"
                             android:textColor="@color/gris"
-                            android:textSize="10dp"
-                            android:textStyle="italic" />
+                            android:textSize="12sp"
+                            android:textStyle="bold|italic" />
 
                         <TextView
 
@@ -131,8 +141,8 @@
                             android:gravity="left"
                             android:text="En cours"
                             android:textColor="@color/gris"
-                            android:textSize="10dp"
-                            android:textStyle="italic" />
+                            android:textSize="12sp"
+                            android:textStyle="bold|italic" />
 
                         <TextView
 
@@ -143,8 +153,8 @@
                             android:gravity="left"
                             android:text="Garentie"
                             android:textColor="@color/gris"
-                            android:textSize="10dp"
-                            android:textStyle="italic" />
+                            android:textSize="12sp"
+                            android:textStyle="bold|italic" />
 
                         <TextView
                             android:layout_width="100dp"
@@ -152,9 +162,9 @@
                             android:layout_weight="1"
                             android:gravity="left"
                             android:text="Impaye"
-                            android:textColor="@color/color_g_14"
-                            android:textSize="10dp"
-                            android:textStyle="italic" />
+                            android:textColor="@color/color_txt_cloture"
+                            android:textSize="12sp"
+                            android:textStyle="bold|italic" />
 
 
                     </LinearLayout>
@@ -280,7 +290,7 @@
                                 android:background="#00000000"
                                 android:text=" 2000.20 "
                                 android:textAllCaps="false"
-                                android:textColor="@color/color_g_14" />
+                                android:textColor="@color/color_txt_cloture" />
 
                         </LinearLayout>
 

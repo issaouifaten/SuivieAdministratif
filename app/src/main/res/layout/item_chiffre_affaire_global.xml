@@ -20,7 +20,7 @@
             android:layout_margin="10dp"
             android:foreground="?android:attr/selectableItemBackground"
             android:orientation="vertical"
-            card_view:cardBackgroundColor="#edfcf9f9"
+            card_view:cardBackgroundColor="@android:color/white"
             card_view:cardCornerRadius="5dp"
             card_view:cardElevation="2dp"
             card_view:cardMaxElevation="6dp"
@@ -30,7 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingLeft="2dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -42,8 +43,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="code client"
-                        android:textColor="@color/blue_ocean"
-                        android:textSize="18sp"
+                        android:textColor="@color/blue_colisage"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -52,7 +53,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="raison sociale"
-                        android:textColor="@color/blue_ocean"
+                        android:textColor="@color/blue_colisage"
                         android:textSize="13sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -70,10 +71,10 @@
                     android:id="@+id/tx_num_piece"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+
                     android:text="num piece"
                     android:textColor="@color/light_black"
-                    android:textSize="18dp"
+                    android:textSize="14sp"
                     android:textStyle="bold|italic" />
 
                 <LinearLayout
@@ -89,38 +90,27 @@
 
                     <TextView
                         android:id="@+id/textView3"
-                        android:layout_width="100dp"
+                        android:layout_width="50dp"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:paddingLeft="5dp"
-                        android:text=" Representant "
-                        android:textColor="@color/color2" />
+                        android:text=" Rep"
+                        android:textColor="@color/colorPrimary2" />
 
                     <TextView
                         android:id="@+id/txt_nom_representant"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:paddingLeft="5dp"
                         android:text="Nom Representant"
                         android:textSize="14sp"
                         android:textStyle="italic" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imageView8"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/icon_representant" />
 
                     <TextView
                         android:id="@+id/textView"
-                        android:layout_width="100dp"
+                        android:layout_width="50dp"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:paddingLeft="5dp"
@@ -131,12 +121,12 @@
                         android:id="@+id/txt_nom_rad"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:paddingLeft="5dp"
                         android:text="NOM RAD"
                         android:textSize="14dp"
                         android:textStyle="italic" />
-
                 </LinearLayout>
 
                 <View

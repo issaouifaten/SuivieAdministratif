@@ -263,7 +263,17 @@ public class IndicateurEncourClient extends AppCompatActivity {
                 if (con == null) {
                     z = "Error in connection with SQL server";
                 } else {
+                    String proc="DECLARE\t@return_value int\n" +
+                            "\n" +
+                            "EXEC\t@return_value = [dbo].[SoldeClientsIndicateur]\n" +
+                            "\t\t@DateAu = '"+datedebut+"',\n" +
+                            "\t\t@DateDebut = '"+datefin+"'\n" +
+                            "\n" +
+                            "SELECT\t'Return Value' = @return_value\n" ;
+                    PreparedStatement ps_proc = con.prepareStatement(proc);
+                    Log.e("proc", proc);
 
+                         ps_proc.executeQuery();
 
                     String queryTable = "select CodeClient,RaisonSociale,TotalSolde,TotalEncour,TotaleGarantie,TotalContentieux,TotalCA,TotalImpayer\n" +
                             " from IndicateurEnCourClient where RaisonSociale!='' "+conditionclient+condition;

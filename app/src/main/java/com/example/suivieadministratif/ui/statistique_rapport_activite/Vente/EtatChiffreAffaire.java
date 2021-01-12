@@ -35,6 +35,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -252,7 +253,15 @@ public class EtatChiffreAffaire extends AppCompatActivity {
         protected void onPostExecute(String r) {
             progressBar.setVisibility(View.GONE);
             condition="";
-            txt_total.setText(""+total_gloabl);
+
+
+            final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+            instance.setMinimumFractionDigits(3);
+            instance.setMaximumFractionDigits(3);
+            txt_total.setText(instance.format(total_gloabl));
+
+
+
 
             String[] from = {"CodeClient", "RaisonSociale", "NomRepresentant", "NumeroPiece", "TotalTTC","NomRAD"};
             int[] views = {R.id.txt_code, R.id.txt_designation, R.id.txt_nom_representant, R.id.tx_num_piece, R.id.txt_total_ttc,R.id.txt_nom_rad};
