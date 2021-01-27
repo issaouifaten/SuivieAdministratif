@@ -31,6 +31,15 @@ import android.widget.TextView;
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.activity.HomeActivity;
+import com.example.suivieadministratif.module.reglementClient.RapportEcheanceClientActivity;
+import com.example.suivieadministratif.module.reglementClient.ReglementClientActivity;
+import com.example.suivieadministratif.module.vente.DetailLigneDevisVente;
+import com.example.suivieadministratif.module.vente.EtatCommande;
+import com.example.suivieadministratif.module.vente.EtatDevisVente;
+import com.example.suivieadministratif.module.vente.EtatFactureVente;
+import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
+import com.example.suivieadministratif.module.vente.EtatRetourActivity;
+import com.example.suivieadministratif.module.vente.MouvementVenteServiceActivity;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -51,7 +60,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class BonSortie extends AppCompatActivity {
+public class BonRedressement extends AppCompatActivity {
     GridView lv_list_historique_bc;
     ProgressBar progressBar;
     SearchView search_bar_client;
@@ -69,20 +78,20 @@ public class BonSortie extends AppCompatActivity {
     BottomSheetBehavior sheetBehavior;
 
 
-
-    String date_debut = "",date_fin="",condition="";
+    String queryTable="";
+    String date_debut = "",date_fin="";
 
     ConnectionClass connectionClass;
-    String CodeSociete, NomUtilisateur, CodeLivreur;
+    String CodeSociete, NomUtilisateur, CodeLivreur,condition="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bon_sortie);
-
+        setContentView(R.layout.activity_bon_redressement);
         //sql session
         SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " :Bon Sortie");
+        setTitle(NomSociete + " :Bon Redressement");
         connectionClass = new ConnectionClass();
 
         SharedPreferences prefe = getSharedPreferences("usersession", Context.MODE_PRIVATE);
@@ -103,6 +112,16 @@ public class BonSortie extends AppCompatActivity {
 
         lv_list_historique_bc = (GridView) findViewById(R.id.lv_list_historique_bc);
         progressBar = (ProgressBar) findViewById(R.id.pb_bc);
+
+
+
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        date_fin = sdf.format(calendar.getTime());
+        calendar.add(Calendar.MONTH, -2);
+        date_debut = sdf.format(calendar.getTime());
+        txt_date_debut.setText(date_debut);
+        txt_date_fin.setText(date_fin);
         EditText editText=(EditText)findViewById(R.id.search_bar_client) ;
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -114,12 +133,13 @@ public class BonSortie extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 if( s.length()>1) {
-                    condition = " and( NumeroBonSortie like'%" + s + "%'  or  Depot.Libelle  like'%" + s + "%' ) ";
+                    condition = " and( NumeroBonRedressement like'%" + s + "%'  or  Depot.Libelle  like'%" + s + "%' ) ";
 
                 }else{
                     condition="";
                 }
-        FillList fillList = new  FillList();
+
+                FillList fillList = new FillList();
                 fillList.execute("");
             }
 
@@ -132,122 +152,10 @@ public class BonSortie extends AppCompatActivity {
 
 
 
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        date_fin = sdf.format(calendar.getTime());
-        calendar.add(Calendar.MONTH, -2);
-        date_debut = sdf.format(calendar.getTime());
-        txt_date_debut.setText(date_debut);
-        txt_date_fin.setText(date_fin);
-        TextView txt_gratuite =(TextView)findViewById(R.id.txt_gratuite);
-        txt_gratuite.setText("Total Sortie");
-         FillList fillList = new  FillList();
+        FillList fillList = new FillList();
         fillList.execute("");
-
-        txt_date_debut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LayoutInflater li = LayoutInflater.from(co);
-                View px = li.inflate(R.layout.diagcalend, null);
-                AlertDialog.Builder alt = new AlertDialog.Builder(co);
-                alt.setIcon(R.drawable.i2s);
-                alt.setView(px);
-                alt.setTitle("date");
-                datePicker = (DatePicker) px.findViewById(R.id.datedebut);
-                alt.setPositiveButton("ok",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface di, int i) {
-
-                                Date d = new Date(datePicker.getYear() - 1900, datePicker.getMonth(), datePicker.getDayOfMonth());
-                                date_debut = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH)
-                                        .format(d);
-
-                                txt_date_debut.setText(date_debut);
-                             FillList fillList = new  FillList();
-                                fillList.execute("");
-
-
-                            }
-                        });
-
-                AlertDialog dd = alt.create();
-                dd.show();
-            }
-        });
-
-
-        txt_date_fin.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                LayoutInflater li = LayoutInflater.from(co);
-                View px = li.inflate(R.layout.diagcalend, null);
-                AlertDialog.Builder alt = new AlertDialog.Builder(co);
-                alt.setIcon(R.drawable.i2s);
-                alt.setView(px);
-                alt.setTitle("date");
-                datePicker = (DatePicker) px.findViewById(R.id.datedebut);
-                alt.setPositiveButton("ok",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface di, int i) {
-
-                                Date d = new Date(datePicker.getYear() - 1900, datePicker.getMonth(), datePicker.getDayOfMonth());
-                                date_fin = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH)
-                                        .format(d);
-
-                                txt_date_fin.setText(date_fin);
-
-
-                              FillList fillList = new  FillList();
-                                fillList.execute("");
-                            }
-                        }); 
-
-                AlertDialog dd = alt.create();
-                dd.show();
-
-            }
-        });
-
-
-        layoutBottomSheet = (RelativeLayout) findViewById(R.id.bottom_sheet);
-        fab_arrow = (FloatingActionButton) findViewById(R.id.fab_arrow);
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setHideable(false);
-
-        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                switch (newState) {
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED: {
-                        // Toast.makeText(getActivity() , "Close Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_down);
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_COLLAPSED: {
-                        // Toast.makeText(getActivity() , "Expand Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_up);
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_DRAGGING:
-                        break;
-                    case BottomSheetBehavior.STATE_SETTLING:
-                        break;
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
-            }
-        });
         NavigationView nav_menu=findViewById(R.id.nav_view);
         View root = nav_menu.getHeaderView(0);
-
         CardView btn_etat_de_stock = (CardView) root.findViewById(R.id.btn_etat_de_stock) ;
         btn_etat_de_stock.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -293,7 +201,7 @@ public class BonSortie extends AppCompatActivity {
 
             }
         });
-//btn_bon_redressement
+        //btn_bon_redressement
         CardView   btn_bon_redressement= (CardView) root.findViewById(R.id.btn_bon_redressement );
         btn_bon_redressement.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -303,6 +211,109 @@ public class BonSortie extends AppCompatActivity {
 
             }
         });
+
+        txt_date_debut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater li = LayoutInflater.from(co);
+                View px = li.inflate(R.layout.diagcalend, null);
+                AlertDialog.Builder alt = new AlertDialog.Builder(co);
+                alt.setIcon(R.drawable.i2s);
+                alt.setView(px);
+                alt.setTitle("date");
+                datePicker = (DatePicker) px.findViewById(R.id.datedebut);
+                alt.setPositiveButton("ok",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface di, int i) {
+
+                                Date d = new Date(datePicker.getYear() - 1900, datePicker.getMonth(), datePicker.getDayOfMonth());
+                                date_debut = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH)
+                                        .format(d);
+
+                                txt_date_debut.setText(date_debut);
+                                FillList fillList = new FillList();
+                                fillList.execute("");
+
+
+                            }
+                        });
+
+                AlertDialog dd = alt.create();
+                dd.show();
+            }
+        });
+
+
+        txt_date_fin.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                LayoutInflater li = LayoutInflater.from(co);
+                View px = li.inflate(R.layout.diagcalend, null);
+                AlertDialog.Builder alt = new AlertDialog.Builder(co);
+                alt.setIcon(R.drawable.i2s);
+                alt.setView(px);
+                alt.setTitle("date");
+                datePicker = (DatePicker) px.findViewById(R.id.datedebut);
+                alt.setPositiveButton("ok",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface di, int i) {
+
+                                Date d = new Date(datePicker.getYear() - 1900, datePicker.getMonth(), datePicker.getDayOfMonth());
+                                date_fin = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH)
+                                        .format(d);
+
+                                txt_date_fin.setText(date_fin);
+
+
+                                FillList fillList = new FillList();
+                                fillList.execute("");
+                            }
+                        });
+
+                AlertDialog dd = alt.create();
+                dd.show();
+
+            }
+        });
+
+
+        layoutBottomSheet = (RelativeLayout) findViewById(R.id.bottom_sheet);
+        fab_arrow = (FloatingActionButton) findViewById(R.id.fab_arrow);
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        sheetBehavior.setHideable(false);
+
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+                        // Toast.makeText(getActivity() , "Close Sheet" ,Toast.LENGTH_LONG).show();
+                        fab_arrow.setImageResource(R.drawable.ic_arrow_down);
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+                        // Toast.makeText(getActivity() , "Expand Sheet" ,Toast.LENGTH_LONG).show();
+                        fab_arrow.setImageResource(R.drawable.ic_arrow_up);
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
+
 
     }
 
@@ -327,8 +338,8 @@ public class BonSortie extends AppCompatActivity {
         protected void onPostExecute(String r) {
             progressBar.setVisibility(View.GONE);
 
-// NumeroDevisVente,DateCreation,NomUtilisateur,CodeDepot,Depot,TotalTTC,Etat.Libelle as Etat
-            String[] from = {"NumeroBonSortie", "DateCreation",   "Depot","TotalTTC","Etat"};
+// NumeroDevisVente,DateCreation,NomUtilisateur,CodeClient,RaisonSociale,TotalTTC,Etat.Libelle as Etat
+            String[] from = {"NumeroBonRedressement", "DateBonRedressement",   "Depot","TotalTTC","Etat"};
             int[] views = {R.id.txt_num_bc, R.id.txt_date_bc, R.id.txt_raison_client, R.id.txt_prix_ttc, R.id.txt_libelle_etat};
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
                     prolist, R.layout.item_bon_commande, from,
@@ -336,7 +347,22 @@ public class BonSortie extends AppCompatActivity {
 
 
 
-            txt_tot_commande.setText(""+total_devis);
+
+
+            final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+            instance.setMinimumFractionDigits(3);
+            instance.setMaximumFractionDigits(3);
+            txt_tot_commande.setText(instance.format(total_devis));
+
+
+
+
+
+
+
+
+
+
             lv_list_historique_bc.setAdapter(ADA);
             lv_list_historique_bc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -344,17 +370,15 @@ public class BonSortie extends AppCompatActivity {
                     HashMap<String, Object> obj = (HashMap<String, Object>) ADA
                             .getItem(position);
 
-                    String  NumeroBonSortie = (String) obj.get("NumeroBonSortie");
-                    String  DateCreation = (String) obj.get("DateCreation");
-                    String  Depot = (String) obj.get("Depot");
+                    String  NumeroDevisVente = (String) obj.get("NumeroBonRedressement");
+                    String  DateCreation = (String) obj.get("DateBonRedressement");
+                    String  RaisonSociale = (String) obj.get("Depot");
                     String  Etat = (String) obj.get("Etat");
                     String  TotalTTC = (String) obj.get("TotalTTC");
-
-
-                    Intent intent=new Intent(getApplicationContext(), DetailLigneBonSortie.class);
-                    intent.putExtra("NumeroBonSortie",NumeroBonSortie);
-                    intent.putExtra("DateCreation",DateCreation);
-                    intent.putExtra("Depot",Depot);
+                    Intent intent=new Intent(getApplicationContext(), DetailBonRedressement.class);
+                    intent.putExtra("NumeroBonRedressement",NumeroDevisVente);
+                    intent.putExtra("DateBonRedressement",DateCreation);
+                    intent.putExtra("Depot",RaisonSociale);
                     intent.putExtra("TotalTTC",TotalTTC);
                     intent.putExtra("Etat",Etat);
                     startActivity(intent);
@@ -376,13 +400,13 @@ public class BonSortie extends AppCompatActivity {
                     z = "Error in connection with SQL server";
                 } else {
 
-
-                    String queryTable = "select NumeroBonSortie,Depot.Libelle as Depot ,BonSortie.CodeDepot,TotalTTC,DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
-                            "from BonSortie \n" +
-                            "inner join Etat on Etat.NumeroEtat=BonSortie.NumeroEtat\n" +
-                            "inner join Depot on Depot.CodeDepot=BonSortie.CodeDepot   " +
-                            "where DateCreation between '"+date_debut+"' and '"+date_fin+"'\n" +condition+
-                            "order by DateCreation desc";
+                    queryTable = "select NumeroBonRedressement,CONVERT(date,DateBonRedressement,103) as DateBonRedressement, NomUtilisateur,\n" +
+                            "TotalTTC,Etat.Libelle as Etat,Depot.Libelle as Depot,Depot.CodeDepot\n" +
+                            "  from BonRedressement \n" +
+                            "inner join Etat on Etat.NumeroEtat=BonRedressement.NumeroEtat\n" +
+                            "inner join Depot on Depot.CodeDepot=BonRedressement.CodeDepot\n" +
+                            "where DateBonRedressement between '"+date_debut+"' and '"+date_fin+"'\n" +condition+
+                            "  order by NumeroBonRedressement desc";
 
                     PreparedStatement ps = con.prepareStatement(queryTable);
                     Log.e("queryDevisVente", queryTable);
@@ -393,7 +417,7 @@ public class BonSortie extends AppCompatActivity {
                     while (rs.next()) {
 
                         Map<String, String> datanum = new HashMap<String, String>();
-                        datanum.put("NumeroBonSortie", rs.getString("NumeroBonSortie"));
+                        datanum.put("NumeroBonRedressement", rs.getString("NumeroBonRedressement"));
                         datanum.put("NomUtilisateur", rs.getString("NomUtilisateur"));
                         datanum.put("CodeDepot", rs.getString("CodeDepot"));
                         datanum.put("Depot", rs.getString("Depot"));
@@ -402,7 +426,7 @@ public class BonSortie extends AppCompatActivity {
 
                         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
-                        datanum.put("DateCreation", df.format(rs.getDate("DateCreation")));
+                        datanum.put("DateBonRedressement", df.format(rs.getDate("DateBonRedressement")));
                         total_devis+=rs.getFloat("TotalTTC");
                         prolist.add(datanum);
 

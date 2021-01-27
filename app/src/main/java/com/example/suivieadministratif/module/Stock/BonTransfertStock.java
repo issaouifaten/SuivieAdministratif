@@ -13,11 +13,14 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -67,7 +70,7 @@ public class BonTransfertStock extends AppCompatActivity {
 
 
 
-    String date_debut = "",date_fin="";
+    String date_debut = "",date_fin="",condition="";
 
     ConnectionClass connectionClass;
     String CodeSociete, NomUtilisateur, CodeLivreur;
@@ -100,7 +103,31 @@ public class BonTransfertStock extends AppCompatActivity {
 
         lv_list_historique_bc = (GridView) findViewById(R.id.lv_list_historique_bc);
         progressBar = (ProgressBar) findViewById(R.id.pb_bc);
-        search_bar_client = (SearchView) findViewById(R.id.search_bar_client);
+        EditText editText=(EditText)findViewById(R.id.search_bar_client) ;
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if( s.length()>1) {
+                    condition = " and( NumeroBonTransfert like'%" + s + "%'  ) ";
+
+                }else{
+                    condition="";
+                }
+                 FillList fillList = new  FillList();
+                fillList.execute("");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -262,7 +289,16 @@ public class BonTransfertStock extends AppCompatActivity {
 
             }
         });
+//btn_bon_redressement
+        CardView   btn_bon_redressement= (CardView) root.findViewById(R.id.btn_bon_redressement );
+        btn_bon_redressement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toBonRedressement = new Intent(getApplicationContext() , BonRedressement.class) ;
+                startActivity(toBonRedressement);
 
+            }
+        });
 
     }
 
@@ -345,7 +381,7 @@ public class BonTransfertStock extends AppCompatActivity {
                             ",Etat.Libelle as Etat\n" +
                             "from BonTransfert\n" +
                             "inner join Etat on Etat.NumeroEtat=BonTransfert.NumeroEtat " +
-                            "where DateCreation between '"+date_debut+"' and '"+date_fin+"'\n" +
+                            "where DateCreation between '"+date_debut+"' and '"+date_fin+"'\n" +condition+
                             "order by DateCreation desc";
 
                     PreparedStatement ps = con.prepareStatement(queryTable);

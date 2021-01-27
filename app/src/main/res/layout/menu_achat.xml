@@ -49,9 +49,9 @@
 
 
                         <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:padding="15dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:padding="1dp"
                             android:src="@drawable/icon_home_img" />
 
 
@@ -62,26 +62,37 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_margin="5dp"
+                    android:layout_margin="1dp"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
                     app:cardBackgroundColor="#66FCF9F9"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
                     app:cardMaxElevation="6dp"
-                    app:contentPadding="5dp">
+                    app:contentPadding="1dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@color/back_card_coture"
                         android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:padding="13dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="1dp"
                             android:src="@drawable/ic_bon_commande" />
+
+                        <TextView
+                            android:id="@+id/textView42"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="1dp"
+                            android:gravity="center"
+                            android:text="BC"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
 
 
                     </LinearLayout>
@@ -94,26 +105,37 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_margin="5dp"
+                    android:layout_margin="1dp"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
                     app:cardBackgroundColor="#66FCF9F9"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
                     app:cardMaxElevation="6dp"
-                    app:contentPadding="5dp">
+                    app:contentPadding="1dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@color/back_card_coture"
                         android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:padding="15dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="1dp"
                             android:src="@drawable/ic_facture" />
+
+                        <TextView
+                            android:id="@+id/textView43"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="1dp"
+                            android:gravity="center"
+                            android:text="Facture"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
 
 
                     </LinearLayout>
@@ -124,27 +146,38 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_margin="5dp"
+                    android:layout_margin="1dp"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
                     app:cardBackgroundColor="#66FCF9F9"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
                     app:cardMaxElevation="6dp"
-                    app:contentPadding="5dp">
+                    app:contentPadding="1dp">
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@color/back_card_coture"
                         android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:padding="15dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="1dp"
                             android:src="@drawable/ic_livraison" />
+
+                        <TextView
+                            android:id="@+id/textView44"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="1dp"
+                            android:gravity="center"
+                            android:text="BL"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 
@@ -155,27 +188,38 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_margin="5dp"
+                    android:layout_margin="1dp"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
                     app:cardBackgroundColor="#66FCF9F9"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
                     app:cardMaxElevation="6dp"
-                    app:contentPadding="5dp">
+                    app:contentPadding="1dp">
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@color/back_card_coture"
                         android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:padding="15dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="1dp"
                             android:src="@drawable/ic_retour" />
+
+                        <TextView
+                            android:id="@+id/textView45"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="1dp"
+                            android:gravity="center"
+                            android:text="BR"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 
@@ -186,26 +230,37 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_margin="5dp"
+                    android:layout_margin="1dp"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
                     app:cardBackgroundColor="#66FCF9F9"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
                     app:cardMaxElevation="6dp"
-                    app:contentPadding="5dp">
+                    app:contentPadding="1dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@color/back_card_coture"
                         android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="60dp"
-                            android:layout_height="55dp"
-                            android:padding="5dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="1dp"
                             android:src="@drawable/ic_echeance" />
+
+                        <TextView
+                            android:id="@+id/textView47"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="1dp"
+                            android:gravity="center"
+                            android:text="Echeance"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
 
 
                     </LinearLayout>
@@ -216,26 +271,37 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_margin="5dp"
+                    android:layout_margin="1dp"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
                     app:cardBackgroundColor="#66FCF9F9"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
                     app:cardMaxElevation="6dp"
-                    app:contentPadding="5dp">
+                    app:contentPadding="1dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@color/back_card_coture"
                         android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:padding="5dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="1dp"
                             android:src="@drawable/ic_reglement_frns" />
+
+                        <TextView
+                            android:id="@+id/textView48"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="1dp"
+                            android:gravity="center"
+                            android:text="Reg"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
 
 
                     </LinearLayout>

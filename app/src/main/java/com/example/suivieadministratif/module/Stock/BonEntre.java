@@ -13,11 +13,14 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -28,6 +31,7 @@ import android.widget.TextView;
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.activity.HomeActivity;
+import com.example.suivieadministratif.module.achat.BonRetourAchatActivity;
 import com.example.suivieadministratif.module.vente.DetailLigneFactureVente;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -67,6 +71,7 @@ public class BonEntre extends AppCompatActivity {
     FloatingActionButton fab_arrow;
     RelativeLayout layoutBottomSheet;
     BottomSheetBehavior sheetBehavior;
+    String condition="";
 
 
 
@@ -103,7 +108,32 @@ public class BonEntre extends AppCompatActivity {
 
         lv_list_historique_bc = (GridView) findViewById(R.id.lv_list_historique_bc);
         progressBar = (ProgressBar) findViewById(R.id.pb_bc);
-        search_bar_client = (SearchView) findViewById(R.id.search_bar_client);
+        EditText editText=(EditText)findViewById(R.id.search_bar_client) ;
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if( s.length()>1) {
+                    condition = " and( NumeroBonEntrer like'%" + s + "%'  or  Depot.Libelle  like'%" + s + "%' ) ";
+
+                }else{
+                    condition="";
+                }
+
+                FillList fillList = new  FillList();
+                fillList.execute("");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -268,8 +298,16 @@ public class BonEntre extends AppCompatActivity {
 
             }
         });
+//btn_bon_redressement
+        CardView   btn_bon_redressement= (CardView) root.findViewById(R.id.btn_bon_redressement );
+        btn_bon_redressement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toBonRedressement = new Intent(getApplicationContext() , BonRedressement.class) ;
+                startActivity(toBonRedressement);
 
-
+            }
+        });
     }
 
     public class FillList extends AsyncTask<String, String, String> {
@@ -347,7 +385,7 @@ public class BonEntre extends AppCompatActivity {
                             "from BonEntrer \n" +
                             "inner join Etat on Etat.NumeroEtat=BonEntrer.NumeroEtat\n" +
                             "inner join Depot on Depot.CodeDepot=BonEntrer.CodeDepot   " +
-                            "where DateCreation between '"+date_debut+"' and '"+date_fin+"'\n" +
+                            "where DateCreation between '"+date_debut+"' and '"+date_fin+"'\n" +condition+
                             "order by DateCreation desc";
 
                     PreparedStatement ps = con.prepareStatement(queryTable);

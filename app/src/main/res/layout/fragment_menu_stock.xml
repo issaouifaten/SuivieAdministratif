@@ -217,7 +217,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:gravity="center"
-                            android:text="Etat de Stock"
+                            android:text="Etat Stock"
                             android:textSize="15dp"
                             android:textStyle="bold" />
 
@@ -271,14 +271,25 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_fiche_article"
+                    android:id="@+id/btn_bon_redressement"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
                     android:layout_margin="10dp"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
-                    android:visibility="gone"
                     app:cardBackgroundColor="#66FCF9F9"
                     app:cardCornerRadius="2dp"
                     app:cardElevation="2dp"
@@ -328,28 +339,13 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:gravity="center"
-                            android:text="Etat de Production "
+                            android:text="Bon Redressement "
                             android:textSize="11dp"
                             android:textStyle="bold" />
 
 
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
-
-
-
-
-            </LinearLayout>
-
-
-
-            <LinearLayout
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
             </LinearLayout>
 
         </LinearLayout>

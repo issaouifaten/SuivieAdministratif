@@ -12,6 +12,7 @@ import com.example.suivieadministratif.ui.menu.MenuAchatFragment;
 import com.example.suivieadministratif.ui.menu.MenuCaisseFragment;
 import com.example.suivieadministratif.ui.menu.MenuEtatDeStockFragment;
 import com.example.suivieadministratif.ui.menu.MenuStatistiqueFragment;
+import com.example.suivieadministratif.ui.menu.MenuTresorerieFragment;
 import com.example.suivieadministratif.ui.menu.MenuVenteFragment;
 import com.example.suivieadministratif.ui.menu.StatistiqueMenuActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -116,6 +117,7 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+
 
 
 

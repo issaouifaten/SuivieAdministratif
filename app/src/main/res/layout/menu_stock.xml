@@ -28,8 +28,8 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_home"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_gravity="center|center_horizontal"
                     android:layout_margin="10dp"
                     android:clickable="true"
@@ -43,13 +43,14 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@color/back_card_coture"
                         android:gravity="center"
                         android:orientation="vertical">
 
 
                         <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
                             android:padding="10dp"
                             android:src="@drawable/icon_home_img" />
 
@@ -59,8 +60,8 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_bon_entree"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:clickable="true"
@@ -69,32 +70,27 @@
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
                     app:cardMaxElevation="6dp"
-                    app:contentPadding="5dp">
+                    app:contentPadding="2dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@color/back_card_coture"
                         android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="85dp"
-                            android:layout_height="85dp"
-                            android:padding="13dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="5dp"
                             android:src="@drawable/ic_bon_entree" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_margin="2dp"
-                            android:background="@color/lightgray" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:text="Entée Stock"
-                            android:textSize="15dp"
+                            android:textSize="8sp"
                             android:textStyle="bold" />
 
 
@@ -105,8 +101,8 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_bonsortie_de_stock"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:clickable="true"
@@ -120,20 +116,15 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@color/back_card_coture"
                         android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="85dp"
-                            android:layout_height="85dp"
-                            android:padding="15dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="5dp"
                             android:src="@drawable/ic_fiche_article" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_margin="2dp"
-                            android:background="@color/lightgray" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -141,7 +132,7 @@
                             android:layout_marginTop="5dp"
                             android:gravity="center"
                             android:text="Sortie Stock "
-                            android:textSize="15dp"
+                            android:textSize="8sp"
                             android:textStyle="bold" />
 
 
@@ -150,8 +141,8 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_etat_de_stock"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:clickable="true"
@@ -166,28 +157,23 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@color/back_card_coture"
                         android:gravity="center"
                         android:orientation="vertical">
 
 
                         <RelativeLayout
-                            android:layout_width="85dp"
-                            android:layout_height="85dp">
+                            android:layout_width="40dp"
+                            android:layout_height="40dp">
 
                             <ImageView
-                                android:layout_width="85dp"
-                                android:layout_height="85dp"
-                                android:padding="13dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:padding="5dp"
                                 android:src="@drawable/ic_etat_stock" />
 
 
                         </RelativeLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_margin="2dp"
-                            android:background="@color/lightgray" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -195,7 +181,7 @@
                             android:layout_marginTop="5dp"
                             android:gravity="center"
                             android:text="Etat de Stock"
-                            android:textSize="15dp"
+                            android:textSize="8sp"
                             android:textStyle="bold" />
 
 
@@ -204,8 +190,8 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_passation_bon_transfert"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:clickable="true"
@@ -220,20 +206,15 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@color/back_card_coture"
                         android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="85dp"
-                            android:layout_height="85dp"
-                            android:padding="15dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="5dp"
                             android:src="@drawable/ic_transfert" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_margin="2dp"
-                            android:background="@color/lightgray" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -241,7 +222,7 @@
                             android:layout_marginTop="5dp"
                             android:gravity="center"
                             android:text="Bon Transfert"
-                            android:textSize="11dp"
+                            android:textSize="8sp"
                             android:textStyle="bold" />
 
 
@@ -249,13 +230,14 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/btn_fiche_article"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:id="@+id/btn_bon_redressement"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:cardBackgroundColor="#66FCF9F9"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
@@ -266,47 +248,41 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:background="@color/back_card_coture"
                         android:gravity="center"
                         android:orientation="vertical">
 
 
                         <RelativeLayout
-                            android:layout_width="85dp"
-                            android:layout_height="85dp">
+                            android:layout_width="40dp"
+                            android:layout_height="40dp">
 
                             <ImageView
-                                android:layout_width="85dp"
-                                android:layout_height="85dp"
-                                android:padding="15dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:padding="5dp"
                                 android:src="@drawable/ic_etat_production" />
 
 
-                            <!--     <TextView
-                                      android:id="@+id/txt_nbr_bt"
-                                      android:layout_width="30dp"
-                                      android:layout_height="30dp"
-                                      android:background="@drawable/round_nbr_transfert"
-                                      android:text="1"
-                                      android:gravity="center"
-                                      android:textColor="@color/white"
-                                      android:layout_alignParentRight="true"
-                                      android:layout_marginRight="0dp"/>-->
+                            <TextView
+                                android:id="@+id/txt_nbr_bt"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="0dp"
+                                android:gravity="center"
+                                android:text="BR"
+                                android:textColor="@color/white"></TextView>
 
                         </RelativeLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_margin="2dp"
-                            android:background="@color/lightgray" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:gravity="center"
-                            android:text="Etat de Production "
-                            android:textSize="11dp"
+                            android:text="B.Redressement"
+                            android:textSize="8sp"
                             android:textStyle="bold" />
 
 

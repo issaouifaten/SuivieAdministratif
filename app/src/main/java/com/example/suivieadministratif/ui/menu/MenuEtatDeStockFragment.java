@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.suivieadministratif.R;
+import com.example.suivieadministratif.module.Stock.BonRedressement;
 import com.example.suivieadministratif.module.Stock.StockArticle;
 import com.example.suivieadministratif.module.Stock.BonEntre;
 import com.example.suivieadministratif.module.Stock.BonSortie;
@@ -72,7 +73,16 @@ public class MenuEtatDeStockFragment extends Fragment {
                 startActivity(intent2);
             }
         });
+        //btn_passation_bon_transfert
 
+        CardView  btn_bon_redressement = (CardView) root.findViewById(R.id.btn_bon_redressement) ;
+        btn_bon_redressement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent2 = new Intent(getActivity(), BonRedressement.class);
+                startActivity(intent2);
+            }
+        });
         return root;
     }
 }

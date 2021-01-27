@@ -155,7 +155,16 @@ public class StockArticle extends AppCompatActivity {
             }
         });
 
+//btn_bon_redressement
+        CardView   btn_bon_redressement= (CardView) root.findViewById(R.id.btn_bon_redressement );
+        btn_bon_redressement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toBonRedressement = new Intent(getApplicationContext() , BonRedressement.class) ;
+                startActivity(toBonRedressement);
 
+            }
+        });
 
 
 

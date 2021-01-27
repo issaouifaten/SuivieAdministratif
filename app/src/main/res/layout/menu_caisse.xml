@@ -77,10 +77,19 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:padding="13dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="5dp"
                             android:src="@drawable/ic_caisse_depense" />
+
+                        <TextView
+                            android:id="@+id/textView36"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="Caisse Depense"
+                            android:textSize="8sp"
+                            android:textStyle="bold" />
 
 
                     </LinearLayout>
@@ -110,10 +119,19 @@
 
 
                         <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:padding="15dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:padding="5dp"
                             android:src="@drawable/ic_caisse_recette" />
+
+                        <TextView
+                            android:id="@+id/textView35"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:text="Caisse Recette"
+                            android:textSize="8sp"
+                            android:textStyle="bold" />
 
 
                     </LinearLayout>

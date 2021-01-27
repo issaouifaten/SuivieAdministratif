@@ -116,21 +116,26 @@
 
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/buttonround">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp">
 
 
-                        <SearchView
+                        <EditText
                             android:id="@+id/search_bar_client"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:hint="Rechercher Client"></SearchView>
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/buttonround"
+                            android:drawableRight="@android:drawable/ic_menu_search"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:padding="5dp" />
 
 
                     </RelativeLayout>
-
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -175,15 +180,10 @@
 
         <include layout="@layout/bottom_sheet_devis_vente" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="bottom"
-            android:orientation="vertical">
-
-            <include
-                layout="@layout/banniere_societe"
-                />
-        </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <include
+        layout="@layout/banniere_societe"
+        tools:layout_editor_absoluteY="691dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

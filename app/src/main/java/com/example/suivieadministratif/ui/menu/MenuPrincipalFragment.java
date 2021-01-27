@@ -156,6 +156,21 @@ public class MenuPrincipalFragment extends Fragment {
 
             }
         });
+        //btn_tresorerie
+        CardView btn_tresorerie = (CardView)   root.findViewById(R.id.btn_tresorerie) ;
+        btn_tresorerie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment fragment = new MenuTresorerieFragment();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                if (fragment != null) {
+                    ft.replace(R.id.nav_host_fragment, fragment);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
+
+            }
+        });
 
 /*
         CardView btn_etat_stock ;

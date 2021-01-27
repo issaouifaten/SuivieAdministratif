@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".module.Stock.BonSortie">
-
+    tools:context=".module.Stock.BonRedressement">
+<!-- -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -137,6 +137,7 @@
 
                     </RelativeLayout>
 
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -154,7 +155,8 @@
                         <GridView
                             android:id="@+id/lv_list_historique_bc"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="60dp" />
 
                     </LinearLayout>
 
@@ -179,10 +181,11 @@
         </androidx.drawerlayout.widget.DrawerLayout>
 
         <include layout="@layout/bottom_sheet_devis_vente" />
+
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <include
         layout="@layout/banniere_societe"
-        tools:layout_editor_absoluteY="691dp" />
-
+        tools:layout_editor_absoluteY="814dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
