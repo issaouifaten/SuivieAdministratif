@@ -17,7 +17,7 @@
 
     <androidx.cardview.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:foreground="?android:attr/selectableItemBackground"
+
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginLeft="10dp"
@@ -178,7 +178,7 @@
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
             android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
+
             card_view:cardBackgroundColor="#edfcf9f9"
             card_view:cardCornerRadius="5dp"
             card_view:cardElevation="6dp"
@@ -325,7 +325,7 @@
             android:layout_marginRight="5dp"
             android:layout_marginTop="2dp"
             android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
+
             card_view:cardBackgroundColor="#edfcf9f9"
             card_view:cardCornerRadius="5dp"
             card_view:cardElevation="6dp"
@@ -417,7 +417,7 @@
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
             android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
+
             card_view:cardBackgroundColor="#edfcf9f9"
             card_view:cardCornerRadius="5dp"
             card_view:cardElevation="6dp"

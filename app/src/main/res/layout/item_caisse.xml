@@ -11,7 +11,7 @@
         android:layout_marginBottom="5dp"
         android:clickable="true"
         card_view:cardBackgroundColor="#66FCF9F9"
-        android:foreground="?android:attr/selectableItemBackground"
+
         android:orientation="vertical"
         android:weightSum="1">
 

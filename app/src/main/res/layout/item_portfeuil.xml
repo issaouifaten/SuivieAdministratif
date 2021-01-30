@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
+
         android:orientation="vertical"
         android:weightSum="1"
         card_view:cardBackgroundColor="#66FCF9F9">

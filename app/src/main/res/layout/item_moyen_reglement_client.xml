@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:foreground="?android:attr/selectableItemBackground"
+
             android:orientation="vertical"
             card_view:cardBackgroundColor="#edfcf9f9"
             card_view:cardCornerRadius="5dp"
@@ -36,7 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:orientation="vertical"
                     card_view:cardBackgroundColor="#edfcf9f9"
                     card_view:cardCornerRadius="5dp"

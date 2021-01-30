@@ -73,7 +73,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_portfeuil_cheque"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
@@ -117,7 +117,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_portfeuil_traite"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
@@ -183,7 +183,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_reg_client"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
@@ -228,7 +228,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_echeance_Client"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"

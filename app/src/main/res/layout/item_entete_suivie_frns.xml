@@ -11,7 +11,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:foreground="?android:attr/selectableItemBackground"
+
     card_view:cardBackgroundColor="#edfcf9f9"
     card_view:cardCornerRadius="5dp"
     card_view:cardElevation="6dp"

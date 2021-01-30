@@ -72,7 +72,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_vente_parametrable"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
@@ -129,7 +129,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_var_ca_en_mois"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"

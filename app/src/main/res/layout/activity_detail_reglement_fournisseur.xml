@@ -35,7 +35,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
-                android:foreground="?android:attr/selectableItemBackground"
+
                 card_view:cardBackgroundColor="#66FCF9F9"
                 card_view:cardCornerRadius="2dp"
                 card_view:cardElevation="2dp"
@@ -176,7 +176,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="5dp"
                 android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
+
                 card_view:cardBackgroundColor="#edfcf9f9"
                 card_view:cardCornerRadius="5dp"
                 card_view:cardElevation="6dp"
@@ -319,7 +319,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="5dp"
                 android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
+
                 card_view:cardBackgroundColor="#edfcf9f9"
                 card_view:cardCornerRadius="5dp"
                 card_view:cardElevation="6dp"
@@ -409,7 +409,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="5dp"
                 android:clickable="true"
-                android:foreground="?android:attr/selectableItemBackground"
+
                 card_view:cardBackgroundColor="#edfcf9f9"
                 card_view:cardCornerRadius="5dp"
                 card_view:cardElevation="6dp"

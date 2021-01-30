@@ -124,7 +124,7 @@
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
-                android:background="?android:attr/textColorTertiaryInverse"
+
                 android:fitsSystemWindows="true"
                 app:headerLayout="@layout/menu_caisse" />
         </androidx.drawerlayout.widget.DrawerLayout>
@@ -138,7 +138,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginBottom="70dp"
             android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
+
             android:visibility="gone"
             app:cardBackgroundColor="#40FCF9F9"
             app:cardCornerRadius="5dp"
@@ -173,7 +173,7 @@
                             android:layout_height="30dp"
                             android:layout_alignParentLeft="true"
                             android:layout_margin="9dp"
-                            android:foreground="?android:attr/selectableItemBackground"
+
                             android:src="@drawable/user_money" />
 
                         <TextView
@@ -208,7 +208,7 @@
                     android:layout_height="30dp"
                     android:layout_alignParentRight="true"
                     android:layout_margin="9dp"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:padding="3dp"
                     android:src="@drawable/ic_close" />
 

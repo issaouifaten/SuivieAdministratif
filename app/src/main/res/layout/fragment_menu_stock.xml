@@ -73,7 +73,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_bon_entree"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:clickable="true"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
@@ -119,7 +119,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_bonsortie_de_stock"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:clickable="true"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
@@ -178,7 +178,7 @@
                     android:layout_height="160dp"
                     android:layout_margin="10dp"
                     android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     app:cardBackgroundColor="#66FCF9F9"
                     app:cardCornerRadius="2dp"
                     app:cardElevation="2dp"
@@ -228,7 +228,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_passation_bon_transfert"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:clickable="true"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
@@ -289,7 +289,7 @@
                     android:layout_height="160dp"
                     android:layout_margin="10dp"
                     android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     app:cardBackgroundColor="#66FCF9F9"
                     app:cardCornerRadius="2dp"
                     app:cardElevation="2dp"

@@ -74,7 +74,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_statistique"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
@@ -122,7 +122,7 @@
                     android:layout_height="140dp"
                     android:layout_margin="10dp"
                     android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:visibility="visible"
                     app:cardBackgroundColor="#66FCF9F9"
                     app:cardCornerRadius="2dp"

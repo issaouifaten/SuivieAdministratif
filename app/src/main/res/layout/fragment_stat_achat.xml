@@ -37,7 +37,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_journal_article_achete"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
@@ -83,7 +83,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_journal_facture_achat"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
@@ -147,7 +147,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_global_achat"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
@@ -193,7 +193,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_article_perime"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"

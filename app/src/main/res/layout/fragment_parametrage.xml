@@ -26,7 +26,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/btn_param_server"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:foreground="?android:attr/selectableItemBackground"
+
             android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="70dp"
@@ -71,7 +71,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/btn_disconnect"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:foreground="?android:attr/selectableItemBackground"
+
             android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="70dp"

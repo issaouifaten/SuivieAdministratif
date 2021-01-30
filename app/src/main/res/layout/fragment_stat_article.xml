@@ -39,7 +39,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_article_faible_rotation"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
@@ -86,7 +86,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_article_nn_mouvemente"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
@@ -152,7 +152,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_journal_article"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
@@ -198,7 +198,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_article_dlc"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"

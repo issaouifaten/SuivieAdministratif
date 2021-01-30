@@ -14,7 +14,7 @@
 
 
     <androidx.cardview.widget.CardView
-        android:foreground="?android:attr/selectableItemBackground"
+
         android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_weight="1"
-                android:foreground="?android:attr/selectableItemBackground">
+                >
 
                 <TextView
                     android:id="@+id/txt_tot_mvmnt_vente_service"
@@ -113,7 +113,7 @@
                 android:orientation="vertical"
                 android:layout_weight="1"
                 android:visibility="invisible"
-                android:foreground="?android:attr/selectableItemBackground">
+                >
 
                 <ImageView
                     android:layout_width="20dp"

@@ -33,7 +33,7 @@
                     android:layout_gravity="center|center_horizontal"
                     android:layout_margin="10dp"
                     android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     app:cardBackgroundColor="#66FCF9F9"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
@@ -65,7 +65,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     app:cardBackgroundColor="#66FCF9F9"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
@@ -106,7 +106,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     app:cardBackgroundColor="#66FCF9F9"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
@@ -146,7 +146,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     app:cardBackgroundColor="#66FCF9F9"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
@@ -195,7 +195,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     app:cardBackgroundColor="#66FCF9F9"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="2dp"
@@ -236,7 +236,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:visibility="visible"
                     app:cardBackgroundColor="#66FCF9F9"
                     app:cardCornerRadius="12dp"

@@ -21,7 +21,7 @@
             android:layout_height="80dp"
             android:layout_margin="10dp"
             android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
+
             card_view:cardBackgroundColor="#66FCF9F9"
             card_view:cardCornerRadius="2dp"
             card_view:cardElevation="2dp"
@@ -91,7 +91,7 @@
                         android:layout_height="140dp"
                         android:layout_margin="10dp"
                         android:clickable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
+
                         card_view:cardBackgroundColor="#66FCF9F9"
                         card_view:cardCornerRadius="2dp"
                         card_view:cardElevation="2dp"
@@ -136,7 +136,7 @@
                         android:layout_height="140dp"
                         android:layout_margin="10dp"
                         android:clickable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
+
                         card_view:cardBackgroundColor="#66FCF9F9"
                         card_view:cardCornerRadius="2dp"
                         card_view:cardElevation="2dp"
@@ -198,7 +198,7 @@
                         android:layout_height="140dp"
                         android:layout_margin="10dp"
                         android:clickable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
+
                         app:cardBackgroundColor="#66FCF9F9"
                         app:cardCornerRadius="2dp"
                         app:cardElevation="2dp"
@@ -244,7 +244,7 @@
                         android:layout_height="140dp"
                         android:layout_margin="10dp"
                         android:clickable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
+
                         app:cardBackgroundColor="#66FCF9F9"
                         app:cardCornerRadius="2dp"
                         app:cardElevation="2dp"
@@ -300,7 +300,7 @@
                         android:layout_height="140dp"
                         android:layout_margin="10dp"
                         android:clickable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
+
                         card_view:cardBackgroundColor="#66FCF9F9"
                         card_view:cardCornerRadius="2dp"
                         card_view:cardElevation="2dp"
@@ -347,7 +347,7 @@
                         android:layout_height="140dp"
                         android:layout_margin="10dp"
                         android:clickable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
+
                         app:cardBackgroundColor="#66FCF9F9"
                         app:cardCornerRadius="2dp"
                         app:cardElevation="2dp"
@@ -406,7 +406,7 @@
                         android:layout_height="140dp"
                         android:layout_margin="10dp"
                         android:clickable="true"
-                        android:foreground="?android:attr/selectableItemBackground"
+
                         app:cardBackgroundColor="#66FCF9F9"
                         app:cardCornerRadius="2dp"
                         app:cardElevation="2dp"

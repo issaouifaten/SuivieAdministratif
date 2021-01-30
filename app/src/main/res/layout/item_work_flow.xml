@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
 
-        android:foreground="?android:attr/selectableItemBackground"
+
         card_view:cardBackgroundColor="#66FCF9F9"
         card_view:cardCornerRadius="2dp"
         card_view:cardElevation="2dp"
@@ -259,7 +259,7 @@
                     android:layout_marginTop="2dp"
                     android:layout_marginEnd="2dp"
                     android:layout_marginBottom="2dp"
-                    android:foreground="?android:attr/selectableItemBackground"
+
                     android:padding="5dp"
                     android:src="@drawable/ic_close"
                     android:visibility="gone" />

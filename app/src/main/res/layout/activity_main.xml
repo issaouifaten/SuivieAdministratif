@@ -21,7 +21,7 @@
             android:layout_marginTop="180dp"
             android:layout_marginRight="30dp"
             android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
+
             app:cardBackgroundColor="#40FCF9F9"
             app:cardCornerRadius="10dp"
             app:cardElevation="1dp"

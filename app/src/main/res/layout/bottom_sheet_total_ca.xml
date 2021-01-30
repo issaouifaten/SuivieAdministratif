@@ -75,7 +75,7 @@
             android:layout_marginBottom="5dp"
             android:layout_marginTop="10dp"
             android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
+
             android:orientation="vertical"
             android:weightSum="1">
 
