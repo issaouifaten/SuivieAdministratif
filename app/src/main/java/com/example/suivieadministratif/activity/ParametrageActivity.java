@@ -1,4 +1,4 @@
-package com.example.suivieadministratif.param;
+package com.example.suivieadministratif.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,12 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
-import com.example.suivieadministratif.activity.LoginActivity;
 import com.example.suivieadministratif.R;
-import com.example.suivieadministratif.activity.SplachScreenActivity;
+import com.example.suivieadministratif.param.Param;
+import com.example.suivieadministratif.param.Parametrage;
 
-
-public class Parametrage extends AppCompatActivity {
+public class ParametrageActivity extends AppCompatActivity {
 
 
 
@@ -28,12 +27,11 @@ public class Parametrage extends AppCompatActivity {
 
     RadioButton rb_cnx_distante;
     RadioButton rb_cnx_i2s;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_parametrage);
+        setContentView(R.layout.activity_parametrage2);
+
         btadd = (Button) findViewById(R.id.add);
 
         edtip = (EditText) findViewById(R.id.ip);
@@ -46,11 +44,13 @@ public class Parametrage extends AppCompatActivity {
 
 
 
+
+
         rb_cnx_distante.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                edtip.setText("41.230.28.31");
+                edtip.setText("");
             }
         });
 
@@ -58,7 +58,7 @@ public class Parametrage extends AppCompatActivity {
         rb_cnx_i2s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                edtip.setText("192.168.1.40");
+                edtip.setText("");
             }
         });
 
@@ -74,9 +74,9 @@ public class Parametrage extends AppCompatActivity {
             edtbase.setText(_base);
 
 
-            if (_ip.equals("41.230.28.31")) {
+            if (_ip.equals("")) {
                 rb_cnx_distante.setChecked(true);
-            } else if (_ip.equals("192.168.1.40")) {
+            } else if (_ip.equals("")) {
                 rb_cnx_i2s.setChecked(true);
             }
 
@@ -87,7 +87,7 @@ public class Parametrage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                SharedPreferences prefs = Parametrage.this.getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
+                SharedPreferences prefs =  getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
                 SharedPreferences.Editor edt = prefs.edit();
                 edt.putBoolean("etatsql", true);
                 edt.putString("user", edtuser.getText().toString());
@@ -104,31 +104,5 @@ public class Parametrage extends AppCompatActivity {
         });
 
 
-
     }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-      /*  SharedPreferences p = getSharedPreferences(prefnamesql, Context.MODE_PRIVATE);
-        st = p.getBoolean("etatsql", false);
-        if (st == true) {
-            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(i);
-        }*/
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
 }

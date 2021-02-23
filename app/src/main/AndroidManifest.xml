@@ -11,7 +11,8 @@
         android:roundIcon="@drawable/i2s"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".module.tresorerie.PortfeuilTraite"></activity>
+        <activity android:name=".activity.ParametrageActivity"></activity>
+        <activity android:name=".module.tresorerie.PortfeuilTraite" />
         <activity android:name=".module.tresorerie.PortfeuilCheque" />
         <activity android:name=".module.Stock.DetailBonRedressement" />
         <activity android:name=".module.Stock.BonRedressement" />
