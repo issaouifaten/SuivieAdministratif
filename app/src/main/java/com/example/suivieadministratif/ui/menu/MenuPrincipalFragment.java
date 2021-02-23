@@ -26,6 +26,7 @@ public class MenuPrincipalFragment extends Fragment {
 
     private MenuViewModel menuViewModel;
 
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         menuViewModel =

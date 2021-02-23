@@ -3,20 +3,25 @@ package com.example.suivieadministratif.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.suivieadministratif.model.WorkFlow;
 import com.example.suivieadministratif.ui.menu.MenuAchatFragment;
 import com.example.suivieadministratif.ui.menu.MenuCaisseFragment;
 import com.example.suivieadministratif.ui.menu.MenuEtatDeStockFragment;
+import com.example.suivieadministratif.ui.menu.MenuPrincipalFragment;
 import com.example.suivieadministratif.ui.menu.MenuStatistiqueFragment;
 import com.example.suivieadministratif.ui.menu.MenuTresorerieFragment;
 import com.example.suivieadministratif.ui.menu.MenuVenteFragment;
 import com.example.suivieadministratif.ui.menu.StatistiqueMenuActivity;
+import com.example.suivieadministratif.ui.parametrage.ParametrageFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -45,9 +50,65 @@ public class HomeActivity extends AppCompatActivity {
                 (R.id.navigation_menu,   R.id.navigation_workflow ,  R.id.navigation_parametrage)
                 .build();
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(navViewBottom, navController);
+
+
+        navViewBottom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment selectedFragment = null;
+                switch (item.getItemId()) {
+
+                    case R.id.navigation_parametrage:
+                        selectedFragment = new ParametrageFragment() ;
+                        break;
+
+                    case R.id.navigation_menu:
+                        selectedFragment = new MenuPrincipalFragment() ;
+                        break;
+                    case R.id.navigation_workflow:
+                        Intent intent2 = new Intent(HomeActivity.this, AlerteWorkflow.class);
+                        startActivity(intent2);
+                        return true;
+                }
+
+
+
+
+
+
+
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, selectedFragment);
+                transaction.commit();
+                return true;
+
+
+
+            }
+
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+//        NavigationUI.setupWithNavController(navViewBottom, navController);
 
 
 
