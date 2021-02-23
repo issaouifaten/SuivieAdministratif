@@ -18,10 +18,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.suivieadministratif.ConnectionClass;
@@ -50,7 +53,7 @@ public class MenuServeur extends AppCompatActivity {
     ProgressBar progressBar;
 
     public   static Activity  fa  ;
-
+String  condition_distant="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +73,27 @@ public class MenuServeur extends AppCompatActivity {
         password = pref.getString("password", password);
         base = pref.getString("base", base);
         gridServeur=(GridView)findViewById(R.id.grid_serveur);
+        Switch bt_distant=(Switch)findViewById(R.id.bt_distant);
 
+
+bt_distant.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked) {
+            // The toggle is enabled
+            condition_distant=" where Distant=1";
+            FillList fillList =new FillList();
+            fillList.execute("");
+
+        } else {
+            // The toggle is disabled
+            FillList fillList =new FillList();
+            fillList.execute("");
+
+            condition_distant=" where Distant=0";
+        }
+    }
+});
+        condition_distant=" where Distant=0";
         FillList fillList =new FillList();
         fillList.execute("");
 
@@ -105,7 +128,7 @@ public class MenuServeur extends AppCompatActivity {
                     z = "Error in connection with SQL server";
                 } else {
 
-                    String queryTable = " select  *  from ListeSociete";
+                    String queryTable = " select  *  from ListeSociete"+condition_distant;
 
                     PreparedStatement ps = con.prepareStatement(queryTable);
                     Log.e("query_list_soc", queryTable);
@@ -215,6 +238,14 @@ public class MenuServeur extends AppCompatActivity {
                     else  if (NomSociete.contains("MTD"))
                     {
                         img_societe.setImageResource(R.drawable.mtd_logo_transportatio);
+                    }
+                    else  if (NomSociete.contains("EPL"))
+                    {
+                        img_societe.setImageResource(R.drawable.epl);
+                    }
+                    else  if (NomSociete.contains("TECHNO"))
+                    {
+                        img_societe.setImageResource(R.drawable.techno);
                     }
                     btn_login.setOnClickListener(new View.OnClickListener() {
                         @Override

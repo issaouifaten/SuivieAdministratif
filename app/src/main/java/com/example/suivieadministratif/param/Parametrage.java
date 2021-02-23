@@ -52,7 +52,7 @@ public class Parametrage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                edtip.setText("");
+                edtip.setText("41.230.28.31");
             }
         });
 
@@ -60,7 +60,7 @@ public class Parametrage extends AppCompatActivity {
         rb_cnx_i2s.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                edtip.setText("");
+                edtip.setText("192.168.1.40");
             }
         });
 
@@ -76,9 +76,9 @@ public class Parametrage extends AppCompatActivity {
             edtbase.setText(_base);
 
 
-            if (_ip.equals("")) {
+            if (_ip.equals("41.230.28.31")) {
                 rb_cnx_distante.setChecked(true);
-            } else if (_ip.equals("")) {
+            } else if (_ip.equals("192.168.1.40")) {
                 rb_cnx_i2s.setChecked(true);
             }
 
