@@ -245,6 +245,7 @@ public class HistoriqueBCTask extends AsyncTask<String, String, String> {
                 {
                     total_bc =total_bc+c.getTotalTTC();
                 }
+
             }
         }
 

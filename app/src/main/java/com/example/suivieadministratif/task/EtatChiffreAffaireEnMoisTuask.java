@@ -187,9 +187,10 @@ public class EtatChiffreAffaireEnMoisTuask extends AsyncTask<String, String, Str
              barDataSet.setColor(  activity.getResources().getColor(listColor[index])  );
             listBarDataSet.add(barDataSet) ;
             index ++ ;
+
         }
 
-        BarData data = new BarData(  listBarDataSet  );
+        BarData data = new BarData(  listBarDataSet );
 
         barGraph.setDrawBarShadow(false);
         barGraph.setData(data);

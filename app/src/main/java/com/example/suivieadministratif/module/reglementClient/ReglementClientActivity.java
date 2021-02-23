@@ -129,6 +129,7 @@ public class ReglementClientActivity extends AppCompatActivity {
 
             }
         });
+
         CardView  btn_facture_vente = (CardView) root.findViewById(R.id.btn_facture_vente) ;
         btn_facture_vente.setOnClickListener(new View.OnClickListener() {
             @Override

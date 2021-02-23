@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Suivie Administratif</string>
+    <string name="app_name">Suivie ERP</string>
     <string name="licence">Idéal Software Solutions</string>
     <string name="title_activity_menu_home">MenuHome</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -21,7 +21,6 @@
     <string name="suivant">Suivant</string>
     <string name="obilgatoire">Obligatoire</string>
     <string name="confirmer_votre_mdp">Confirmer votre mot de passe</string>
-
 
     <string name="identifiant">Entrer votre identifiant</string>
     <string name="mot_de_passe">Entrer votre mot de passe</string>

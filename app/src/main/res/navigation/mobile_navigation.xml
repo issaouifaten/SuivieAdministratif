@@ -13,7 +13,6 @@
         tools:layout="@layout/fragment_menu_principal" />
 
 
-
     <fragment
         android:id="@+id/navigation_workflow"
         android:name="com.example.suivieadministratif.ui.workflow.WorkflowFragment"
@@ -25,7 +24,16 @@
         android:id="@+id/navigation_parametrage"
         android:name="com.example.suivieadministratif.ui.parametrage.ParametrageFragment"
         android:label="Paramètrage"
-        tools:layout="@layout/fragment_parametrage" />
+        tools:layout="@layout/fragment_parametrage" >
+        <action
+            android:id="@+id/action_navigation_parametrage_self"
+            app:destination="@id/navigation_parametrage" />
+    </fragment>
 
 
 </navigation>
+
+
+
+
+

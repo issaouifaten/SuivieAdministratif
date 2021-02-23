@@ -254,7 +254,6 @@ public class EtatJournalActivite extends AppCompatActivity {
                     final TextView txt_numero = (TextView) convertView.findViewById(R.id.txt_numero);
 
 
-
                     final CardView card = (CardView) convertView.findViewById(R.id.card);
                     final HashMap<String, Object> obj = (HashMap<String, Object>) ADA
                             .getItem(position);
@@ -354,17 +353,6 @@ public class EtatJournalActivite extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
     public class GetDataSpinnerModeReg extends AsyncTask<String, String, String> {
         String z = "  ";
 
@@ -429,9 +417,6 @@ public class EtatJournalActivite extends AppCompatActivity {
             return z;
         }
     }
-
-
-
 
 
 

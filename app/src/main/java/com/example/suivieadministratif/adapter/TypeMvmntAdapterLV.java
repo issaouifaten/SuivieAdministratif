@@ -38,21 +38,20 @@ public class TypeMvmntAdapterLV extends ArrayAdapter<TypeMouvement> {
         Context context = parent.getContext();
         View rowView = null;
         TypeMouvement tmvmnt = listTypeMouvement.get(position);
+
         if (tmvmnt.getNumeroPiece().equals("")) {
 
             rowView = inflater.inflate(R.layout.item_titre_type, null, true);
 
-
-
-            TextView txt_titre_type_mvmnt = rowView.findViewById(R.id.txt_titre_type_mvmnt);
-
-            TextView   txt_total_montant= rowView.findViewById(R.id.txt_total_montant);
+            TextView  txt_titre_type_mvmnt = rowView.findViewById(R.id.txt_titre_type_mvmnt);
+            TextView  txt_total_montant= rowView.findViewById(R.id.txt_total_montant);
 
             txt_titre_type_mvmnt.setText(tmvmnt.getType().replace("Type Mouvement ", ""));
             txt_total_montant.setText(formatter.format(tmvmnt.getMontant()));
 
         }
-        else if (!tmvmnt.getNumeroPiece().equals("")) {
+
+        else if (!tmvmnt.getNumeroPiece().equals(""))  {
 
             rowView = inflater.inflate(R.layout.item_type_mvmnt, null, true);
             TextView txt_num_piece = rowView.findViewById(R.id.txt_num_piece);
@@ -69,7 +68,4 @@ public class TypeMvmntAdapterLV extends ArrayAdapter<TypeMouvement> {
 
     }
 
-
 }
-
-

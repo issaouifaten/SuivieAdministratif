@@ -69,7 +69,6 @@ public class BonAchatSuiviCMDRVAdapter extends RecyclerView.Adapter<BonAchatSuiv
 
 
 
-
         if (origine.equals("SuivieCommandeFrs"))
         {
             holder.txt_libelle_rep_stock.setText("Repliquat");
