@@ -1,4 +1,4 @@
-package com.example.suivieadministratif.param;
+package com.example.suivieadministratif.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,12 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
-import com.example.suivieadministratif.activity.LoginActivity;
 import com.example.suivieadministratif.R;
-import com.example.suivieadministratif.activity.SplachScreenActivity;
+import com.example.suivieadministratif.param.Param;
+import com.example.suivieadministratif.param.Parametrage;
 
-
-public class Parametrage extends AppCompatActivity {
+public class ParametrageActivity extends AppCompatActivity {
 
 
 
@@ -28,12 +27,11 @@ public class Parametrage extends AppCompatActivity {
 
     RadioButton rb_cnx_distante;
     RadioButton rb_cnx_i2s;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_parametrage);
+        setContentView(R.layout.activity_parametrage2);
+
         btadd = (Button) findViewById(R.id.add);
 
         edtip = (EditText) findViewById(R.id.ip);
@@ -43,6 +41,8 @@ public class Parametrage extends AppCompatActivity {
 
         rb_cnx_distante = (RadioButton) findViewById(R.id.rb_wifi_distant);
         rb_cnx_i2s = (RadioButton) findViewById(R.id.rb_wifi_local);
+
+
 
 
 
@@ -87,7 +87,7 @@ public class Parametrage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                SharedPreferences prefs = Parametrage.this.getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
+                SharedPreferences prefs =  getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
                 SharedPreferences.Editor edt = prefs.edit();
                 edt.putBoolean("etatsql", true);
                 edt.putString("user", edtuser.getText().toString());
@@ -104,31 +104,5 @@ public class Parametrage extends AppCompatActivity {
         });
 
 
-
     }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-      /*  SharedPreferences p = getSharedPreferences(prefnamesql, Context.MODE_PRIVATE);
-        st = p.getBoolean("etatsql", false);
-        if (st == true) {
-            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(i);
-        }*/
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
 }
