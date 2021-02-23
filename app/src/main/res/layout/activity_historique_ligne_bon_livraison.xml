@@ -20,7 +20,8 @@
         card_view:cardCornerRadius="5dp"
         card_view:cardElevation="6dp"
         card_view:cardMaxElevation="2dp"
-        card_view:contentPadding="5dp">
+        card_view:contentPadding="5dp"
+        tools:ignore="MissingConstraints">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -81,10 +82,10 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentBottom="true">
 
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/ic_customer" />
+<!--                    <ImageView-->
+<!--                        android:layout_width="25dp"-->
+<!--                        android:layout_height="25dp"-->
+<!--                        android:src="@drawable/ic_customer" />-->
 
 
                     <TextView

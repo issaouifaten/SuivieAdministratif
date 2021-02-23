@@ -19,26 +19,25 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@android:color/white"
             android:orientation="horizontal">
-
-
-
 
 
             <TextView
                 android:id="@+id/txt_article"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:text="Article"
                 android:layout_weight="1"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="Article"
+                android:textColor="@color/black" />
 
 
             <ImageView
                 android:layout_width="5dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/line_v"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:src="@drawable/line_v" />
 
 
             <LinearLayout
@@ -75,15 +74,15 @@
             <ImageView
                 android:layout_width="5dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/line_v"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:src="@drawable/line_v" />
 
 
             <ImageView
                 android:layout_width="5dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_ttc"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:src="@drawable/ic_ttc" />
 
 
             <TextView

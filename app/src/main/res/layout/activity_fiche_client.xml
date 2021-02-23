@@ -120,12 +120,12 @@
                         android:layout_weight="1"
                         android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/imageView15"
-                            android:layout_width="25dp"
-                            android:layout_height="33dp"
-                            android:layout_margin="5dp"
-                            android:src="@drawable/ic_customer" />
+<!--                        <ImageView-->
+<!--                            android:id="@+id/imageView15"-->
+<!--                            android:layout_width="25dp"-->
+<!--                            android:layout_height="33dp"-->
+<!--                            android:layout_margin="5dp"-->
+<!--                            android:src="@drawable/ic_customer" />-->
 
                         <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                             android:id="@+id/spin_client"

@@ -27,7 +27,7 @@
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/ic_customer" />
+                android:src="@drawable/ic_user_img" />
 
             <TextView
                 android:id="@+id/txt_code_fournisseur"
