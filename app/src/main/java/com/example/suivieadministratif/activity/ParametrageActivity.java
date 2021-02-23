@@ -13,7 +13,7 @@ import android.widget.RadioButton;
 
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.param.Param;
-import com.example.suivieadministratif.param.Parametrage;
+
 
 public class ParametrageActivity extends AppCompatActivity {
 
