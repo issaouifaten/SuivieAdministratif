@@ -108,7 +108,7 @@ public class FactureAchat extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         date_fin = sdf.format(calendar.getTime());
-        calendar.add(Calendar.MONTH, -2);
+        calendar.add(Calendar.MONTH, -1);
         date_debut = sdf.format(calendar.getTime());
         txt_date_debut.setText(date_debut);
         txt_date_fin.setText(date_fin);
