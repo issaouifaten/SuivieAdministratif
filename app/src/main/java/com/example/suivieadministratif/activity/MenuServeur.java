@@ -52,15 +52,16 @@ public class MenuServeur extends AppCompatActivity {
     GridView gridServeur;
     ProgressBar progressBar;
 
-    public   static Activity  fa  ;
-String  condition_distant="";
+    public static Activity fa;
+    String condition_distant = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_serveur);
         connectionClass = new ConnectionClass();
 
-        fa =  this  ;
+        fa = this;
 
         SharedPreferences prefe = getSharedPreferences("usersession", Context.MODE_PRIVATE);
         SharedPreferences.Editor edte = prefe.edit();
@@ -72,35 +73,37 @@ String  condition_distant="";
         ip = pref.getString("ip", ip);
         password = pref.getString("password", password);
         base = pref.getString("base", base);
-        gridServeur=(GridView)findViewById(R.id.grid_serveur);
-        Switch bt_distant=(Switch)findViewById(R.id.bt_distant);
+        gridServeur = (GridView) findViewById(R.id.grid_serveur);
+        final   Switch bt_distant = (Switch) findViewById(R.id.bt_distant);
 
 
-bt_distant.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (isChecked) {
-            // The toggle is enabled
-            condition_distant=" where Distant=1";
-            FillList fillList =new FillList();
-            fillList.execute("");
+        bt_distant.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
 
-        } else {
-            // The toggle is disabled
-            FillList fillList =new FillList();
-            fillList.execute("");
+                    bt_distant.setText("Distant");
+                    // The toggle is enabled
+                    condition_distant = " where Distant=1";
+                    FillList fillList = new FillList();
+                    fillList.execute("");
 
-            condition_distant=" where Distant=0";
-        }
-    }
-});
-        condition_distant=" where Distant=0";
-        FillList fillList =new FillList();
+                } else {
+
+                    bt_distant.setText("Local");
+                    // The toggle is disabled
+                    FillList fillList = new FillList();
+                    fillList.execute("");
+
+                    condition_distant = " where Distant=0";
+                }
+            }
+        });
+        condition_distant = " where Distant=0";
+        FillList fillList = new FillList();
         fillList.execute("");
 
 
     }
-
-
 
 
     public class FillList extends AsyncTask<String, String, String> {
@@ -109,13 +112,13 @@ bt_distant.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener
 
 
         List<Map<String, String>> prolist = new ArrayList<Map<String, String>>();
-        float total_gloabl=0;
+        float total_gloabl = 0;
 
         @Override
         protected void onPreExecute() {
-          //  progressBar.setVisibility(View.VISIBLE);
+            //  progressBar.setVisibility(View.VISIBLE);
 
-            total_gloabl=0;
+            total_gloabl = 0;
         }
 
 
@@ -128,7 +131,7 @@ bt_distant.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener
                     z = "Error in connection with SQL server";
                 } else {
 
-                    String queryTable = " select  *  from ListeSociete"+condition_distant;
+                    String queryTable = " select  *  from ListeSociete" + condition_distant;
 
                     PreparedStatement ps = con.prepareStatement(queryTable);
                     Log.e("query_list_soc", queryTable);
@@ -171,11 +174,10 @@ bt_distant.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener
             //    progressBar.setVisibility(View.GONE);
 
 
-            String[] from = {"NomSociete", "CodeSociete", "IP", "NomBase" };
-             int[] views = {R.id.txt_code, R.id.txt_designation, R.id.txt_nom_representant, R.id.tx_num_piece, R.id.txt_total_ttc,R.id.txt_nom_rad};
+            String[] from = {"NomSociete", "CodeSociete", "IP", "NomBase"};
+            int[] views = {R.id.txt_code, R.id.txt_designation, R.id.txt_nom_representant, R.id.tx_num_piece, R.id.txt_total_ttc, R.id.txt_nom_rad};
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
                     prolist, R.layout.item_chiffre_affaire_global, from, views);
-
 
 
             final BaseAdapter baseAdapter = new BaseAdapter() {
@@ -205,12 +207,11 @@ bt_distant.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener
                     final CardView btn_login = (CardView) convertView.findViewById(R.id.btn_login);
 
 
-
                     final HashMap<String, Object> obj = (HashMap<String, Object>) ADA
                             .getItem(position);
-                    final   String NomSociete = (String) obj.get("NomSociete");
-                    final  String NomBase = (String) obj.get("NomBase");
-                    final  String IP = (String) obj.get("IP");
+                    final String NomSociete = (String) obj.get("NomSociete");
+                    final String NomBase = (String) obj.get("NomBase");
+                    final String IP = (String) obj.get("IP");
 
 
 //  String[] from = {"CodeClient", "RaisonSociale" ,"TypeOperation","NumeroPiece","TotalTTC"};
@@ -218,40 +219,26 @@ bt_distant.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener
 
                     txt_nomsociete.setText(NomSociete);
 
-                    if (NomSociete.equals("CCM"))
-                    {
+                    if (NomSociete.equals("CCM")) {
                         img_societe.setImageResource(R.drawable.ic_logo_ccm);
-                    }
-                    else  if (NomSociete.equals("GMT"))
-                    {
+                    } else if (NomSociete.equals("GMT")) {
                         img_societe.setImageResource(R.drawable.ic_logo_gmt);
-                    }
-                    else  if (NomSociete.contains("I2S"))
-                    {
+                    } else if (NomSociete.contains("I2S")) {
                         img_societe.setImageResource(R.drawable.i2s);
-                    }
-                    else  if (NomSociete.contains("CMVI"))
-                    {
+                    } else if (NomSociete.contains("CMVI")) {
                         img_societe.setImageResource(R.drawable.cmvi_logo);
-                    }
-
-                    else  if (NomSociete.contains("MTD"))
-                    {
+                    } else if (NomSociete.contains("MTD")) {
                         img_societe.setImageResource(R.drawable.mtd_logo_transportatio);
-                    }
-                    else  if (NomSociete.contains("EPL"))
-                    {
+                    } else if (NomSociete.contains("EPL")) {
                         img_societe.setImageResource(R.drawable.epl);
-                    }
-                    else  if (NomSociete.contains("TECHNO"))
-                    {
+                    } else if (NomSociete.contains("TECHNO")) {
                         img_societe.setImageResource(R.drawable.techno);
                     }
                     btn_login.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
-                            SharedPreferences pref = getSharedPreferences(Param.PEF_SERVER , Context.MODE_PRIVATE);
+                            SharedPreferences pref = getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
                             SharedPreferences.Editor edt = pref.edit();
                             edt.putString("base", NomBase);
                             edt.putString("ip", IP);
@@ -259,16 +246,11 @@ bt_distant.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener
 
                             edt.commit();
 
-                            Intent intent=new Intent(getApplicationContext(), HomeActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                             startActivity(intent);
 
                         }
                     });
-
-
-
-
-
 
 
                     return convertView;
@@ -283,6 +265,7 @@ bt_distant.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener
 
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
