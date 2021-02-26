@@ -34,50 +34,19 @@
                 android:paddingTop="30dp">
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+
+                <Switch
+                    android:id="@+id/bt_distant"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:switchMinWidth="80dp"
+                    android:text="Distant "
+                    android:textColor="@color/progressBarColor"
+                    android:textSize="18sp"
+                    android:textStyle="bold|italic"
                     android:layout_marginTop="70dp"
-                    android:orientation="horizontal">
-
-
-                    <RadioGroup
-                        android:id="@+id/rg_wifi"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-                        <RadioButton
-                            android:id="@+id/rb_wifi_distant"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:background="@drawable/rbtn_selector_rouge"
-                            android:button="@null"
-                            android:checked="true"
-                            android:gravity="center"
-                            android:text="Connexion Distante"
-                            android:textColor="@drawable/rbtn_textcolor_selector_rouge" />
-
-
-                        <RadioButton
-                            android:id="@+id/rb_wifi_local"
-                            android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:background="@drawable/rbtn_selector_rouge"
-                            android:button="@null"
-                            android:checked="false"
-                            android:gravity="center"
-                            android:text="Connexion I2S"
-                            android:textColor="@drawable/rbtn_textcolor_selector_rouge" />
-
-                    </RadioGroup>
-                </LinearLayout>
-
+                    android:layout_gravity="center"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -85,12 +54,29 @@
                     android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/ip"
+                        android:id="@+id/ip_local"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_weight="1"
-                        android:hint="ip "
+                        android:hint="IP Local"
+                        android:inputType="text"
+                        android:singleLine="true" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/ip_distant"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:hint="IP Distant"
                         android:inputType="text"
                         android:singleLine="true" />
 

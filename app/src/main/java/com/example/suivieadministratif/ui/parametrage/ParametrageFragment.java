@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.suivieadministratif.R;
+import com.example.suivieadministratif.activity.ParametrageActivity;
 import com.example.suivieadministratif.activity.SplachScreenActivity;
 import com.example.suivieadministratif.param.Param;
 import com.example.suivieadministratif.param.Parametrage;
@@ -48,7 +49,7 @@ public class ParametrageFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent  toParam  = new Intent(getActivity()  , Parametrage.class) ;
+                Intent  toParam  = new Intent(getActivity()  , ParametrageActivity.class) ;
                 startActivity(toParam);
 
             }

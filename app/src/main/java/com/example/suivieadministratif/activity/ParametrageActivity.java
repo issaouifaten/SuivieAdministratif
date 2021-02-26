@@ -8,8 +8,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Switch;
 
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.param.Param;
@@ -22,11 +24,11 @@ public class ParametrageActivity extends AppCompatActivity {
     boolean st = false;
 
     Button btadd ;
-    EditText edtip, edtpass, edtbase, edtuser ;
+    EditText ed_ip_local  , ed_ip_distant , edtpass, edtbase, edtuser ;
 
 
-    RadioButton rb_cnx_distante;
-    RadioButton rb_cnx_i2s;
+    String  ip_selected  ="" ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,54 +36,77 @@ public class ParametrageActivity extends AppCompatActivity {
 
         btadd = (Button) findViewById(R.id.add);
 
-        edtip = (EditText) findViewById(R.id.ip);
+        final Switch bt_distant = (Switch) findViewById(R.id.bt_distant);
+
+        ed_ip_local = (EditText) findViewById(R.id.ip_local);
+        ed_ip_distant = (EditText) findViewById(R.id.ip_distant);
+
         edtpass = (EditText) findViewById(R.id.password);
         edtuser = (EditText) findViewById(R.id.user);
         edtbase = (EditText) findViewById(R.id.db);
 
-        rb_cnx_distante = (RadioButton) findViewById(R.id.rb_wifi_distant);
-        rb_cnx_i2s = (RadioButton) findViewById(R.id.rb_wifi_local);
-
-
-
-
-
-        rb_cnx_distante.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                edtip.setText("");
-            }
-        });
-
-
-        rb_cnx_i2s.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                edtip.setText("");
-            }
-        });
 
         SharedPreferences prefs =   getSharedPreferences(Param.PEF_SERVER , Context.MODE_PRIVATE);
+
+
+        bt_distant.setChecked(true);
+        bt_distant.setText("Distant");
         //final SharedPreferences.Editor edt = prefs.edit();
         //edt.putBoolean("etatsql", false);
 
-        if( prefs.contains("ip") && prefs.contains("base") ) {
+        if( prefs.contains("ip_distant") && prefs.contains("ip_local")&& prefs.contains("ip") &&  prefs.contains("base") ) {
+            String _ip_distant = prefs.getString("ip_distant", "");
+            String _ip_local = prefs.getString("ip_local", "");
             String _ip = prefs.getString("ip", "");
             String _base = prefs.getString("base", "");
 
-            edtip.setText(_ip);
+            ed_ip_distant.setText(_ip_distant);
+            ed_ip_local.setText(_ip_local);
             edtbase.setText(_base);
 
+             if( _ip.contains("192.168."))
+             {
+                 bt_distant.setChecked(false);
+                 bt_distant.setText("Local");
+                 ed_ip_local.setTextColor(getResources().getColor(R.color.color_g_7));
+                 ed_ip_distant.setTextColor(getResources().getColor(R.color.ripple_lite));
+             }
+             else {
+                 bt_distant.setChecked(true);
+                 bt_distant.setText("Distant");
 
-            if (_ip.equals("")) {
-                rb_cnx_distante.setChecked(true);
-            } else if (_ip.equals("")) {
-                rb_cnx_i2s.setChecked(true);
-            }
-
+                 ed_ip_local.setTextColor(getResources().getColor(R.color.ripple_lite));
+                 ed_ip_distant.setTextColor(getResources().getColor(R.color.color_g_7));
+             }
 
         }
+
+
+          bt_distant.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+              @Override
+              public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                 if (b==true)
+                 {
+                     bt_distant.setText("Distant");
+
+                     ed_ip_local.setTextColor(getResources().getColor(R.color.ripple_lite));
+                     ed_ip_distant.setTextColor(getResources().getColor(R.color.color_g_7));
+
+                     ip_selected = ed_ip_distant.getText().toString() ;
+
+                 }
+                  else {
+
+                     bt_distant.setText("Local");
+
+                     ed_ip_local.setTextColor(getResources().getColor(R.color.color_g_7));
+                     ed_ip_distant.setTextColor(getResources().getColor(R.color.ripple_lite));
+
+                     ip_selected = ed_ip_local.getText().toString() ;
+                 }
+
+              }
+          });
 
         btadd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +118,9 @@ public class ParametrageActivity extends AppCompatActivity {
                 edt.putString("user", edtuser.getText().toString());
                 edt.putString("password", edtpass.getText().toString());
                 edt.putString("base", edtbase.getText().toString());
-                edt.putString("ip", edtip.getText().toString());
+                edt.putString("ip", ip_selected);
+                edt.putString("ip_distant", ed_ip_distant.getText().toString());
+                edt.putString("ip_local", ed_ip_local.getText().toString());
 
                 edt.commit();
                 Intent intent = new Intent(getApplicationContext(), SplachScreenActivity.class);
