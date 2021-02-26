@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.example.suivieadministratif.R;
-import com.example.suivieadministratif.param.Parametrage;
+
 
 public class ConnexionEuServeurEchoueActivity extends Activity {
 
@@ -23,7 +23,7 @@ public class ConnexionEuServeurEchoueActivity extends Activity {
             @Override
             public void onClick(View view) {
 
-                Intent toParam = new Intent(ConnexionEuServeurEchoueActivity.this  , Parametrage.class) ;
+                Intent toParam = new Intent(ConnexionEuServeurEchoueActivity.this  , ParametrageActivity.class) ;
                 startActivity(toParam);
                 finish();
             }

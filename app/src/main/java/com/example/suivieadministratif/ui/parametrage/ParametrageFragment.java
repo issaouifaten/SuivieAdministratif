@@ -13,7 +13,7 @@ import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.activity.ParametrageActivity;
 import com.example.suivieadministratif.activity.SplachScreenActivity;
 import com.example.suivieadministratif.param.Param;
-import com.example.suivieadministratif.param.Parametrage;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

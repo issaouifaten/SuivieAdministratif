@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import com.example.suivieadministratif.ConnectionClass;
 import  com.example.suivieadministratif.R ;
 import com.example.suivieadministratif.param.Param;
-import com.example.suivieadministratif.param.Parametrage;
+
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -127,7 +127,7 @@ public class SplachScreenActivity extends AppCompatActivity {
 
                 } else {
 
-                    Intent i = new Intent(getApplicationContext(), Parametrage.class);
+                    Intent i = new Intent(getApplicationContext(), ParametrageActivity.class);
                     startActivity(i);
 
                 }

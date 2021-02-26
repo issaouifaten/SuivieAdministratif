@@ -340,6 +340,7 @@ public class MenuServeur extends AppCompatActivity {
 
             try {
                 Connection con = connectionClass.CONN(ip, password, user, base);
+
                 if (con == null) {
                     z = "Error in connection with SQL server";
                 } else {

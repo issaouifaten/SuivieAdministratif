@@ -153,9 +153,7 @@
             android:name=".MenuHome"
             android:label="HOME"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".param.Parametrage"
-            android:label="Paramètrage Serveur" />
+
         <activity
             android:name=".activity.LoginActivity"
             android:label="LOGIN" />

@@ -23,7 +23,7 @@ import android.widget.Toast;
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.param.Param;
-import com.example.suivieadministratif.param.Parametrage;
+
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.sql.Connection;
@@ -329,7 +329,7 @@ public class LoginActivity extends AppCompatActivity
                                         SharedPreferences.Editor edt = pref.edit();
                                        // edt.putBoolean("etatsql", false);
                                         edt.commit();
-                                        Intent inte = new Intent(getApplicationContext(), Parametrage.class);
+                                        Intent inte = new Intent(getApplicationContext(), ParametrageActivity.class);
                                         startActivity(inte);
                                     } else {
 

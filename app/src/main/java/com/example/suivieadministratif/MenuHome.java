@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.suivieadministratif.activity.MenuServeur;
+import com.example.suivieadministratif.activity.ParametrageActivity;
 import com.example.suivieadministratif.module.Stock.StockArticle;
 import com.example.suivieadministratif.module.vente.EtatCommande;
 import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
@@ -24,7 +25,7 @@ import com.example.suivieadministratif.module.vente.EtatRetourActivity;
 import com.example.suivieadministratif.activity.LoginActivity;
 
 import com.example.suivieadministratif.param.Param;
-import com.example.suivieadministratif.param.Parametrage;
+
 import com.example.suivieadministratif.ui.menu.MenuPrincipalFragment;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Vente.EtatChiffreAffaire;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.article.EtatJournalArticleVendu;
@@ -253,7 +254,7 @@ public class MenuHome extends AppCompatActivity implements NavigationView.OnNavi
                                     SharedPreferences.Editor edt = pref.edit();
                                     //edt.putBoolean("etatsql", false);
                                     edt.commit();
-                                    Intent inte = new Intent(getApplicationContext(), Parametrage.class);
+                                    Intent inte = new Intent(getApplicationContext(), ParametrageActivity.class);
                                     startActivity(inte);
                                 } else {
 
