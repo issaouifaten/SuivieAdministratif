@@ -56,14 +56,27 @@ public class BonCommandeAdapter extends ArrayAdapter<BonCommandeVente> {
         CardView card_cmd  = (CardView) rowView.findViewById(R.id.item_bon_commande);
         TextView txt_num_bc        = (TextView) rowView.findViewById(R.id.txt_num_bc);
         TextView txt_raison_client       = (TextView) rowView.findViewById(R.id.txt_raison_client);
+
+        TextView txt_ht           = (TextView) rowView.findViewById(R.id.txt_prix_ht);
+        TextView txt_tva          = (TextView) rowView.findViewById(R.id.txt_prix_tva);
+        TextView txt_remise       = (TextView) rowView.findViewById(R.id.txt_remise);
         TextView txt_ttc          = (TextView) rowView.findViewById(R.id.txt_prix_ttc);
+
+
         TextView txt_date_bc         = (TextView) rowView.findViewById(R.id.txt_date_bc);
         TextView txt_libelle_etat      = (TextView) rowView.findViewById(R.id.txt_libelle_etat);
 
 
         txt_num_bc .setText (bc.getNumeroBonCommandeVente());
         txt_raison_client.setText(bc.getReferenceClient());
-        txt_ttc.setText   (formatter.format(bc.getTotalTTC())+" TTC");
+
+        txt_ht.setText   (formatter.format(bc.getTotalHT())+"");
+        txt_tva.setText   (formatter.format(bc.getTotalTVA())+"");
+        txt_remise.setText   (formatter.format(bc.getTotalRemise())+"");
+        txt_ttc.setText   (formatter.format(bc.getTotalTTC())+"");
+
+
+
         txt_date_bc.setText(df.format(bc.getDateBonCommandeVente()));
         txt_libelle_etat.setText(bc.getLibelleEtat());
 

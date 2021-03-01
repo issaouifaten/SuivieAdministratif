@@ -318,7 +318,8 @@ public class EtatLivraisonActivity extends AppCompatActivity {
     }
 
     public void updateData() {
-        HistoriqueBLTask historiqueBLTask = new HistoriqueBLTask(this, date_debut, date_fin, lv_list_historique_bl, pb_bc, search_bar_client);
+
+        HistoriqueBLTask historiqueBLTask = new  HistoriqueBLTask (this, date_debut, date_fin, lv_list_historique_bl, pb_bc, search_bar_client);
         historiqueBLTask.execute();
 
     }

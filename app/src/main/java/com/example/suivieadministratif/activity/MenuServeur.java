@@ -3,11 +3,13 @@ package com.example.suivieadministratif.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +29,7 @@ import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
@@ -43,6 +46,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 
 public class MenuServeur extends AppCompatActivity {
     ConnectionClass connectionClass;
@@ -58,10 +65,11 @@ public class MenuServeur extends AppCompatActivity {
     String condition_distant = "";
 
 
-    ProgressBar  pb_test_conn  ;
-    TextView  txt_test_conn  ;
-    LinearLayout  ll_test_conn  ;
+    ProgressBar pb_test_conn;
+    TextView txt_test_conn;
+    LinearLayout ll_test_conn;
 
+    TestConnection testConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +83,7 @@ public class MenuServeur extends AppCompatActivity {
         SharedPreferences.Editor edte = prefe.edit();
         NomUtilisateur = prefe.getString("NomUtilisateur", NomUtilisateur);
 
-       final SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
+        final SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         SharedPreferences.Editor edt = pref.edit();
         user = pref.getString("user", user);
         ip = pref.getString("ip", ip);
@@ -83,39 +91,36 @@ public class MenuServeur extends AppCompatActivity {
         base = pref.getString("base", base);
         gridServeur = (GridView) findViewById(R.id.grid_serveur);
 
-        pb_test_conn = (ProgressBar)  findViewById(R.id.pb_test_conn) ;
-        txt_test_conn = (TextView)  findViewById(R.id.txt_test_conn) ;
-        ll_test_conn = (LinearLayout)   findViewById(R.id.ll_test_conn)  ;
+        pb_test_conn = (ProgressBar) findViewById(R.id.pb_test_conn);
+        txt_test_conn = (TextView) findViewById(R.id.txt_test_conn);
+        ll_test_conn = (LinearLayout) findViewById(R.id.ll_test_conn);
 
         ll_test_conn.setVisibility(View.GONE);
 
 
+        testConnection = new TestConnection(ip, ll_test_conn, txt_test_conn, pb_test_conn );
+        testConnection.execute();
 
-         new TestConnection(ip  ,ll_test_conn , txt_test_conn ,pb_test_conn).execute() ;
+        testConnexion(ip);
 
 
-        final   Switch bt_distant = (Switch) findViewById(R.id.bt_distant);
+        final Switch bt_distant = (Switch) findViewById(R.id.bt_distant);
 
         bt_distant.setChecked(true);
         bt_distant.setText("Distant");
         condition_distant = " where Distant = 1";
 
-        if (ip.contains("192.168."))
-        {
+        if (ip.contains("192.168.")) {
             condition_distant = " where Distant=0";
             bt_distant.setChecked(false);
             bt_distant.setText("Local");
-        }
-        else {
+        } else {
             bt_distant.setChecked(true);
             bt_distant.setText("Distant");
 
             condition_distant = " where Distant = 1";
 
         }
-
-
-        new TestConnection(ip  ,ll_test_conn , txt_test_conn ,pb_test_conn).execute() ;
 
 
         bt_distant.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -126,7 +131,7 @@ public class MenuServeur extends AppCompatActivity {
                     // The toggle is enabled
 
                     ip = pref.getString("ip_distant", ip);
-                    new TestConnection(ip  ,ll_test_conn , txt_test_conn ,pb_test_conn).execute() ;
+                    testConnexion(ip);
                     condition_distant = " where Distant = 1";
 
 
@@ -135,14 +140,56 @@ public class MenuServeur extends AppCompatActivity {
                     bt_distant.setText("Local");
                     ip = pref.getString("ip_local", ip);
                     // The toggle is disabled
-                    new TestConnection(ip  ,ll_test_conn , txt_test_conn ,pb_test_conn).execute() ;
+                    testConnexion(ip);
                     condition_distant = " where Distant = 0";
-
 
 
                 }
             }
         });
+
+
+    }
+
+    public void testConnexion(String ip) {
+
+        //   AsyncTaskWithTimeout.this.get(30000, TimeUnit.MILLISECONDS );
+        testConnection.cancel(false);
+
+        testConnection = new TestConnection(ip, ll_test_conn, txt_test_conn, pb_test_conn);
+        testConnection.execute();
+
+        try {
+            testConnection.get(3000, TimeUnit.MILLISECONDS);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+
+        //setting timeout thread for async task
+        /*Thread thread1 = new Thread() {
+            public void run() {
+                try {
+                    testConnection.get(5000, TimeUnit.MILLISECONDS);  //set time in milisecond(in this timeout is 30 seconds
+
+                } catch (Exception e) {
+                    testConnection.cancel(false);
+                    ((Activity) MenuServeur.this).runOnUiThread(new Runnable() {
+                        @SuppressLint("ShowToast")
+                        public void run() {
+                            Toast.makeText(MenuServeur.this, "Vérifier votre connexion Internet", Toast.LENGTH_LONG).show();
+
+
+                        }
+
+                    });
+                }
+            }
+        };
+        thread1.start();*/
 
 
     }
@@ -314,10 +361,11 @@ public class MenuServeur extends AppCompatActivity {
         Boolean test = false;
 
 
-        String ip  ;
-        LinearLayout  ll_test_conn  ;
-        TextView  txt_test_conn ;
-        ProgressBar  pb_test_conn  ;
+        String ip;
+        LinearLayout ll_test_conn;
+        TextView txt_test_conn;
+        ProgressBar pb_test_conn;
+
 
 
         public TestConnection(String ip, LinearLayout ll_test_conn, TextView txt_test_conn, ProgressBar pb_test_conn) {
@@ -325,13 +373,17 @@ public class MenuServeur extends AppCompatActivity {
             this.ll_test_conn = ll_test_conn;
             this.txt_test_conn = txt_test_conn;
             this.pb_test_conn = pb_test_conn;
+
+            Log.e("test_CONN" ,  ip) ;
         }
 
         @Override
         protected void onPreExecute() {
             ll_test_conn.setVisibility(View.VISIBLE);
             pb_test_conn.setVisibility(View.VISIBLE);
-            txt_test_conn.setText( "Vérification Connexion en cours ...");
+            txt_test_conn.setText("Vérification Connexion en cours ...");
+
+            gridServeur.setVisibility(View.INVISIBLE);
         }
 
 
@@ -345,16 +397,17 @@ public class MenuServeur extends AppCompatActivity {
                     z = "Error in connection with SQL server";
                 } else {
 
-                    String queryTable = " select  *  from ListeSociete"    ;
+                    String queryTable = " select  *  from ListeSociete";
 
                     PreparedStatement ps = con.prepareStatement(queryTable);
                     Log.e("query_list_soc", queryTable);
 
                     ResultSet rs = ps.executeQuery();
                     z = "e";
-                    test = false  ;
+                    test = false;
                     while (rs.next()) {
 
+                        Log.e("test_CONN"  , "result = true ") ;
                         test = true;
 
                     }
@@ -364,8 +417,6 @@ public class MenuServeur extends AppCompatActivity {
             } catch (SQLException ex) {
                 z = "tablelist" + ex.toString();
                 Log.e("erreur", z);
-
-
             }
             return z;
         }
@@ -375,11 +426,10 @@ public class MenuServeur extends AppCompatActivity {
         protected void onPostExecute(String r) {
 
             pb_test_conn.setVisibility(View.INVISIBLE);
-            if (test)
-            {
+            if (test) {
                 ll_test_conn.setVisibility(View.VISIBLE);
 
-                txt_test_conn.setText( "Connexion établie avec Succès");
+                txt_test_conn.setText("Connexion établie avec Succès");
 
                 gridServeur.setVisibility(View.VISIBLE);
 
@@ -387,9 +437,9 @@ public class MenuServeur extends AppCompatActivity {
                 fillList.execute("");
 
 
-            }else {
+            } else {
                 ll_test_conn.setVisibility(View.VISIBLE);
-                txt_test_conn.setText( "Vérifier votre connexion Internet");
+                txt_test_conn.setText("Vérifier votre connexion Internet");
 
                 gridServeur.setVisibility(View.INVISIBLE);
             }
@@ -398,7 +448,26 @@ public class MenuServeur extends AppCompatActivity {
         }
 
 
+        @Override
+        protected void onCancelled(String s) {
+            super.onCancelled(s);
+
+            Log.e("test_CONN" , "onCancel  "+ test) ;
+
+            if (test)
+            {
+
+            }
+            else {
+
+                pb_test_conn.setVisibility(View.INVISIBLE);
+                txt_test_conn.setText("Vérifier votre connexion Internet");
+            }
+        }
+
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -427,10 +496,9 @@ public class MenuServeur extends AppCompatActivity {
             return true;
         }
 
-        if (id ==  R.id.menu_param)
-        {
+        if (id == R.id.menu_param) {
 
-            startActivity( new Intent(getApplicationContext() , ParametrageActivity.class));
+            startActivity(new Intent(getApplicationContext(), ParametrageActivity.class));
 
         }
 

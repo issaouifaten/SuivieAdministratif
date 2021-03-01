@@ -326,8 +326,8 @@ public class FactureAchat extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
 
 // NumeroDevisAchat,DateCreation,NomUtilisateur,CodeFournisseur,RaisonSociale,TotalTTC,Etat.Libelle as Etat
-            String[] from = {"NumeroFactureAchat", "DateCreation",   "RaisonSociale","TotalTTC","Etat"};
-            int[] views = {R.id.txt_num_bc, R.id.txt_date_bc, R.id.txt_raison_client, R.id.txt_prix_ttc, R.id.txt_libelle_etat};
+            String[] from = {"NumeroFactureAchat", "DateCreation",   "RaisonSociale","TotalTTC" , "TotalRemise" ,"TotalHT"  , "TotalTVA"    ,"Etat"};
+            int[] views = {R.id.txt_num_bc, R.id.txt_date_bc, R.id.txt_raison_client, R.id.txt_prix_ttc, R.id.txt_remise, R.id.txt_prix_ht, R.id.txt_prix_tva , R.id.txt_libelle_etat};
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
                     prolist, R.layout.item_bon_commande, from,
                     views);
@@ -378,7 +378,7 @@ public class FactureAchat extends AppCompatActivity {
                 } else {
 
 
-                    String queryTable = "select NumeroFactureAchat,RaisonSociale,CodeFournisseur,TotalTTC,DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
+                    String queryTable = "select NumeroFactureAchat,RaisonSociale,CodeFournisseur,TotalTTC , TotalRemise ,TotalHT  , TotalTVA  , DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
                             ",Etat.NumeroEtat from FactureAchat \n" +
                             "inner join Etat on Etat.NumeroEtat=FactureAchat.NumeroEtat\n" +
                             "where DateCreation between '"+date_debut+"' and '"+date_fin+"'\n" +
@@ -398,6 +398,11 @@ public class FactureAchat extends AppCompatActivity {
                         datanum.put("CodeFournisseur", rs.getString("CodeFournisseur"));
                         datanum.put("RaisonSociale", rs.getString("RaisonSociale"));
                         datanum.put("TotalTTC", rs.getString("TotalTTC"));
+
+                        datanum.put("TotalRemise", rs.getString("TotalRemise"));
+                        datanum.put("TotalHT", rs.getString("TotalHT"));
+                        datanum.put("TotalTVA", rs.getString("TotalTVA"));
+
                         datanum.put("Etat", rs.getString("Etat"));
                         datanum.put("NumeroEtat", rs.getString("NumeroEtat"));
 

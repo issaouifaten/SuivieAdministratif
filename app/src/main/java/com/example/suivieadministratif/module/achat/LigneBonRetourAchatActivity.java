@@ -51,6 +51,8 @@ public class LigneBonRetourAchatActivity extends AppCompatActivity {
         txt_date_bc.setText(date_cmd);
         txt_num_br.setText(NumeroBR);
 
+
+
         HistoriqueLBRAchatTask historiqueLBRTask  = new HistoriqueLBRAchatTask (this  ,lv_ligne_br ,NumeroBR , pb) ;
         historiqueLBRTask.execute();
 

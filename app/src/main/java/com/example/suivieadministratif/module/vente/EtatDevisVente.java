@@ -123,7 +123,7 @@ public class EtatDevisVente extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                queryTable = "select NumeroDevisVente,DateCreation,NomUtilisateur,CodeClient,RaisonSociale,TotalTTC,Etat.Libelle as Etat\n" +
+                queryTable = "select NumeroDevisVente,DateCreation,NomUtilisateur ,CodeClient,RaisonSociale,TotalTTC,  TotalRemise ,TotalHT  , TotalTVA  , Etat.Libelle as Etat\n" +
                         " from DevisVente\n" +
                         " inner join Etat on Etat.NumeroEtat=DevisVente.NumeroEtat\n" +
                         " where DateCreation between '"+date_debut+"'and '"+date_fin+"' and ( NumeroDevisVente like'%"+s+"%' OR RaisonSociale LIKE'%"+s+"%')  order by NumeroDevisVente desc";
@@ -140,7 +140,7 @@ public class EtatDevisVente extends AppCompatActivity {
 
 
 
-       queryTable = "select NumeroDevisVente,DateCreation,NomUtilisateur,CodeClient,RaisonSociale,TotalTTC,Etat.Libelle as Etat\n" +
+       queryTable = "select NumeroDevisVente,DateCreation,NomUtilisateur,CodeClient,RaisonSociale,TotalTTC, TotalRemise ,TotalHT  , TotalTVA  , Etat.Libelle as Etat\n" +
                 " from DevisVente\n" +
                 " inner join Etat on Etat.NumeroEtat=DevisVente.NumeroEtat\n" +
                 " where DateCreation between '"+date_debut+"'and '"+date_fin+"' order by NumeroDevisVente desc";
@@ -370,9 +370,9 @@ public class EtatDevisVente extends AppCompatActivity {
         protected void onPostExecute(String r) {
             progressBar.setVisibility(View.GONE);
 
-// NumeroDevisVente,DateCreation,NomUtilisateur,CodeClient,RaisonSociale,TotalTTC,Etat.Libelle as Etat
-            String[] from = {"NumeroDevisVente", "DateCreation",   "RaisonSociale","TotalTTC","Etat"};
-            int[] views = {R.id.txt_num_bc, R.id.txt_date_bc, R.id.txt_raison_client, R.id.txt_prix_ttc, R.id.txt_libelle_etat};
+// NumeroDevisVente,DateCreation,NomUtilisateur,CodeClient,RaisonSociale,TotalTTC,Etat.Libelle as Etat    ,  ,
+            String[] from = {"NumeroDevisVente", "DateCreation",   "RaisonSociale","TotalTTC", "TotalRemise", "TotalHT", "TotalTVA","Etat"};
+            int[] views = {R.id.txt_num_bc, R.id.txt_date_bc, R.id.txt_raison_client, R.id.txt_prix_ttc,  R.id.txt_remise, R.id.txt_prix_ht, R.id.txt_prix_tva , R.id.txt_libelle_etat};
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
                     prolist, R.layout.item_bon_commande, from,
                     views);
@@ -385,11 +385,6 @@ public class EtatDevisVente extends AppCompatActivity {
             instance.setMinimumFractionDigits(3);
             instance.setMaximumFractionDigits(3);
             txt_tot_commande.setText(instance.format(total_devis));
-
-
-
-
-
 
 
 
@@ -447,7 +442,15 @@ public class EtatDevisVente extends AppCompatActivity {
                         datanum.put("NomUtilisateur", rs.getString("NomUtilisateur"));
                         datanum.put("CodeClient", rs.getString("CodeClient"));
                         datanum.put("RaisonSociale", rs.getString("RaisonSociale"));
+
+
+
                         datanum.put("TotalTTC", rs.getString("TotalTTC"));
+                        datanum.put("TotalRemise", rs.getString("TotalRemise"));
+                        datanum.put("TotalHT", rs.getString("TotalTTC"));
+                        datanum.put("TotalTVA", rs.getString("TotalTVA"));
+
+
                         datanum.put("Etat", rs.getString("Etat"));
 
                         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");

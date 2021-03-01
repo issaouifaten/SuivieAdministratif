@@ -91,7 +91,7 @@ public class HistoriqueBLAchatTask extends AsyncTask<String, String, String> {
                 z = "Error in connection with SQL server";
             } else {
 
-                String queryHis_bc = "select   NumeroBonLivraisonAchat  ,RaisonSociale  ,TotalTTC  , Etat.NumeroEtat ,Etat.Libelle  , DateBonLivraisonAchat    \n" +
+                String queryHis_bc = "select   NumeroBonLivraisonAchat  ,RaisonSociale  ,TotalTTC   , TotalRemise ,TotalHT  , TotalTVA    , Etat.NumeroEtat ,Etat.Libelle  , DateBonLivraisonAchat    \n" +
 
                         "from BonLivraisonAchat   \n" +
                         "inner JOIN Etat  on Etat.NumeroEtat =  BonLivraisonAchat.NumeroEtat  " +
@@ -108,7 +108,12 @@ public class HistoriqueBLAchatTask extends AsyncTask<String, String, String> {
 
                     String NumeroBonLivraisonVente = rs.getString("NumeroBonLivraisonAchat");
                     String RaisonSociale = rs.getString("RaisonSociale");
+
+                    double TotalRemise = rs.getDouble("TotalRemise");
+                    double TotalHT = rs.getDouble("TotalHT");
+                    double TotalTVA = rs.getDouble("TotalTVA");
                     double TotalTTC = rs.getDouble("TotalTTC");
+
                     Date DateBonLivraisonVente = dtfSQL.parse(rs.getString("DateBonLivraisonAchat"));
                     String NumeroEtat = rs.getString("NumeroEtat");
                     String LibelleEtat = rs.getString("Libelle");
@@ -117,8 +122,7 @@ public class HistoriqueBLAchatTask extends AsyncTask<String, String, String> {
                         tot_liv=tot_liv+TotalTTC ;
                     }
 
-
-                    BonLivraisonVente bonLivraisonVente = new BonLivraisonVente(NumeroBonLivraisonVente, DateBonLivraisonVente, RaisonSociale, TotalTTC, NumeroEtat, LibelleEtat);
+                    BonLivraisonVente bonLivraisonVente = new BonLivraisonVente(NumeroBonLivraisonVente, DateBonLivraisonVente, RaisonSociale, TotalTTC, TotalRemise ,TotalHT  , TotalTVA    , NumeroEtat, LibelleEtat);
                     listBonLivraisonVentes.add(bonLivraisonVente);
 
                 }
@@ -181,46 +185,21 @@ public class HistoriqueBLAchatTask extends AsyncTask<String, String, String> {
 
                 DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
-                NumberFormat formatter = new DecimalFormat("0.000");
+
 
                 final BonLivraisonVente bonLivraisonVente = listBL.get(position);
 
-                AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-                alert.setIcon(R.drawable.i2s);
-                alert.setTitle("Bon De Livraison");
-                alert.setMessage("Client : " + bonLivraisonVente.getRaisonSociale());
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                Intent toLigneBonLiv = new Intent(activity, LigneBonLivraisonAchatActivity.class);
+                toLigneBonLiv.putExtra("cle_numero_bon_liv_achat", bonLivraisonVente.getNumeroBonLivraisonVente());
+                toLigneBonLiv.putExtra("cle_raison_sociale", bonLivraisonVente.getRaisonSociale());
+                toLigneBonLiv.putExtra("cle_total_ttc", bonLivraisonVente.getTotalTTC());
+                toLigneBonLiv.putExtra("cle_date_bc", sdf.format(bonLivraisonVente.getDateBonLivraisonVente()));
+                activity.startActivity(toLigneBonLiv);
 
 
-                alert.setNegativeButton("Détail",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface di, int i) {
-                                //di.cancel();
-
-                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-                                Intent toLigneBonLiv = new Intent(activity, LigneBonLivraisonAchatActivity.class);
-                                toLigneBonLiv.putExtra("cle_numero_bon_liv_achat", bonLivraisonVente.getNumeroBonLivraisonVente());
-                                toLigneBonLiv.putExtra("cle_raison_sociale", bonLivraisonVente.getRaisonSociale());
-                                toLigneBonLiv.putExtra("cle_total_ttc", bonLivraisonVente.getTotalTTC());
-                                toLigneBonLiv.putExtra("cle_date_bc", sdf.format(bonLivraisonVente.getDateBonLivraisonVente()));
-                                activity.startActivity(toLigneBonLiv);
-
-                            }
-                        });
 
 
-                if (bonLivraisonVente.getNumeroEtat().equals("E00")) {
-
-                    alert.setNeutralButton("Annulé", null);
-
-                } else {
-
-                    AlertDialog dd = alert.create();
-
-                    dd.show();
-
-                }
             }
         });
 

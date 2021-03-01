@@ -73,11 +73,6 @@ public class HistoriqueBLTask extends AsyncTask<String, String, String> {
 
 
 
-      /*  SharedPreferences pref=activity.getSharedPreferences("usersession", Context.MODE_PRIVATE);
-        SharedPreferences.Editor edt=pref.edit();
-        NomUtilisateur= pref.getString("NomUtilisateur",NomUtilisateur);*/
-
-
         connectionClass = new ConnectionClass();
 
     }
@@ -98,7 +93,7 @@ public class HistoriqueBLTask extends AsyncTask<String, String, String> {
                 z = "Error in connection with SQL server";
             } else {
 
-                String queryHis_bc = " select  NumeroBonLivraisonVente  ,RaisonSociale  ,TotalTTC  , Etat.NumeroEtat ,Etat.Libelle  , DateBonLivraisonVente  from BonLivraisonVente   \n" +
+                String queryHis_bc = " select  NumeroBonLivraisonVente  ,RaisonSociale  ,TotalTTC   , TotalRemise ,TotalHT  , TotalTVA    ,  Etat.NumeroEtat ,Etat.Libelle  , DateBonLivraisonVente  from BonLivraisonVente   \n" +
                         "   inner JOIN Etat  on Etat.NumeroEtat =  BonLivraisonVente.NumeroEtat  \n" +
                         "   where CONVERT (Date  , DateBonLivraisonVente)  between  '"+df.format(date_debut)+"'  and  '"+df.format(date_fin)+"'\n" +
                         "   order by DateBonLivraisonVente  desc \n" +
@@ -113,7 +108,15 @@ public class HistoriqueBLTask extends AsyncTask<String, String, String> {
 
                     String NumeroBonLivraisonVente = rs.getString("NumeroBonLivraisonVente");
                     String RaisonSociale = rs.getString("RaisonSociale");
+
+
+                    double TotalRemise = rs.getDouble("TotalRemise");
+                    double TotalHT = rs.getDouble("TotalHT");
+                    double TotalTVA = rs.getDouble("TotalTVA");
                     double TotalTTC = rs.getDouble("TotalTTC");
+
+
+
                     Date DateBonLivraisonVente = dtfSQL.parse(rs.getString("DateBonLivraisonVente"));
                     String NumeroEtat = rs.getString("NumeroEtat");
                     String LibelleEtat = rs.getString("Libelle");
@@ -123,7 +126,7 @@ public class HistoriqueBLTask extends AsyncTask<String, String, String> {
                         tot_liv=tot_liv+TotalTTC ;
                     }
 
-                    BonLivraisonVente bonLivraisonVente = new BonLivraisonVente(NumeroBonLivraisonVente, DateBonLivraisonVente, RaisonSociale, TotalTTC, NumeroEtat, LibelleEtat);
+                    BonLivraisonVente bonLivraisonVente = new BonLivraisonVente(NumeroBonLivraisonVente, DateBonLivraisonVente, RaisonSociale, TotalTTC , TotalRemise ,TotalHT  , TotalTVA    , NumeroEtat, LibelleEtat);
                     listBonLivraisonVentes.add(bonLivraisonVente);
 
 
@@ -149,8 +152,7 @@ public class HistoriqueBLTask extends AsyncTask<String, String, String> {
         lv_hist_bc.setAdapter(bonLivraisonAdapter);
 
 
-        DecimalFormat  decF  = new DecimalFormat("0.000") ;
-       // EtatLivraisonActivity.txt_tot_livraison.setText(decF.format(tot_liv)+" Dt");
+
         final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
         instance.setMinimumFractionDigits(3);
         instance.setMaximumFractionDigits(3);
@@ -196,42 +198,18 @@ public class HistoriqueBLTask extends AsyncTask<String, String, String> {
 
                 final BonLivraisonVente bonLivraisonVente = listBL.get(position);
 
-                AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-                alert.setIcon(R.drawable.i2s);
-                alert.setTitle("Bon De Livraison");
-                alert.setMessage("Client : " + bonLivraisonVente.getRaisonSociale());
+
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+                Intent toLigneBonLiv = new Intent(activity, HistoriqueLigneBonLivraisonActivity.class);
+                toLigneBonLiv.putExtra("cle_numero_bon_liv_vente", bonLivraisonVente.getNumeroBonLivraisonVente());
+                toLigneBonLiv.putExtra("cle_raison_sociale", bonLivraisonVente.getRaisonSociale());
+                toLigneBonLiv.putExtra("cle_total_ttc", bonLivraisonVente.getTotalTTC());
+                toLigneBonLiv.putExtra("cle_date_bc", sdf.format(bonLivraisonVente.getDateBonLivraisonVente()));
+                activity.startActivity(toLigneBonLiv);
 
 
-                alert.setNegativeButton("Détail",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface di, int i) {
-                                //di.cancel();
 
-                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-                                Intent toLigneBonLiv = new Intent(activity, HistoriqueLigneBonLivraisonActivity.class);
-                                toLigneBonLiv.putExtra("cle_numero_bon_liv_vente", bonLivraisonVente.getNumeroBonLivraisonVente());
-                                toLigneBonLiv.putExtra("cle_raison_sociale", bonLivraisonVente.getRaisonSociale());
-                                toLigneBonLiv.putExtra("cle_total_ttc", bonLivraisonVente.getTotalTTC());
-                                toLigneBonLiv.putExtra("cle_date_bc", sdf.format(bonLivraisonVente.getDateBonLivraisonVente()));
-                                activity.startActivity(toLigneBonLiv);
-
-                            }
-                        });
-
-
-                if (bonLivraisonVente.getNumeroEtat().equals("E00")) {
-
-                    alert.setNeutralButton("Annulé", null);
-
-                } else {
-
-                    AlertDialog dd = alert.create();
-
-                    dd.show();
-
-                }
             }
         });
 

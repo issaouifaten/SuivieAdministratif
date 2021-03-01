@@ -190,34 +190,6 @@
                 </LinearLayout>
 
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="30dp"
-                            android:src="@drawable/ic_frns"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Fournisseur "
-                            android:textSize="13dp" />
-
-
-                        <TextView
-                            android:id="@+id/txt_frns"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="fournisseur "
-                            android:textStyle="bold"
-                            android:textSize="13dp" />
-
-
-                    </LinearLayout>
                 </LinearLayout>
 
 

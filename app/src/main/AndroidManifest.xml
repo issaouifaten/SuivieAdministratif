@@ -145,6 +145,13 @@
             android:label="Etat de Bon Retour" />
         <activity android:name=".module.vente.HistoriqueLigneBonLivraisonActivity" />
         <activity android:name=".module.vente.LigneBonLivraisonVenteActivity" />
+
+        <activity
+            android:name=".module.Stock.FicheArticle.FicheArticleActivity"
+            android:label="Fiche Article"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+
         <activity
             android:name=".module.vente.EtatLivraisonActivity"
             android:label="Etat de Bon Livraison" />

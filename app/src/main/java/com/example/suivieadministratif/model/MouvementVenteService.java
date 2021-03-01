@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class MouvementVenteService {
 
-    private String Frs;
+
     private String CodeClient;
     private String RaisonSociale;
     private String NumeroPiece;
@@ -16,8 +16,8 @@ public class MouvementVenteService {
     private String NomUtilisateur;
 
 
-    public MouvementVenteService(String frs, String codeClient, String raisonSociale, String numeroPiece, String codeArticle, String designationArticle, Date datePiece, int quantite, double montantTTC, String nomUtilisateur) {
-        Frs = frs;
+    public MouvementVenteService(  String codeClient, String raisonSociale, String numeroPiece, String codeArticle, String designationArticle, Date datePiece, int quantite, double montantTTC, String nomUtilisateur) {
+
         CodeClient = codeClient;
         RaisonSociale = raisonSociale;
         NumeroPiece = numeroPiece;
@@ -30,13 +30,7 @@ public class MouvementVenteService {
     }
 
 
-    public String getFrs() {
-        return Frs;
-    }
 
-    public void setFrs(String frs) {
-        Frs = frs;
-    }
 
     public String getCodeClient() {
         return CodeClient;
@@ -113,7 +107,7 @@ public class MouvementVenteService {
     @Override
     public String toString() {
         return "MouvementVenteService{" +
-                "Frs='" + Frs + '\'' +
+
                 ", CodeClient='" + CodeClient + '\'' +
                 ", RaisonSociale='" + RaisonSociale + '\'' +
                 ", NumeroPiece='" + NumeroPiece + '\'' +

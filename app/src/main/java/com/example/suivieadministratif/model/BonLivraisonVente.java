@@ -47,10 +47,13 @@ public class BonLivraisonVente {
     ArrayList<LigneBonLivraisonVente> list_ligne_bl;
 
 
-    public BonLivraisonVente ( String NumeroBonLivraisonVente, Date DateBonLivraisonVente, String referenceClient, double totalTTC,String NumeroEtat,String LibelleEtat) {
+    public BonLivraisonVente ( String NumeroBonLivraisonVente, Date DateBonLivraisonVente, String referenceClient, double totalTTC ,double TotalRemise ,double TotalHT  ,double  TotalTVA    ,String NumeroEtat,String LibelleEtat) {
         this.NumeroBonLivraisonVente = NumeroBonLivraisonVente;
         this.DateBonLivraisonVente = DateBonLivraisonVente;
         RaisonSociale = referenceClient;
+        this.TotalRemise=TotalRemise  ;
+        this.TotalHT=TotalHT ;
+        this.TotalTVA=TotalTVA ;
         TotalTTC = totalTTC;
         this.NumeroEtat = NumeroEtat  ;
         this.LibelleEtat = LibelleEtat ;

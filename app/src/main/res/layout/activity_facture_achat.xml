@@ -113,6 +113,7 @@
                     android:layout_height="match_parent"
 
                     android:padding="5dp"
+                    android:layout_marginBottom="80dp"
                     tools:context="com.example.faten.testsql.activity.HistoriqueBonCommande">
 
 

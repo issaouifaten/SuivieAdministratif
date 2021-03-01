@@ -128,7 +128,6 @@ String NumeroDevisVente="";
                     z = "Error in connection with SQL server";
                 } else {
 
-
                     String queryTable = " select  CodeArticle,DesignationArticle, convert(numeric(18,0),Quantite)as Quantite ,MontantTTC  from LigneDevisVente where NumeroDevisVente='"+NumeroDevisVente+"' ";
 
                     PreparedStatement ps = con.prepareStatement(queryTable);

@@ -118,7 +118,8 @@
                         xmlns:tools="http://schemas.android.com/tools"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="5dp">
+                        android:padding="5dp"
+                        android:layout_marginBottom="80dp">
 
 
                         <RelativeLayout
@@ -145,11 +146,7 @@
                             android:gravity="center"
                             android:orientation="vertical">
 
-                            <!--    <Button
-                        android:id="@+id/btreload"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
-                        android:background="@drawable/reload" /> -->
+
 
                             <ListView
                                 android:id="@+id/lv_list_historique_bl"

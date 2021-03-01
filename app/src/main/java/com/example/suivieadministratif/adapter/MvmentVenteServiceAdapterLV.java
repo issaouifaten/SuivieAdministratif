@@ -56,7 +56,7 @@ public class MvmentVenteServiceAdapterLV extends ArrayAdapter<MouvementVenteServ
         TextView txt_qt_article  = (TextView) rowView.findViewById(R.id.txt_qt);
 
 
-        TextView  txt_fournisseur = (TextView) rowView.findViewById(R.id.txt_frns);
+
         TextView txt_nom_utilisateur = (TextView) rowView.findViewById(R.id.txt_etablie_par);
         TextView txt_montant = (TextView) rowView.findViewById(R.id.txt_total_montant);
 
@@ -69,7 +69,7 @@ try {
     txt_code_article.setText("("+mvs.getCodeArticle()+")");
     txt_design_article.setText(mvs.getDesignationArticle());
     txt_qt_article.setText(mvs.getQuantite()+"");
-    txt_fournisseur.setText(mvs.getFrs());
+
     txt_nom_utilisateur.setText(mvs.getNomUtilisateur());
     txt_montant.setText(formatter.format(mvs.getMontantTTC())+" Dt");
 

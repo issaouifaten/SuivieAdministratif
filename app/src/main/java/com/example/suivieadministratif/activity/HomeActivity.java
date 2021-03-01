@@ -45,6 +45,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder
                 (R.id.navigation_menu,   R.id.navigation_workflow ,  R.id.navigation_parametrage)

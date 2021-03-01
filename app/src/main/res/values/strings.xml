@@ -24,7 +24,7 @@
 
     <string name="identifiant">Entrer votre identifiant</string>
     <string name="mot_de_passe">Entrer votre mot de passe</string>
-    <string name="title_activity_home">MainActivity</string>
+    <string name="title_activity_home">Menu </string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>

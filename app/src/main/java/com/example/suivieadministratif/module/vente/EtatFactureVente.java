@@ -120,7 +120,7 @@ public class EtatFactureVente extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                queryTable = "select NumeroFactureVente,RaisonSociale,CodeClient,TotalTTC,DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
+                queryTable = "select NumeroFactureVente,RaisonSociale,CodeClient,TotalTTC , TotalRemise ,TotalHT  , TotalTVA    , DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
                         ",Etat.NumeroEtat  from FactureVente \n" +
                         "inner join Etat on Etat.NumeroEtat=FactureVente.NumeroEtat\n" +
                         "where DateCreation between '"+date_debut+"' and '"+date_fin+"'   and ( NumeroFactureVente like'%"+s+"%' OR RaisonSociale LIKE'%"+s+"%') \n" +
@@ -247,7 +247,7 @@ public class EtatFactureVente extends AppCompatActivity {
         TextView txt_gratuite =(TextView)findViewById(R.id.txt_gratuite);
         txt_gratuite.setText("Total Facture");
 
-        queryTable = "select NumeroFactureVente,RaisonSociale,CodeClient,TotalTTC,DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
+        queryTable = "select NumeroFactureVente,RaisonSociale,CodeClient,TotalTTC  , TotalRemise ,TotalHT  , TotalTVA    , DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
                 ",Etat.NumeroEtat from FactureVente \n" +
                 "inner join Etat on Etat.NumeroEtat=FactureVente.NumeroEtat\n" +
                 "where DateCreation between '"+date_debut+"' and '"+date_fin+"'\n" +
@@ -382,8 +382,8 @@ public class EtatFactureVente extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
 
 // NumeroDevisVente,DateCreation,NomUtilisateur,CodeClient,RaisonSociale,TotalTTC,Etat.Libelle as Etat
-            String[] from = {"NumeroFactureVente", "DateCreation",   "RaisonSociale","TotalTTC","Etat"};
-            int[] views = {R.id.txt_num_bc, R.id.txt_date_bc, R.id.txt_raison_client, R.id.txt_prix_ttc, R.id.txt_libelle_etat};
+            String[] from = {"NumeroFactureVente", "DateCreation",   "RaisonSociale","TotalTTC" , "TotalRemise" ,"TotalHT"  , "TotalTVA"    ,"Etat"};
+            int[] views = {R.id.txt_num_bc, R.id.txt_date_bc, R.id.txt_raison_client, R.id.txt_prix_ttc, R.id.txt_remise,R.id.txt_prix_ht,R.id.txt_prix_tva,R.id.txt_libelle_etat};
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
                     prolist, R.layout.item_bon_commande, from,
                     views);
@@ -408,6 +408,9 @@ public class EtatFactureVente extends AppCompatActivity {
                     String  Etat = (String) obj.get("Etat");
                     String  TotalTTC = (String) obj.get("TotalTTC");
 
+                    String  TotalRemise = (String) obj.get("TotalRemise");
+                    String  TotalHT = (String) obj.get("TotalHT");
+                    String  TotalTVA = (String) obj.get("TotalTVA");
 
                     Intent intent=new Intent(getApplicationContext(),DetailLigneFactureVente.class);
                     intent.putExtra("NumeroFactureVente",NumeroFactureVente);
@@ -449,6 +452,9 @@ public class EtatFactureVente extends AppCompatActivity {
                         datanum.put("NomUtilisateur", rs.getString("NomUtilisateur"));
                         datanum.put("CodeClient", rs.getString("CodeClient"));
                         datanum.put("RaisonSociale", rs.getString("RaisonSociale"));
+                        datanum.put("TotalRemise", rs.getString("TotalRemise"));
+                        datanum.put("TotalHT", rs.getString("TotalHT"));
+                        datanum.put("TotalTVA", rs.getString("TotalTVA"));
                         datanum.put("TotalTTC", rs.getString("TotalTTC"));
                         datanum.put("Etat", rs.getString("Etat"));
 

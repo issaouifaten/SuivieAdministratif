@@ -49,11 +49,6 @@ public class ParametrageActivity extends AppCompatActivity {
         SharedPreferences prefs =   getSharedPreferences(Param.PEF_SERVER , Context.MODE_PRIVATE);
 
 
-        bt_distant.setChecked(true);
-        bt_distant.setText("Distant");
-        //final SharedPreferences.Editor edt = prefs.edit();
-        //edt.putBoolean("etatsql", false);
-
         if( prefs.contains("ip_distant") && prefs.contains("ip_local")&& prefs.contains("ip") &&  prefs.contains("base") ) {
             String _ip_distant = prefs.getString("ip_distant", "");
             String _ip_local = prefs.getString("ip_local", "");

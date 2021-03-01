@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -83,6 +84,8 @@ public class  HistoriqueLBRAchatTask extends AsyncTask <String, String, String> 
                         "NumeroBonRetourAchat  , CodeArticle  ,Quantite   , MontantTTC ,DesignationArticle\n" +
                         " from  LigneBonRetourAchat    where NumeroBonRetourAchat  = '"+NumeroBR+"'   " ;
 
+
+                Log.e("query_x" ,queryClient) ;
                 PreparedStatement ps = con.prepareStatement(queryClient);
                 ResultSet rs = ps.executeQuery();
 
@@ -105,6 +108,8 @@ public class  HistoriqueLBRAchatTask extends AsyncTask <String, String, String> 
             }
         } catch (Exception ex) {
             z = "Error retrieving data from table";
+
+            Log.e("error" , ex.getMessage().toString()) ;
 
         }
         return z;

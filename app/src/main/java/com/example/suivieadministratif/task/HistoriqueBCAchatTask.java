@@ -74,10 +74,6 @@ float total=0;
 
         Log.e("BON_CMD" ,Param.PEF_SERVER +"-"+ip+"-"+base) ;
 
-      /*  SharedPreferences pref=activity.getSharedPreferences("usersession", Context.MODE_PRIVATE);
-        SharedPreferences.Editor edt=pref.edit();
-        NomUtilisateur= pref.getString("NomUtilisateur",NomUtilisateur);*/
-
         connectionClass = new ConnectionClass();
 
     }
@@ -98,7 +94,7 @@ float total=0;
                 z = "Error in connection with SQL server";
             } else {
 
-                String queryHis_bc = "  select NumeroBonCommandeAchat  ,RaisonSociale  ,TotalTTC  , Etat.NumeroEtat ,Etat.Libelle  , DateBonCommandeAchat   from BonCommandeAchat  \n" +
+                String queryHis_bc = "  select NumeroBonCommandeAchat  ,RaisonSociale  ,TotalTTC , TotalRemise ,TotalHT  , TotalTVA  ,  Etat.NumeroEtat ,Etat.Libelle  , DateBonCommandeAchat   from BonCommandeAchat  \n" +
                         "inner JOIN Etat  on Etat.NumeroEtat =  BonCommandeAchat.NumeroEtat    \n" +
                         "where CONVERT (Date  , DateBonCommandeAchat)  between  '"+df.format(date_debut)+"'  and  '"+df.format(date_fin)+"'\n" +
                         "order by DateBonCommandeAchat desc  \n ";
@@ -112,13 +108,17 @@ float total=0;
 
                     String NumeroBonCommandeVente = rs.getString("NumeroBonCommandeAchat");
                     String RaisonSociale = rs.getString("RaisonSociale");
+
+                    double TotalRemise = rs.getDouble("TotalRemise");
+                    double TotalHT = rs.getDouble("TotalHT");
+                    double TotalTVA = rs.getDouble("TotalTVA");
                     double TotalTTC = rs.getDouble("TotalTTC");
                     Date DateBonCommandeVente = dtfSQL.parse(rs.getString("DateBonCommandeAchat"));
                     String NumeroEtat = rs.getString("NumeroEtat");
                     String Libelle = rs.getString("Libelle");
                     total+=TotalTTC;
 
-                    BonCommandeVente bonCommandeVente = new BonCommandeVente(NumeroBonCommandeVente, DateBonCommandeVente, RaisonSociale, TotalTTC, NumeroEtat,Libelle);
+                    BonCommandeVente bonCommandeVente = new BonCommandeVente(NumeroBonCommandeVente, DateBonCommandeVente, RaisonSociale, TotalTTC,TotalRemise ,   TotalHT  ,    TotalTVA, NumeroEtat,Libelle);
                     listBonCommandeVente.add(bonCommandeVente);
 
                 }
@@ -183,41 +183,15 @@ float total=0;
 
                 final BonCommandeVente bonCommandeVente = listBC.get(position);
 
-                AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-                alert.setIcon(R.drawable.i2s);
-                alert.setTitle("Bon De Commande Achat");
-                alert.setMessage("Client : " + bonCommandeVente.getReferenceClient());
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                Intent toLigneBonCommande = new Intent(activity, LigneBonCommandeAchatActivity.class);
+                toLigneBonCommande.putExtra("cle_numero_bon_cmd_achat", bonCommandeVente.getNumeroBonCommandeVente());
+                toLigneBonCommande.putExtra("cle_raison_sociale", bonCommandeVente.getReferenceClient());
+                toLigneBonCommande.putExtra("cle_total_ttc", bonCommandeVente.getTotalTTC());
+                toLigneBonCommande.putExtra("cle_date_bc", sdf.format(bonCommandeVente.getDateBonCommandeVente()));
+                activity.startActivity(toLigneBonCommande);
 
 
-                alert.setNegativeButton("Détail",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface di, int i) {
-                                //di.cancel();
-
-                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                Intent toLigneBonCommande = new Intent(activity, LigneBonCommandeAchatActivity.class);
-                                toLigneBonCommande.putExtra("cle_numero_bon_cmd_achat", bonCommandeVente.getNumeroBonCommandeVente());
-                                toLigneBonCommande.putExtra("cle_raison_sociale", bonCommandeVente.getReferenceClient());
-                                toLigneBonCommande.putExtra("cle_total_ttc", bonCommandeVente.getTotalTTC());
-                                toLigneBonCommande.putExtra("cle_date_bc", sdf.format(bonCommandeVente.getDateBonCommandeVente()));
-                                activity.startActivity(toLigneBonCommande);
-
-                            }
-                        });
-
-
-                if (bonCommandeVente.getNumeroEtat().equals("E00")) {
-
-                    alert.setNeutralButton("Annulé", null);
-
-                } else {
-
-                    AlertDialog dd = alert.create();
-
-                    dd.show();
-
-                }
             }
         });
 

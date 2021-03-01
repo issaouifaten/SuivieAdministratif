@@ -28,11 +28,16 @@ public class BonRetourVente {
 
     private ArrayList<LigneBonRetourVente> list_ligne_br ;
 
-    public BonRetourVente ( String NumeroBonRetourVente, Date DateBonRetourVente, String referenceClient, double totalTTC,String NumeroEtat,String LibelleEtat) {
+    public BonRetourVente ( String NumeroBonRetourVente, Date DateBonRetourVente, String referenceClient, double totalTTC ,double TotalRemise ,double TotalHT  ,double TotalTVA    , String NumeroEtat,String LibelleEtat) {
         this.NumeroBonRetourVente = NumeroBonRetourVente;
         this.DateBonRetourVente = DateBonRetourVente;
         RaisonSociale = referenceClient;
+
         TotalTTC = totalTTC;
+        this.TotalRemise=TotalRemise  ;
+        this.TotalHT=TotalHT ;
+        this.TotalTVA=TotalTVA ;
+
         this.NumeroEtat = NumeroEtat  ;
         this.LibelleEtat=LibelleEtat;
     }

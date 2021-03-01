@@ -100,10 +100,10 @@ public class MouvementVenteServiceTask extends AsyncTask<String, String, String>
                 z = "Error in connection with SQL server";
             } else {
 
-                String query_mvmnt_service = " select Frs  ,CodeClient  ,RaisonSociale  ,NumeroPiece ,Vue_listeventeglobal.CodeArticle , DesignationArticle " +
-                        ",DatePiece ,Quantite ,MontantTTC ,NomUtilisateur\n" +
-                        " from Vue_listeventeglobal\n" +
-                        "inner join Article on Article.CodeArticle=Vue_listeventeglobal.CodeArticle \n" +
+                String query_mvmnt_service = " select Vue_listeventeglobal.CodeClient  ,Vue_listeventeglobal.RaisonSociale  ,NumeroPiece ,Vue_listeventeglobal.CodeArticle ,Article.Designation  , DatePiece ,Quantite ,MontantTTC ,NomUtilisateur\n" +
+                        "     from Vue_listeventeglobal\n" +
+                        "    left join Article on Article.CodeArticle=Vue_listeventeglobal.CodeArticle \n" +
+                        "    left  join BonLivraisonVente  on  BonLivraisonVente.NumeroBonLivraisonVente = Vue_listeventeglobal.NumeroPiece \n" +
                         "where  DatePiece between '"+df.format(date_debut)+"' and '"+df.format(date_fin)+"' and Stockable=0  ";
 
 
@@ -114,19 +114,19 @@ public class MouvementVenteServiceTask extends AsyncTask<String, String, String>
 
                 while (rs.next()) {
 
-                    String Frs = rs.getString("Frs");
+
                     String CodeClient = rs.getString("CodeClient");
                     String RaisonSociale = rs.getString("RaisonSociale");
                     String NumeroPiece = rs.getString("NumeroPiece");
                     String CodeArticle = rs.getString("CodeArticle");
-                    String DesignationArticle = rs.getString("DesignationArticle");
+                    String DesignationArticle = rs.getString("Designation");
                     Date DatePiece = dtfSQL.parse(rs.getString("DatePiece"));
                     int  Quantite = rs.getInt("Quantite");
                     double MontantTTC = rs.getDouble("MontantTTC");
                     String NomUtilisateur = rs.getString("NomUtilisateur");
                     total+=MontantTTC;
 
-                    MouvementVenteService  mouvementVenteService = new MouvementVenteService(Frs , CodeClient ,RaisonSociale ,NumeroPiece ,CodeArticle ,DesignationArticle ,DatePiece ,Quantite ,MontantTTC ,NomUtilisateur);
+                    MouvementVenteService  mouvementVenteService = new MouvementVenteService( CodeClient ,RaisonSociale ,NumeroPiece ,CodeArticle ,DesignationArticle ,DatePiece ,Quantite ,MontantTTC ,NomUtilisateur);
                     listMouvementServiceVente.add(mouvementVenteService);
 
                 }
@@ -159,98 +159,8 @@ public class MouvementVenteServiceTask extends AsyncTask<String, String, String>
 
         //listOnClick(listBonCommandeVente);
 
-     /*   search_bar_client.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                if (!search_bar_client.isIconified()) {
-                    search_bar_client.setIconified(true);
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-
-                final ArrayList<BonCommandeVente> fitlerClientList = filterClientCMD(listBonCommandeVente, query);
-
-                EtatCommande.bcAdapter = new BonCommandeAdapter(activity, fitlerClientList);
-                lv_hist_bc.setAdapter(EtatCommande.bcAdapter);
-                listOnClick(fitlerClientList);
-
-                return false;
-
-            }
-        });*/
 
     }
 
-   /* public void listOnClick(final  ArrayList<BonCommandeVente>  listBC) {
-
-        lv_hist_bc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-
-                NumberFormat formatter = new DecimalFormat("0.000");
-
-                final BonCommandeVente bonCommandeVente = listBC.get(position);
-
-                AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-                alert.setIcon(R.drawable.i2s);
-                alert.setTitle("Bon De Commande");
-                alert.setMessage("Client : " + bonCommandeVente.getReferenceClient());
-
-
-                alert.setNegativeButton("Détail",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface di, int i) {
-                                //di.cancel();
-
-                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                Intent toLigneBonCommande = new Intent(activity, HistoriqueLigneBonCommandeActivity.class);
-                                toLigneBonCommande.putExtra("cle_numero_bon_cmd_vente", bonCommandeVente.getNumeroBonCommandeVente());
-                                toLigneBonCommande.putExtra("cle_raison_sociale", bonCommandeVente.getReferenceClient());
-                                toLigneBonCommande.putExtra("cle_total_ttc", bonCommandeVente.getTotalTTC());
-                                toLigneBonCommande.putExtra("cle_date_bc", sdf.format(bonCommandeVente.getDateBonCommandeVente()));
-                                activity.startActivity(toLigneBonCommande);
-
-                            }
-                        });
-
-
-                if (bonCommandeVente.getNumeroEtat().equals("E00")) {
-
-                    alert.setNeutralButton("Annulé", null);
-
-                } else {
-
-                    AlertDialog dd = alert.create();
-
-                    dd.show();
-
-                }
-            }
-        });
-
-    }
-
-    private ArrayList<BonCommandeVente> filterClientCMD(ArrayList<BonCommandeVente> listClientCMD, String term) {
-
-        term = term.toLowerCase();
-        final ArrayList<BonCommandeVente> filetrListClient = new ArrayList<>();
-
-        for (BonCommandeVente c : listClientCMD) {
-            final String txtRaisonSocial = c.getReferenceClient().toLowerCase();
-
-            if (txtRaisonSocial.contains(term)) {
-                filetrListClient.add(c);
-            }
-        }
-        return filetrListClient;
-
-    }*/
 
 }
