@@ -26,6 +26,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -42,7 +43,7 @@ public class EtatCommande extends AppCompatActivity {
     ProgressBar pb_bc;
     SearchView search_bar_client;
 
-    public TextView txt_date_debut, txt_date_fin;
+
 
     final Context co = this;
     String user, password, base, ip;
@@ -57,6 +58,8 @@ public class EtatCommande extends AppCompatActivity {
     public static Date date_fin = null;
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     NumberFormat formatter = new DecimalFormat("00");
+    public TextView txt_date_debut, txt_date_fin;
+
 
     public static TextView txt_tot_commande ;
 
@@ -87,10 +90,11 @@ public class EtatCommande extends AppCompatActivity {
 
         final Calendar cal1 = Calendar.getInstance();
         cal1.setTime(currentDate);
-        cal1.add(Calendar.MONTH, -1);
+        //cal1.add(Calendar.MONTH, -1);
         year_x1 = cal1.get(Calendar.YEAR);
         month_x1 = cal1.get(Calendar.MONTH);
-        day_x1 = cal1.get(Calendar.DAY_OF_MONTH);
+        day_x1 = 1 ;
+
 
 
         final Calendar cal2 = Calendar.getInstance();
@@ -100,13 +104,28 @@ public class EtatCommande extends AppCompatActivity {
         month_x2 = cal2.get(Calendar.MONTH);
         day_x2 = cal2.get(Calendar.DAY_OF_MONTH);
 
-        date_debut = cal1.getTime();
-        String _date_du = df.format(cal1.getTime());
+
+
+        DecimalFormat  df_month = new DecimalFormat("00") ;
+        DecimalFormat  df_year  = new DecimalFormat("0000") ;
+
+        Log.e("date_debut ", "01/"+ df_month.format(cal1.get(Calendar.MONTH) +1)+"/"+df_year.format(cal1.get(Calendar.YEAR) ) ) ;
+        String _date_du =  "01/"+ df_month.format(cal1.get(Calendar.MONTH) +1)+"/"+df_year.format(cal1.get(Calendar.YEAR) )  ;
+
+        try {
+            date_debut =  df .parse(_date_du);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         txt_date_debut.setText(_date_du);
 
         date_fin = cal2.getTime();
         String _date_au = df.format(cal2.getTime());
         txt_date_fin.setText(_date_au);
+
+
+
         NavigationView nav_menu=findViewById(R.id.nav_view);
         View root = nav_menu.getHeaderView(0);
 

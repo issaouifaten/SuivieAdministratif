@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.annotation.TargetApi;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -45,6 +46,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -59,12 +61,10 @@ public class EtatFactureVente extends AppCompatActivity {
     ProgressBar progressBar;
     SearchView search_bar_client;
 
-    public TextView txt_date_debut, txt_date_fin;
-    DatePicker datePicker;
+
     final Context co = this;
     String user, password, base, ip;
-    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-    NumberFormat formatter = new DecimalFormat("00");
+
     public static TextView txt_tot_commande;
 
     FloatingActionButton fab_arrow;
@@ -73,10 +73,23 @@ public class EtatFactureVente extends AppCompatActivity {
 
 
 
-    String date_debut = "",date_fin="",queryTable="";
+    public TextView txt_date_debut, txt_date_fin;
+
+    int id_DatePickerDialog = 0;
+    Date currentDate = new Date();
+    public static int year_x1, month_x1, day_x1;
+    public static int year_x2, month_x2, day_x2;
+
+    public static Date date_debut = null;
+    public static Date date_fin = null;
+    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    NumberFormat formatter = new DecimalFormat("00");
+
+    String queryTable="";
+
 
     ConnectionClass connectionClass;
-    String CodeSociete, NomUtilisateur, CodeLivreur;
+    String   NomUtilisateur   ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,13 +115,159 @@ public class EtatFactureVente extends AppCompatActivity {
         txt_tot_commande = (TextView) findViewById(R.id.txt_tot_commande);
         txt_date_debut = findViewById(R.id.txt_date_debut);
         txt_date_fin = findViewById(R.id.txt_date_fin);
-
-
         lv_list_historique_bc = (GridView) findViewById(R.id.lv_list_historique_bc);
         progressBar = (ProgressBar) findViewById(R.id.pb_bc);
 
-        NavigationView nav_menu=findViewById(R.id.nav_view);
-        View root = nav_menu.getHeaderView(0);
+
+
+
+
+        final Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(currentDate);
+        //cal1.add(Calendar.MONTH, -1);
+        year_x1 = cal1.get(Calendar.YEAR);
+        month_x1 = cal1.get(Calendar.MONTH);
+        day_x1 = 1 ;
+
+
+
+        final Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(currentDate);
+
+        year_x2 = cal2.get(Calendar.YEAR);
+        month_x2 = cal2.get(Calendar.MONTH);
+        day_x2 = cal2.get(Calendar.DAY_OF_MONTH);
+
+
+
+        DecimalFormat  df_month = new DecimalFormat("00") ;
+        DecimalFormat  df_year  = new DecimalFormat("0000") ;
+
+        Log.e("date_debut ", "01/"+ df_month.format(cal1.get(Calendar.MONTH) +1)+"/"+df_year.format(cal1.get(Calendar.YEAR) ) ) ;
+        String _date_du =  "01/"+ df_month.format(cal1.get(Calendar.MONTH) +1)+"/"+df_year.format(cal1.get(Calendar.YEAR) )  ;
+
+        try {
+            date_debut =  df .parse(_date_du);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        txt_date_debut.setText(_date_du);
+
+        date_fin = cal2.getTime();
+        String _date_au = df.format(cal2.getTime());
+        txt_date_fin.setText(_date_au);
+
+
+
+
+        queryTable = "select NumeroFactureVente,RaisonSociale,CodeClient,TotalTTC  , TotalRemise ,TotalHT  , TotalTVA    , DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
+                ",Etat.NumeroEtat from FactureVente \n" +
+                "inner join Etat on Etat.NumeroEtat=FactureVente.NumeroEtat\n" +
+                "where DateCreation between '"+df.format(date_debut)+"' and '"+df.format(date_fin)+"'\n" +
+                "order by DateCreation desc";
+        updateData();
+
+
+
+
+        txt_date_debut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                id_DatePickerDialog = 0;
+                Log.e("month_x1", "On picker  : " + month_x1);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(EtatFactureVente.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                        if (id_DatePickerDialog == 0) {
+                            year_x1 = year;
+                            month_x1 = monthOfYear;
+                            day_x1 = dayOfMonth;
+
+                            txt_date_debut.setText("" + formatter.format(day_x1) + "/" + formatter.format(month_x1 + 1) + "/" + year_x1);
+
+                            String _date_du = formatter.format(day_x1) + "/" + formatter.format(month_x1 + 1) + "/" + year_x1 + " ";
+                            String _date_au = txt_date_fin.getText().toString();
+
+
+                            try {
+                                date_debut = df.parse(_date_du);
+                                date_fin = df.parse(_date_au);
+
+
+                                queryTable = "select NumeroFactureVente,RaisonSociale,CodeClient,TotalTTC  , TotalRemise ,TotalHT  , TotalTVA    , DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
+                                        ",Etat.NumeroEtat from FactureVente \n" +
+                                        "inner join Etat on Etat.NumeroEtat=FactureVente.NumeroEtat\n" +
+                                        "where DateCreation between '"+df.format(date_debut)+"' and '"+df.format(date_fin)+"'\n" +
+                                        "order by DateCreation desc";
+                                updateData();
+
+
+                            } catch (Exception e) {
+                                Log.e("Exception--", " " + e.getMessage());
+                            }
+                        }
+                    }
+                }, year_x1, month_x1, day_x1);
+                datePickerDialog.show();
+            }
+        });
+
+
+        txt_date_fin.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                id_DatePickerDialog = 1;
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(EtatFactureVente.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        if (id_DatePickerDialog == 1) {
+
+                            year_x2 = year;
+                            month_x2 = monthOfYear;
+                            day_x2 = dayOfMonth;
+
+                            txt_date_fin.setText("" + formatter.format(day_x2) + "/" + formatter.format(month_x2 + 1) + "/" + year_x2);
+
+                            String _date_au = "" + formatter.format(day_x2) + "/" + formatter.format(month_x2 + 1) + "/" + year_x2;
+                            String _date_du = txt_date_debut.getText().toString();
+
+                            try {
+                                date_debut = df.parse(_date_du);
+                                date_fin = df.parse(_date_au);
+
+
+                                queryTable = "select NumeroFactureVente,RaisonSociale,CodeClient,TotalTTC  , TotalRemise ,TotalHT  , TotalTVA    , DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
+                                        ",Etat.NumeroEtat from FactureVente \n" +
+                                        "inner join Etat on Etat.NumeroEtat=FactureVente.NumeroEtat\n" +
+                                        "where DateCreation between '"+df.format(date_debut)+"' and '"+df.format(date_fin)+"'\n" +
+                                        "order by DateCreation desc";
+
+                                updateData();
+
+
+                            } catch (Exception e) {
+                                Log.e("Exception --", " " + e.getMessage());
+                            }
+
+                        }
+                    }
+                }, year_x2, month_x2, day_x2);
+                datePickerDialog.show();
+            }
+        });
+
+
+
+
+
+
+
 
         EditText editText=(EditText)findViewById(R.id.search_bar_client) ;
         editText.addTextChangedListener(new TextWatcher() {
@@ -120,13 +279,25 @@ public class EtatFactureVente extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+
+                if (s.equals(""))
+                {
+                    queryTable = "select NumeroFactureVente,RaisonSociale,CodeClient,TotalTTC  , TotalRemise ,TotalHT  , TotalTVA    , DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
+                            ",Etat.NumeroEtat from FactureVente \n" +
+                            "inner join Etat on Etat.NumeroEtat=FactureVente.NumeroEtat\n" +
+                            "where DateCreation between '"+df.format(date_debut)+"' and '"+df.format(date_fin)+"'\n" +
+                            "order by DateCreation desc";
+                }
+                else
+
                 queryTable = "select NumeroFactureVente,RaisonSociale,CodeClient,TotalTTC , TotalRemise ,TotalHT  , TotalTVA    , DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
                         ",Etat.NumeroEtat  from FactureVente \n" +
                         "inner join Etat on Etat.NumeroEtat=FactureVente.NumeroEtat\n" +
-                        "where DateCreation between '"+date_debut+"' and '"+date_fin+"'   and ( NumeroFactureVente like'%"+s+"%' OR RaisonSociale LIKE'%"+s+"%') \n" +
+                        "where DateCreation between '"+df.format(date_debut)+"' and '"+df.format(date_fin)+"'   and ( NumeroFactureVente like'%"+s+"%' OR RaisonSociale LIKE'%"+s+"%') \n" +
                         "order by DateCreation desc";
-             FillList fillList = new  FillList();
-                fillList.execute("");
+
+                 FillList fillList = new  FillList();
+                 fillList.execute("");
             }
 
             @Override
@@ -143,6 +314,9 @@ public class EtatFactureVente extends AppCompatActivity {
 
 
 
+
+        NavigationView nav_menu=findViewById(R.id.nav_view);
+        View root = nav_menu.getHeaderView(0);
 
         CardView btn_devis_vente = (CardView) root.findViewById(R.id.btn_devis_vente)  ;
         btn_devis_vente.setOnClickListener(new View.OnClickListener() {
@@ -237,90 +411,9 @@ public class EtatFactureVente extends AppCompatActivity {
         });
 
 
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        date_fin = sdf.format(calendar.getTime());
-        calendar.add(Calendar.MONTH, -1);
-        date_debut = sdf.format(calendar.getTime());
-        txt_date_debut.setText(date_debut);
-        txt_date_fin.setText(date_fin);
-        TextView txt_gratuite =(TextView)findViewById(R.id.txt_gratuite);
-        txt_gratuite.setText("Total Facture");
-
-        queryTable = "select NumeroFactureVente,RaisonSociale,CodeClient,TotalTTC  , TotalRemise ,TotalHT  , TotalTVA    , DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
-                ",Etat.NumeroEtat from FactureVente \n" +
-                "inner join Etat on Etat.NumeroEtat=FactureVente.NumeroEtat\n" +
-                "where DateCreation between '"+date_debut+"' and '"+date_fin+"'\n" +
-                "order by DateCreation desc";
-         FillList fillList = new  FillList();
-         fillList.execute("");
-
-        txt_date_debut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LayoutInflater li = LayoutInflater.from(co);
-                View px = li.inflate(R.layout.diagcalend, null);
-                AlertDialog.Builder alt = new AlertDialog.Builder(co);
-                alt.setIcon(R.drawable.i2s);
-                alt.setView(px);
-                alt.setTitle("date");
-                datePicker = (DatePicker) px.findViewById(R.id.datedebut);
-                alt.setPositiveButton("ok",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface di, int i) {
-
-                                Date d = new Date(datePicker.getYear() - 1900, datePicker.getMonth(), datePicker.getDayOfMonth());
-                                date_debut = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH)
-                                        .format(d);
-
-                                txt_date_debut.setText(date_debut);
-                                 FillList fillList = new  FillList();
-                                fillList.execute("");
 
 
-                            }
-                        });
 
-                AlertDialog dd = alt.create();
-                dd.show();
-            }
-        });
-
-
-        txt_date_fin.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                LayoutInflater li = LayoutInflater.from(co);
-                View px = li.inflate(R.layout.diagcalend, null);
-                AlertDialog.Builder alt = new AlertDialog.Builder(co);
-                alt.setIcon(R.drawable.i2s);
-                alt.setView(px);
-                alt.setTitle("date");
-                datePicker = (DatePicker) px.findViewById(R.id.datedebut);
-                alt.setPositiveButton("ok",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface di, int i) {
-
-                                Date d = new Date(datePicker.getYear() - 1900, datePicker.getMonth(), datePicker.getDayOfMonth());
-                                date_fin = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH)
-                                        .format(d);
-
-                                txt_date_fin.setText(date_fin);
-
-
-                                 FillList fillList = new  FillList();
-                                fillList.execute("");
-                            }
-                        });
-
-                AlertDialog dd = alt.create();
-                dd.show();
-
-            }
-        });
 
 
         layoutBottomSheet = (RelativeLayout) findViewById(R.id.bottom_sheet);
@@ -360,6 +453,14 @@ public class EtatFactureVente extends AppCompatActivity {
 
     }
 
+
+    public  void  updateData()
+    {
+
+        FillList fillList = new  FillList();
+        fillList.execute("");
+
+    }
     public class FillList extends AsyncTask<String, String, String> {
         String z = "";
         Boolean test = false;

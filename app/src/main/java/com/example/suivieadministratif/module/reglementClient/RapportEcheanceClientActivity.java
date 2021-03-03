@@ -30,6 +30,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -75,26 +76,168 @@ public class RapportEcheanceClientActivity extends AppCompatActivity {
 
         final Calendar cal1 = Calendar.getInstance();
         cal1.setTime(currentDate);
-        //cal1.add(Calendar.DAY_OF_YEAR, -7);
+        //cal1.add(Calendar.MONTH, -1);
         year_x1 = cal1.get(Calendar.YEAR);
         month_x1 = cal1.get(Calendar.MONTH);
-        day_x1 = cal1.get(Calendar.DAY_OF_MONTH);
+        day_x1 = 1 ;
+
 
 
         final Calendar cal2 = Calendar.getInstance();
         cal2.setTime(currentDate);
-        //  cal2.add(Calendar.DAY_OF_YEAR, +7);
+
         year_x2 = cal2.get(Calendar.YEAR);
         month_x2 = cal2.get(Calendar.MONTH);
         day_x2 = cal2.get(Calendar.DAY_OF_MONTH);
 
-        date_debut = cal1.getTime();
-        String _date_du = df.format(cal1.getTime());
+        DecimalFormat  df_month = new DecimalFormat("00") ;
+        DecimalFormat  df_year  = new DecimalFormat("0000") ;
+
+        Log.e("date_debut ", "01/"+ df_month.format(cal1.get(Calendar.MONTH) +1)+"/"+df_year.format(cal1.get(Calendar.YEAR) ) ) ;
+        String _date_du =  "01/"+ df_month.format(cal1.get(Calendar.MONTH) +1)+"/"+df_year.format(cal1.get(Calendar.YEAR) )  ;
+
+        try {
+            date_debut =  df .parse(_date_du);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         txt_date_debut.setText(_date_du);
 
         date_fin = cal2.getTime();
         String _date_au = df.format(cal2.getTime());
         txt_date_fin.setText(_date_au);
+
+
+
+
+
+
+
+
+        updateData();
+
+        txt_date_debut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                id_DatePickerDialog = 0;
+                Log.e("month_x1", "On picker  : " + month_x1);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(RapportEcheanceClientActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+                        if (id_DatePickerDialog == 0) {
+                            year_x1 = year;
+                            month_x1 = monthOfYear;
+                            day_x1 = dayOfMonth;
+
+                            txt_date_debut.setText("" + formatter.format(day_x1) + "/" + formatter.format(month_x1 + 1) + "/" + year_x1);
+
+                            String _date_du = formatter.format(day_x1) + "/" + formatter.format(month_x1 + 1) + "/" + year_x1 + " ";
+                            String _date_au = txt_date_fin.getText().toString();
+
+
+                            try {
+                                date_debut = df.parse(_date_du);
+                                date_fin = df.parse(_date_au);
+
+                                updateData();
+
+
+                            } catch (Exception e) {
+                                Log.e("Exception--", " " + e.getMessage());
+                            }
+                        }
+                    }
+                }, year_x1, month_x1, day_x1);
+                datePickerDialog.show();
+            }
+        });
+
+
+        txt_date_fin.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                id_DatePickerDialog = 1;
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(RapportEcheanceClientActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        if (id_DatePickerDialog == 1) {
+
+                            year_x2 = year;
+                            month_x2 = monthOfYear;
+                            day_x2 = dayOfMonth;
+
+                            txt_date_fin.setText("" + formatter.format(day_x2) + "/" + formatter.format(month_x2 + 1) + "/" + year_x2);
+
+                            String _date_au = "" + formatter.format(day_x2) + "/" + formatter.format(month_x2 + 1) + "/" + year_x2;
+                            String _date_du = txt_date_debut.getText().toString();
+
+                            try {
+                                date_debut = df.parse(_date_du);
+                                date_fin = df.parse(_date_au);
+
+                                updateData();
+
+                            } catch (Exception e) {
+                                Log.e("Exception --", " " + e.getMessage());
+                            }
+
+                        }
+                    }
+                }, year_x2, month_x2, day_x2);
+                datePickerDialog.show();
+            }
+        });
+
+
+
+
+
+        layoutBottomSheet = (RelativeLayout)  findViewById(R.id.bottom_sheet);
+        fab_arrow = (FloatingActionButton)  findViewById(R.id.fab_arrow);
+        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+        sheetBehavior.setHideable(false);
+
+        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED: {
+
+                        // Toast.makeText(getActivity() , "Close Sheet" ,Toast.LENGTH_LONG).show();
+                        fab_arrow.setImageResource(R.drawable.ic_arrow_down);
+
+                      /* ReptureStockClientTaskTask reptureStockClientTaskTask = new ReptureStockClientTaskTask(getActivity() ,"1" , exptens_lv_stock_en_repture) ;
+                        reptureStockClientTaskTask.execute() ;*/
+
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_COLLAPSED: {
+                        // Toast.makeText(getActivity() , "Expand Sheet" ,Toast.LENGTH_LONG).show();
+                        fab_arrow.setImageResource(R.drawable.ic_arrow_up);
+                    }
+                    break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
+
+
 
 
         NavigationView nav_menu = findViewById(R.id.nav_view);
@@ -189,86 +332,6 @@ public class RapportEcheanceClientActivity extends AppCompatActivity {
                 Intent toCaisseRecette = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(toCaisseRecette);
 
-            }
-        });
-
-
-        updateData();
-
-        txt_date_debut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                id_DatePickerDialog = 0;
-                Log.e("month_x1", "On picker  : " + month_x1);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(RapportEcheanceClientActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
-                        if (id_DatePickerDialog == 0) {
-                            year_x1 = year;
-                            month_x1 = monthOfYear;
-                            day_x1 = dayOfMonth;
-
-                            txt_date_debut.setText("" + formatter.format(day_x1) + "/" + formatter.format(month_x1 + 1) + "/" + year_x1);
-
-                            String _date_du = formatter.format(day_x1) + "/" + formatter.format(month_x1 + 1) + "/" + year_x1 + " ";
-                            String _date_au = txt_date_fin.getText().toString();
-
-
-                            try {
-                                date_debut = df.parse(_date_du);
-                                date_fin = df.parse(_date_au);
-
-                                updateData();
-
-
-                            } catch (Exception e) {
-                                Log.e("Exception--", " " + e.getMessage());
-                            }
-                        }
-                    }
-                }, year_x1, month_x1, day_x1);
-                datePickerDialog.show();
-            }
-        });
-
-
-        txt_date_fin.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                id_DatePickerDialog = 1;
-
-                DatePickerDialog datePickerDialog = new DatePickerDialog(RapportEcheanceClientActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        if (id_DatePickerDialog == 1) {
-
-                            year_x2 = year;
-                            month_x2 = monthOfYear;
-                            day_x2 = dayOfMonth;
-
-                            txt_date_fin.setText("" + formatter.format(day_x2) + "/" + formatter.format(month_x2 + 1) + "/" + year_x2);
-
-                            String _date_au = "" + formatter.format(day_x2) + "/" + formatter.format(month_x2 + 1) + "/" + year_x2;
-                            String _date_du = txt_date_debut.getText().toString();
-
-                            try {
-                                date_debut = df.parse(_date_du);
-                                date_fin = df.parse(_date_au);
-
-                                updateData();
-
-                            } catch (Exception e) {
-                                Log.e("Exception --", " " + e.getMessage());
-                            }
-
-                        }
-                    }
-                }, year_x2, month_x2, day_x2);
-                datePickerDialog.show();
             }
         });
 
