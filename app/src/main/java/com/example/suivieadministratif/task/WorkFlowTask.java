@@ -6,15 +6,11 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.example.suivieadministratif.ConnectionClass;
-import com.example.suivieadministratif.adapter.EcheanceClientAdapterLV;
 import com.example.suivieadministratif.adapter.WorkFlowAdapterRV;
-import com.example.suivieadministratif.model.EcheanceClient;
 import com.example.suivieadministratif.model.WorkFlow;
-import com.example.suivieadministratif.module.reglementClient.RapportEcheanceClientActivity;
 import com.example.suivieadministratif.param.Param;
 
 import java.sql.Connection;

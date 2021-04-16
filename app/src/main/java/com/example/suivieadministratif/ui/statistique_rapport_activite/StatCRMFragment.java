@@ -21,11 +21,11 @@ import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.adapter.TypeMvmntGVAdapter;
 import com.example.suivieadministratif.model.TypeMouvementClick;
 import com.example.suivieadministratif.task.ListTypeMvmntDisticntTask;
-import com.example.suivieadministratif.ui.menu.MenuViewModel;
+import com.example.suivieadministratif.menu.MenuViewModel;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.CRM.EtatJournalActivite;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.CRM.Etat_Suivie_VoitureParMission;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.CRM.ListeCauseRetour;
-import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.FicheClient;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.FicheClientActivity2;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.article.JournalActiviteActivity;
 
 import java.text.DecimalFormat;
@@ -75,14 +75,6 @@ public class StatCRMFragment extends Fragment {
         menuViewModel = ViewModelProviders.of(this).get(MenuViewModel.class);
         View root = inflater.inflate(R.layout.fragment_stat_crm, container, false);
 
-//        CardView btn_journal_activite = (CardView) root.findViewById(R.id.btn_journal_activite);
-//        btn_journal_activite.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialogChoixActiviteJournalier(v);
-//            }
-//        });
-
 
         CardView   btn_suivie_vente = (CardView) root.findViewById(R.id.btn_suivie_vente)  ;
         btn_suivie_vente.setOnClickListener(new View.OnClickListener() {
@@ -119,44 +111,11 @@ public class StatCRMFragment extends Fragment {
         btn_suivie_client.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent6 = new Intent(getActivity(), FicheClient.class);
+                Intent intent6 = new Intent(getActivity(), FicheClientActivity2.class);
                 startActivity(intent6);
             }
         });
 
-/*
-
-        CardView  btn_mvmnt_vente_service= (CardView) root.findViewById(R.id.btn_mvmnt_vente_service) ;
-        btn_mvmnt_vente_service.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent5 = new Intent(getActivity(), MouvementVenteServiceActivity.class);
-                startActivity(intent5);
-            }
-        });
-
-
-        CardView   btn_reglement_client = (CardView)  root.findViewById(R.id.btn_reg_client)  ;
-        btn_reglement_client.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent  intent1 = new Intent(getActivity() , ReglementClientActivity.class) ;
-                startActivity(intent1);
-            }
-        });
-
-
-        CardView   btn_echeance_client = (CardView)   root.findViewById(R.id.btn_echeance_Client);
-        btn_echeance_client.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent  intent1 = new Intent(getActivity() , RapportEcheanceClientActivity.class) ;
-                startActivity(intent1);
-            }
-        });
-
-*/
 
         menuViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -348,7 +307,6 @@ public class StatCRMFragment extends Fragment {
                 }
 
                 if (existe == false  )
-
                 {
                     Toast.makeText(getActivity() , "Selectionnez au moin un type Mouvement" , Toast.LENGTH_LONG).show();
                 }

@@ -2,24 +2,17 @@ package com.example.suivieadministratif.task;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.adapter.DetailReglementAdapterRV;
 import com.example.suivieadministratif.adapter.LigneReglementAdapterRV;
-import com.example.suivieadministratif.adapter.ReglementClientAdapterLV;
 import com.example.suivieadministratif.model.DetailReglementClient;
 import com.example.suivieadministratif.model.LigneReglementClient;
-import com.example.suivieadministratif.model.ReglementClient;
-import com.example.suivieadministratif.module.reglementClient.DetailReglementClientActivity;
-import com.example.suivieadministratif.module.reglementClient.ReglementClientActivity;
 import com.example.suivieadministratif.param.Param;
 
 import java.sql.Connection;
@@ -181,7 +174,7 @@ public class DetailLigneReglementClientTask extends AsyncTask<String, String, St
         DetailReglementAdapterRV adapterRV1 = new DetailReglementAdapterRV(activity  , listDetailReglementClient , "") ;
         rv_detail_reg_client.setAdapter(adapterRV1);
 
-        ReglementClientActivity.txt_tot_reglement.setText(decF.format(total_reglement) +" Dt");
+
 
     }
 

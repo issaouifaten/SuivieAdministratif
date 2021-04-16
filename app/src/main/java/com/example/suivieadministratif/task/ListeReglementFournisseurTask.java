@@ -13,14 +13,11 @@ import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.example.suivieadministratif.ConnectionClass;
-import com.example.suivieadministratif.adapter.ReglementClientAdapterLV;
 import com.example.suivieadministratif.adapter.ReglementFournisseurAdapterLV;
-import com.example.suivieadministratif.model.ReglementClient;
 import com.example.suivieadministratif.model.ReglementFournisseur;
-import com.example.suivieadministratif.module.reglementClient.DetailReglementClientActivity;
-import com.example.suivieadministratif.module.reglementClient.ReglementClientActivity;
-import com.example.suivieadministratif.module.reglementFournisseur.DetailReglementFournisseurActivity;
-import com.example.suivieadministratif.module.reglementFournisseur.ReglementFournisseurActivity;
+import com.example.suivieadministratif.module.achat.DetailReglementFournisseurActivity;
+import com.example.suivieadministratif.module.achat.ReglementFournisseurActivity;
+import com.example.suivieadministratif.module.vente.ReglementClientActivity;
 import com.example.suivieadministratif.param.Param;
 
 import java.sql.Connection;
@@ -28,9 +25,11 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class ListeReglementFournisseurTask extends AsyncTask<String, String, String> {
@@ -39,8 +38,9 @@ public class ListeReglementFournisseurTask extends AsyncTask<String, String, Str
     Activity activity;
     ListView lv_reglement_fournisseur ;
     ProgressBar pb_chargement ;
-    SearchView search_bar_frns  ;
 
+
+    String CodeFournisseurSelected ;
     Date  date_debut  , date_fin ;
     ConnectionClass connectionClass ;
     String user, password, base, ip;
@@ -52,13 +52,13 @@ public class ListeReglementFournisseurTask extends AsyncTask<String, String, Str
     double total_reglement  =0 ;
 
 
-    public ListeReglementFournisseurTask(Activity activity  , ListView lv_reglement_fournisseur , ProgressBar pb_chargement , Date  date_debut  , Date date_fin,SearchView search_bar_frns   ) {
+    public ListeReglementFournisseurTask(Activity activity  , ListView lv_reglement_fournisseur , ProgressBar pb_chargement , Date  date_debut  , Date date_fin,String CodeFournisseurSelected    ) {
         this.activity  = activity  ;
         this.lv_reglement_fournisseur = lv_reglement_fournisseur  ;
         this.pb_chargement  = pb_chargement   ;
         this.date_debut = date_debut  ;
         this.date_fin = date_fin  ;
-        this.search_bar_frns=search_bar_frns ;
+        this.CodeFournisseurSelected=CodeFournisseurSelected ;
 
 
         SharedPreferences pref = activity.getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
@@ -90,9 +90,16 @@ public class ListeReglementFournisseurTask extends AsyncTask<String, String, Str
             } else {
 
 
+                String  condition  = "" ;
+                if (!CodeFournisseurSelected.equals(""))
+                {
+                    condition += "  and CodeFournisseur=   '"+CodeFournisseurSelected+"' "  ;
+                }
+
                 String query = "select NumeroReglementFournisseur ,DateReglement  , RaisonSociale,TotalPayement ,NomUtilisateur  \n" +
                         "from  ReglementFournisseur\n" +
-                        " where DateReglement between  '"+sdf.format(date_debut)+"' and '"+sdf.format(date_fin)+"' \n" ;
+                        " where DateReglement between  '"+sdf.format(date_debut)+"' and '"+sdf.format(date_fin)+"' \n" +condition+
+                        "order  by  NumeroReglementFournisseur  DESC " ;
 
                 Log.e("query_reg_frns", query);
 
@@ -145,38 +152,15 @@ public class ListeReglementFournisseurTask extends AsyncTask<String, String, Str
 
         ReglementFournisseurAdapterLV adapterLV = new ReglementFournisseurAdapterLV(activity , listReglementFournisseur) ;
         lv_reglement_fournisseur.setAdapter(adapterLV);
+
+
+        final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+        instance.setMinimumFractionDigits(3);
+        instance.setMaximumFractionDigits(3);
+        ReglementFournisseurActivity.txt_tot_ttc.setText(instance.format(total_reglement));
+
+
         listOnClick(listReglementFournisseur);
-
-
-        search_bar_frns.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                if (!search_bar_frns.isIconified()) {
-                    search_bar_frns.setIconified(true);
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-
-                final ArrayList<ReglementFournisseur> filterReglementFournisseur = filterReglementFournisseur(listReglementFournisseur, query);
-
-                ReglementFournisseurAdapterLV adapterLV = new ReglementFournisseurAdapterLV(activity , filterReglementFournisseur) ;
-                lv_reglement_fournisseur.setAdapter(adapterLV);
-
-                listOnClick(filterReglementFournisseur);
-
-                return false;
-
-            }
-        });
-
-
-
-        ReglementFournisseurActivity.txt_tot_reglement.setText(decF.format(total_reglement) +" Dt");
-
 
 
 
@@ -208,26 +192,7 @@ public class ListeReglementFournisseurTask extends AsyncTask<String, String, Str
 
 
 
-    private ArrayList<ReglementFournisseur> filterReglementFournisseur(ArrayList<ReglementFournisseur> listFrnsReg, String term) {
 
-        term = term.toLowerCase();
-        final ArrayList<ReglementFournisseur> filetrReglementFournisseur = new ArrayList<>();
-
-        double mnt_reg_fournisseur  =0 ;
-        for (ReglementFournisseur f : listFrnsReg) {
-            final String txtRaisonSocial = f.getRaisonSociale().toLowerCase();
-
-
-            if (txtRaisonSocial.contains(term)) {
-                filetrReglementFournisseur.add(f);
-                mnt_reg_fournisseur=mnt_reg_fournisseur+ f.getTotalPayement()  ;
-            }
-        }
-        DecimalFormat  decF  = new DecimalFormat("0.000") ;
-        ReglementFournisseurActivity.txt_tot_reglement.setText(decF.format(mnt_reg_fournisseur) +" Dt");
-        return filetrReglementFournisseur;
-
-    }
 
 
 }

@@ -57,10 +57,12 @@ public class EtatGlobalAchat extends AppCompatActivity {
     Spinner  spindepot;
     ProgressBar progressBar;
     String date_debut = "",date_fin="";
-    public TextView txt_date_debut, txt_date_fin,txt_tot_commande;
+    public TextView txt_date_debut, txt_date_fin ;//,txt_tot_commande;
     DatePicker datePicker;
     final Context co = this;
     String conditionFrs="",conditionDepot="",conditionArticle="";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,9 +72,9 @@ public class EtatGlobalAchat extends AppCompatActivity {
         String NomSociete = pref.getString("NomSociete", "");
         setTitle(NomSociete + " : Etat Global Achat ");
 
-        txt_tot_commande = (TextView) findViewById(R.id.txt_tot_commande);
+        /*txt_tot_commande = (TextView) findViewById(R.id.txt_tot_commande);
         TextView txt_label = (TextView) findViewById(R.id.txt_gratuite);
-        txt_label.setText("Total HT");
+        txt_label.setText("Total HT");*/
         /// CONNECTION BASE
 
 
@@ -325,7 +327,7 @@ public class EtatGlobalAchat extends AppCompatActivity {
 
 
 
-            txt_tot_commande.setText(instance.format(total));
+           // txt_tot_commande.setText(instance.format(total));
 
 
             String[] from = {"CodeArticle", "Quantite",    "TotalAchatHT","NBP","AImporter","Designation","NetImporter"};

@@ -8,22 +8,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.adapter.EcheanceClientAdapterLV;
 import com.example.suivieadministratif.model.EcheanceClient;
-import com.example.suivieadministratif.module.reglementClient.RapportEcheanceClientActivity;
+import com.example.suivieadministratif.module.vente.RapportEcheanceClientActivity;
 import com.example.suivieadministratif.param.Param;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class EcheanceClientTask extends AsyncTask<String, String, String> {
 
@@ -38,6 +38,8 @@ public class EcheanceClientTask extends AsyncTask<String, String, String> {
     ConnectionClass connectionClass;
     String user, password, base, ip;
 
+    String  CodeClientSelected   ;
+
     String NomUtilisateur;
     Date  date_debut , date_fin  ;
     DateFormat dtfSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -48,13 +50,14 @@ public class EcheanceClientTask extends AsyncTask<String, String, String> {
 
     double   tot_echeance =0  ;
 
-    public EcheanceClientTask(Activity activity, Date  date_debut , Date date_fin  , ListView lv_echeance_client, ProgressBar pb ) {
+    public EcheanceClientTask(Activity activity, Date  date_debut , Date date_fin  , ListView lv_echeance_client, ProgressBar pb , String CodeClientSelected  ) {
         this.activity = activity;
         this.date_debut = date_debut  ;
         this.date_fin = date_fin  ;
         this.lv_echeance_client = lv_echeance_client;
         this.pb = pb;
-       // this.search_bar_client = search_bar_client;
+
+       this.CodeClientSelected = CodeClientSelected;
 
 
         SharedPreferences prefe = activity.getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
@@ -66,9 +69,7 @@ public class EcheanceClientTask extends AsyncTask<String, String, String> {
 
         Log.e("BON_CMD" ,Param.PEF_SERVER +"-"+ip+"-"+base) ;
 
-        /*SharedPreferences pref=activity.getSharedPreferences("usersession", Context.MODE_PRIVATE);
-        SharedPreferences.Editor edt=pref.edit();
-        NomUtilisateur= pref.getString("NomUtilisateur",NomUtilisateur);*/
+
 
         connectionClass = new ConnectionClass();
 
@@ -90,9 +91,16 @@ public class EcheanceClientTask extends AsyncTask<String, String, String> {
                 z = "Error in connection with SQL server";
             } else {
 
+                String  condition  = "" ;
+                if (!CodeClientSelected.equals(""))
+                {
+                    condition += "  and CodeClient=   '"+CodeClientSelected+"' "  ;
+                }
+
+
                 String query_echeance_client = " select CodeClient  , RaisonSociale , Libelle   ,Porteur  ,NumeroReglementClient  ,Reference  , MontantRecu , Echeance , NomUtilisateurActuel  \n" +
                         "from     Vue_EcheancierClient  \n" +
-                        "where Echeance between  '"+df.format(date_debut)+"' and '"+df.format(date_fin)+"'   ";
+                        "where Echeance between  '"+df.format(date_debut)+"' and '"+df.format(date_fin)+"'   "+condition;
 
 
                 Log.e("query_echeance_client",""+query_echeance_client) ;
@@ -134,107 +142,15 @@ public class EcheanceClientTask extends AsyncTask<String, String, String> {
 
         pb.setVisibility(View.INVISIBLE);
 
-        DecimalFormat   decF  = new DecimalFormat("0.000") ;
-        RapportEcheanceClientActivity.txt_tot_echeance.setText(decF.format(tot_echeance) +" DT");
-        EcheanceClientAdapterLV   adapterLV =  new EcheanceClientAdapterLV(activity  , listEcheanceClient) ;
+
+        EcheanceClientAdapterLV adapterLV = new EcheanceClientAdapterLV(activity, listEcheanceClient);
         lv_echeance_client.setAdapter(adapterLV);
 
-    /*    MvmentVenteServiceAdapterLV mvmentVenteServiceAdapterLV  = new MvmentVenteServiceAdapterLV(activity, listMouvementServiceVente);
-        lv_mvmnt_vente_service.setAdapter(mvmentVenteServiceAdapterLV);*/
-        //listOnClick(listBonCommandeVente);
 
-     /*   search_bar_client.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                if (!search_bar_client.isIconified()) {
-                    search_bar_client.setIconified(true);
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-
-                final ArrayList<BonCommandeVente> fitlerClientList = filterClientCMD(listBonCommandeVente, query);
-
-                EtatCommande.bcAdapter = new BonCommandeAdapter(activity, fitlerClientList);
-                lv_hist_bc.setAdapter(EtatCommande.bcAdapter);
-                listOnClick(fitlerClientList);
-
-                return false;
-
-            }
-        });*/
+        final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+        instance.setMinimumFractionDigits(3);
+        instance.setMaximumFractionDigits(3);
+        RapportEcheanceClientActivity.txt_tot_ttc.setText(instance.format(tot_echeance));
 
     }
-
-   /* public void listOnClick(final  ArrayList<BonCommandeVente>  listBC) {
-
-        lv_hist_bc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-
-                NumberFormat formatter = new DecimalFormat("0.000");
-
-                final BonCommandeVente bonCommandeVente = listBC.get(position);
-
-                AlertDialog.Builder alert = new AlertDialog.Builder(activity);
-                alert.setIcon(R.drawable.i2s);
-                alert.setTitle("Bon De Commande");
-                alert.setMessage("Client : " + bonCommandeVente.getReferenceClient());
-
-
-                alert.setNegativeButton("Détail",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface di, int i) {
-                                //di.cancel();
-
-                                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                                Intent toLigneBonCommande = new Intent(activity, HistoriqueLigneBonCommandeActivity.class);
-                                toLigneBonCommande.putExtra("cle_numero_bon_cmd_vente", bonCommandeVente.getNumeroBonCommandeVente());
-                                toLigneBonCommande.putExtra("cle_raison_sociale", bonCommandeVente.getReferenceClient());
-                                toLigneBonCommande.putExtra("cle_total_ttc", bonCommandeVente.getTotalTTC());
-                                toLigneBonCommande.putExtra("cle_date_bc", sdf.format(bonCommandeVente.getDateBonCommandeVente()));
-                                activity.startActivity(toLigneBonCommande);
-
-                            }
-                        });
-
-
-                if (bonCommandeVente.getNumeroEtat().equals("E00")) {
-
-                    alert.setNeutralButton("Annulé", null);
-
-                } else {
-
-                    AlertDialog dd = alert.create();
-
-                    dd.show();
-
-                }
-            }
-        });
-
-    }
-
-    private ArrayList<BonCommandeVente> filterClientCMD(ArrayList<BonCommandeVente> listClientCMD, String term) {
-
-        term = term.toLowerCase();
-        final ArrayList<BonCommandeVente> filetrListClient = new ArrayList<>();
-
-        for (BonCommandeVente c : listClientCMD) {
-            final String txtRaisonSocial = c.getReferenceClient().toLowerCase();
-
-            if (txtRaisonSocial.contains(term)) {
-                filetrListClient.add(c);
-            }
-        }
-        return filetrListClient;
-
-    }*/
-
 }

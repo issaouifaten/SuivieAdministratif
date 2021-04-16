@@ -57,7 +57,7 @@ public class JournalFactureAchat extends AppCompatActivity {
     Spinner  spindepot;
     ProgressBar progressBar;
     String date_debut = "",date_fin="";
-    public TextView txt_date_debut, txt_date_fin,txt_tot_commande;
+    public TextView txt_date_debut, txt_date_fin ; //,txt_tot_commande;
     DatePicker datePicker;
     final Context co = this;
     String conditionFrs="",conditionDepot="",conditionArticle="";
@@ -95,9 +95,9 @@ public class JournalFactureAchat extends AppCompatActivity {
         txt_date_debut = findViewById(R.id.txt_date_debut);
         txt_date_fin = findViewById(R.id.txt_date_fin);
         spinfrs = (Spinner) findViewById(R.id.spinner);
-        txt_tot_commande = (TextView) findViewById(R.id.txt_tot_commande);
-        TextView txt_label = (TextView) findViewById(R.id.txt_gratuite);
-        txt_label.setText("Total TTC");
+       // txt_tot_commande = (TextView) findViewById(R.id.txt_tot_commande);
+        /*TextView txt_label = (TextView) findViewById(R.id.txt_gratuite);
+        txt_label.setText("Total TTC");*/
         gridArticle=(GridView)findViewById(R.id.grid_article) ;
         Button btadd=(Button)findViewById(R.id.btadd);
 
@@ -260,7 +260,7 @@ float total=0;
 
 
 
-            txt_tot_commande.setText(instance.format(total));
+           // txt_tot_commande.setText(instance.format(total));
             String[] from = {"NumeroPiece", "TotalTVA",    "TotalRemise","TotalHT","TotalFodec","DatePiece","RaisonSociale","TotalTTC","TimbreFiscal"};
             int[] views = {R.id.txt_num_piece, R.id.txt_qt, R.id.txt_remise, R.id.txt_ht, R.id.txt_fodec,R.id.txt_date_piece,R.id.txt_rs,R.id.txt_ttc,R.id.txt_fiscal};
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),

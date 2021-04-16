@@ -101,9 +101,9 @@ public class EtatJournalArticleAchete extends AppCompatActivity {
         spindepot=(Spinner)findViewById(R.id.spin_depot);
         GetDataSpinner getDataSpinner=new GetDataSpinner();
         getDataSpinner.execute("");
-     txt_tot_commande = (TextView) findViewById(R.id.txt_tot_commande);
-     TextView txt_label = (TextView) findViewById(R.id.txt_gratuite);
-   txt_label.setText("Total TTC");
+     // txt_tot_commande = (TextView) findViewById(R.id.txt_tot_commande);
+    /* TextView txt_label = (TextView) findViewById(R.id.txt_gratuite);
+       txt_label.setText("Total TTC");*/
 
 
         txt_date_debut = findViewById(R.id.txt_date_debut);
@@ -351,7 +351,7 @@ float total=0;
             final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
             instance.setMinimumFractionDigits(3);
             instance.setMaximumFractionDigits(3);
-            txt_tot_commande.setText(instance.format(total));
+          //  txt_tot_commande.setText(instance.format(total));
             String[] from = {"CodeArticle", "Quantite", "MontantHT",  "MontantTTC","TotalRemise","MontantFodec","Designation"};
             int[] views = {R.id.txt_code, R.id.txt_qt, R.id.txt_totalht, R.id.txt_ttc, R.id.txt_remise,R.id.txt_fodec,R.id.txt_des};
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),

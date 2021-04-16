@@ -1,35 +1,23 @@
 package com.example.suivieadministratif.task;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
 
 import com.example.suivieadministratif.ConnectionClass;
-import com.example.suivieadministratif.R;
-import com.example.suivieadministratif.adapter.BonCommandeAdapter;
 import com.example.suivieadministratif.adapter.SuivieImportationAdapter;
-import com.example.suivieadministratif.model.BonCommandeVente;
 import com.example.suivieadministratif.model.SuivieImportationDossier;
-import com.example.suivieadministratif.module.vente.EtatCommande;
-import com.example.suivieadministratif.module.vente.HistoriqueLigneBonCommandeActivity;
 import com.example.suivieadministratif.param.Param;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;

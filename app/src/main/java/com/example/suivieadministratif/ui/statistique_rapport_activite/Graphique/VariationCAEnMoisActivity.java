@@ -56,9 +56,19 @@ public class VariationCAEnMoisActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_variation_c_a_en_mois);
 
+
+        String param = getIntent().getStringExtra("param")  ;
+
+       /*commercial
+        comptable*/
+
         SharedPreferences pref = getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " : Variation CA en Mois");
+
+
+        setTitle(NomSociete + " : Variation CA "+param+" en Mois");
+
+
 
         barGraph = (BarChart)   findViewById(R.id.barGraph)  ;
         pb= (ProgressBar) findViewById(R.id.pb) ;
@@ -69,10 +79,10 @@ public class VariationCAEnMoisActivity extends AppCompatActivity {
         sp_annee_fin = (Spinner)  findViewById(R.id.sp_annee_fin) ;
         sp_mois_fin= (Spinner)  findViewById(R.id.sp_mois_fin) ;
 
-        ListAnneeForSpinner  listAnneeForSpinner   = new ListAnneeForSpinner(this  ,sp_annee_debut  ,sp_mois_debut , "Debut") ;
+        ListAnneeForSpinner  listAnneeForSpinner   = new ListAnneeForSpinner(this  ,sp_annee_debut  ,sp_mois_debut , param ,"Debut") ;
         listAnneeForSpinner.execute() ;
 
-        ListAnneeForSpinner  listAnneeFinForSpinner   = new ListAnneeForSpinner(this  ,sp_annee_fin  ,sp_mois_fin , "Fin") ;
+        ListAnneeForSpinner  listAnneeFinForSpinner   = new ListAnneeForSpinner(this  ,sp_annee_fin  ,sp_mois_fin , param ,"Fin") ;
         listAnneeFinForSpinner.execute() ;
 
 

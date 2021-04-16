@@ -170,7 +170,7 @@
 
         </RelativeLayout>
 
-        <include layout="@layout/bottom_sheet_devis_vente" />
+
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -33,6 +33,7 @@ public class ListMoisForSpinner extends AsyncTask<String, String, String> {
     Activity activity;
     Spinner sp_mois;
     String annee ;
+    String param  ;
     String  origine  ;
 
     ArrayList<String> listMois = new ArrayList<>();
@@ -46,10 +47,11 @@ public class ListMoisForSpinner extends AsyncTask<String, String, String> {
     String user, password, base, ip;
 
 
-    public ListMoisForSpinner(Activity activity, Spinner sp_mois, String annee,   String  origine ) {
+    public ListMoisForSpinner(Activity activity, Spinner sp_mois, String annee,  String param   ,  String  origine ) {
         this.activity = activity;
         this.sp_mois = sp_mois;
         this.annee = annee;
+        this.param=param  ;
         this.origine = origine  ;
 
         SharedPreferences prefe = activity.getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
@@ -258,7 +260,7 @@ public class ListMoisForSpinner extends AsyncTask<String, String, String> {
 
                        Log.e("Period_selected_x", "du  " + sdf.format(dateDebut) + "  au  " + sdf.format(dateFin));
 
-                       EtatChiffreAffaireEnMoisTuask etatChiffreAffaireEnMoisTuask  = new EtatChiffreAffaireEnMoisTuask(activity  ,VariationCAEnMoisActivity.barGraph  ,dateDebut , dateFin ,VariationCAEnMoisActivity.pb)  ;
+                       EtatChiffreAffaireEnMoisTuask etatChiffreAffaireEnMoisTuask  = new EtatChiffreAffaireEnMoisTuask(activity  ,VariationCAEnMoisActivity.barGraph  ,dateDebut , dateFin ,VariationCAEnMoisActivity.pb, param)  ;
                        etatChiffreAffaireEnMoisTuask.execute() ;
 
                    }
@@ -306,7 +308,7 @@ public class ListMoisForSpinner extends AsyncTask<String, String, String> {
 
                            Log.e("Period_selected_x", "du  " + sdf.format(dateDebut) + "  au  " + sdf.format(dateFin));
 
-                           EtatChiffreAffaireEnMoisTuask etatChiffreAffaireEnMoisTuask  = new EtatChiffreAffaireEnMoisTuask(activity  ,VariationCAEnMoisActivity.barGraph  ,dateDebut , dateFin ,VariationCAEnMoisActivity.pb)  ;
+                           EtatChiffreAffaireEnMoisTuask etatChiffreAffaireEnMoisTuask  = new EtatChiffreAffaireEnMoisTuask(activity  ,VariationCAEnMoisActivity.barGraph  ,dateDebut , dateFin ,VariationCAEnMoisActivity.pb , param)  ;
                            etatChiffreAffaireEnMoisTuask.execute() ;
                        }
                        catch (Exception  ex)

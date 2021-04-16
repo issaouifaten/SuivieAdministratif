@@ -248,7 +248,7 @@ public class BonTransfertStock extends AppCompatActivity {
         btn_etat_de_stock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent2 = new Intent(getApplicationContext(), StockArticle.class);
+                Intent intent2 = new Intent(getApplicationContext(), EtatDeStockActivity.class);
                 startActivity(intent2);
             }
         });

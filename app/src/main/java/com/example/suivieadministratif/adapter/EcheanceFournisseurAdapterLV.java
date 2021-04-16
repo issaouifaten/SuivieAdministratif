@@ -14,8 +14,10 @@ import com.example.suivieadministratif.model.EcheanceClient;
 import com.example.suivieadministratif.model.EcheanceFournisseur;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class EcheanceFournisseurAdapterLV extends ArrayAdapter<EcheanceFournisseur> {
@@ -54,7 +56,13 @@ public class EcheanceFournisseurAdapterLV extends ArrayAdapter<EcheanceFournisse
             txt_raison_sociale.setText(ef.getRaisonSociale());
             txt_date_echenace.setText(sdf.format(ef.getEcheance()));
             txt_libelle.setText(ef.getLibelle() +" de montant ");
-            txt_montant.setText(formatter.format(ef.getMontantRecu())+" Dt");
+
+
+            final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+            instance.setMinimumFractionDigits(3);
+            instance.setMaximumFractionDigits(3);
+
+            txt_montant.setText(instance.format(ef.getMontantRecu())+" Dt");
             txt_reg_frns.setText(ef.getNumeroReglementFournisseur());
             txt_libelle_compte.setText(ef.getLibelleCompte());
 

@@ -79,7 +79,7 @@ public class HistoriqueLBCAchatTask extends AsyncTask <String, String, String> {
             } else {
 
                 String queryClient = "  select \n" +
-                        "NumeroBonCommandeAchat  , CodeArticle  ,Quantite   , MontantTTC,DesignationArticle \n" +
+                        "NumeroBonCommandeAchat  , CodeArticle  ,Quantite   , NetHT , TauxRemise  , MontantTTC  , DesignationArticle \n" +
                         " from  LigneBonCommandeAchat  where NumeroBonCommandeAchat  = '"+NumeroBC+"'   " ;
 
                 PreparedStatement ps = con.prepareStatement(queryClient);
@@ -94,7 +94,13 @@ public class HistoriqueLBCAchatTask extends AsyncTask <String, String, String> {
                     int Quantite = rs.getInt("Quantite");
                     double MontantTTC = rs.getDouble("MontantTTC");
 
-                    LigneBonCommandeVente lbc  = new LigneBonCommandeVente(NumeroBonCommandeVente  ,CodeArticle ,Quantite , MontantTTC) ;
+                    double NetHT = rs.getDouble("NetHT");
+                    double TauxRemise = rs.getDouble("TauxRemise");
+
+
+
+                    //String numeroBonCommandeVente, String codeArticle, int quantite, double montantTTC ,double NetHT , double TauxRemise
+                    LigneBonCommandeVente lbc  = new LigneBonCommandeVente(NumeroBonCommandeVente  ,CodeArticle ,Quantite , MontantTTC, NetHT , TauxRemise) ;
                     listLigneBonCommandeVente.add(lbc) ;
 
                 }

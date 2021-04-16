@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.suivieadministratif.R;
-import com.example.suivieadministratif.ui.menu.MenuViewModel;
+import com.example.suivieadministratif.menu.MenuViewModel;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Achat.EtatArticlePerime;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Achat.EtatGlobalAchat;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Achat.EtatJournalArticleAchete;
@@ -58,7 +58,7 @@ public class StatAchatFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent7 = new Intent(getActivity(), EtatGlobalAchat.class);
-                startActivity(intent7);
+               startActivity(intent7);
             }
         });
 
@@ -81,7 +81,7 @@ public class StatAchatFragment extends Fragment {
             public void onClick(View v) {
 
                 Intent intent5 = new Intent(getActivity(), JournalFactureAchat.class);
-                startActivity(intent5);
+                 startActivity(intent5);
             }
         });
 

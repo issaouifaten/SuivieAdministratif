@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/navigation_menu"
-        android:name="com.example.suivieadministratif.ui.menu.MenuPrincipalFragment"
+        android:name="com.example.suivieadministratif.menu.MenuPrincipalFragment"
         android:label="Menu"
         tools:layout="@layout/fragment_menu_principal" />
 

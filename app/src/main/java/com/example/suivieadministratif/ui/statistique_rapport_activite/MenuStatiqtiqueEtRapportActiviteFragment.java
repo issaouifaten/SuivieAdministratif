@@ -7,17 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.suivieadministratif.R;
-import com.example.suivieadministratif.module.reglementClient.RapportEcheanceClientActivity;
-import com.example.suivieadministratif.module.reglementClient.ReglementClientActivity;
-import com.example.suivieadministratif.module.vente.EtatCommande;
-import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
-import com.example.suivieadministratif.module.vente.EtatRetourActivity;
-import com.example.suivieadministratif.module.vente.MouvementVenteServiceActivity;
 import com.example.suivieadministratif.ui.diagramme.MenuDiagrammeFragment;
-import com.example.suivieadministratif.ui.menu.MenuVenteFragment;
-import com.example.suivieadministratif.ui.menu.MenuViewModel;
-import com.example.suivieadministratif.ui.menu.StatistiqueMenuActivity;
-import com.example.suivieadministratif.ui.statistique_rapport_activite.Graphique.Diagramme;
+import com.example.suivieadministratif.menu.MenuViewModel;
+import com.example.suivieadministratif.menu.StatistiqueMenuActivity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

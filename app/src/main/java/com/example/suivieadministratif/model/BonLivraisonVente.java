@@ -47,21 +47,23 @@ public class BonLivraisonVente {
     ArrayList<LigneBonLivraisonVente> list_ligne_bl;
 
 
-    public BonLivraisonVente ( String NumeroBonLivraisonVente, Date DateBonLivraisonVente, String referenceClient, double totalTTC ,double TotalRemise ,double TotalHT  ,double  TotalTVA    ,String NumeroEtat,String LibelleEtat) {
+    public BonLivraisonVente(String NumeroBonLivraisonVente, Date DateBonLivraisonVente, String NomUtilisateur, String referenceClient, double TotalNetHT, double TotalTVA, double totalTTC, String NumeroEtat, String LibelleEtat) {
         this.NumeroBonLivraisonVente = NumeroBonLivraisonVente;
         this.DateBonLivraisonVente = DateBonLivraisonVente;
         RaisonSociale = referenceClient;
-        this.TotalRemise=TotalRemise  ;
-        this.TotalHT=TotalHT ;
-        this.TotalTVA=TotalTVA ;
+        this.NomUtilisateur = NomUtilisateur;
+
+        this.TotalNetHT = TotalNetHT;
+        this.TotalTVA = TotalTVA;
         TotalTTC = totalTTC;
-        this.NumeroEtat = NumeroEtat  ;
-        this.LibelleEtat = LibelleEtat ;
+
+
+        this.NumeroEtat = NumeroEtat;
+        this.LibelleEtat = LibelleEtat;
     }
 
 
-
-    public BonLivraisonVente (String numeroBonLivraisonVente, Date heureCreation, String codeClient, String raisonSociale, double totalTTC, double MontantRecuPayement, String LibelleEtatPayement, String NumeroEtat, String CodeDepot
+    public BonLivraisonVente(String numeroBonLivraisonVente, Date heureCreation, String codeClient, String raisonSociale, double totalTTC, double MontantRecuPayement, String LibelleEtatPayement, String NumeroEtat, String CodeDepot
             , String NumeroBonGratuiteVente, String NumeroFactureVente, String NumeroEtatPaiment, boolean retour, boolean Draft
             , String EtabliePar, String DraftePar, String PayePar) {
 

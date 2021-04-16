@@ -30,6 +30,7 @@ import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 import java.nio.charset.CoderMalfunctionError;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -53,11 +54,9 @@ public class CommandeFournisseurNonConforme extends AppCompatActivity {
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     NumberFormat formatter = new DecimalFormat("00");
 
-    public static TextView txt_tot_ht;
+    public static TextView txt_total_ht;
 
-    FloatingActionButton fab_arrow;
-    RelativeLayout layoutBottomSheet;
-    BottomSheetBehavior sheetBehavior;
+
 
     public static SearchableSpinner sp_fournisseur;
     public static SearchableSpinner sp_resp_administration;
@@ -80,7 +79,7 @@ public class CommandeFournisseurNonConforme extends AppCompatActivity {
 
         txt_date_debut = findViewById(R.id.txt_date_debut);
         txt_date_fin = findViewById(R.id.txt_date_fin);
-        txt_tot_ht = (TextView) findViewById(R.id.txt_tot_ht);
+        txt_total_ht = (TextView) findViewById(R.id.txt_total_ht);
 
         rv_list_cmd_frns_nn_conforme = (RecyclerView) findViewById(R.id.rv_list_cmd_frns_nn_conforme);
         rv_list_cmd_frns_nn_conforme.setHasFixedSize(true);
@@ -92,12 +91,13 @@ public class CommandeFournisseurNonConforme extends AppCompatActivity {
         sp_resp_administration = (SearchableSpinner) findViewById(R.id.sp_resp_admin);
 
 
+
         final Calendar cal1 = Calendar.getInstance();
         cal1.setTime(currentDate);
-        cal1.add(Calendar.MONTH, -3);
+        //cal1.add(Calendar.MONTH, -1);
         year_x1 = cal1.get(Calendar.YEAR);
         month_x1 = cal1.get(Calendar.MONTH);
-        day_x1 = cal1.get(Calendar.DAY_OF_MONTH);
+        day_x1 = 1;
 
 
         final Calendar cal2 = Calendar.getInstance();
@@ -107,13 +107,26 @@ public class CommandeFournisseurNonConforme extends AppCompatActivity {
         month_x2 = cal2.get(Calendar.MONTH);
         day_x2 = cal2.get(Calendar.DAY_OF_MONTH);
 
-        date_debut = cal1.getTime();
-        String _date_du = df.format(cal1.getTime());
+
+        DecimalFormat df_month = new DecimalFormat("00");
+        DecimalFormat df_year = new DecimalFormat("0000");
+
+        Log.e("date_debut ", "01/" + df_month.format(cal1.get(Calendar.MONTH) + 1) + "/" + df_year.format(cal1.get(Calendar.YEAR)));
+        String _date_du = "01/" + df_month.format(cal1.get(Calendar.MONTH) + 1) + "/" + df_year.format(cal1.get(Calendar.YEAR));
+
+        try {
+            date_debut = df.parse(_date_du);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         txt_date_debut.setText(_date_du);
 
         date_fin = cal2.getTime();
         String _date_au = df.format(cal2.getTime());
         txt_date_fin.setText(_date_au);
+
+
 
         ListFournisseurTaskForSearchableSpinner listFournisseurTaskForSearchableSpinner = new ListFournisseurTaskForSearchableSpinner(this, sp_fournisseur, "CommandeFournisseurNonConforme");
         listFournisseurTaskForSearchableSpinner.execute();
@@ -200,39 +213,7 @@ public class CommandeFournisseurNonConforme extends AppCompatActivity {
         });
 
 
-        layoutBottomSheet = (RelativeLayout) findViewById(R.id.bottom_sheet);
-        fab_arrow = (FloatingActionButton) findViewById(R.id.fab_arrow);
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setHideable(false);
 
-        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                switch (newState) {
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED: {
-                        // Toast.makeText(getActivity() , "Close Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_down);
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_COLLAPSED: {
-                        // Toast.makeText(getActivity() , "Expand Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_up);
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_DRAGGING:
-                        break;
-                    case BottomSheetBehavior.STATE_SETTLING:
-                        break;
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
-            }
-        });
 
     }
 

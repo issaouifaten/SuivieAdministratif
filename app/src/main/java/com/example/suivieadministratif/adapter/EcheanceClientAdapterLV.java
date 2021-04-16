@@ -49,26 +49,23 @@ public class EcheanceClientAdapterLV extends ArrayAdapter<EcheanceClient> {
         TextView txt_nom_utilisateur = (TextView) rowView.findViewById(R.id.txt_etablie_par);
         TextView txt_num_reg  = (TextView) rowView.findViewById(R.id.txt_num_reg);
 
-
         try {
+
             txt_raison_sociale.setText(ec.getRaisonSociale());
             txt_date_echenace.setText(sdf.format(ec.getEcheance()));
             txt_libelle.setText(ec.getLibelle() +" de montant ");
             txt_montant.setText(formatter.format(ec.getMontantRecu())+" Dt");
             txt_num_reg.setText(ec.getNumeroReglementClient());
             txt_nom_utilisateur.setText(ec.getNomUtilisateurActuel());
-
-
-
         }
         catch (Exception ex)
-
         {
             Log.e("ERROR_echeance_client",ex.getMessage().toString())  ;
         }
 
 
 /*
+
         TextView txt_num_piece = (TextView) rowView.findViewById(R.id.txt_piece);
         TextView txt_date_piece = (TextView) rowView.findViewById(R.id.txt_date_piece);
 
@@ -85,8 +82,6 @@ public class EcheanceClientAdapterLV extends ArrayAdapter<EcheanceClient> {
         TextView  txt_fournisseur = (TextView) rowView.findViewById(R.id.txt_frns);
 
         TextView txt_montant = (TextView) rowView.findViewById(R.id.txt_total_montant);
-
-
 
 */
 

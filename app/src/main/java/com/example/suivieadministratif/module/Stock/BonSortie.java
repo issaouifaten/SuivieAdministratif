@@ -252,7 +252,7 @@ public class BonSortie extends AppCompatActivity {
         btn_etat_de_stock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent2 = new Intent(getApplicationContext(), StockArticle.class);
+                Intent intent2 = new Intent(getApplicationContext(), EtatDeStockActivity.class);
                 startActivity(intent2);
             }
         });
@@ -331,7 +331,7 @@ public class BonSortie extends AppCompatActivity {
             String[] from = {"NumeroBonSortie", "DateCreation",   "Depot","TotalTTC","Etat"};
             int[] views = {R.id.txt_num_bc, R.id.txt_date_bc, R.id.txt_raison_client, R.id.txt_prix_ttc, R.id.txt_libelle_etat};
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
-                    prolist, R.layout.item_bon_commande, from,
+                    prolist, R.layout.item_etat_entete, from,
                     views);
 
 

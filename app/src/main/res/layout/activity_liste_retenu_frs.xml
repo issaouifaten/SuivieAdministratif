@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.statistique_rapport_activite.Fournisseur.ListeRetenuFrs">
+    tools:context=".ui.statistique_rapport_activite.Fournisseur.ListeRetenuFournisseurActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -139,7 +139,6 @@
 
         </LinearLayout>
 
-        <include layout="@layout/bottom_sheet_devis_vente" />
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

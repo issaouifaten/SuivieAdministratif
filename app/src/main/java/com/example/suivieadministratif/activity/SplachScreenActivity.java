@@ -61,7 +61,7 @@ public class SplachScreenActivity extends AppCompatActivity {
 
         //  get PARAM USER
 
-        etatUser = prefUser.getBoolean("etat", false);
+        etatUser = prefUser.getBoolean("etatuser", false);
         NomUtilisateur = prefUser.getString("NomUtilisateur", "");
         NomSociete = prefUser.getString("NomSociete", "");
         MotDePasse = prefUser.getString("MotDePasse", "");

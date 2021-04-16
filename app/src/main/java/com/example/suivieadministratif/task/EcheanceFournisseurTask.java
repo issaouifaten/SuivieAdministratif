@@ -11,10 +11,12 @@ import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.example.suivieadministratif.ConnectionClass;
+import com.example.suivieadministratif.adapter.BonLivraisonAdapter;
 import com.example.suivieadministratif.adapter.EcheanceFournisseurAdapterLV;
-import com.example.suivieadministratif.model.EcheanceClient;
+import com.example.suivieadministratif.model.BonLivraisonVente;
 import com.example.suivieadministratif.model.EcheanceFournisseur;
-import com.example.suivieadministratif.module.reglementFournisseur.RapportEcheanceFournisseurActivity;
+import com.example.suivieadministratif.module.achat.RapportEcheanceFournisseurActivity;
+import com.example.suivieadministratif.module.vente.ReglementClientActivity;
 import com.example.suivieadministratif.param.Param;
 
 import java.sql.Connection;
@@ -22,9 +24,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class EcheanceFournisseurTask extends AsyncTask<String, String, String> {
 
@@ -33,6 +37,8 @@ public class EcheanceFournisseurTask extends AsyncTask<String, String, String> {
 
     ListView lv_echeance_fournisseur;
     ProgressBar pb;
+
+    String  CodeFournisseurSelected ;
 
 
     String z = "";
@@ -48,12 +54,13 @@ public class EcheanceFournisseurTask extends AsyncTask<String, String, String> {
     ArrayList<EcheanceFournisseur> listEcheanceFournisseurs = new ArrayList<>();
 
     double tot_echeance_frns  =0 ;
-    public EcheanceFournisseurTask(Activity activity, Date  date_debut , Date date_fin  , ListView lv_echeance_fournisseur, ProgressBar pb ) {
+    public EcheanceFournisseurTask(Activity activity, Date  date_debut , Date date_fin  , ListView lv_echeance_fournisseur, ProgressBar pb ,   String  CodeFournisseurSelected ) {
         this.activity = activity;
         this.date_debut = date_debut  ;
         this.date_fin = date_fin  ;
         this.lv_echeance_fournisseur = lv_echeance_fournisseur;
         this.pb = pb;
+        this.CodeFournisseurSelected=CodeFournisseurSelected  ;
 
         SharedPreferences prefe = activity.getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
         user = prefe.getString("user", user);
@@ -61,12 +68,7 @@ public class EcheanceFournisseurTask extends AsyncTask<String, String, String> {
         password = prefe.getString("password", password);
         base = prefe.getString("base", base);
 
-
         Log.e("BON_CMD" ,Param.PEF_SERVER +"-"+ip+"-"+base) ;
-
-        /*SharedPreferences pref=activity.getSharedPreferences("usersession", Context.MODE_PRIVATE);
-        SharedPreferences.Editor edt=pref.edit();
-        NomUtilisateur= pref.getString("NomUtilisateur",NomUtilisateur);*/
 
         connectionClass = new ConnectionClass();
 
@@ -97,12 +99,6 @@ public class EcheanceFournisseurTask extends AsyncTask<String, String, String> {
                         "SELECT\t'Return Value' = @return_value";
 
 
-
-                     /*   " select CodeClient  , RaisonSociale , Libelle   ,Porteur  ,NumeroReglementClient  ,Reference  , MontantRecu , Echeance , NomUtilisateurActuel  \n" +
-                        "from  Vue_EcheancierClient  \n" +
-                        "where Echeance between  '"+df.format(date_debut)+"' and '"+df.format(date_fin)+"' and Stockable=0  ";*/
-
-
                 Log.e("query_echeance_frns",""+query_echeance_frns) ;
                 PreparedStatement ps = con.prepareStatement(query_echeance_frns);
                 ResultSet rs = ps.executeQuery();
@@ -124,10 +120,22 @@ public class EcheanceFournisseurTask extends AsyncTask<String, String, String> {
                     String RaisonSociale = rs.getString("RaisonSociale");
                     Date DateReglement = dtfSQL.parse(rs.getString("DateReglement"));
 
+                    if (CodeFournisseurSelected.equals(CodeFournisseur))
+                    {
+                        tot_echeance_frns = tot_echeance_frns + MontantRecu ;
+                        EcheanceFournisseur echeanceFournisseur  = new EcheanceFournisseur(LibelleCompte  ,Libelle ,NumeroReglementFournisseur ,CodeFournisseur ,CodeCompte ,Reference  ,Echeance ,MontantRecu ,CodeModeReglement ,RaisonSociale ,DateReglement) ;
+                        listEcheanceFournisseurs.add(echeanceFournisseur) ;
+                    }
+                    else if (CodeFournisseurSelected.equals(""))
+                    {
+                        tot_echeance_frns = tot_echeance_frns + MontantRecu ;
+                        EcheanceFournisseur echeanceFournisseur  = new EcheanceFournisseur(LibelleCompte  ,Libelle ,NumeroReglementFournisseur ,CodeFournisseur ,CodeCompte ,Reference  ,Echeance ,MontantRecu ,CodeModeReglement ,RaisonSociale ,DateReglement) ;
+                        listEcheanceFournisseurs.add(echeanceFournisseur) ;
 
-                    tot_echeance_frns = tot_echeance_frns + MontantRecu ;
-                    EcheanceFournisseur echeanceFournisseur  = new EcheanceFournisseur(LibelleCompte  ,Libelle ,NumeroReglementFournisseur ,CodeFournisseur ,CodeCompte ,Reference  ,Echeance ,MontantRecu ,CodeModeReglement ,RaisonSociale ,DateReglement) ;
-                    listEcheanceFournisseurs.add(echeanceFournisseur) ;
+                    }
+
+
+
 
                 }
 
@@ -150,7 +158,33 @@ public class EcheanceFournisseurTask extends AsyncTask<String, String, String> {
         lv_echeance_fournisseur.setAdapter(echeanceFournisseurAdapterLV);
 
         DecimalFormat decF = new DecimalFormat("0.000");
-        RapportEcheanceFournisseurActivity.txt_tot_echeance.setText(decF.format(tot_echeance_frns));
+
+        final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+        instance.setMinimumFractionDigits(3);
+        instance.setMaximumFractionDigits(3);
+        RapportEcheanceFournisseurActivity.txt_tot_ttc.setText(instance.format(tot_echeance_frns));
+
+
+    }
+
+    private ArrayList<EcheanceFournisseur> filterEchFrns (ArrayList<EcheanceFournisseur> listEcheanceFournisseurs, String term) {
+
+        term = term.toLowerCase();
+        final ArrayList<EcheanceFournisseur> filetrlistEcheanceFournisseurs = new ArrayList<>();
+
+        for (EcheanceFournisseur  c : listEcheanceFournisseurs) {
+            final String txtRaisonSocial = c.getRaisonSociale().toLowerCase();
+
+            if (txtRaisonSocial.contains(term)) {
+
+                filetrlistEcheanceFournisseurs.add(c);
+
+
+            }
+        }
+
+
+        return filetrlistEcheanceFournisseurs;
 
     }
 

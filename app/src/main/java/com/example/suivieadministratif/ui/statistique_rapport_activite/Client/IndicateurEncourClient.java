@@ -45,6 +45,7 @@ import java.util.Locale;
 import java.util.Map;
 
 public class IndicateurEncourClient extends AppCompatActivity {
+
     ConnectionClass connectionClass;
     String CodeSociete, NomUtilisateur, CodeLivreur;
     final Context co = this;
@@ -57,7 +58,7 @@ public class IndicateurEncourClient extends AppCompatActivity {
     ProgressBar progressBar;
     ArrayList<String> data_CodeRespensable, data_NomRespensable;
     ArrayList<String> data_CodeClient, data_NomClient;
-    Spinner spinRespensable, spinClient;
+    Spinner  spinClient; //spinRespensable,
     String condition = "", conditionclient = "", conditionArticle = "";
 
 
@@ -87,11 +88,12 @@ public class IndicateurEncourClient extends AppCompatActivity {
         txt_datefin = (TextView) findViewById(R.id.txt_date_fin);
         txt_total = (TextView) findViewById(R.id.txt_total);
         gridEtat = (GridView) findViewById(R.id.grid_detail);
-        spinRespensable = (Spinner) findViewById(R.id.spinnerrepresentant);
+       // spinRespensable = (Spinner) findViewById(R.id.spinnerrepresentant);
         spinClient = (Spinner) findViewById(R.id.spinnerclient);
 
-        GetDataSpinner getDataSpinner = new GetDataSpinner();
-        getDataSpinner.execute("");
+        /*GetDataSpinner getDataSpinner = new GetDataSpinner();
+        getDataSpinner.execute("");*/
+
         GetDataSpinnerClient getDataSpinnerClient = new GetDataSpinnerClient();
         getDataSpinnerClient.execute("");
 
@@ -192,7 +194,7 @@ public class IndicateurEncourClient extends AppCompatActivity {
 
             }
         });
-        spinRespensable.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+      /*  spinRespensable.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
@@ -211,7 +213,7 @@ public class IndicateurEncourClient extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });*/
 
     }
 
@@ -348,7 +350,7 @@ public class IndicateurEncourClient extends AppCompatActivity {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
-            spinRespensable.setAdapter(adapter);
+           // spinRespensable.setAdapter(adapter);
 
 
         }

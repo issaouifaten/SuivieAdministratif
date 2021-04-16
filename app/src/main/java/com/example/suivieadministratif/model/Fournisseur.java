@@ -4,7 +4,13 @@ public class Fournisseur {
 
     private   String  CodeFournisseur  ;
     private   String  RaisonSocial  ;
+    private   int  nbrClick   ;
 
+    public Fournisseur(String codeFournisseur, String raisonSocial, int nbrClick) {
+        CodeFournisseur = codeFournisseur;
+        RaisonSocial = raisonSocial;
+        this.nbrClick = nbrClick;
+    }
 
     public Fournisseur(String codeFournisseur, String raisonSocial) {
         CodeFournisseur = codeFournisseur;
@@ -25,6 +31,15 @@ public class Fournisseur {
 
     public void setRaisonSocial(String raisonSocial) {
         RaisonSocial = raisonSocial;
+    }
+
+
+    public int getNbrClick() {
+        return nbrClick;
+    }
+
+    public void setNbrClick(int nbrClick) {
+        this.nbrClick = nbrClick;
     }
 
     @Override

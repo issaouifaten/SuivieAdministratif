@@ -11,7 +11,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:orientation="vertical"
         android:scrollbarAlwaysDrawVerticalTrack="true">
 
@@ -62,7 +61,7 @@
                         android:hint="IP Local"
                         android:inputType="text"
                         android:singleLine="true"
-                        android:text="192.168.1.24" />
+                        android:text="192.168.1.40" />
 
                 </LinearLayout>
 
@@ -80,7 +79,23 @@
                         android:hint="IP Distant"
                         android:inputType="text"
                         android:singleLine="true"
-                        android:text="41.231.87.241" />
+                        android:text="41.230.54.0" />
+
+
+                    <!--
+                    MTD
+
+                    CMVI
+                    41.230.28.31 :5560
+                    192.168.1.40
+
+                    TECHNOFRIEN
+                41.230.54.0
+
+                    MTD
+                    41.228.160.56
+
+                    -->
 
                 </LinearLayout>
 
@@ -94,7 +109,22 @@
                     android:hint="base"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
-                    android:text="I2S_ERP" />
+                    android:text="TECHNOFRIEN" />
+
+                <!--
+                  MTD
+
+                  CMVI
+                  41.230.28.31 :5560
+                  192.168.1.40
+
+                  TECHNOFRIEN
+              41.230.54.0
+
+                  MTD
+                  41.228.160.56
+
+                  -->
 
                 <EditText
                     android:id="@+id/user"

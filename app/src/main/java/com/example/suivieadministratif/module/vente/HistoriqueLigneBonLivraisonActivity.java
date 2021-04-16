@@ -1,6 +1,7 @@
 package com.example.suivieadministratif.module.vente;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.task.HistoriqueLBLAchatTask;
 import com.example.suivieadministratif.task.HistoriqueLBLTask;
@@ -17,7 +18,7 @@ public class HistoriqueLigneBonLivraisonActivity extends AppCompatActivity {
 
 
     TextView txt_num_bl, txt_date_bc, txt_client, txt_ttc;
-    ListView lv_ligne_bc;
+    ListView lv_ligne_piece;
     ProgressBar pb;
     DecimalFormat decF = new DecimalFormat("0.000");
 
@@ -25,8 +26,7 @@ public class HistoriqueLigneBonLivraisonActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_historique_ligne_bon_livraison);
-
+        setContentView(R.layout.activity_detail_ligne_piece);
 
         String NumeroBL = getIntent().getStringExtra("cle_numero_bon_liv_vente");
         setTitle(NumeroBL);
@@ -35,12 +35,12 @@ public class HistoriqueLigneBonLivraisonActivity extends AppCompatActivity {
         double ttc = getIntent().getDoubleExtra("cle_total_ttc", 0);
         String date_cmd = getIntent().getStringExtra("cle_date_bc");
 
-        txt_num_bl = (TextView) findViewById(R.id.txt_num_bl);
+        txt_num_bl = (TextView) findViewById(R.id.txt_num_piece);
         txt_date_bc = (TextView) findViewById(R.id.txt_date_bc);
         txt_client = (TextView) findViewById(R.id.txt_raison_client);
         txt_ttc = (TextView) findViewById(R.id.txt_prix_ttc);
 
-        lv_ligne_bc = (ListView) findViewById(R.id.lv_ligne_bon_commande);
+        lv_ligne_piece = (ListView) findViewById(R.id.lv_ligne_piece);
         pb = (ProgressBar) findViewById(R.id.pb);
         pb.setVisibility(View.INVISIBLE);
 
@@ -48,11 +48,9 @@ public class HistoriqueLigneBonLivraisonActivity extends AppCompatActivity {
         txt_ttc.setText(decF.format(ttc));
         txt_date_bc.setText(date_cmd);
         txt_num_bl.setText(NumeroBL);
-//
-//        HistoriqueLBLAchatTask historiqueLBLTask  = new HistoriqueLBLAchatTask (this  ,lv_ligne_bc ,NumeroBL , pb) ;
-//        historiqueLBLTask.execute();
-        HistoriqueLBLTask historiqueLBLTask  = new HistoriqueLBLTask (this  ,lv_ligne_bc ,NumeroBL , pb) ;
-         historiqueLBLTask.execute();
+
+        HistoriqueLBLTask historiqueLBLTask = new HistoriqueLBLTask(this , lv_ligne_piece , NumeroBL, pb);
+        historiqueLBLTask.execute();
 
 
     }

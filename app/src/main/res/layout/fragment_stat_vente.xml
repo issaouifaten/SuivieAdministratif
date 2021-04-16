@@ -391,6 +391,59 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_journal_bl_vente"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+
+                    android:clickable="true"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
+                    android:layout_margin="10dp"
+                    card_view:cardCornerRadius="2dp"
+                    card_view:contentPadding="10dp"
+                    card_view:cardBackgroundColor="#66FCF9F9"
+                    card_view:cardElevation="2dp"
+                    card_view:cardMaxElevation="6dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+
+                        <RelativeLayout
+                            android:layout_width="60dp"
+                            android:layout_height="60dp">
+
+                            <ImageView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/ic_bon_commande"
+                                android:padding="5dp"/>
+
+                        </RelativeLayout>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:src="@drawable/line_h"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:layout_marginTop="10dp"
+                            android:textSize="15dp"
+                            android:text="Journal BL Vente"
+                            android:gravity="center"/>
+
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
 
             </LinearLayout>
 

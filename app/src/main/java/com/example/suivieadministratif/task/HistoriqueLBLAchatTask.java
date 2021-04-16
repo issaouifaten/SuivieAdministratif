@@ -24,7 +24,6 @@ public class HistoriqueLBLAchatTask extends AsyncTask <String, String, String> {
 
 
     Activity activity;
-
     ListView lv_list_lbl;
     String NumeroBL ;
     ProgressBar pb;
@@ -80,7 +79,7 @@ public class HistoriqueLBLAchatTask extends AsyncTask <String, String, String> {
                 z = "Error in connection with SQL server";
             } else {
                 String queryAchat = " select \n" +
-                        "NumeroBonLivraisonAchat  , CodeArticle  ,Quantite   , MontantTTC,DesignationArticle \n" +
+                        "NumeroBonLivraisonAchat  , CodeArticle  , Quantite   , MontantTTC ,  NetHT  ,  TauxRemise ,    DesignationArticle \n" +
                         " from  LigneBonLivraisonAchat    where NumeroBonLivraisonAchat  = '"+NumeroBL+"'   " ;
 
                 PreparedStatement ps = con.prepareStatement(queryAchat);
@@ -93,10 +92,14 @@ public class HistoriqueLBLAchatTask extends AsyncTask <String, String, String> {
                     String NumeroBonLivraisonVente = rs.getString("NumeroBonLivraisonAchat");
                     String CodeArticle = rs.getString("DesignationArticle");
                     int Quantite = rs.getInt("Quantite");
+
+                    double NetHT = rs.getDouble("NetHT");
+                    double TauxRemise = rs.getDouble("TauxRemise");
                     double MontantTTC = rs.getDouble("MontantTTC");
 
-                    LigneBonLivraisonVente lbl  = new LigneBonLivraisonVente(NumeroBonLivraisonVente , CodeArticle ,Quantite , MontantTTC) ;
+                    LigneBonLivraisonVente lbl  = new LigneBonLivraisonVente(NumeroBonLivraisonVente , CodeArticle ,Quantite ,NetHT ,TauxRemise, MontantTTC) ;
                     listLigneBonLivraisonVente.add(lbl) ;
+
 
                 }
 
@@ -105,6 +108,8 @@ public class HistoriqueLBLAchatTask extends AsyncTask <String, String, String> {
             }
         } catch (Exception ex) {
             z = "Error retrieving data from table";
+
+            Log.e("Error_ACHAT" ,ex.getMessage().toString()) ;
 
         }
         return z;

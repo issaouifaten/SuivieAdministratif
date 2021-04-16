@@ -178,7 +178,7 @@
                 app:headerLayout="@layout/menu_stock" />
         </androidx.drawerlayout.widget.DrawerLayout>
 
-        <include layout="@layout/bottom_sheet_devis_vente" />
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

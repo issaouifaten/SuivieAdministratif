@@ -11,9 +11,16 @@
         android:roundIcon="@drawable/i2s"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.ParametrageActivity"></activity>
-        <activity android:name=".module.tresorerie.PortfeuilTraite" />
-        <activity android:name=".module.tresorerie.PortfeuilCheque" />
+        <activity android:name=".module.tresorerie.DetailRecapEcheancierClientParMois"></activity>
+        <activity android:name=".module.tresorerie.RecapEcheancierClientActivity" />
+        <activity android:name=".module.tresorerie.PortFeuilleTraiteActvity" />
+        <activity android:name=".module.tresorerie.PortFeuilleChequeActivity" />
+        <activity android:name=".module.vente.FicheClientActivity" />
+        <activity android:name=".ui.statistique_rapport_activite.Vente.JournalBLVenteActivity" />
+        <activity android:name=".module.Stock.StockAlaDateActivity" />
+        <activity android:name=".module.Stock.FicheArticleActivity" />
+        <activity android:name=".module.Stock.EtatDeStockActivity" />
+        <activity android:name=".activity.ParametrageActivity" />
         <activity android:name=".module.Stock.DetailBonRedressement" />
         <activity android:name=".module.Stock.BonRedressement" />
         <activity android:name=".ui.statistique_rapport_activite.Graphique.VariationCAEnMoisActivity" />
@@ -44,10 +51,10 @@
         <activity android:name=".ui.statistique_rapport_activite.Client.IndicateurEncourClient" />
         <activity android:name=".ui.statistique_rapport_activite.Client.PieceNonPayeClient" />
         <activity android:name=".ui.statistique_rapport_activite.Fournisseur.PieceNonPayeFrs" />
-        <activity android:name=".ui.statistique_rapport_activite.Client.ListRetenuClient" />
+        <activity android:name=".ui.statistique_rapport_activite.Client.ListRetenuClientActivity" />
         <activity android:name=".ui.statistique_rapport_activite.Achat.EtatJournalArticleAchete" />
-        <activity android:name=".ui.statistique_rapport_activite.Client.FicheClient" />
-        <activity android:name=".ui.statistique_rapport_activite.Fournisseur.ListeRetenuFrs" />
+        <activity android:name=".ui.statistique_rapport_activite.Client.FicheClientActivity2" />
+        <activity android:name=".ui.statistique_rapport_activite.Fournisseur.ListeRetenuFournisseurActivity" />
         <activity android:name=".ui.statistique_rapport_activite.article.ArticleDLC" />
         <activity android:name=".module.Stock.DetailLigneBonTransfert" />
         <activity android:name=".module.Stock.BonTransfertStock" />
@@ -55,13 +62,34 @@
         <activity android:name=".module.Stock.BonSortie" />
         <activity android:name=".module.Stock.DetailLigneBonEntre" />
         <activity android:name=".module.Stock.BonEntre" />
-        <activity android:name=".module.achat.DetailLigneFactureAchat" />
+        <activity android:name=".module.achat.FicheFournisseurActivity" />
+        <activity android:name=".module.achat.LigneFactureAchat" />
         <activity android:name=".module.achat.FactureAchat" />
-        <activity android:name=".module.vente.EtatBonAvoirVente" />
-        <activity android:name=".module.vente.DetailLigneFactureVente" />
+        <activity android:name=".module.achat.DetailReglementFournisseurActivity" />
+        <activity
+            android:name=".module.achat.RapportEcheanceFournisseurActivity"
+            android:label="Rapport Echéance Fournisseur" />
+        <activity
+            android:name=".module.achat.ReglementFournisseurActivity"
+            android:label="Règlement Fournisseur" />
+        <activity android:name=".module.achat.LigneBonRetourAchatActivity" />
+        <activity android:name=".module.achat.LigneBonLivraisonAchatActivity" />
+        <activity android:name=".module.achat.LigneBonCommandeAchatActivity" />
+        <activity android:name=".module.achat.BonRetourAchatActivity" />
+        <activity android:name=".module.achat.BonLivraisonAchatActivity" />
+        <activity android:name=".module.achat.BonCommandeAchatActivity" />
+        <activity android:name=".module.vente.LigneFactureVente" />
         <activity android:name=".module.vente.EtatFactureVente" />
-        <activity android:name=".module.vente.DetailLigneDevisVente" />
+        <activity android:name=".module.vente.LigneDevisVente" />
         <activity android:name=".module.vente.EtatDevisVente" />
+        <activity
+            android:name=".module.vente.RapportEcheanceClientActivity"
+            android:label="Rapport Echéance Client" />
+        <activity android:name=".module.vente.MouvementVenteServiceActivity" />
+        <activity android:name=".module.vente.DetailReglementClientActivity" />
+        <activity
+            android:name=".module.vente.ReglementClientActivity"
+            android:label="Règlement Client" />
         <activity
             android:name=".activity.AlerteWorkflow"
             android:label="@string/title_activity_alerte_workflow"
@@ -76,43 +104,15 @@
             android:name=".ui.statistique_rapport_activite.article.ArticleFaibleRotationActivity"
             android:label="Article faible Rotation" />
         <activity
-            android:name=".ui.menu.StatistiqueMenuActivity"
+            android:name=".menu.StatistiqueMenuActivity"
             android:label="Statistique"
-            android:theme="@style/AppTheme.NoActionBar">
-
-            <!--  -->
-        </activity>
-        <activity
-            android:name=".module.reglementFournisseur.RapportEcheanceFournisseurActivity"
-            android:label="Rapport Echéance Fournisseur" />
-        <activity
-            android:name=".module.reglementClient.RapportEcheanceClientActivity"
-            android:label="Rapport Echéance Client" />
-        <activity android:name=".module.vente.MouvementVenteServiceActivity" />
-        <activity android:name=".module.reglementFournisseur.DetailReglementFournisseurActivity" />
-        <activity android:name=".module.reglementClient.DetailReglementClientActivity" />
-        <activity
-            android:name=".module.reglementFournisseur.ReglementFournisseurActivity"
-            android:label="Règlement Fournisseur" />
-        <activity
-            android:name=".module.reglementClient.ReglementClientActivity"
-            android:label="Règlement Client" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.caisse.CaisseRecetteActivity"
             android:label="Caisse Recette" />
         <activity
             android:name=".module.caisse.MouvementCaisseDepenseDetailActivity"
             android:label="Mouvement Caisse Depense" />
-        <activity android:name=".module.achat.LigneBonRetourAchatActivity" />
-        <activity android:name=".module.achat.LigneBonLivraisonAchatActivity" />
-        <activity android:name=".module.achat.LigneBonCommandeAchatActivity" />
-        <activity android:name=".module.achat.BonRetourAchatActivity" />
-        <activity android:name=".module.achat.BonLivraisonAchatActivity" />
-        <activity android:name=".module.achat.BonCommandeAchatActivity" />
-        <activity
-            android:name=".activity.BasicActivity"
-            android:label="@string/title_activity_basic"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.HomeActivity"
             android:label="@string/title_activity_home" />
@@ -132,9 +132,6 @@
         <activity
             android:name=".ui.statistique_rapport_activite.article.EtatJournalArticleVendu"
             android:label="Journal Article Vendu" />
-        <activity
-            android:name=".module.Stock.StockArticle"
-            android:label="JournalArticleVendu" />
         <activity android:name=".module.vente.EtatCommande" />
         <activity
             android:name=".ui.statistique_rapport_activite.Vente.EtatChiffreAffaire"
@@ -144,23 +141,14 @@
             android:name=".module.vente.EtatRetourActivity"
             android:label="Etat de Bon Retour" />
         <activity android:name=".module.vente.HistoriqueLigneBonLivraisonActivity" />
-        <activity android:name=".module.vente.LigneBonLivraisonVenteActivity" />
-
-        <activity
-            android:name=".module.Stock.FicheArticle.FicheArticleActivity"
-            android:label="Fiche Article"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-
         <activity
             android:name=".module.vente.EtatLivraisonActivity"
             android:label="Etat de Bon Livraison" />
-        <activity android:name=".module.vente.HistoriqueLigneBonCommandeActivity" />
+        <activity android:name=".module.vente.LigneBonCommandeActivity" />
         <activity
             android:name=".MenuHome"
             android:label="HOME"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".activity.LoginActivity"
             android:label="LOGIN" />

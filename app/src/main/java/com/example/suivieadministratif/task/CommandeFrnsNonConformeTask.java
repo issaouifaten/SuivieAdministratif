@@ -237,7 +237,7 @@ public class CommandeFrnsNonConformeTask extends AsyncTask<String, String, Strin
         rv_suivie_cmd_frns.setAdapter(adapter);
 
         DecimalFormat decF = new DecimalFormat("0.000");
-        CommandeFournisseurNonConforme.txt_tot_ht.setText(decF.format(total_) + " Dt");
+        CommandeFournisseurNonConforme.txt_total_ht.setText(decF.format(total_) + " Dt");
 
     }
 

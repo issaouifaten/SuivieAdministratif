@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.menu.MenuVenteFragment"
+    tools:context=".menu.MenuVenteFragment"
     android:background="@drawable/back">
 
 
@@ -139,7 +139,7 @@
                         <ImageView
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:src="@drawable/ic_caisse_recette"
+                            android:src="@drawable/ic_caisse_"
                             android:padding="15dp"/>
 
                         <ImageView

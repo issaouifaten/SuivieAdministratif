@@ -1,20 +1,15 @@
 package com.example.suivieadministratif.module.achat;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import com.example.suivieadministratif.ConnectionClass;
 import  com.example.suivieadministratif.R ;
 import com.example.suivieadministratif.activity.HomeActivity;
-import com.example.suivieadministratif.module.reglementFournisseur.RapportEcheanceFournisseurActivity;
-import com.example.suivieadministratif.module.reglementFournisseur.ReglementFournisseurActivity;
-import com.example.suivieadministratif.module.vente.EtatRetourActivity;
 import com.example.suivieadministratif.task.HistoriqueBRAchatTask;
-import com.example.suivieadministratif.task.HistoriqueBRTask;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.suivieadministratif.task.ListFournisseurTaskForSearchableSpinner;
 import com.google.android.material.navigation.NavigationView;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -26,14 +21,12 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -41,16 +34,12 @@ import java.util.Date;
 public class BonRetourAchatActivity extends AppCompatActivity {
 
 
-    ListView lv_list_historique_br;
-    ProgressBar pb_bc  ;
-    SearchView search_bar_client ;
+    public static ListView lv_list_historique_br;
+    public static  ProgressBar pb_bc  ;
+
 
     public TextView txt_date_debut, txt_date_fin;
 
-    ConnectionClass connectionClass;
-    String NomUtilisateur,codeclient,rsclient="",mail="",Nbcmd="",date,nbcmd,totale;
-    final Context co = this;
-    String user, password, base, ip;
 
     int id_DatePickerDialog = 0;
     Date currentDate = new Date();
@@ -62,18 +51,17 @@ public class BonRetourAchatActivity extends AppCompatActivity {
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     NumberFormat formatter = new DecimalFormat("00");
 
-    public static TextView txt_tot_retour  ;
-
-    FloatingActionButton fab_arrow;
-    RelativeLayout layoutBottomSheet;
-    BottomSheetBehavior sheetBehavior;
 
 
+    public static TextView txt_tot_ht, txt_tot_tva, txt_tot_ttc;
+
+    SearchableSpinner sp_fournisseur ;
+    public   static   String  CodeFournisseurSelected = "" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bon_retour_achat);
+        setContentView(R.layout.activity_etat_achat);
 
         SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
@@ -82,18 +70,22 @@ public class BonRetourAchatActivity extends AppCompatActivity {
         txt_date_debut = findViewById(R.id.txt_date_debut);
         txt_date_fin = findViewById(R.id.txt_date_fin);
 
-        txt_tot_retour= findViewById(R.id.txt_tot_retour) ;
+        txt_tot_ht = (TextView) findViewById(R.id.txt_tot_ht);
+        txt_tot_tva = (TextView) findViewById(R.id.txt_total_tva);
+        txt_tot_ttc = (TextView) findViewById(R.id.txt_total_ttc);
 
-        lv_list_historique_br=(ListView)findViewById(R.id.lv_list_historique_br);
+        lv_list_historique_br=(ListView)findViewById(R.id.lv_list);
         pb_bc  = (ProgressBar)  findViewById(R.id.pb_bc) ;
-        search_bar_client = (SearchView)   findViewById(R.id.search_bar_client) ;
+
+        sp_fournisseur = (SearchableSpinner) findViewById(R.id.sp_fournisseur);
+
 
         final Calendar cal1 = Calendar.getInstance();
         cal1.setTime(currentDate);
-        cal1.add(Calendar.MONTH, -1);
-        year_x1  = cal1.get(Calendar.YEAR);
+        //cal1.add(Calendar.MONTH, -1);
+        year_x1 = cal1.get(Calendar.YEAR);
         month_x1 = cal1.get(Calendar.MONTH);
-        day_x1   = cal1.get(Calendar.DAY_OF_MONTH);
+        day_x1 = 1 ;
 
         final Calendar cal2 = Calendar.getInstance();
         cal2.setTime(currentDate);
@@ -102,15 +94,33 @@ public class BonRetourAchatActivity extends AppCompatActivity {
         month_x2 = cal2.get(Calendar.MONTH);
         day_x2 = cal2.get(Calendar.DAY_OF_MONTH);
 
-        date_debut = cal1.getTime();
-        String _date_du = df.format(cal1.getTime());
+
+
+        DecimalFormat  df_month = new DecimalFormat("00") ;
+        DecimalFormat  df_year  = new DecimalFormat("0000") ;
+
+        Log.e("date_debut ", "01/"+ df_month.format(cal1.get(Calendar.MONTH) +1)+"/"+df_year.format(cal1.get(Calendar.YEAR) ) ) ;
+        String _date_du =  "01/"+ df_month.format(cal1.get(Calendar.MONTH) +1)+"/"+df_year.format(cal1.get(Calendar.YEAR) )  ;
+
+
+        try {
+            date_debut =  df .parse(_date_du);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         txt_date_debut.setText(_date_du);
 
         date_fin = cal2.getTime();
         String _date_au = df.format(cal2.getTime());
         txt_date_fin.setText(_date_au);
 
+
         updateData ();
+
+
+        ListFournisseurTaskForSearchableSpinner listFournisseurTaskForSearchableSpinner = new ListFournisseurTaskForSearchableSpinner(this , sp_fournisseur,"BonRetourAchatActivity") ;
+        listFournisseurTaskForSearchableSpinner.execute() ;
 
         txt_date_debut.setOnClickListener(new View.OnClickListener  ()  {
             @Override
@@ -268,48 +278,12 @@ public class BonRetourAchatActivity extends AppCompatActivity {
 
 
 
-
-        layoutBottomSheet = (RelativeLayout) findViewById(R.id.bottom_sheet);
-        fab_arrow = (FloatingActionButton) findViewById(R.id.fab_arrow);
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setHideable(false);
-
-        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                switch (newState) {
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED: {
-                        // Toast.makeText(getActivity() , "Close Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_down);
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_COLLAPSED: {
-                        // Toast.makeText(getActivity() , "Expand Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_up);
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_DRAGGING:
-                        break;
-                    case BottomSheetBehavior.STATE_SETTLING:
-                        break;
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
-            }
-        });
-
-
     }
 
     public   void     updateData ()
     {
 
-        HistoriqueBRAchatTask historiqueBRTask  = new HistoriqueBRAchatTask(this ,date_debut ,date_fin,lv_list_historique_br  , pb_bc,search_bar_client) ;
+        HistoriqueBRAchatTask historiqueBRTask  = new HistoriqueBRAchatTask(this ,date_debut ,date_fin,lv_list_historique_br  , pb_bc,CodeFournisseurSelected) ;
         historiqueBRTask.execute() ;
 
     }

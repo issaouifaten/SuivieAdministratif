@@ -29,6 +29,8 @@ public class ListAnneeForSpinner extends AsyncTask<String, String, String> {
     Activity activity;
     Spinner sp_annee;
     Spinner sp_mois;
+
+    String  param ;
     String origine;
     ArrayList<String> listAnnee = new ArrayList<>();
 
@@ -41,11 +43,12 @@ public class ListAnneeForSpinner extends AsyncTask<String, String, String> {
     String user, password, base, ip;
 
 
-    public ListAnneeForSpinner(Activity activity, Spinner sp_annee, Spinner sp_mois, String origine) {
+    public ListAnneeForSpinner(Activity activity, Spinner sp_annee, Spinner sp_mois,  String  param  ,String origine) {
         this.activity = activity;
         this.sp_annee = sp_annee;
         this.sp_mois = sp_mois;
         this.origine = origine;
+        this.param = param  ;
 
         SharedPreferences prefe = activity.getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         SharedPreferences.Editor edte = prefe.edit();
@@ -151,7 +154,7 @@ public class ListAnneeForSpinner extends AsyncTask<String, String, String> {
                         VariationCAEnMoisActivity.annee_fin_selected = listAnnee.get( position) ;
                     }
 
-                    ListMoisForSpinner listMoisForSpinner = new ListMoisForSpinner(activity, sp_mois, annee ,origine);
+                    ListMoisForSpinner listMoisForSpinner = new ListMoisForSpinner(activity, sp_mois, annee ,param ,origine);
                     listMoisForSpinner.execute();
 
                     Log.e("selection_anne", annee);

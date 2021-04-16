@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_item_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+
+
+
+                 <LinearLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:orientation="horizontal"
+                     android:layout_marginTop= "5dp"
+                     android:layout_marginBottom="3dp"
+                     android:layout_marginRight="30dp"
+                     android:gravity="center_vertical">
+
+                     <ImageView
+                         android:layout_width="25dp"
+                         android:layout_height="25dp"
+                         android:src="@drawable/ic_fournisseur"
+                         android:layout_margin="5dp"
+                         />
+
+                     <TextView
+                         android:id="@+id/txt_nom_prenom"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:text=" nom Prenom  "
+                         android:textStyle="bold"
+                         android:textSize="20dp"
+                         android:textColor="@color/blue"
+                          />
+
+
+                     <TextView
+                         android:id="@+id/txt_nom_utilisateur"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_gravity="top"
+                         android:layout_margin="5dp"
+                         android:text="0015698"
+                         android:textSize="10dp"
+
+                         android:textColor="@color/gris"  />
+
+
+                 </LinearLayout>
+
+
+
+
+              <!--  <TextView
+                    android:id="@+id/txt_code_article"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:typeface="serif"
+                    android:text="12/20/2019"
+                    />-->
+            </LinearLayout>
+
+
+            <CheckBox
+                android:id="@+id/cb_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="2dp"
+                android:buttonTint="@color/yello"
+                android:clickable="false" />
+
+
+
+
+        </RelativeLayout>
+
+
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>

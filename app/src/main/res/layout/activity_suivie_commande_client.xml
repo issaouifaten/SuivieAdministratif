@@ -199,24 +199,10 @@
                     android:inputType="textPersonName"
                     android:padding="5dp" />
 
-                <GridView
-                    android:id="@+id/grid_detail"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/footer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:layout_alignParentBottom="true"
-                android:orientation="horizontal">
-
                 <androidx.cardview.widget.CardView
                     android:id="@+id/card_compte"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:layout_marginBottom="10dp"
                     app:cardBackgroundColor="@color/back_card_coture">
@@ -274,6 +260,20 @@
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
+
+                <GridView
+                    android:id="@+id/grid_detail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/footer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal">
+
             </LinearLayout>
 
 

@@ -43,6 +43,7 @@ public class EtatChiffreAffaireEnMoisTuask extends AsyncTask<String, String, Str
     Date date_debut, date_fin;
 
     ProgressBar pb;
+    String param  ;
 
 
     String z = "";
@@ -66,12 +67,13 @@ public class EtatChiffreAffaireEnMoisTuask extends AsyncTask<String, String, Str
             R.color.color_g_21} ;
 
 
-    public EtatChiffreAffaireEnMoisTuask(Activity activity,   BarChart barGraph ,Date date_debut, Date date_fin, ProgressBar pb) {
+    public EtatChiffreAffaireEnMoisTuask(Activity activity,   BarChart barGraph ,Date date_debut, Date date_fin, ProgressBar pb,String param) {
         this.activity = activity;
         this.barGraph = barGraph  ;
         this.date_debut = date_debut;
         this.date_fin = date_fin;
         this.pb = pb;
+        this.param=param  ;
 
         SharedPreferences prefe = activity.getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
         user = prefe.getString("user", user);
@@ -99,17 +101,37 @@ public class EtatChiffreAffaireEnMoisTuask extends AsyncTask<String, String, Str
                 z = "Error in connection with SQL server";
             } else {
 
-                String query_entete_suivie_relation = " select  YEAR(DatePiece) as annee,\n" +
-                        "MONTH(DatePiece) as mois,\n" +
-                        "sum(NetHT) as Total, \n" +
-                        "CAST(MONTH(DatePiece) AS varchar(2)) + '/' +    CAST(year(DatePiece) AS varchar(4)) as Code    \n" +
-                        "from  dbo.Vue_ListeVenteGlobal   \n" +
-                        "WHERE DatePiece between '"+df.format(date_debut)+"' AND '"+df.format(date_fin)+"'    \n" +
-                        "GROUP by   MONTH(DatePiece) ,YEAR(DatePiece)  \n" +
-                        "ORDER BY CONVERT(DATE,'01/'+CAST(MONTH(DatePiece) AS varchar(2)) + '/' +    CAST(year(DatePiece) AS varchar(4))) \n ";
+                String query_entete_suivie_relation = "" ;
+
+                if (param.equals("commercial"))
+                {
+                    query_entete_suivie_relation = " select  YEAR(DatePiece) as annee,\n" +
+                            "MONTH(DatePiece) as mois,\n" +
+                            "sum(NetHT) as Total, \n" +
+                            "CAST(MONTH(DatePiece) AS varchar(2)) + '/' +    CAST(year(DatePiece) AS varchar(4)) as Code    \n" +
+                            "from  dbo.Vue_ListeVenteGlobal   \n" +
+                            "WHERE DatePiece between '"+df.format(date_debut)+"' AND '"+df.format(date_fin)+"'    \n" +
+                            "GROUP by   MONTH(DatePiece) ,YEAR(DatePiece)  \n" +
+                            "ORDER BY CONVERT(DATE,'01/'+CAST(MONTH(DatePiece) AS varchar(2)) + '/' +    CAST(year(DatePiece) AS varchar(4))) \n ";
+
+                }
+                else if (param .equals("comptable"))
+                {
+
+                    query_entete_suivie_relation = " select  YEAR(DatePiece) as annee,\n" +
+                            "MONTH(DatePiece) as mois,\n" +
+                            "sum(NetHT) as Total, \n" +
+                            "CAST(MONTH(DatePiece) AS varchar(2)) + '/' +    CAST(year(DatePiece) AS varchar(4)) as Code    \n" +
+                            "from  dbo.Vue_ListeVenteGlobalComptable   \n" +
+                            "WHERE DatePiece between '"+df.format(date_debut)+"' AND '"+df.format(date_fin)+"'    \n" +
+                            "GROUP by   MONTH(DatePiece) ,YEAR(DatePiece)  \n" +
+                            "ORDER BY CONVERT(DATE,'01/'+CAST(MONTH(DatePiece) AS varchar(2)) + '/' +    CAST(year(DatePiece) AS varchar(4))) \n ";
+                }
 
 
-                Log.e("query_entete", "" + query_entete_suivie_relation);
+
+
+                Log.e("query_var_ca_en_mois", "" + query_entete_suivie_relation);
                 PreparedStatement ps = con.prepareStatement(query_entete_suivie_relation);
                 ResultSet rs = ps.executeQuery();
 
@@ -128,7 +150,7 @@ public class EtatChiffreAffaireEnMoisTuask extends AsyncTask<String, String, Str
                     listCAParPeriode .add(caParPeriode) ;
 
 
-                    listTaux.add( new BarEntry(  index  ,(float) Total ,Code ) );
+                    listTaux.add( new BarEntry(  index  ,(float) Total , Code ) );
                     listCode.add(Code) ;
                     index ++ ;
                 }
@@ -167,10 +189,6 @@ public class EtatChiffreAffaireEnMoisTuask extends AsyncTask<String, String, Str
 
         ArrayList<String> labels  = new ArrayList<>() ;
         labels.add("") ;
-
-
-
-
 
 
         List<IBarDataSet> listBarDataSet  = new ArrayList<>() ;

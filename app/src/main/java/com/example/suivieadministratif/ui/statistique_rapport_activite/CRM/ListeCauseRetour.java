@@ -70,7 +70,7 @@ EditText edt_recherche;
 
         SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " :Liste Depense");
+        setTitle(NomSociete + " :Liste Cause Retour ");
 
         connectionClass = new ConnectionClass();
 

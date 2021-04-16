@@ -9,15 +9,10 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.suivieadministratif.ConnectionClass;
-import com.example.suivieadministratif.adapter.DetailReglementAdapterRV;
 import com.example.suivieadministratif.adapter.DetailReglementfrnsAdapterRV;
-import com.example.suivieadministratif.adapter.LigneReglementAdapterRV;
 import com.example.suivieadministratif.adapter.LigneReglementFrnsAdapterRV;
-import com.example.suivieadministratif.model.DetailReglementClient;
 import com.example.suivieadministratif.model.DetailReglementFournisseur;
-import com.example.suivieadministratif.model.LigneReglementClient;
 import com.example.suivieadministratif.model.LigneReglementFournisseur;
-import com.example.suivieadministratif.module.reglementClient.ReglementClientActivity;
 import com.example.suivieadministratif.param.Param;
 
 import java.sql.Connection;

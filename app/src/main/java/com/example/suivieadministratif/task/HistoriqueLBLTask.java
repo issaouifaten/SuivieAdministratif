@@ -82,7 +82,7 @@ public class HistoriqueLBLTask extends AsyncTask <String, String, String> {
             } else {
 
                 String queryClient = "  select \n" +
-                        "NumeroBonLivraisonVente  , CodeArticle  ,Quantite   , MontantTTC ,DesignationArticle\n" +
+                        "NumeroBonLivraisonVente  , CodeArticle  ,Quantite   , NetHT , TauxRemise  , MontantTTC  , DesignationArticle\n" +
                         " from  LigneBonLivraisonVente    where NumeroBonLivraisonVente  = '"+NumeroBL+"'   " ;
 
                 PreparedStatement ps = con.prepareStatement(queryClient);
@@ -95,9 +95,11 @@ public class HistoriqueLBLTask extends AsyncTask <String, String, String> {
                     String NumeroBonLivraisonVente = rs.getString("NumeroBonLivraisonVente");
                     String CodeArticle = rs.getString("DesignationArticle");
                     int Quantite = rs.getInt("Quantite");
+                    double NetHT = rs.getDouble("NetHT");
+                    double TauxRemise = rs.getDouble("TauxRemise");
                     double MontantTTC = rs.getDouble("MontantTTC");
 
-                    LigneBonLivraisonVente lbl  = new LigneBonLivraisonVente(NumeroBonLivraisonVente , CodeArticle ,Quantite , MontantTTC) ;
+                    LigneBonLivraisonVente lbl  = new LigneBonLivraisonVente(NumeroBonLivraisonVente , CodeArticle ,Quantite , NetHT ,TauxRemise ,MontantTTC) ;
                     listLigneBonLivraisonVente.add(lbl) ;
 
                 }
@@ -118,7 +120,7 @@ public class HistoriqueLBLTask extends AsyncTask <String, String, String> {
 
         pb.setVisibility(View.INVISIBLE);
 
-        LigneBLAdapter ligneBLAdapter  = new LigneBLAdapter(activity  , listLigneBonLivraisonVente) ;
+        LigneBLAdapter ligneBLAdapter = new LigneBLAdapter(activity  , listLigneBonLivraisonVente) ;
         lv_list_lbl.setAdapter(ligneBLAdapter);
 
     }

@@ -12,8 +12,15 @@ import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.adapter.SpinnerAdapter;
 import com.example.suivieadministratif.model.Depot;
 import com.example.suivieadministratif.model.Fournisseur;
+import com.example.suivieadministratif.module.achat.BonCommandeAchatActivity;
+import com.example.suivieadministratif.module.achat.BonLivraisonAchatActivity;
+import com.example.suivieadministratif.module.achat.BonRetourAchatActivity;
+import com.example.suivieadministratif.module.achat.FactureAchat;
+import com.example.suivieadministratif.module.achat.RapportEcheanceFournisseurActivity;
+import com.example.suivieadministratif.module.achat.ReglementFournisseurActivity;
 import com.example.suivieadministratif.param.Param;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Fournisseur.CommandeFournisseurNonConforme;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Fournisseur.PieceNonPayeFrs;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Fournisseur.SuivieCommandeFrs;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.StatArticleFragment;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.StatSRMFragment;
@@ -101,8 +108,8 @@ public class ListFournisseurTaskForSearchableSpinner extends AsyncTask<String,St
                 listRaison.clear();
 
 
-                    listFournisseur.add(new Fournisseur("" ,"Tout les fournisseur")) ;
-                    listRaison.add("Tout les fournisseur")  ;
+                    listFournisseur.add(new Fournisseur("" ,"Tout les fournisseurs")) ;
+                    listRaison.add("Tout les fournisseurs")  ;
 
 
                 while ( rs.next() ) {
@@ -178,6 +185,75 @@ public class ListFournisseurTaskForSearchableSpinner extends AsyncTask<String,St
 
                 }
 
+                else  if(origine.equals("PieceNonPayeFrs"))
+                {
+                    PieceNonPayeFrs.CodeFournisseurSelected =  listFournisseur.get(position).getCodeFournisseur() ;
+
+                    PieceNonPayeFournisseurTask pieceNonPayeFournisseurTask = new PieceNonPayeFournisseurTask(activity , PieceNonPayeFrs.date_debut ,PieceNonPayeFrs.date_fin ,PieceNonPayeFrs.lv_list_historique_bc ,PieceNonPayeFrs.progressBar ,PieceNonPayeFrs.CodeFournisseurSelected)  ;
+                    pieceNonPayeFournisseurTask.execute() ;
+                }
+
+
+
+
+                          else  if(origine.equals("FactureAchat"))
+                {
+                    FactureAchat.CodeFournisseurSelected =  listFournisseur.get(position).getCodeFournisseur() ;
+
+                    EtatFactureAchatTask  etatFactureAchatTask  = new EtatFactureAchatTask(activity ,  FactureAchat.date_debut  , FactureAchat.date_fin  ,  FactureAchat.lv_list_historique_bc , FactureAchat.progressBar , FactureAchat.CodeFournisseurSelected) ;
+                    etatFactureAchatTask.execute() ;
+
+                }
+
+                else  if(origine.equals("BonCommandeAchatActivity"))
+                {
+                    BonCommandeAchatActivity.CodeFournisseurSelected =  listFournisseur.get(position).getCodeFournisseur() ;
+
+                    HistoriqueBCAchatTask historiqueBCTask = new HistoriqueBCAchatTask(activity,BonCommandeAchatActivity. date_debut, BonCommandeAchatActivity.date_fin, BonCommandeAchatActivity.lv_list_historique_bc, BonCommandeAchatActivity.pb_bc, BonCommandeAchatActivity.CodeFournisseurSelected);
+                    historiqueBCTask.execute();
+                }
+
+
+
+                else  if(origine.equals("BonLivraisonAchatActivity"))
+                {
+                    BonLivraisonAchatActivity.CodeFournisseurSelected =  listFournisseur.get(position).getCodeFournisseur() ;
+
+                    HistoriqueBLAchatTask historiqueBLTask  = new HistoriqueBLAchatTask(activity ,BonLivraisonAchatActivity.date_debut ,BonLivraisonAchatActivity.date_fin,BonLivraisonAchatActivity.lv_list_historique_bl  ,BonLivraisonAchatActivity. pb_bc,BonLivraisonAchatActivity.CodeFournisseurSelected) ;
+                    historiqueBLTask.execute() ;
+                }
+
+
+                else  if(origine.equals("BonRetourAchatActivity"))
+                {
+                    BonRetourAchatActivity.CodeFournisseurSelected =  listFournisseur.get(position).getCodeFournisseur() ;
+
+                    HistoriqueBRAchatTask historiqueBRTask  = new HistoriqueBRAchatTask(activity ,BonRetourAchatActivity.date_debut ,BonRetourAchatActivity.date_fin,BonRetourAchatActivity.lv_list_historique_br  , BonRetourAchatActivity.pb_bc,BonRetourAchatActivity.CodeFournisseurSelected) ;
+                    historiqueBRTask.execute() ;
+
+                }
+
+
+
+                else  if(origine.equals("ReglementFournisseurActivity"))
+                {
+                    ReglementFournisseurActivity.CodeFournisseurSelected =  listFournisseur.get(position).getCodeFournisseur() ;
+
+                    ListeReglementFournisseurTask listeReglementFournisseurTask  = new ListeReglementFournisseurTask(activity ,ReglementFournisseurActivity.lv_list_reg_fournisseur ,ReglementFournisseurActivity. pb ,ReglementFournisseurActivity.date_debut ,ReglementFournisseurActivity.date_fin ,  ReglementFournisseurActivity.CodeFournisseurSelected ) ;
+                    listeReglementFournisseurTask.execute() ;
+
+                }
+
+
+                else  if(origine.equals("RapportEcheanceFournisseurActivity"))
+                {
+                    RapportEcheanceFournisseurActivity.CodeFournisseurSelected =  listFournisseur.get(position).getCodeFournisseur() ;
+
+                    EcheanceFournisseurTask echeanceFournisseurTask  = new EcheanceFournisseurTask(activity  , RapportEcheanceFournisseurActivity.date_debut , RapportEcheanceFournisseurActivity.date_fin ,  RapportEcheanceFournisseurActivity.lv_list_echeance_fournisseur ,  RapportEcheanceFournisseurActivity.pb , RapportEcheanceFournisseurActivity.CodeFournisseurSelected ) ;
+                    echeanceFournisseurTask.execute() ;
+
+                }
+                //
 
 
             }

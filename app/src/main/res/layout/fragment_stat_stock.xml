@@ -59,7 +59,7 @@
                         <ImageView
                             android:layout_width="60dp"
                             android:layout_height="60dp"
-                            android:src="@drawable/ic_devis_vente"
+                            android:src="@drawable/ic_etat_stock"
                             android:padding="5dp"/>
 
                         <ImageView
@@ -111,7 +111,7 @@
                             <ImageView
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
-                                android:src="@drawable/ic_bon_commande"
+                                android:src="@drawable/ic_indic_stock"
                                 android:padding="5dp"/>
 
                         </RelativeLayout>
@@ -130,8 +130,8 @@
                             android:text="Indic. Dispo-Stock"
                             android:gravity="center"/>
 
-
                     </LinearLayout>
+
                 </androidx.cardview.widget.CardView>
 
 

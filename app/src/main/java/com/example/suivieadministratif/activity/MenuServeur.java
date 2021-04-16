@@ -324,6 +324,17 @@ public class MenuServeur extends AppCompatActivity {
                     } else if (NomSociete.contains("TECHNO")) {
                         img_societe.setImageResource(R.drawable.techno);
                     }
+
+                    else if (NomSociete.contains("DRIFER")) {
+                        img_societe.setImageResource(R.drawable.ic_logo_driffer);
+                    }
+
+
+                    else if (NomSociete.contains("OLIVETECH")) {
+                        img_societe.setImageResource(R.drawable.ic_logo_otivtech);
+                    }
+
+
                     btn_login.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

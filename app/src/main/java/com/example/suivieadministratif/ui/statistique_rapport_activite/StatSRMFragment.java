@@ -10,21 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.task.ListContactTaskForSearchableSpinner;
-import com.example.suivieadministratif.task.ListDepotTaskForSearchableSpinner;
-import com.example.suivieadministratif.task.ListFamilleTaskForSearchableSpinner;
 import com.example.suivieadministratif.task.ListFournisseurTaskForSearchableSpinner;
 import com.example.suivieadministratif.task.ListMoyenRelationSpinner;
 import com.example.suivieadministratif.task.ListNatureRelationSpinner;
 import com.example.suivieadministratif.task.ListResponsableTaskForSearchableSpinner;
-import com.example.suivieadministratif.ui.menu.MenuViewModel;
+import com.example.suivieadministratif.menu.MenuViewModel;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.SRM.SuivieRelationFournisseurActivity;
-import com.example.suivieadministratif.ui.statistique_rapport_activite.article.ArticleNonMouvementeActivity;
-import com.example.suivieadministratif.ui.statistique_rapport_activite.importation.SuivieDossierImportationActivity;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import androidx.annotation.NonNull;

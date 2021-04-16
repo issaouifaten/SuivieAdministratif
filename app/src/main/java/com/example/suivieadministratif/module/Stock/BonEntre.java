@@ -22,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
@@ -31,9 +32,10 @@ import android.widget.TextView;
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.activity.HomeActivity;
-import com.example.suivieadministratif.module.achat.BonRetourAchatActivity;
-import com.example.suivieadministratif.module.vente.DetailLigneFactureVente;
 
+import com.example.suivieadministratif.adapter.BonCommandeAdapter;
+import com.example.suivieadministratif.model.BonCommandeVente;
+import com.example.suivieadministratif.module.vente.EtatCommande;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -56,7 +58,7 @@ import java.util.Map;
 
 public class BonEntre extends AppCompatActivity {
 
-    GridView lv_list_historique_bc;
+    ListView lv_list ;
     ProgressBar progressBar;
     SearchView search_bar_client;
 
@@ -66,11 +68,9 @@ public class BonEntre extends AppCompatActivity {
     String user, password, base, ip;
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     NumberFormat formatter = new DecimalFormat("00");
-    public static TextView txt_tot_commande;
+    public static TextView txt_tot;
 
-    FloatingActionButton fab_arrow;
-    RelativeLayout layoutBottomSheet;
-    BottomSheetBehavior sheetBehavior;
+
     String condition="";
 
 
@@ -78,16 +78,16 @@ public class BonEntre extends AppCompatActivity {
     String date_debut = "",date_fin="";
 
     ConnectionClass connectionClass;
-    String CodeSociete, NomUtilisateur, CodeLivreur;
+    String  NomUtilisateur ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bon_entre);
+        setContentView(R.layout.activity_etat_stock);
 
         //sql session
         SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " :Bon Entre");
+        setTitle(NomSociete + " :Bon Entrée");
         connectionClass = new ConnectionClass();
 
         SharedPreferences prefe = getSharedPreferences("usersession", Context.MODE_PRIVATE);
@@ -101,24 +101,28 @@ public class BonEntre extends AppCompatActivity {
         password = pref.getString("password", password);
         base = pref.getString("base", base);
 
-        txt_tot_commande = (TextView) findViewById(R.id.txt_tot_commande);
+        txt_tot = (TextView) findViewById(R.id.txt_total_ttc);
         txt_date_debut = findViewById(R.id.txt_date_debut);
         txt_date_fin = findViewById(R.id.txt_date_fin);
 
 
-        lv_list_historique_bc = (GridView) findViewById(R.id.lv_list_historique_bc);
+        lv_list = (ListView) findViewById(R.id.lv_list);
         progressBar = (ProgressBar) findViewById(R.id.pb_bc);
-        EditText editText=(EditText)findViewById(R.id.search_bar_client) ;
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+        SearchView searchView= findViewById(R.id.search_bar_client) ;
+        searchView  . setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                if (!search_bar_client.isIconified()) {
+                    search_bar_client.setIconified(true);
+                }
+                return false;
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                if( s.length()>1) {
+            public boolean onQueryTextChange(String s) {
+                if( s.length() > 0) {
                     condition = " and( NumeroBonEntrer like'%" + s + "%'  or  Depot.Libelle  like'%" + s + "%' ) ";
 
                 }else{
@@ -127,13 +131,15 @@ public class BonEntre extends AppCompatActivity {
 
                 FillList fillList = new  FillList();
                 fillList.execute("");
-            }
 
-            @Override
-            public void afterTextChanged(Editable s) {
+
+                return false;
 
             }
         });
+
+
+
 
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -142,8 +148,13 @@ public class BonEntre extends AppCompatActivity {
         date_debut = sdf.format(calendar.getTime());
         txt_date_debut.setText(date_debut);
         txt_date_fin.setText(date_fin);
-        TextView txt_gratuite =(TextView)findViewById(R.id.txt_gratuite);
-        txt_gratuite.setText("Total Entre");
+
+
+     /*   TextView txt_gratuite =(TextView)findViewById(R.id.txt_gratuite);
+        txt_gratuite.setText("Total Entre");*/
+
+
+
         FillList fillList = new FillList();
         fillList.execute("");
 
@@ -214,53 +225,20 @@ public class BonEntre extends AppCompatActivity {
             }
         });
 
-        layoutBottomSheet = (RelativeLayout) findViewById(R.id.bottom_sheet);
-        fab_arrow = (FloatingActionButton) findViewById(R.id.fab_arrow);
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setHideable(false);
-
-        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                switch (newState) {
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED: {
-                        // Toast.makeText(getActivity() , "Close Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_down);
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_COLLAPSED: {
-                        // Toast.makeText(getActivity() , "Expand Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_up);
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_DRAGGING:
-                        break;
-                    case BottomSheetBehavior.STATE_SETTLING:
-                        break;
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
-            }
-        });
-
 
 
         NavigationView nav_menu=findViewById(R.id.nav_view);
         View root = nav_menu.getHeaderView(0);
 
-        CardView btn_etat_de_stock = (CardView) root.findViewById(R.id.btn_etat_de_stock) ;
-        btn_etat_de_stock.setOnClickListener(new View.OnClickListener() {
+         CardView btn_etat_de_stock = (CardView) root.findViewById(R.id.btn_etat_de_stock) ;
+       btn_etat_de_stock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent2 = new Intent(getApplicationContext(), StockArticle.class);
+                Intent intent2 = new Intent(getApplicationContext(), EtatDeStockActivity.class);
                 startActivity(intent2);
             }
         });
+
         //btn_bon_entree
         CardView  btn_bon_entree = (CardView) root.findViewById(R.id.btn_bon_entree) ;
         btn_bon_entree.setOnClickListener(new View.OnClickListener() {
@@ -316,7 +294,7 @@ public class BonEntre extends AppCompatActivity {
 
 
         List<Map<String, String>> prolist = new ArrayList<Map<String, String>>();
-        float total_devis=0;
+        float total_ttc=0;
 
 
         @Override
@@ -331,18 +309,16 @@ public class BonEntre extends AppCompatActivity {
         protected void onPostExecute(String r) {
             progressBar.setVisibility(View.GONE);
 
-// NumeroDevisVente,DateCreation,NomUtilisateur,CodeDepot,Depot,TotalTTC,Etat.Libelle as Etat
-            String[] from = {"NumeroBonEntrer", "DateCreation",   "Depot","TotalTTC","Etat"};
-            int[] views = {R.id.txt_num_bc, R.id.txt_date_bc, R.id.txt_raison_client, R.id.txt_prix_ttc, R.id.txt_libelle_etat};
+
+            String[] from = {"NumeroBonEntrer", "DateCreation",   "Depot", "TotalHT", "TotalTVA", "TotalTTC",  "Etat"};
+            int[] views = {R.id.txt_num_piece, R.id.txt_date_bc, R.id.txt_raison_client, R.id.txt_prix_net_ht, R.id.txt_prix_tva,  R.id.txt_prix_ttc, R.id.txt_libelle_etat};
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
-                    prolist, R.layout.item_bon_commande, from,
-                    views);
+                    prolist, R.layout.item_etat_entete, from,  views);
 
-
-
-            txt_tot_commande.setText(""+total_devis);
-            lv_list_historique_bc.setAdapter(ADA);
-            lv_list_historique_bc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            txt_tot.setText(""+total_ttc);
+            
+            lv_list.setAdapter(ADA);
+            lv_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     HashMap<String, Object> obj = (HashMap<String, Object>) ADA
@@ -381,7 +357,7 @@ public class BonEntre extends AppCompatActivity {
                 } else {
 
 
-                    String queryTable = "select NumeroBonEntrer,Depot.Libelle as Depot ,BonEntrer.CodeDepot,TotalTTC,DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
+                    String queryTable = "select NumeroBonEntrer,Depot.Libelle as Depot ,BonEntrer.CodeDepot ,  TotalHT  , TotalTVA    ,TotalTTC,DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
                             "from BonEntrer \n" +
                             "inner join Etat on Etat.NumeroEtat=BonEntrer.NumeroEtat\n" +
                             "inner join Depot on Depot.CodeDepot=BonEntrer.CodeDepot   " +
@@ -389,7 +365,7 @@ public class BonEntre extends AppCompatActivity {
                             "order by DateCreation desc";
 
                     PreparedStatement ps = con.prepareStatement(queryTable);
-                    Log.e("queryDevisVente", queryTable);
+                    Log.e("queryEtreeStock", queryTable);
 
                     ResultSet rs = ps.executeQuery();
                     z = "e";
@@ -401,28 +377,29 @@ public class BonEntre extends AppCompatActivity {
                         datanum.put("NomUtilisateur", rs.getString("NomUtilisateur"));
                         datanum.put("CodeDepot", rs.getString("CodeDepot"));
                         datanum.put("Depot", rs.getString("Depot"));
+                        datanum.put("TotalHT", rs.getString("TotalHT"));
+                        datanum.put("TotalTVA", rs.getString("TotalTVA"));
                         datanum.put("TotalTTC", rs.getString("TotalTTC"));
+
                         datanum.put("Etat", rs.getString("Etat"));
 
                         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
                         datanum.put("DateCreation", df.format(rs.getDate("DateCreation")));
-                        total_devis+=rs.getFloat("TotalTTC");
+                        total_ttc+=rs.getFloat("TotalTTC");
                         prolist.add(datanum);
 
-
                         test = true;
-
-
                         z = "succees";
                     }
 
 
                 }
-            } catch (SQLException ex) {
+            }
+            catch (SQLException ex) {
+
                 z = "tablelist" + ex.toString();
                 Log.e("erreur", z);
-
 
             }
             return z;

@@ -21,6 +21,7 @@ import com.example.suivieadministratif.model.BonCommandeVente;
 import com.example.suivieadministratif.module.achat.BonCommandeAchatActivity;
 import com.example.suivieadministratif.module.achat.LigneBonCommandeAchatActivity;
 
+import com.example.suivieadministratif.module.vente.EtatCommande;
 import com.example.suivieadministratif.module.vente.MouvementVenteServiceActivity;
 import com.example.suivieadministratif.param.Param;
 
@@ -42,27 +43,32 @@ public class HistoriqueBCAchatTask extends AsyncTask<String, String, String> {
 
     ListView lv_hist_bc;
     ProgressBar pb;
-    SearchView search_bar_client;
+
 
     String z = "";
     ConnectionClass connectionClass;
     String user, password, base, ip;
 
-    String NomUtilisateur;
+
     Date  date_debut , date_fin  ;
     DateFormat dtfSQL = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-float total=0;
+
+    double total_net_ht = 0;
+    double total_tva = 0;
+    double total_ttc = 0;
+    String    CodeFournisseurSelected ;
+
     ArrayList<BonCommandeVente> listBonCommandeVente = new ArrayList<>();
 
-    public HistoriqueBCAchatTask(Activity activity, Date  date_debut , Date date_fin  , ListView lv_hist_bc, ProgressBar pb, SearchView search_bar_client) {
+    public HistoriqueBCAchatTask(Activity activity, Date  date_debut , Date date_fin  , ListView lv_hist_bc, ProgressBar pb, String    CodeFournisseurSelected ) {
         this.activity = activity;
         this.date_debut = date_debut  ;
         this.date_fin = date_fin  ;
         this.lv_hist_bc = lv_hist_bc;
         this.pb = pb;
-        this.search_bar_client = search_bar_client;
+        this.CodeFournisseurSelected = CodeFournisseurSelected;
 
 
         SharedPreferences prefe = activity.getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
@@ -94,9 +100,18 @@ float total=0;
                 z = "Error in connection with SQL server";
             } else {
 
-                String queryHis_bc = "  select NumeroBonCommandeAchat  ,RaisonSociale  ,TotalTTC , TotalRemise ,TotalHT  , TotalTVA  ,  Etat.NumeroEtat ,Etat.Libelle  , DateBonCommandeAchat   from BonCommandeAchat  \n" +
+
+
+                String  condition  = "" ;
+                if (!CodeFournisseurSelected.equals(""))
+                {
+                    condition += "  and CodeFournisseur=   '"+CodeFournisseurSelected+"' "  ;
+                }
+
+
+                String queryHis_bc = "  select NumeroBonCommandeAchat  ,RaisonSociale , NomUtilisateur  , TotalNetHT , TotalTVA  ,  TotalTTC  ,  Etat.NumeroEtat ,Etat.Libelle  , DateBonCommandeAchat   from BonCommandeAchat  \n" +
                         "inner JOIN Etat  on Etat.NumeroEtat =  BonCommandeAchat.NumeroEtat    \n" +
-                        "where CONVERT (Date  , DateBonCommandeAchat)  between  '"+df.format(date_debut)+"'  and  '"+df.format(date_fin)+"'\n" +
+                        "where CONVERT (Date  , DateBonCommandeAchat)  between  '"+df.format(date_debut)+"'  and  '"+df.format(date_fin)+"'\n" +condition+
                         "order by DateBonCommandeAchat desc  \n ";
 
                 Log.e("queryHis_bc",""+queryHis_bc) ;
@@ -108,17 +123,29 @@ float total=0;
 
                     String NumeroBonCommandeVente = rs.getString("NumeroBonCommandeAchat");
                     String RaisonSociale = rs.getString("RaisonSociale");
+                    String NomUtilisateur = rs.getString("NomUtilisateur");
 
-                    double TotalRemise = rs.getDouble("TotalRemise");
-                    double TotalHT = rs.getDouble("TotalHT");
+
+                    double TotalNetHT = rs.getDouble("TotalNetHT");
                     double TotalTVA = rs.getDouble("TotalTVA");
                     double TotalTTC = rs.getDouble("TotalTTC");
+
                     Date DateBonCommandeVente = dtfSQL.parse(rs.getString("DateBonCommandeAchat"));
                     String NumeroEtat = rs.getString("NumeroEtat");
                     String Libelle = rs.getString("Libelle");
-                    total+=TotalTTC;
 
-                    BonCommandeVente bonCommandeVente = new BonCommandeVente(NumeroBonCommandeVente, DateBonCommandeVente, RaisonSociale, TotalTTC,TotalRemise ,   TotalHT  ,    TotalTVA, NumeroEtat,Libelle);
+
+                    if ( !NumeroEtat.equals("E00"))
+                    {
+                        total_net_ht += TotalNetHT;
+                        total_tva += TotalTVA;
+                        total_ttc += TotalTTC;
+
+
+                    }
+
+
+                    BonCommandeVente bonCommandeVente = new BonCommandeVente(NumeroBonCommandeVente, DateBonCommandeVente, NomUtilisateur , RaisonSociale,   TotalNetHT , TotalTVA  ,  TotalTTC  , NumeroEtat,Libelle);
                     listBonCommandeVente.add(bonCommandeVente);
 
                 }
@@ -146,28 +173,13 @@ float total=0;
         final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
         instance.setMinimumFractionDigits(3);
         instance.setMaximumFractionDigits(3);
-        BonCommandeAchatActivity.txt_tot.setText(instance.format(total));
-        search_bar_client.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
 
-                if (!search_bar_client.isIconified()) {
-                    search_bar_client.setIconified(true);
-                }
-                return false;
-            }
+        BonCommandeAchatActivity.  txt_tot_ht.setText(instance.format(total_net_ht)+"");
+        BonCommandeAchatActivity. txt_tot_tva.setText(instance.format(total_tva)+"");
+        BonCommandeAchatActivity. txt_tot_ttc.setText(instance.format(total_ttc)+"");
 
-            @Override
-            public boolean onQueryTextChange(String query) {
 
-                final ArrayList<BonCommandeVente> fitlerClientList = filterClientCMD(listBonCommandeVente, query);
-                BonCommandeAchatActivity.bcAdapter = new BonCommandeAdapter(activity, fitlerClientList);
-                lv_hist_bc.setAdapter(BonCommandeAchatActivity.bcAdapter);
-                listOnClick(fitlerClientList);
 
-                return false;
-            }
-        });
 
     }
 
@@ -198,20 +210,5 @@ float total=0;
     }
 
 
-    private ArrayList<BonCommandeVente> filterClientCMD(ArrayList<BonCommandeVente> listClientCMD, String term) {
-
-        term = term.toLowerCase();
-        final ArrayList<BonCommandeVente> filetrListClient = new ArrayList<>();
-
-        for (BonCommandeVente c : listClientCMD) {
-            final String txtRaisonSocial = c.getReferenceClient().toLowerCase();
-
-            if (txtRaisonSocial.contains(term)) {
-                filetrListClient.add(c);
-            }
-        }
-        return filetrListClient;
-
-    }
 
 }

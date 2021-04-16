@@ -1,9 +1,7 @@
 package com.example.suivieadministratif.task;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -15,15 +13,10 @@ import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.example.suivieadministratif.ConnectionClass;
-import com.example.suivieadministratif.R;
-import com.example.suivieadministratif.adapter.BonLivraisonAdapter;
 import com.example.suivieadministratif.adapter.ReglementClientAdapterLV;
-import com.example.suivieadministratif.model.BonLivraisonVente;
 import com.example.suivieadministratif.model.ReglementClient;
-import com.example.suivieadministratif.module.reglementClient.DetailReglementClientActivity;
-import com.example.suivieadministratif.module.reglementClient.ReglementClientActivity;
-import com.example.suivieadministratif.module.vente.HistoriqueLigneBonLivraisonActivity;
-import com.example.suivieadministratif.module.vente.MouvementVenteServiceActivity;
+import com.example.suivieadministratif.module.vente.DetailReglementClientActivity;
+import com.example.suivieadministratif.module.vente.ReglementClientActivity;
 import com.example.suivieadministratif.param.Param;
 
 import java.sql.Connection;
@@ -44,7 +37,7 @@ public class ListeReglementClientTask extends AsyncTask<String, String, String> 
     Activity activity;
     ListView lv_reglement_client ;
     ProgressBar pb_chargement ;
-    SearchView search_bar_client ;
+    String CodeClient ;
 
     Date  date_debut  , date_fin ;
     ConnectionClass connectionClass ;
@@ -57,13 +50,13 @@ public class ListeReglementClientTask extends AsyncTask<String, String, String> 
     double total_reglement  =0 ;
 
 
-    public ListeReglementClientTask(Activity activity  , ListView lv_reglement_client , ProgressBar pb_chargement , Date  date_debut  , Date date_fin ,    SearchView search_bar_client  ) {
+    public ListeReglementClientTask(Activity activity  , ListView lv_reglement_client , ProgressBar pb_chargement , Date  date_debut  , Date date_fin ,   String CodeClient  ) {
         this.activity  = activity  ;
         this.lv_reglement_client = lv_reglement_client  ;
         this.pb_chargement  = pb_chargement   ;
         this.date_debut = date_debut  ;
         this.date_fin = date_fin  ;
-        this.search_bar_client=search_bar_client ;
+        this.CodeClient=CodeClient ;
 
 
         SharedPreferences pref = activity.getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
@@ -94,10 +87,16 @@ public class ListeReglementClientTask extends AsyncTask<String, String, String> 
                 res = "Check Your Internet Access!";
             } else {
 
+                String  condition  = "" ;
+                if (!CodeClient.equals(""))
+                {
+                    condition += "  and CodeClient=   '"+CodeClient+"' "  ;
+                }
 
-                String query = " select NumeroReglementClient ,DateReglement  , RaisonSociale,TotalPayement ,NomUtilisateur  , HeureCreation    \n" +
+                String query = " select NumeroReglementClient ,DateReglement  , RaisonSociale ,TotalPayement ,NomUtilisateur  , HeureCreation    \n" +
                         " from  ReglementClient\n" +
-                        " where DateReglement between  '"+sdf.format(date_debut)+"' and '"+sdf.format(date_fin)+"' \n" ;
+                        " where DateReglement between  '"+sdf.format(date_debut)+"' and '"+sdf.format(date_fin)+"' \n" +condition+
+                        " order  by  NumeroReglementClient  DESC " ;
 
                 Log.e("query_reg_client", query);
 
@@ -105,7 +104,6 @@ public class ListeReglementClientTask extends AsyncTask<String, String, String> 
                 ResultSet rs = stmt.executeQuery(query);
 
                 while (rs.next()) {
-
 
                     String NumeroReglementClient  = rs.getString("NumeroReglementClient");
                     Date DateReglement  =dtfSQL.parse( rs.getString("DateReglement"));
@@ -152,41 +150,15 @@ public class ListeReglementClientTask extends AsyncTask<String, String, String> 
 
         ReglementClientAdapterLV adapterLV = new ReglementClientAdapterLV(activity , listReglementClient) ;
         lv_reglement_client.setAdapter(adapterLV);
-        //ReglementClientActivity.txt_tot_reglement.setText(decF.format(total_reglement) +" Dt");
+
         final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
         instance.setMinimumFractionDigits(3);
         instance.setMaximumFractionDigits(3);
-        ReglementClientActivity.txt_tot_reglement.setText(instance.format(total_reglement));
+        ReglementClientActivity.txt_tot_ttc.setText(instance.format(total_reglement));
 
 
         listOnClick(listReglementClient);
 
-
-        search_bar_client.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                if (!search_bar_client.isIconified()) {
-                    search_bar_client.setIconified(true);
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-
-                final ArrayList<ReglementClient> fitlerReglementClient = filterReglementClient(listReglementClient, query);
-
-                ReglementClientAdapterLV adapterLV = new ReglementClientAdapterLV(activity , fitlerReglementClient) ;
-                lv_reglement_client.setAdapter(adapterLV);
-
-
-                listOnClick(fitlerReglementClient);
-
-                return false;
-
-            }
-        });
 
 
 
@@ -222,30 +194,6 @@ public class ListeReglementClientTask extends AsyncTask<String, String, String> 
 
 
 
-    private ArrayList<ReglementClient> filterReglementClient(ArrayList<ReglementClient> listClientReg, String term) {
-
-        term = term.toLowerCase();
-        final ArrayList<ReglementClient> filetrReglementClient = new ArrayList<>();
-
-        double mnt_reg_client  =0 ;
-        for (ReglementClient c : listClientReg) {
-            final String txtRaisonSocial = c.getRaisonSociale().toLowerCase();
-
-
-            if (txtRaisonSocial.contains(term)) {
-                filetrReglementClient.add(c);
-                mnt_reg_client=mnt_reg_client+ c.getTotalPayement()  ;
-            }
-        }
-        DecimalFormat  decF  = new DecimalFormat("0.000") ;
-        //ReglementClientActivity.txt_tot_reglement.setText(decF.format(mnt_reg_client) +" Dt");
-        final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
-        instance.setMinimumFractionDigits(3);
-        instance.setMaximumFractionDigits(3);
-        ReglementClientActivity.txt_tot_reglement.setText(instance.format(mnt_reg_client));
-        return filetrReglementClient;
-
-    }
 
 
 }

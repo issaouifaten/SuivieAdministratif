@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.suivieadministratif.R;
-import com.example.suivieadministratif.ui.menu.MenuViewModel;
+import com.example.suivieadministratif.menu.MenuViewModel;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Stock.Etat_Stock;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Stock.Etat_indic_dispo_stock;
 

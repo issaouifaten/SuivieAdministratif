@@ -2,26 +2,15 @@ package com.example.suivieadministratif.activity;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
 import com.example.suivieadministratif.ConnectionClass;
-import com.example.suivieadministratif.ui.menu.MenuAchatFragment;
-import com.example.suivieadministratif.ui.menu.MenuCaisseFragment;
-import com.example.suivieadministratif.ui.menu.MenuEtatDeStockFragment;
-import com.example.suivieadministratif.ui.menu.MenuVenteFragment;
-import com.example.suivieadministratif.ui.menu.StatistiqueMenuActivity;
-import com.example.suivieadministratif.ui.statistique_rapport_activite.Stock.Etat_Stock;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,7 +20,6 @@ import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.GridView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.SimpleAdapter;

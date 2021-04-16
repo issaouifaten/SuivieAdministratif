@@ -18,6 +18,7 @@ import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.adapter.BonRetourAdapter;
 import com.example.suivieadministratif.model.BonRetourVente;
+import com.example.suivieadministratif.module.achat.BonLivraisonAchatActivity;
 import com.example.suivieadministratif.module.achat.BonRetourAchatActivity;
 import com.example.suivieadministratif.module.achat.LigneBonRetourAchatActivity;
 import com.example.suivieadministratif.module.vente.EtatRetourActivity;
@@ -41,11 +42,13 @@ public class HistoriqueBRAchatTask extends AsyncTask<String, String, String> {
 
     ListView lv_hist_br;
     ProgressBar pb;
-    SearchView search_bar_client;
+
 
     String z = "";
     ConnectionClass connectionClass;
     String user, password, base, ip;
+
+    String CodeFournisseurSelected  ;
 
 
     Date  date_debut , date_fin  ;
@@ -55,15 +58,17 @@ public class HistoriqueBRAchatTask extends AsyncTask<String, String, String> {
 
     ArrayList<BonRetourVente> listBonRetourVente = new ArrayList<>();
 
-    double  total= 0 ;
+    double total_net_ht = 0;
+    double total_tva = 0;
+    double total_ttc = 0;
 
-    public HistoriqueBRAchatTask(Activity activity, Date  date_debut , Date date_fin  , ListView lv_hist_br, ProgressBar pb, SearchView search_bar_client) {
+    public HistoriqueBRAchatTask(Activity activity, Date  date_debut , Date date_fin  , ListView lv_hist_br, ProgressBar pb,     String CodeFournisseurSelected ) {
         this.activity = activity;
         this.date_debut = date_debut  ;
         this.date_fin = date_fin  ;
         this.lv_hist_br = lv_hist_br;
         this.pb = pb;
-        this.search_bar_client = search_bar_client;
+        this.CodeFournisseurSelected = CodeFournisseurSelected;
 
         SharedPreferences prefe = activity.getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         SharedPreferences.Editor edte = prefe.edit();
@@ -92,10 +97,18 @@ public class HistoriqueBRAchatTask extends AsyncTask<String, String, String> {
                 z = "Error in connection with SQL server";
             } else {
 
-                String queryHis_bc = "select   NumeroBonRetourAchat ,RaisonSociale ,TotalTTC , TotalRemise ,TotalHT  , TotalTVA ,  DateBonRetourAchat ,Etat.NumeroEtat ,Etat.Libelle  " +
+
+                String  condition  = "" ;
+                if (!CodeFournisseurSelected.equals(""))
+                {
+                    condition += "  and CodeFournisseur=   '"+CodeFournisseurSelected+"' "  ;
+                }
+
+
+                String queryHis_bc = "select   NumeroBonRetourAchat ,RaisonSociale , NomUtilisateur  , TotalNetHT , TotalTVA  ,  TotalTTC  , DateBonRetourAchat ,Etat.NumeroEtat ,Etat.Libelle  " +
                         "    from BonRetourAchat  \n " +
                         "    inner JOIN Etat  on Etat.NumeroEtat =  BonRetourAchat.NumeroEtat \n" +
-                        "    where CONVERT (Date  , DateBonRetourAchat)  between  '"+df.format(date_debut)+"'  and  '"+df.format(date_fin)+"'\n" +
+                        "    where CONVERT (Date  , DateBonRetourAchat)  between  '"+df.format(date_debut)+"'  and  '"+df.format(date_fin)+"'\n" +condition+
                         "    order by DateBonRetourAchat desc  \n" +
                         "     ";
 
@@ -103,14 +116,21 @@ public class HistoriqueBRAchatTask extends AsyncTask<String, String, String> {
                 Log.e("queryHis_br",""+queryHis_bc) ;
                 PreparedStatement ps = con.prepareStatement(queryHis_bc);
                 ResultSet rs = ps.executeQuery();
-                total= 0 ;
+
+
+                  total_net_ht = 0;
+                  total_tva = 0;
+                  total_ttc = 0;
+
                 while (rs.next()) {
 
                     String NumeroBonRetourVente = rs.getString("NumeroBonRetourAchat");
                     String RaisonSociale = rs.getString("RaisonSociale");
+                    String NomUtilisateur = rs.getString("NomUtilisateur");
 
-                    double TotalRemise = rs.getDouble("TotalRemise");
-                    double TotalHT = rs.getDouble("TotalHT");
+
+
+                    double TotalNetHT = rs.getDouble("TotalNetHT");
                     double TotalTVA = rs.getDouble("TotalTVA");
                     double TotalTTC = rs.getDouble("TotalTTC");
                     Date DateBonRetourVente = dtfSQL.parse(rs.getString("DateBonRetourAchat"));
@@ -119,11 +139,13 @@ public class HistoriqueBRAchatTask extends AsyncTask<String, String, String> {
 
                     if (NumeroEtat!="E00")
                     {
-                        total+= TotalTTC ;
+                        total_net_ht += TotalNetHT;
+                        total_tva += TotalTVA;
+                        total_ttc += TotalTTC;
                     }
 
 
-                    BonRetourVente bonRetourVente = new BonRetourVente(NumeroBonRetourVente, DateBonRetourVente, RaisonSociale, TotalTTC,    TotalRemise ,TotalHT  , TotalTVA  ,NumeroEtat,NumeroLibelle);
+                    BonRetourVente bonRetourVente = new BonRetourVente(NumeroBonRetourVente, DateBonRetourVente,NomUtilisateur , RaisonSociale  , TotalNetHT , TotalTVA  ,  TotalTTC  ,  NumeroEtat,NumeroLibelle);
                     listBonRetourVente.add(bonRetourVente);
 
                 }
@@ -147,37 +169,18 @@ public class HistoriqueBRAchatTask extends AsyncTask<String, String, String> {
         final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
         instance.setMinimumFractionDigits(3);
         instance.setMaximumFractionDigits(3);
-        BonRetourAchatActivity.txt_tot_retour.setText(instance.format(total));
 
+
+        BonRetourAchatActivity.  txt_tot_ht.setText(instance.format(total_net_ht)+"");
+        BonRetourAchatActivity. txt_tot_tva.setText(instance.format(total_tva)+"");
+        BonRetourAchatActivity. txt_tot_ttc.setText(instance.format(total_ttc)+"");
 
         BonRetourAdapter bonRetourAdapter  = new BonRetourAdapter(activity  , listBonRetourVente)  ;
          lv_hist_br.setAdapter(bonRetourAdapter);
 
         listOnClick(listBonRetourVente);
 
-        search_bar_client.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
 
-                if (!search_bar_client.isIconified()) {
-                    search_bar_client.setIconified(true);
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-
-                final ArrayList<BonRetourVente> fitlerClientList = filterClientCMD(listBonRetourVente, query);
-
-                BonRetourAdapter bonRetourAdapter1  = new BonRetourAdapter(activity  , fitlerClientList)  ;
-                lv_hist_br.setAdapter(bonRetourAdapter1);
-                listOnClick(fitlerClientList);
-
-                return false;
-
-            }
-        });
 
     }
 
@@ -207,21 +210,6 @@ public class HistoriqueBRAchatTask extends AsyncTask<String, String, String> {
     }
 
 
-    private ArrayList<BonRetourVente> filterClientCMD(ArrayList<BonRetourVente> listClientBR, String term) {
 
-        term = term.toLowerCase();
-        final ArrayList<BonRetourVente> filetrListClient = new ArrayList<>();
-
-        for (BonRetourVente c : listClientBR) {
-            final String txtRaisonSocial = c.getRaisonSociale().toLowerCase();
-
-
-            if (txtRaisonSocial.contains(term)) {
-                filetrListClient.add(c);
-            }
-        }
-        return filetrListClient;
-
-    }
 
 }

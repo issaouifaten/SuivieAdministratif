@@ -26,9 +26,11 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class ListeMouvementCaisseDepenceTask extends AsyncTask<String, String, String> {
@@ -157,9 +159,11 @@ public class ListeMouvementCaisseDepenceTask extends AsyncTask<String, String, S
 
         pb_chargement.setVisibility(View.INVISIBLE);
 
-        DecimalFormat  decF  = new DecimalFormat("0.000") ;
+        final NumberFormat formatter = NumberFormat.getNumberInstance(Locale.FRENCH);
+        formatter.setMinimumFractionDigits(3);
+        formatter.setMaximumFractionDigits(3);
 
-        MouvementCaisseDepenseDetailActivity.txt_tot_depense.setText(decF.format(total_depense) +" Dt");
+        MouvementCaisseDepenseDetailActivity.txt_tot_depense.setText(formatter.format(total_depense) +" Dt");
         MouvementDepenseAdapterLV adapter  = new MouvementDepenseAdapterLV(activity  , listMvntCaisse) ;
         lv_list_mvmnt_caisse.setAdapter(adapter);
 

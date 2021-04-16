@@ -10,8 +10,10 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,25 +26,28 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class DetailLigneBonEntre extends AppCompatActivity {
 
     String  NumeroBonEntrer="";
     ConnectionClass connectionClass;
-    String CodeSociete, NomUtilisateur, CodeLivreur;
+    String   NomUtilisateur ;
     final Context co = this;
     String user, password, base, ip;
-    GridView gridEtat;
 
-    ListView lv_ligne_bon_commande;
+
+    ListView lv_ligne_piece;
+    ProgressBar  pb  ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_ligne_bon_entre);
+        setContentView(R.layout.activity_detail_ligne_piece);
 
         Intent intent=getIntent();
         //" NumeroBonEntrer", "DateCreation",   "Depot","TotalTTC","Etat"
@@ -54,12 +59,12 @@ public class DetailLigneBonEntre extends AppCompatActivity {
         Toast.makeText(getApplicationContext(),""+NumeroBonEntrer,Toast.LENGTH_LONG).show();
 
 
-        TextView txt_num_bc =(TextView)findViewById(R.id.txt_num_bc);
+        TextView txt_num_piece  =(TextView)findViewById(R.id.txt_num_piece);
         TextView txt_prix_ttc =(TextView)findViewById(R.id.txt_prix_ttc);
 
         TextView txt_raison_client =(TextView)findViewById(R.id.txt_raison_client);
         TextView txt_date_bc =(TextView)findViewById(R.id.txt_date_bc);
-        txt_num_bc.setText( ""+NumeroBonEntrer);
+        txt_num_piece.setText( ""+NumeroBonEntrer);
         txt_prix_ttc.setText(TotalTTC);
         txt_raison_client.setText(Depot);
         txt_date_bc.setText(DateCreation);
@@ -69,7 +74,7 @@ public class DetailLigneBonEntre extends AppCompatActivity {
 
         SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " : Detail Facture ");
+        setTitle(NomSociete + " : Détail Bon Entrée ");
         connectionClass = new ConnectionClass();
         SharedPreferences prefe = getSharedPreferences("usersession", Context.MODE_PRIVATE);
         SharedPreferences.Editor edte = prefe.edit();
@@ -79,7 +84,8 @@ public class DetailLigneBonEntre extends AppCompatActivity {
         ip = pref.getString("ip", ip);
         password = pref.getString("password", password);
         base = pref.getString("base", base);
-        lv_ligne_bon_commande=(ListView)findViewById(R.id.lv_ligne_bon_commande);
+        lv_ligne_piece = (ListView)findViewById(R.id.lv_ligne_piece);
+        pb= (ProgressBar)  findViewById(R.id.pb)  ;
         FillList fillList =new FillList();
         fillList.execute("");
     }
@@ -95,7 +101,7 @@ public class DetailLigneBonEntre extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            //  progressBar.setVisibility(View.VISIBLE);
+            pb.setVisibility(View.VISIBLE);
 
 
         }
@@ -103,18 +109,19 @@ public class DetailLigneBonEntre extends AppCompatActivity {
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         @Override
         protected void onPostExecute(String r) {
-            //  progressBar.setVisibility(View.GONE);
+            pb.setVisibility(View.GONE);
 
-            String[] from = {"DesignationArticle", "Quantite",   "MontantTTC" };
-            int[] views = {R.id.txt_article, R.id.txt_qt_article, R.id.txt_prix_ttc};
+            String[] from = {"DesignationArticle", "CodeArticle", "MontantHT", "MontantTVA", "MontantTTC", "Quantite", "MontantTTC"};
+            int[] views = {R.id.txt_designation,R.id.txt_code_article  , R.id.txt_net_ht, R.id.txt_taux_remise, R.id.txt_mnt_ttc, R.id.txt_quantite, R.id.txt_prix_ttc};
+
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
-                    prolist, R.layout.item_lbc, from,
+                    prolist, R.layout.item_ligne_piece, from,
                     views);
 
 
 
 
-            lv_ligne_bon_commande.setAdapter(ADA);
+            lv_ligne_piece.setAdapter(ADA);
 
 
         }
@@ -129,22 +136,28 @@ public class DetailLigneBonEntre extends AppCompatActivity {
                 } else {
 
 
-                    String queryTable = " select  CodeArticle,DesignationArticle, convert(numeric(18,0),Quantite)as Quantite ,MontantTTC  from LigneBonEntrer where  NumeroBonEntrer='"+ NumeroBonEntrer+"' ";
+                    String queryTable = " select  CodeArticle,DesignationArticle, convert(numeric(18,0),Quantite)as Quantite ,  MontantHT , MontantTVA   , MontantTTC       from LigneBonEntrer where  NumeroBonEntrer='"+ NumeroBonEntrer+"' ";
 
-                    PreparedStatement ps = con.prepareStatement(queryTable);
-                    Log.e("queryDetailFacture", queryTable);
+                    PreparedStatement  ps = con.prepareStatement(queryTable);
+                    Log.e("LigneBonEntrer", queryTable);
 
                     ResultSet rs = ps.executeQuery();
                     z = "e";
 
                     while (rs.next()) {
 
+                        final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+                        instance.setMinimumFractionDigits(3);
+                        instance.setMaximumFractionDigits(3);
+
                         Map<String, String> datanum = new HashMap<String, String>();
                         datanum.put("CodeArticle", rs.getString("CodeArticle"));
                         datanum.put("DesignationArticle", rs.getString("DesignationArticle"));
                         datanum.put("Quantite", rs.getString("Quantite"));
-                        datanum.put("MontantTTC", rs.getString("MontantTTC"));
 
+                        datanum.put("MontantHT", instance.format(rs.getDouble("MontantHT")));
+                        datanum.put("MontantTVA", rs.getInt("MontantTVA") +"");
+                        datanum.put("MontantTTC", instance.format(rs.getDouble("MontantTTC")));
 
                         prolist.add(datanum);
 

@@ -19,6 +19,7 @@ import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.adapter.BonLivraisonAdapter;
 import com.example.suivieadministratif.model.BonLivraisonVente;
 import com.example.suivieadministratif.model.LigneBonLivraisonVente;
+import com.example.suivieadministratif.module.achat.BonCommandeAchatActivity;
 import com.example.suivieadministratif.module.achat.BonLivraisonAchatActivity;
 import com.example.suivieadministratif.module.achat.LigneBonLivraisonAchatActivity;
 import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
@@ -42,7 +43,7 @@ public class HistoriqueBLAchatTask extends AsyncTask<String, String, String> {
 
     ListView lv_hist_bc;
     ProgressBar pb;
-    SearchView search_bar_client;
+    String CodeFournisseurSelected ;
 
     String z = "";
     ConnectionClass connectionClass;
@@ -55,14 +56,18 @@ public class HistoriqueBLAchatTask extends AsyncTask<String, String, String> {
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
     ArrayList<BonLivraisonVente> listBonLivraisonVentes = new ArrayList<>();
-    double  tot_liv  =0  ;
-    public HistoriqueBLAchatTask(Activity activity, Date  date_debut , Date date_fin  , ListView lv_hist_bc, ProgressBar pb, SearchView search_bar_client) {
+
+    double total_net_ht = 0;
+    double total_tva = 0;
+    double total_ttc = 0;
+
+    public HistoriqueBLAchatTask(Activity activity, Date  date_debut , Date date_fin  , ListView lv_hist_bc, ProgressBar pb,   String CodeFournisseurSelected  ) {
         this.activity = activity;
         this.date_debut = date_debut  ;
         this.date_fin = date_fin  ;
         this.lv_hist_bc = lv_hist_bc;
         this.pb = pb;
-        this.search_bar_client = search_bar_client;
+        this.CodeFournisseurSelected = CodeFournisseurSelected;
 
         SharedPreferences prefe = activity.getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         SharedPreferences.Editor edte = prefe.edit();
@@ -91,11 +96,18 @@ public class HistoriqueBLAchatTask extends AsyncTask<String, String, String> {
                 z = "Error in connection with SQL server";
             } else {
 
-                String queryHis_bc = "select   NumeroBonLivraisonAchat  ,RaisonSociale  ,TotalTTC   , TotalRemise ,TotalHT  , TotalTVA    , Etat.NumeroEtat ,Etat.Libelle  , DateBonLivraisonAchat    \n" +
+                String  condition  = "" ;
+                if (!CodeFournisseurSelected.equals(""))
+                {
+                    condition += "  and CodeFournisseur=   '"+CodeFournisseurSelected+"' "  ;
+                }
+
+
+                String queryHis_bc = "select   NumeroBonLivraisonAchat  ,RaisonSociale , NomUtilisateur , TotalNetHT , TotalTVA  ,  TotalTTC  , Etat.NumeroEtat ,Etat.Libelle  , DateBonLivraisonAchat    \n" +
 
                         "from BonLivraisonAchat   \n" +
                         "inner JOIN Etat  on Etat.NumeroEtat =  BonLivraisonAchat.NumeroEtat  " +
-                        "where CONVERT (Date  , DateBonLivraisonAchat)  between  '"+df.format(date_debut)+"'  and  '"+df.format(date_fin)+"'\n" +
+                        "where CONVERT (Date  , DateBonLivraisonAchat)  between  '"+df.format(date_debut)+"'  and  '"+df.format(date_fin)+"'\n" +condition+
                         "order by DateBonLivraisonAchat desc  \n" +
                         "     ";
 
@@ -108,21 +120,26 @@ public class HistoriqueBLAchatTask extends AsyncTask<String, String, String> {
 
                     String NumeroBonLivraisonVente = rs.getString("NumeroBonLivraisonAchat");
                     String RaisonSociale = rs.getString("RaisonSociale");
+                    String NomUtilisateur = rs.getString("NomUtilisateur");
 
-                    double TotalRemise = rs.getDouble("TotalRemise");
-                    double TotalHT = rs.getDouble("TotalHT");
+                    double TotalNetHT = rs.getDouble("TotalNetHT");
                     double TotalTVA = rs.getDouble("TotalTVA");
                     double TotalTTC = rs.getDouble("TotalTTC");
 
                     Date DateBonLivraisonVente = dtfSQL.parse(rs.getString("DateBonLivraisonAchat"));
                     String NumeroEtat = rs.getString("NumeroEtat");
                     String LibelleEtat = rs.getString("Libelle");
-                    if (!NumeroEtat.equals("E00"))
-                    {
-                        tot_liv=tot_liv+TotalTTC ;
-                    }
 
-                    BonLivraisonVente bonLivraisonVente = new BonLivraisonVente(NumeroBonLivraisonVente, DateBonLivraisonVente, RaisonSociale, TotalTTC, TotalRemise ,TotalHT  , TotalTVA    , NumeroEtat, LibelleEtat);
+
+                     if ( !NumeroEtat.equals("E00"))
+                        {
+                            total_net_ht += TotalNetHT;
+                            total_tva    += TotalTVA;
+                            total_ttc    += TotalTTC;
+
+                        }
+
+                    BonLivraisonVente bonLivraisonVente = new BonLivraisonVente(NumeroBonLivraisonVente, DateBonLivraisonVente,NomUtilisateur  ,RaisonSociale   , TotalNetHT , TotalTVA  ,  TotalTTC  ,    NumeroEtat, LibelleEtat);
                     listBonLivraisonVentes.add(bonLivraisonVente);
 
                 }
@@ -148,32 +165,12 @@ public class HistoriqueBLAchatTask extends AsyncTask<String, String, String> {
         final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
         instance.setMinimumFractionDigits(3);
         instance.setMaximumFractionDigits(3);
-        BonLivraisonAchatActivity. txt_tot_livraison.setText(instance.format(tot_liv));
+
+        BonLivraisonAchatActivity. txt_tot_ht.setText(instance.format(total_net_ht)+"");
+        BonLivraisonAchatActivity. txt_tot_tva.setText(instance.format(total_tva)+"");
+        BonLivraisonAchatActivity. txt_tot_ttc.setText(instance.format(total_ttc)+"");
+
         listOnClick(listBonLivraisonVentes);
-
-        search_bar_client.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                if (!search_bar_client.isIconified()) {
-                    search_bar_client.setIconified(true);
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-
-                final ArrayList<BonLivraisonVente> fitlerClientList = filterClientCMD(listBonLivraisonVentes, query);
-
-                BonLivraisonAdapter bonLivraisonAdapter  = new BonLivraisonAdapter(activity  , fitlerClientList)  ;
-                lv_hist_bc.setAdapter(bonLivraisonAdapter);
-                listOnClick(fitlerClientList);
-
-                return false;
-
-            }
-        });
 
     }
 
@@ -185,8 +182,6 @@ public class HistoriqueBLAchatTask extends AsyncTask<String, String, String> {
 
                 DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
-
-
                 final BonLivraisonVente bonLivraisonVente = listBL.get(position);
 
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -196,30 +191,8 @@ public class HistoriqueBLAchatTask extends AsyncTask<String, String, String> {
                 toLigneBonLiv.putExtra("cle_total_ttc", bonLivraisonVente.getTotalTTC());
                 toLigneBonLiv.putExtra("cle_date_bc", sdf.format(bonLivraisonVente.getDateBonLivraisonVente()));
                 activity.startActivity(toLigneBonLiv);
-
-
-
-
             }
         });
-
-    }
-
-
-    private ArrayList<BonLivraisonVente> filterClientCMD(ArrayList<BonLivraisonVente> listClientBL, String term) {
-
-        term = term.toLowerCase();
-        final ArrayList<BonLivraisonVente> filetrListClient = new ArrayList<>();
-
-        for (BonLivraisonVente c : listClientBL) {
-            final String txtRaisonSocial = c.getRaisonSociale().toLowerCase();
-
-
-            if (txtRaisonSocial.contains(term)) {
-                filetrListClient.add(c);
-            }
-        }
-        return filetrListClient;
 
     }
 

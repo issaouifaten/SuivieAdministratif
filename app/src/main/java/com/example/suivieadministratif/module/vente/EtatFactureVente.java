@@ -1,80 +1,55 @@
 package com.example.suivieadministratif.module.vente;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
-import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.SearchView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.activity.HomeActivity;
-import com.example.suivieadministratif.module.reglementClient.RapportEcheanceClientActivity;
-import com.example.suivieadministratif.module.reglementClient.ReglementClientActivity;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.suivieadministratif.task.EtatDevisTask;
+import com.example.suivieadministratif.task.EtatFactureVenteTask;
+import com.example.suivieadministratif.task.ListClientTaskForSearchSpinner;
 import com.google.android.material.navigation.NavigationView;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 public class EtatFactureVente extends AppCompatActivity {
-    GridView lv_list_historique_bc;
-    ProgressBar progressBar;
-    SearchView search_bar_client;
+
+    public   static  ListView lv_list_historique_bc;
+    public   static    ProgressBar progressBar;
+
 
 
     final Context co = this;
     String user, password, base, ip;
 
-    public static TextView txt_tot_commande;
+    public  static  TextView txt_tot_ht, txt_tot_tva, txt_tot_ttc;
 
-    FloatingActionButton fab_arrow;
-    RelativeLayout layoutBottomSheet;
-    BottomSheetBehavior sheetBehavior;
+    String queryTable = "";
 
 
+    ConnectionClass connectionClass;
+    String NomUtilisateur;
 
-    public TextView txt_date_debut, txt_date_fin;
-
+    String condition = "";
     int id_DatePickerDialog = 0;
     Date currentDate = new Date();
     public static int year_x1, month_x1, day_x1;
@@ -84,42 +59,47 @@ public class EtatFactureVente extends AppCompatActivity {
     public static Date date_fin = null;
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     NumberFormat formatter = new DecimalFormat("00");
+    public TextView txt_date_debut, txt_date_fin;
 
-    String queryTable="";
 
 
-    ConnectionClass connectionClass;
-    String   NomUtilisateur   ;
+    SearchableSpinner sp_client ;
+    public   static   String  CodeClientSelected = "";
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_etat_facture_vente);
-
+        setContentView(R.layout.activity_etat_vente);
         //sql session
         SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " :Facture Vente");
+        setTitle(NomSociete + " : Facture Vente");
         connectionClass = new ConnectionClass();
 
         SharedPreferences prefe = getSharedPreferences("usersession", Context.MODE_PRIVATE);
         SharedPreferences.Editor edte = prefe.edit();
-        NomUtilisateur = prefe.getString("NomUtilisateur", NomUtilisateur);
 
-        // SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         SharedPreferences.Editor edt = pref.edit();
         user = pref.getString("user", user);
         ip = pref.getString("ip", ip);
         password = pref.getString("password", password);
         base = pref.getString("base", base);
 
-        txt_tot_commande = (TextView) findViewById(R.id.txt_tot_commande);
+
+        txt_tot_ht = (TextView) findViewById(R.id.txt_tot_ht);
+        txt_tot_tva = (TextView) findViewById(R.id.txt_total_tva);
+        txt_tot_ttc = (TextView) findViewById(R.id.txt_total_ttc);
+
+        sp_client  = (SearchableSpinner)   findViewById(R.id.sp_client)   ;
+
+
         txt_date_debut = findViewById(R.id.txt_date_debut);
         txt_date_fin = findViewById(R.id.txt_date_fin);
-        lv_list_historique_bc = (GridView) findViewById(R.id.lv_list_historique_bc);
+
+        lv_list_historique_bc = (ListView) findViewById(R.id.lv_list);
         progressBar = (ProgressBar) findViewById(R.id.pb_bc);
-
-
-
 
 
         final Calendar cal1 = Calendar.getInstance();
@@ -127,8 +107,7 @@ public class EtatFactureVente extends AppCompatActivity {
         //cal1.add(Calendar.MONTH, -1);
         year_x1 = cal1.get(Calendar.YEAR);
         month_x1 = cal1.get(Calendar.MONTH);
-        day_x1 = 1 ;
-
+        day_x1 = 1;
 
 
         final Calendar cal2 = Calendar.getInstance();
@@ -139,15 +118,14 @@ public class EtatFactureVente extends AppCompatActivity {
         day_x2 = cal2.get(Calendar.DAY_OF_MONTH);
 
 
+        DecimalFormat df_month = new DecimalFormat("00");
+        DecimalFormat df_year = new DecimalFormat("0000");
 
-        DecimalFormat  df_month = new DecimalFormat("00") ;
-        DecimalFormat  df_year  = new DecimalFormat("0000") ;
-
-        Log.e("date_debut ", "01/"+ df_month.format(cal1.get(Calendar.MONTH) +1)+"/"+df_year.format(cal1.get(Calendar.YEAR) ) ) ;
-        String _date_du =  "01/"+ df_month.format(cal1.get(Calendar.MONTH) +1)+"/"+df_year.format(cal1.get(Calendar.YEAR) )  ;
+        Log.e("date_debut ", "01/" + df_month.format(cal1.get(Calendar.MONTH) + 1) + "/" + df_year.format(cal1.get(Calendar.YEAR)));
+        String _date_du = "01/" + df_month.format(cal1.get(Calendar.MONTH) + 1) + "/" + df_year.format(cal1.get(Calendar.YEAR));
 
         try {
-            date_debut =  df .parse(_date_du);
+            date_debut = df.parse(_date_du);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -161,15 +139,11 @@ public class EtatFactureVente extends AppCompatActivity {
 
 
 
-        queryTable = "select NumeroFactureVente,RaisonSociale,CodeClient,TotalTTC  , TotalRemise ,TotalHT  , TotalTVA    , DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
-                ",Etat.NumeroEtat from FactureVente \n" +
-                "inner join Etat on Etat.NumeroEtat=FactureVente.NumeroEtat\n" +
-                "where DateCreation between '"+df.format(date_debut)+"' and '"+df.format(date_fin)+"'\n" +
-                "order by DateCreation desc";
         updateData();
 
 
-
+        ListClientTaskForSearchSpinner listClientTaskForSearchableSpinner = new ListClientTaskForSearchSpinner(this ,sp_client, "EtatFactureVente") ;
+        listClientTaskForSearchableSpinner.execute() ;
 
         txt_date_debut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,14 +170,7 @@ public class EtatFactureVente extends AppCompatActivity {
                                 date_debut = df.parse(_date_du);
                                 date_fin = df.parse(_date_au);
 
-
-                                queryTable = "select NumeroFactureVente,RaisonSociale,CodeClient,TotalTTC  , TotalRemise ,TotalHT  , TotalTVA    , DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
-                                        ",Etat.NumeroEtat from FactureVente \n" +
-                                        "inner join Etat on Etat.NumeroEtat=FactureVente.NumeroEtat\n" +
-                                        "where DateCreation between '"+df.format(date_debut)+"' and '"+df.format(date_fin)+"'\n" +
-                                        "order by DateCreation desc";
                                 updateData();
-
 
                             } catch (Exception e) {
                                 Log.e("Exception--", " " + e.getMessage());
@@ -241,15 +208,7 @@ public class EtatFactureVente extends AppCompatActivity {
                                 date_debut = df.parse(_date_du);
                                 date_fin = df.parse(_date_au);
 
-
-                                queryTable = "select NumeroFactureVente,RaisonSociale,CodeClient,TotalTTC  , TotalRemise ,TotalHT  , TotalTVA    , DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
-                                        ",Etat.NumeroEtat from FactureVente \n" +
-                                        "inner join Etat on Etat.NumeroEtat=FactureVente.NumeroEtat\n" +
-                                        "where DateCreation between '"+df.format(date_debut)+"' and '"+df.format(date_fin)+"'\n" +
-                                        "order by DateCreation desc";
-
                                 updateData();
-
 
                             } catch (Exception e) {
                                 Log.e("Exception --", " " + e.getMessage());
@@ -263,74 +222,21 @@ public class EtatFactureVente extends AppCompatActivity {
         });
 
 
-
-
-
-
-
-
-        EditText editText=(EditText)findViewById(R.id.search_bar_client) ;
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-
-                if (s.equals(""))
-                {
-                    queryTable = "select NumeroFactureVente,RaisonSociale,CodeClient,TotalTTC  , TotalRemise ,TotalHT  , TotalTVA    , DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
-                            ",Etat.NumeroEtat from FactureVente \n" +
-                            "inner join Etat on Etat.NumeroEtat=FactureVente.NumeroEtat\n" +
-                            "where DateCreation between '"+df.format(date_debut)+"' and '"+df.format(date_fin)+"'\n" +
-                            "order by DateCreation desc";
-                }
-                else
-
-                queryTable = "select NumeroFactureVente,RaisonSociale,CodeClient,TotalTTC , TotalRemise ,TotalHT  , TotalTVA    , DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
-                        ",Etat.NumeroEtat  from FactureVente \n" +
-                        "inner join Etat on Etat.NumeroEtat=FactureVente.NumeroEtat\n" +
-                        "where DateCreation between '"+df.format(date_debut)+"' and '"+df.format(date_fin)+"'   and ( NumeroFactureVente like'%"+s+"%' OR RaisonSociale LIKE'%"+s+"%') \n" +
-                        "order by DateCreation desc";
-
-                 FillList fillList = new  FillList();
-                 fillList.execute("");
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
-
-
-
-
-
-
-
-
-
-        NavigationView nav_menu=findViewById(R.id.nav_view);
+        NavigationView nav_menu = findViewById(R.id.nav_view);
         View root = nav_menu.getHeaderView(0);
 
-        CardView btn_devis_vente = (CardView) root.findViewById(R.id.btn_devis_vente)  ;
+
+        CardView btn_devis_vente = (CardView) root.findViewById(R.id.btn_devis_vente);
         btn_devis_vente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent6 = new Intent(getApplicationContext(), EtatDevisVente.class);
+                Intent intent6 = new Intent(getApplicationContext(), EtatFactureVente.class);
                 startActivity(intent6);
             }
         });
 
 
-
-
-        CardView   btn_bon_livraison = (CardView) root.findViewById(R.id.btn_bon_livraison)  ;
+        CardView btn_bon_livraison = (CardView) root.findViewById(R.id.btn_bon_livraison);
         btn_bon_livraison.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -340,7 +246,7 @@ public class EtatFactureVente extends AppCompatActivity {
         });
 
 
-        CardView btn_bon_retour = (CardView) root.findViewById(R.id.btn_bon_retour)  ;
+        CardView btn_bon_retour = (CardView) root.findViewById(R.id.btn_bon_retour);
         btn_bon_retour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -350,7 +256,7 @@ public class EtatFactureVente extends AppCompatActivity {
         });
 
 
-        CardView  btn_bon_commande = (CardView) root.findViewById(R.id.btn_bon_commande) ;
+        CardView btn_bon_commande = (CardView) root.findViewById(R.id.btn_bon_commande);
         btn_bon_commande.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -360,7 +266,7 @@ public class EtatFactureVente extends AppCompatActivity {
 
             }
         });
-        CardView  btn_facture_vente = (CardView) root.findViewById(R.id.btn_facture_vente) ;
+        CardView btn_facture_vente = (CardView) root.findViewById(R.id.btn_facture_vente);
         btn_facture_vente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -371,7 +277,7 @@ public class EtatFactureVente extends AppCompatActivity {
             }
         });
 
-        CardView  btn_mvmnt_vente_service= (CardView) root.findViewById(R.id.btn_mvmnt_vente_service) ;
+        CardView btn_mvmnt_vente_service = (CardView) root.findViewById(R.id.btn_mvmnt_vente_service);
         btn_mvmnt_vente_service.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -382,208 +288,45 @@ public class EtatFactureVente extends AppCompatActivity {
         });
 
 
-        CardView   btn_reglement_client = (CardView)  root.findViewById(R.id.btn_reg_client)  ;
+        CardView btn_reglement_client = (CardView) root.findViewById(R.id.btn_reg_client);
         btn_reglement_client.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent  intent1 = new Intent(getApplicationContext() , ReglementClientActivity.class) ;
+                Intent intent1 = new Intent(getApplicationContext(), ReglementClientActivity.class);
                 startActivity(intent1);
             }
         });
 
 
-        CardView   btn_echeance_client = (CardView)   root.findViewById(R.id.btn_echeance_Client);
+        CardView btn_echeance_client = (CardView) root.findViewById(R.id.btn_echeance_Client);
         btn_echeance_client.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent  intent1 = new Intent(getApplicationContext() , RapportEcheanceClientActivity.class) ;
+                Intent intent1 = new Intent(getApplicationContext(), RapportEcheanceClientActivity.class);
                 startActivity(intent1);
             }
         });
-        CardView   btn_home= (CardView) root.findViewById(R.id.btn_home );
+        CardView btn_home = (CardView) root.findViewById(R.id.btn_home);
         btn_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toCaisseRecette  = new Intent(getApplicationContext() , HomeActivity.class) ;
+                Intent toCaisseRecette = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(toCaisseRecette);
 
             }
         });
 
+    }
 
 
+    public void updateData() {
 
-
-
-
-        layoutBottomSheet = (RelativeLayout) findViewById(R.id.bottom_sheet);
-        fab_arrow = (FloatingActionButton) findViewById(R.id.fab_arrow);
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setHideable(false);
-
-        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                switch (newState) {
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED: {
-                        // Toast.makeText(getActivity() , "Close Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_down);
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_COLLAPSED: {
-                        // Toast.makeText(getActivity() , "Expand Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_up);
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_DRAGGING:
-                        break;
-                    case BottomSheetBehavior.STATE_SETTLING:
-                        break;
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
-            }
-        });
-
+        EtatFactureVenteTask  etatFactureVenteTask = new EtatFactureVenteTask(this  ,date_debut ,date_fin, lv_list_historique_bc, progressBar, CodeClientSelected);
+        etatFactureVenteTask.execute();
 
     }
 
 
-    public  void  updateData()
-    {
-
-        FillList fillList = new  FillList();
-        fillList.execute("");
-
-    }
-    public class FillList extends AsyncTask<String, String, String> {
-        String z = "";
-        Boolean test = false;
-
-
-        List<Map<String, String>> prolist = new ArrayList<Map<String, String>>();
-        float total_devis=0;
-
-
-        @Override
-        protected void onPreExecute() {
-            progressBar.setVisibility(View.VISIBLE);
-
-
-        }
-
-        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-        @Override
-        protected void onPostExecute(String r) {
-            progressBar.setVisibility(View.GONE);
-
-// NumeroDevisVente,DateCreation,NomUtilisateur,CodeClient,RaisonSociale,TotalTTC,Etat.Libelle as Etat
-            String[] from = {"NumeroFactureVente", "DateCreation",   "RaisonSociale","TotalTTC" , "TotalRemise" ,"TotalHT"  , "TotalTVA"    ,"Etat"};
-            int[] views = {R.id.txt_num_bc, R.id.txt_date_bc, R.id.txt_raison_client, R.id.txt_prix_ttc, R.id.txt_remise,R.id.txt_prix_ht,R.id.txt_prix_tva,R.id.txt_libelle_etat};
-            final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
-                    prolist, R.layout.item_bon_commande, from,
-                    views);
-
-
-
-            final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
-            instance.setMinimumFractionDigits(3);
-            instance.setMaximumFractionDigits(3);
-            txt_tot_commande.setText(instance.format(total_devis));
-
-            lv_list_historique_bc.setAdapter(ADA);
-            lv_list_historique_bc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    HashMap<String, Object> obj = (HashMap<String, Object>) ADA
-                            .getItem(position);
-
-                    String  NumeroFactureVente = (String) obj.get("NumeroFactureVente");
-                    String  DateCreation = (String) obj.get("DateCreation");
-                    String  RaisonSociale = (String) obj.get("RaisonSociale");
-                    String  Etat = (String) obj.get("Etat");
-                    String  TotalTTC = (String) obj.get("TotalTTC");
-
-                    String  TotalRemise = (String) obj.get("TotalRemise");
-                    String  TotalHT = (String) obj.get("TotalHT");
-                    String  TotalTVA = (String) obj.get("TotalTVA");
-
-                    Intent intent=new Intent(getApplicationContext(),DetailLigneFactureVente.class);
-                    intent.putExtra("NumeroFactureVente",NumeroFactureVente);
-                    intent.putExtra("DateCreation",DateCreation);
-                    intent.putExtra("RaisonSociale",RaisonSociale);
-                    intent.putExtra("TotalTTC",TotalTTC);
-                    intent.putExtra("Etat",Etat);
-                    startActivity(intent);
-
-
-
-                }
-            });
-
-
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            try {
-                Connection con = connectionClass.CONN(ip, password, user, base);
-                if (con == null) {
-                    z = "Error in connection with SQL server";
-                } else {
-
-
-
-                    PreparedStatement ps = con.prepareStatement(queryTable);
-                        Log.e("queryfACTUREVente", queryTable);
-
-                    ResultSet rs = ps.executeQuery();
-                    z = "e";
-
-                    while (rs.next()) {
-
-                        Map<String, String> datanum = new HashMap<String, String>();
-                        datanum.put("NumeroFactureVente", rs.getString("NumeroFactureVente"));
-                        datanum.put("NomUtilisateur", rs.getString("NomUtilisateur"));
-                        datanum.put("CodeClient", rs.getString("CodeClient"));
-                        datanum.put("RaisonSociale", rs.getString("RaisonSociale"));
-                        datanum.put("TotalRemise", rs.getString("TotalRemise"));
-                        datanum.put("TotalHT", rs.getString("TotalHT"));
-                        datanum.put("TotalTVA", rs.getString("TotalTVA"));
-                        datanum.put("TotalTTC", rs.getString("TotalTTC"));
-                        datanum.put("Etat", rs.getString("Etat"));
-
-                        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-
-                        datanum.put("DateCreation", df.format(rs.getDate("DateCreation")));
-                        if(!(rs.getString("NumeroEtat").equals("E00")||rs.getString("NumeroEtat").equals("E40")))
-                        total_devis+=rs.getFloat("TotalTTC");
-                        prolist.add(datanum);
-
-
-                        test = true;
-
-
-                        z = "succees";
-                    }
-
-
-                }
-            } catch (SQLException ex) {
-                z = "tablelist" + ex.toString();
-                Log.e("erreur", z);
-
-
-            }
-            return z;
-        }
-    }
 
 
 }

@@ -69,7 +69,7 @@ public class EtatJournalActivite extends AppCompatActivity {
 
         SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " :Suivie Arret Caisse");
+        setTitle(NomSociete + " : Journal d'Activité ");
 
         connectionClass = new ConnectionClass();
 

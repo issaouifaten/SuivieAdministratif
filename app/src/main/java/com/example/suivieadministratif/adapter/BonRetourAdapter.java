@@ -3,7 +3,6 @@ package com.example.suivieadministratif.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.suivieadministratif.R;
-import com.example.suivieadministratif.model.BonLivraisonVente;
 import com.example.suivieadministratif.model.BonRetourVente;
 
 import java.text.DateFormat;
@@ -32,7 +30,7 @@ public class BonRetourAdapter extends ArrayAdapter<BonRetourVente> {
     private final ArrayList<BonRetourVente> listBonRetour ;
 
     public BonRetourAdapter(Activity activity  , ArrayList<BonRetourVente> listBonRetour) {
-        super(activity, R.layout.item_bon_commande , listBonRetour);
+        super(activity, R.layout.item_etat_entete, listBonRetour);
         // TODO Auto-generated constructor stub
 
         this.activity=activity;
@@ -43,30 +41,33 @@ public class BonRetourAdapter extends ArrayAdapter<BonRetourVente> {
         LayoutInflater inflater=activity.getLayoutInflater();
         Context context = parent.getContext();
 
-        View rowView=inflater.inflate(R.layout.item_bon_commande, null, true);
+        View rowView=inflater.inflate(R.layout.item_etat_entete, null, true);
 
 
         BonRetourVente br = listBonRetour.get(position);
 
         CardView card_cmd  = (CardView) rowView.findViewById(R.id.item_bon_commande);
-        TextView txt_num_br        = (TextView) rowView.findViewById(R.id.txt_num_bc);
+        TextView txt_num_br        = (TextView) rowView.findViewById(R.id.txt_num_piece);
         TextView txt_raison_client       = (TextView) rowView.findViewById(R.id.txt_raison_client);
         TextView txt_ttc          = (TextView) rowView.findViewById(R.id.txt_prix_ttc);
-        TextView txt_ht           = (TextView) rowView.findViewById(R.id.txt_prix_ht);
+        TextView txt_ht           = (TextView) rowView.findViewById(R.id.txt_prix_net_ht);
         TextView txt_tva          = (TextView) rowView.findViewById(R.id.txt_prix_tva);
-        TextView txt_remise       = (TextView) rowView.findViewById(R.id.txt_remise);
+
         TextView txt_date_bc         = (TextView) rowView.findViewById(R.id.txt_date_bc);
         TextView     txt_libelle_etat= (TextView) rowView.findViewById(R.id.txt_libelle_etat);
 
 
-        txt_ht.setText   (formatter.format(br.getTotalHT())+"");
+        TextView txt_etablie_par       = (TextView) rowView.findViewById(R.id.txt_etablie_par);
+        txt_etablie_par.setText(br.getNomUtilisateur());
+
+        txt_ht.setText   (formatter.format(br.getTotalNetHT())+"");
         txt_tva.setText   (formatter.format(br.getTotalTVA())+"");
-        txt_remise.setText   (formatter.format(br.getTotalRemise())+"");
+
         txt_ttc.setText   (formatter.format(br.getTotalTTC())+"");
 
             txt_num_br .setText (br.getNumeroBonRetourVente());
             txt_raison_client.setText(br.getRaisonSociale());
-            txt_ttc.setText   (formatter.format(br.getTotalTTC())+" TTC");
+            txt_ttc.setText   (formatter.format(br.getTotalTTC()));
             txt_date_bc.setText(df.format(br.getDateBonRetourVente()));
             txt_libelle_etat.setText(br .getLibelleEtat());
 

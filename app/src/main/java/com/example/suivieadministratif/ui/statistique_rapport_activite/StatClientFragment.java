@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.suivieadministratif.R;
-import com.example.suivieadministratif.ui.menu.MenuViewModel;
-import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.FicheClient;
+import com.example.suivieadministratif.menu.MenuViewModel;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.FicheClientActivity2;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.IndicateurEncourClient;
-import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.ListRetenuClient;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.ListRetenuClientActivity;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.MoyenReglementClient;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.PieceNonPayeClient;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.SuivieCommandeClient;
@@ -50,7 +50,7 @@ public class StatClientFragment extends Fragment {
         btn_suivie_client.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent6 = new Intent(getActivity(), FicheClient.class);
+                Intent intent6 = new Intent(getActivity(), FicheClientActivity2.class);
                 startActivity(intent6);
             }
         });
@@ -60,7 +60,7 @@ public class StatClientFragment extends Fragment {
         btn_list_retenu_cl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent7 = new Intent(getActivity(), ListRetenuClient.class);
+                Intent intent7 = new Intent(getActivity(), ListRetenuClientActivity.class);
                 startActivity(intent7);
             }
         });

@@ -104,7 +104,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 android:padding="5dp"
                 tools:context="com.example.faten.testsql.activity.HistoriqueBonCommande">
 
@@ -133,22 +132,217 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="60dp"
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <!--    <Button
-                    android:id="@+id/btreload"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:background="@drawable/reload" /> -->
 
 
-                    <GridView
+                    <RelativeLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/buttonround"
+                        android:gravity="center">
+
+
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/sp_client"
+                            style="@android:style/Widget.Material.Light.Spinner.Underlined"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#00000000"
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            tools:targetApi="lollipop" />
+
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="2dp"
+                            android:padding="5dp"
+                            android:src="@drawable/ic_search" />
+
+                    </RelativeLayout>
+
+
+
+                    <androidx.cardview.widget.CardView
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        card_view:cardBackgroundColor="#edfcf9f9"
+                        card_view:cardCornerRadius="5dp"
+                        card_view:cardElevation="6dp"
+                        card_view:cardMaxElevation="2dp" >
+
+                        <FrameLayout
+                            android:id="@+id/farme_card"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/card_edge_red">
+
+                        </FrameLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+
+
+                                <TextView
+                                    android:id="@+id/txt_libelle_etat"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="20dp"
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_weight="1"
+                                    android:text="Total  "
+                                    android:textColor="@color/color_g_7"
+                                    android:textStyle="italic|bold"
+                                    android:typeface="serif" />
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="right"
+                                    android:gravity="bottom"
+                                    android:orientation="horizontal">
+
+
+
+                                    <TextView
+                                        android:id="@+id/libelle_ht"
+                                        android:layout_width="80dp"
+                                        android:layout_height="wrap_content"
+                                        android:text="Total Montant"
+                                        android:textColor="@color/colortxt"
+                                        android:typeface="serif"
+                                        android:layout_weight="1"/>
+
+
+                                    <TextView
+                                        android:id="@+id/libelle_tva"
+                                        android:layout_width="80dp"
+                                        android:layout_height="wrap_content"
+
+                                        android:textColor="@color/colortxt"
+                                        android:typeface="serif"
+                                        android:layout_weight="1"
+                                        />
+
+
+                                    <TextView
+                                        android:id="@+id/libelle_ttc"
+                                        android:layout_width="80dp"
+                                        android:layout_height="wrap_content"
+                                        android:text="Total Restant"
+                                        android:textColor="@color/colortxt"
+                                        android:typeface="serif"
+                                        android:layout_weight="1"
+                                        android:gravity="right"/>
+
+
+
+
+
+
+
+                                </LinearLayout>
+
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="right"
+                                    android:gravity="bottom"
+                                    android:orientation="horizontal">
+
+
+
+                                    <TextView
+                                        android:id="@+id/txt_tot_mnt"
+                                        android:layout_width="80dp"
+                                        android:layout_height="20dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:text="---.---"
+                                        android:textColor="@color/blue"
+                                        android:autoSizeMaxTextSize="15dp"
+                                        android:autoSizeMinTextSize="12sp"
+                                        android:textStyle="italic|bold"
+                                        android:typeface="serif"
+                                        android:layout_weight="1"/>
+
+
+                                    <TextView
+                                        android:id="@+id/txt_total_tva"
+                                        android:layout_width="80dp"
+                                        android:layout_height="20dp"
+
+                                        android:textColor="@color/blue"
+                                        android:autoSizeMaxTextSize="15dp"
+                                        android:autoSizeMinTextSize="12sp"
+                                        android:textStyle="italic|bold"
+                                        android:layout_weight="1"
+                                        android:typeface="serif"
+                                        />
+
+
+
+                                    <TextView
+                                        android:id="@+id/txt_total_restant"
+                                        android:layout_width="80dp"
+                                        android:layout_height="20dp"
+                                        android:layout_marginLeft="5dp"
+                                        android:autoSizeMaxTextSize="15dp"
+                                        android:autoSizeMinTextSize="12sp"
+                                        android:autoSizeStepGranularity="2sp"
+                                        android:autoSizeTextType="uniform"
+                                        android:text="----.---"
+                                        android:textColor="@color/color_g_1"
+                                        android:textStyle="italic|bold"
+                                        android:layout_weight="1"
+                                        android:typeface="serif"
+                                        android:gravity="right"
+
+                                        />
+
+
+
+
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+
+
+
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+                     <GridView
                         android:id="@+id/lv_list_historique_bc"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="70dp"/>
+                        android:layout_marginBottom="10dp"/>
+
 
                 </LinearLayout>
 
@@ -162,7 +356,7 @@
 
         </LinearLayout>
 
-        <include layout="@layout/bottom_sheet_piece_non_paye" />
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

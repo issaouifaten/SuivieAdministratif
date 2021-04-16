@@ -170,7 +170,7 @@
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:padding="5dp"
-                            android:src="@drawable/ic_livraison" />
+                            android:src="@drawable/ic_bon_commande" />
 
                         <ImageView
                             android:layout_width="match_parent"
@@ -316,7 +316,7 @@
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:padding="5dp"
-                            android:src="@drawable/ic_livraison" />
+                            android:src="@drawable/ic_nn_mouvemente" />
 
                         <ImageView
                             android:layout_width="match_parent"
@@ -362,7 +362,7 @@
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:padding="5dp"
-                            android:src="@drawable/ic_retour" />
+                            android:src="@drawable/ic_customer" />
 
                         <ImageView
                             android:layout_width="match_parent"

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Journal BL Vente"
+                android:gravity="center"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                ></TextView>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:src="@drawable/line_h"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+
+
+                <RelativeLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginRight="2dp"
+                    android:background="@drawable/buttonround">
+
+
+                    <TextView
+                        android:id="@+id/txt_date_debut"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="#00000000"
+                        android:gravity="center"
+                        android:text="10/10/2019"
+                        android:textStyle="bold"
+                        android:textSize="15dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="40dp"
+                        android:textColor="@color/colorPrimary2"
+                        android:layout_toStartOf="@+id/img1"
+                        android:layout_centerVertical="true" />
+
+                    <ImageView
+
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="10dp"
+                        android:layout_alignParentEnd="true"
+                        android:foregroundGravity="center"
+                        android:src="@drawable/ic_calendar"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_marginRight="2dp"
+                    android:background="@drawable/buttonround">
+
+
+                    <TextView
+                        android:id="@+id/txt_date_fin"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="#00000000"
+                        android:gravity="center"
+                        android:text="10/10/2019"
+                        android:textStyle="bold"
+                        android:textSize="15dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="40dp"
+                        android:textColor="@color/colorPrimary2"
+                        android:layout_toStartOf="@+id/img1"
+                        android:layout_centerVertical="true" />
+
+                    <ImageView
+
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="10dp"
+                        android:layout_alignParentEnd="true"
+                        android:foregroundGravity="center"
+                        android:src="@drawable/ic_calendar"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Client"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary2"/>
+
+                <RelativeLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/buttonround"
+                    android:gravity="center">
+
+
+                    <LinearLayout
+                        android:id="@+id/ll_chargement_client"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <ProgressBar
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:gravity="center"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Chargement en cours ..."/>
+
+
+                    </LinearLayout>
+
+
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:id="@+id/sp_client"
+                        style="@android:style/Widget.Material.Light.Spinner.Underlined"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="#00000000"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        tools:targetApi="lollipop" />
+
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_margin="2dp"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_arrow_sp_" />
+
+                </RelativeLayout>
+
+
+            <Button
+                android:id="@+id/buttonOk"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:background="@color/colorPrimary2"
+                android:text="Consulter"
+                android:textColor="#FFF" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+

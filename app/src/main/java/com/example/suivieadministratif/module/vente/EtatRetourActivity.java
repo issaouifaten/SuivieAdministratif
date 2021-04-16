@@ -10,19 +10,15 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.activity.HomeActivity;
-import com.example.suivieadministratif.module.reglementClient.RapportEcheanceClientActivity;
-import com.example.suivieadministratif.module.reglementClient.ReglementClientActivity;
 import com.example.suivieadministratif.task.HistoriqueBRTask;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.suivieadministratif.task.ListClientTaskForSearchSpinner;
 import com.google.android.material.navigation.NavigationView;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -31,22 +27,18 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 public class EtatRetourActivity extends AppCompatActivity {
 
-    ListView lv_list_historique_br;
-    ProgressBar pb_bc;
-    SearchView search_bar_client;
+    public static  ListView lv_list_historique_br;
+    public static  ProgressBar pb_bc;
+
 
     public TextView txt_date_debut, txt_date_fin;
 
-    ConnectionClass connectionClass;
-    String NomUtilisateur, codeclient, rsclient = "", mail = "", Nbcmd = "", date, nbcmd, totale;
-    final Context co = this;
-    String user, password, base, ip ;
+
 
     int id_DatePickerDialog = 0;
     Date currentDate = new Date();
@@ -59,29 +51,33 @@ public class EtatRetourActivity extends AppCompatActivity {
     NumberFormat formatter = new DecimalFormat("00");
 
     public static TextView txt_tot_retour;
+    public  static  TextView txt_tot_ht  , txt_tot_tva   , txt_tot_ttc  ;
 
-
-    FloatingActionButton fab_arrow;
-    RelativeLayout layoutBottomSheet;
-    BottomSheetBehavior sheetBehavior;
+    SearchableSpinner sp_client ;
+    public   static   String  CodeClientSelected = "";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_etat_retour);
+        setContentView(R.layout.activity_etat_vente);
 
         SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
         setTitle(NomSociete + " : Bon Retour Vente");
 
+
+        txt_tot_ht = (TextView) findViewById(R.id.txt_tot_ht);
+        txt_tot_tva   = (TextView) findViewById(R.id.txt_total_tva);
+        txt_tot_ttc  = (TextView) findViewById(R.id.txt_total_ttc);
+
         txt_date_debut = findViewById(R.id.txt_date_debut);
         txt_date_fin = findViewById(R.id.txt_date_fin);
 
-        lv_list_historique_br = (ListView) findViewById(R.id.lv_list_historique_br);
+        lv_list_historique_br = (ListView) findViewById(R.id.lv_list);
         pb_bc = (ProgressBar) findViewById(R.id.pb_bc);
-        search_bar_client = (SearchView) findViewById(R.id.search_bar_client);
-        txt_tot_retour = (TextView) findViewById(R.id.txt_tot_retour);
+        sp_client  = (SearchableSpinner)   findViewById(R.id.sp_client) ;
+        txt_tot_retour = (TextView) findViewById(R.id.txt_total_ttc);
 
         final Calendar cal1 = Calendar.getInstance();
         cal1.setTime(currentDate);
@@ -122,6 +118,12 @@ public class EtatRetourActivity extends AppCompatActivity {
 
 
         updateData();
+
+
+        ListClientTaskForSearchSpinner listClientTaskForSearchableSpinner = new ListClientTaskForSearchSpinner(this ,sp_client, "EtatRetourActivity") ;
+        listClientTaskForSearchableSpinner.execute() ;
+
+
 
         txt_date_debut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,39 +203,7 @@ public class EtatRetourActivity extends AppCompatActivity {
         });
 
 
-        layoutBottomSheet = (RelativeLayout) findViewById(R.id.bottom_sheet);
-        fab_arrow = (FloatingActionButton) findViewById(R.id.fab_arrow);
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setHideable(false);
 
-        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                switch (newState) {
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED: {
-                        // Toast.makeText(getActivity() , "Close Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_down);
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_COLLAPSED: {
-                        // Toast.makeText(getActivity() , "Expand Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_up);
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_DRAGGING:
-                        break;
-                    case BottomSheetBehavior.STATE_SETTLING:
-                        break;
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
-            }
-        });
 
 
         NavigationView nav_menu=findViewById(R.id.nav_view);
@@ -338,7 +308,7 @@ public class EtatRetourActivity extends AppCompatActivity {
 
     public void updateData() {
 
-        HistoriqueBRTask historiqueBRTask = new HistoriqueBRTask(this, date_debut, date_fin, lv_list_historique_br, pb_bc, search_bar_client);
+        HistoriqueBRTask historiqueBRTask = new HistoriqueBRTask(this, date_debut, date_fin, lv_list_historique_br, pb_bc, CodeClientSelected);
         historiqueBRTask.execute();
 
     }

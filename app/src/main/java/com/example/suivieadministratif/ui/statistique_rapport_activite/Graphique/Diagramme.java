@@ -40,6 +40,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -65,6 +66,9 @@ public class Diagramme extends AppCompatActivity {
     ArrayList<String> data_CodeVille, data_LibelleVille;
     Spinner spinRespensable, spinVille;
     String conditionRep="",conditionVille="";
+
+   TextView  txt_total_benifice_net  ,txt_total_benifice ,txt_montant_ttc , txt_montant_remise  ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +79,7 @@ public class Diagramme extends AppCompatActivity {
 
         SharedPreferences pref = getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " :Rapport Graphique");
+        setTitle(NomSociete + " : Rapport Graphique");
 
 
         /// CONNECTION BASE
@@ -93,6 +97,12 @@ public class Diagramme extends AppCompatActivity {
         SharedPreferences.Editor edte = prefe.edit();
         NomUtilisateur = prefe.getString("NomUtilisateur", NomUtilisateur);
         CodeSociete = prefe.getString("CodeSociete", CodeSociete);
+
+        txt_total_benifice_net  = (TextView)   findViewById(R.id.txt_total_benifice_net);
+        txt_total_benifice  = (TextView)   findViewById(R.id.txt_total_benifice);
+        txt_montant_ttc  = (TextView)   findViewById(R.id.txt_montant_ttc);
+        txt_montant_remise = (TextView)   findViewById(R.id.txt_montant_remise);
+
 
 //bt
         bt_benificenet=(CheckBox)findViewById(R.id.bt_benificenet);
@@ -292,6 +302,10 @@ public class Diagramme extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
             //   Toast.makeText(getApplicationContext(), r, Toast.LENGTH_SHORT).show();
 
+            final NumberFormat format = NumberFormat.getNumberInstance(Locale.FRENCH);
+            format.setMinimumFractionDigits(3);
+            format.setMaximumFractionDigits(3);
+
             //donnee
             ArrayList<BarEntry> arrayListData = new ArrayList();
             String label="";
@@ -305,9 +319,11 @@ public class Diagramme extends AppCompatActivity {
                 arrayListData.add(new BarEntry( longeur, BenificeNet));
                 label+=" BenificeNet="+BenificeNet+";";
 
+                txt_total_benifice_net.setText(format.format(BenificeNet));
+
             }else{
                 bt_benificenet.setBackgroundColor(Color.rgb(255, 255, 255));
-
+                txt_total_benifice_net.setText("---.---");
             }
 
             if(bt_benifice.isChecked()) {
@@ -316,9 +332,10 @@ public class Diagramme extends AppCompatActivity {
                 arrayListData.add(new BarEntry( longeur,Benifice));
                 label+=" Benifice="+Benifice+"; ";
 
+                txt_total_benifice.setText(format.format(Benifice));
             }else{
                 bt_benifice.setBackgroundColor(Color.rgb(255, 255, 255));
-
+                txt_total_benifice.setText("---.---");
             }
 
             if(bt_montantttc.isChecked()) {
@@ -326,9 +343,11 @@ public class Diagramme extends AppCompatActivity {
                 longeur++;
                 arrayListData.add(new BarEntry( longeur,MontantTTC));
                 label+=" TTC="+MontantTTC+";";
-            }else{
+                txt_montant_ttc.setText(format.format(MontantTTC));
+            }
+            else{
                 bt_montantttc.setBackgroundColor(Color.rgb(255, 255, 255));
-
+                txt_montant_ttc.setText("---.---");
             }
 
 
@@ -337,9 +356,11 @@ public class Diagramme extends AppCompatActivity {
                 longeur++;
                 arrayListData.add(new BarEntry( longeur,MontantRemise));
                 label+=" Remise="+MontantRemise+";";
+
+                txt_montant_remise.setText(format.format(MontantRemise));
             }else{
                 bt_montantremise.setBackgroundColor(Color.rgb(255, 255, 255));
-
+                txt_montant_remise.setText("---.---");
             }
 
 

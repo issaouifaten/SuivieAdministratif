@@ -1,28 +1,18 @@
 package com.example.suivieadministratif.task;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.example.suivieadministratif.ConnectionClass;
-import com.example.suivieadministratif.R;
-import com.example.suivieadministratif.adapter.BonCommandeAdapter;
 import com.example.suivieadministratif.adapter.MvmentVenteServiceAdapterLV;
-import com.example.suivieadministratif.model.BonCommandeVente;
 import com.example.suivieadministratif.model.MouvementVenteService;
-import com.example.suivieadministratif.module.vente.EtatCommande;
-import com.example.suivieadministratif.module.vente.EtatRetourActivity;
-import com.example.suivieadministratif.module.vente.HistoriqueLigneBonCommandeActivity;
 import com.example.suivieadministratif.module.vente.MouvementVenteServiceActivity;
 import com.example.suivieadministratif.param.Param;
 
@@ -30,7 +20,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -75,11 +64,6 @@ public class MouvementVenteServiceTask extends AsyncTask<String, String, String>
 
 
         Log.e("BON_CMD" ,Param.PEF_SERVER +"-"+ip+"-"+base) ;
-
-        /*SharedPreferences pref=activity.getSharedPreferences("usersession", Context.MODE_PRIVATE);
-        SharedPreferences.Editor edt=pref.edit();
-        NomUtilisateur= pref.getString("NomUtilisateur",NomUtilisateur);*/
-
         connectionClass = new ConnectionClass();
 
     }
@@ -100,10 +84,10 @@ public class MouvementVenteServiceTask extends AsyncTask<String, String, String>
                 z = "Error in connection with SQL server";
             } else {
 
-                String query_mvmnt_service = " select Vue_listeventeglobal.CodeClient  ,Vue_listeventeglobal.RaisonSociale  ,NumeroPiece ,Vue_listeventeglobal.CodeArticle ,Article.Designation  , DatePiece ,Quantite ,MontantTTC ,NomUtilisateur\n" +
-                        "     from Vue_listeventeglobal\n" +
-                        "    left join Article on Article.CodeArticle=Vue_listeventeglobal.CodeArticle \n" +
-                        "    left  join BonLivraisonVente  on  BonLivraisonVente.NumeroBonLivraisonVente = Vue_listeventeglobal.NumeroPiece \n" +
+                String query_mvmnt_service = " select Vue_listeventeglobal.CodeClient  ,Vue_listeventeglobal.RaisonSociale  ,NumeroPiece ,Vue_listeventeglobal.CodeArticle ,Article.Designation  , DatePiece ,Quantite ,MontantTTC ,Vue_listeventeglobal.NomUtilisateur\n" +
+                        "         from Vue_listeventeglobal\n" +
+                        "        left join Article on Article.CodeArticle=Vue_listeventeglobal.CodeArticle \n" +
+                        "        left  join BonLivraisonVente  on  BonLivraisonVente.NumeroBonLivraisonVente = Vue_listeventeglobal.NumeroPiece  \n" +
                         "where  DatePiece between '"+df.format(date_debut)+"' and '"+df.format(date_fin)+"' and Stockable=0  ";
 
 
@@ -111,9 +95,7 @@ public class MouvementVenteServiceTask extends AsyncTask<String, String, String>
                 PreparedStatement ps = con.prepareStatement(query_mvmnt_service);
                 ResultSet rs = ps.executeQuery();
 
-
                 while (rs.next()) {
-
 
                     String CodeClient = rs.getString("CodeClient");
                     String RaisonSociale = rs.getString("RaisonSociale");
@@ -148,16 +130,14 @@ public class MouvementVenteServiceTask extends AsyncTask<String, String, String>
 
         MvmentVenteServiceAdapterLV mvmentVenteServiceAdapterLV  = new MvmentVenteServiceAdapterLV(activity, listMouvementServiceVente);
         lv_mvmnt_vente_service.setAdapter(mvmentVenteServiceAdapterLV);
+
       //  txt_tot_mvmnt_vente_service
-
-
 
         final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
         instance.setMinimumFractionDigits(3);
         instance.setMaximumFractionDigits(3);
-        MouvementVenteServiceActivity.txt_tot_mvmnt_vente_service.setText(instance.format(total));
 
-        //listOnClick(listBonCommandeVente);
+        MouvementVenteServiceActivity. txt_tot_ttc.setText(instance.format(total)+"");
 
 
     }

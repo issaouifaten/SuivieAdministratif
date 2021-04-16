@@ -32,15 +32,16 @@ public class BonCommandeVente {
     }
 
 
-    public BonCommandeVente(String numeroBonCommandeVente, Date dateBonCommandeVente, String referenceClient, double totalTTC ,double TotalRemise ,double  TotalHT  ,double   TotalTVA ,String NumeroEtat , String LibelleEtat ) {
+    public BonCommandeVente(String numeroBonCommandeVente, Date dateBonCommandeVente,String NomUtilisateur ,String referenceClient, double  TotalNetHT  ,double   TotalTVA , double totalTTC ,String NumeroEtat , String LibelleEtat ) {
         NumeroBonCommandeVente = numeroBonCommandeVente;
         DateBonCommandeVente = dateBonCommandeVente;
         ReferenceClient = referenceClient;
+
+this.NomUtilisateur=NomUtilisateur  ;
+        this.TotalNetHT=TotalNetHT  ;
+        this.TotalTVA = TotalTVA  ;
         TotalTTC = totalTTC;
 
-        this.TotalRemise=TotalRemise  ;
-        this.TotalHT=TotalHT ;
-        this.TotalTVA = TotalTVA  ;
 
         this.NumeroEtat = NumeroEtat  ;
         this.LibelleEtat =LibelleEtat ;

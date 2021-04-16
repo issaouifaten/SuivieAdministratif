@@ -24,11 +24,13 @@ public class LigneBonCommandeVente {
     }
 
 
-    public LigneBonCommandeVente(String numeroBonCommandeVente, String codeArticle, int quantite, double montantTTC) {
+    public LigneBonCommandeVente(String numeroBonCommandeVente, String codeArticle, int quantite, double montantTTC ,double NetHT , double TauxRemise   ) {
         NumeroBonCommandeVente = numeroBonCommandeVente;
         CodeArticle = codeArticle;
         Quantite = quantite;
         MontantTTC = montantTTC;
+        this.NetHT = NetHT ;
+        this.TauxRemise = TauxRemise ;
     }
 
     public LigneBonCommandeVente(String numeroBonCommandeVente, String codeArticle, String designationArticle, int numeroOrdre, double prixVenteHT, int quantite, double montantHT, double tauxTVA, double montantTVA, double montantTTC, String observation, double tauxRemise, double montantRemise, double montantFodec, double netHT, double prixAchatNet) {

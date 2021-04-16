@@ -24,7 +24,7 @@ public class ArticleNonMouvementeActivity extends AppCompatActivity {
 
         SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " : Article Nom Mouvementé");
+        setTitle(NomSociete + " : Article Non Mouvementé");
 
 
         SearchView search_bar = (SearchView)  findViewById(R.id.search_bar) ;

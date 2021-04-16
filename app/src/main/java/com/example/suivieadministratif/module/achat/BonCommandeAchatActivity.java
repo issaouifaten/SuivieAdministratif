@@ -1,20 +1,15 @@
 package com.example.suivieadministratif.module.achat;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import com.example.suivieadministratif.R ;
+import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.activity.HomeActivity;
 import com.example.suivieadministratif.adapter.BonCommandeAdapter;
-import com.example.suivieadministratif.module.reglementFournisseur.RapportEcheanceFournisseurActivity;
-import com.example.suivieadministratif.module.reglementFournisseur.ReglementFournisseurActivity;
-import com.example.suivieadministratif.module.vente.EtatCommande;
 import com.example.suivieadministratif.task.HistoriqueBCAchatTask;
-import com.example.suivieadministratif.task.HistoriqueBCTask;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.suivieadministratif.task.ListFournisseurTaskForSearchableSpinner;
 import com.google.android.material.navigation.NavigationView;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -26,7 +21,6 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -39,12 +33,12 @@ import java.util.Date;
 public class BonCommandeAchatActivity extends AppCompatActivity {
 
 
-    ListView lv_list_historique_bc;
-    ProgressBar pb_bc;
-    SearchView search_bar_client;
+    public static  ListView lv_list_historique_bc;
+    public static   ProgressBar pb_bc;
+
 
     public TextView txt_date_debut, txt_date_fin;
-    public static TextView  txt_tot;
+    public static TextView txt_tot;
 
 
     final Context co = this;
@@ -61,13 +55,15 @@ public class BonCommandeAchatActivity extends AppCompatActivity {
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     NumberFormat formatter = new DecimalFormat("00");
 
-    FloatingActionButton fab_arrow   ;
-    RelativeLayout layoutBottomSheet ;
-    BottomSheetBehavior sheetBehavior;
+    public static TextView txt_tot_ht, txt_tot_tva, txt_tot_ttc;
+
+    SearchableSpinner sp_fournisseur ;
+    public   static   String  CodeFournisseurSelected = "" ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bon_commande_achat);
+        setContentView(R.layout.activity_etat_achat);
 
         //sql session
         SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
@@ -78,12 +74,17 @@ public class BonCommandeAchatActivity extends AppCompatActivity {
         txt_date_fin = findViewById(R.id.txt_date_fin);
 
 
-        lv_list_historique_bc = (ListView) findViewById(R.id.lv_list_historique_bc_achat);
+        txt_tot_ht = (TextView) findViewById(R.id.txt_tot_ht);
+        txt_tot_tva = (TextView) findViewById(R.id.txt_total_tva);
+        txt_tot_ttc = (TextView) findViewById(R.id.txt_total_ttc);
+        sp_fournisseur = (SearchableSpinner) findViewById(R.id.sp_fournisseur);
+
+
+        lv_list_historique_bc = (ListView) findViewById(R.id.lv_list);
         pb_bc = (ProgressBar) findViewById(R.id.pb_bc);
-        search_bar_client = (SearchView) findViewById(R.id.search_bar_client);
-      TextView  titre = (TextView) findViewById(R.id.txt_gratuite);
-      titre.setText("Total TTC : ");
-        txt_tot = (TextView) findViewById(R.id.txt_tot_livraison);
+
+
+
 
         final Calendar cal1 = Calendar.getInstance();
         cal1.setTime(currentDate);
@@ -109,6 +110,11 @@ public class BonCommandeAchatActivity extends AppCompatActivity {
         txt_date_fin.setText(_date_au);
 
         updateData();
+
+
+        ListFournisseurTaskForSearchableSpinner listFournisseurTaskForSearchableSpinner = new ListFournisseurTaskForSearchableSpinner(this , sp_fournisseur,"BonCommandeAchatActivity") ;
+        listFournisseurTaskForSearchableSpinner.execute() ;
+
 
         txt_date_debut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,134 +190,92 @@ public class BonCommandeAchatActivity extends AppCompatActivity {
                 datePickerDialog.show();
             }
         });
-        NavigationView nav_menu=findViewById(R.id.nav_view);
+        NavigationView nav_menu = findViewById(R.id.nav_view);
         View headerView = nav_menu.getHeaderView(0);
 
 
-        CardView btn_bon_liv_achat = (CardView) headerView. findViewById(R.id.btn_bon_livraison_achat) ;
+        CardView btn_bon_liv_achat = (CardView) headerView.findViewById(R.id.btn_bon_livraison_achat);
         btn_bon_liv_achat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent1 = new Intent(getApplicationContext() , BonLivraisonAchatActivity.class) ;
+                Intent intent1 = new Intent(getApplicationContext(), BonLivraisonAchatActivity.class);
                 startActivity(intent1);
             }
         });
 
 
-        CardView  btn_bon_cmd_achat = (CardView)  headerView. findViewById(R.id.btn_bon_commande_achat) ;
+        CardView btn_bon_cmd_achat = (CardView) headerView.findViewById(R.id.btn_bon_commande_achat);
         btn_bon_cmd_achat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent  intent1 = new Intent(getApplicationContext() , BonCommandeAchatActivity.class) ;
+                Intent intent1 = new Intent(getApplicationContext(), BonCommandeAchatActivity.class);
                 startActivity(intent1);
             }
         });
 
 
-
-        CardView  btn_bon_retour_achat = (CardView) headerView. findViewById(R.id.btn_bon_retour_achat) ;
+        CardView btn_bon_retour_achat = (CardView) headerView.findViewById(R.id.btn_bon_retour_achat);
         btn_bon_retour_achat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent  intent1 = new Intent(getApplicationContext() , BonRetourAchatActivity.class) ;
+                Intent intent1 = new Intent(getApplicationContext(), BonRetourAchatActivity.class);
                 startActivity(intent1);
             }
         });
 
 
-        CardView btn_reglement_frns = (CardView)headerView. findViewById(R.id.btn_reg_frns)  ;
+        CardView btn_reglement_frns = (CardView) headerView.findViewById(R.id.btn_reg_frns);
 
         btn_reglement_frns.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent1 = new Intent(getApplicationContext() , ReglementFournisseurActivity.class) ;
+                Intent intent1 = new Intent(getApplicationContext(), ReglementFournisseurActivity.class);
                 startActivity(intent1);
             }
         });
 
-        CardView   btn_echeance_fournisseur = (CardView) headerView.  findViewById(R.id.btn_echenace_fournisseur);
+        CardView btn_echeance_fournisseur = (CardView) headerView.findViewById(R.id.btn_echenace_fournisseur);
         btn_echeance_fournisseur.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent1 = new Intent(getApplicationContext() , RapportEcheanceFournisseurActivity.class) ;
+                Intent intent1 = new Intent(getApplicationContext(), RapportEcheanceFournisseurActivity.class);
                 startActivity(intent1);
 
             }
         });
 //btn_facture_achat
-        CardView   btn_facture_achat = (CardView)  headerView. findViewById(R.id.btn_facture_achat);
+        CardView btn_facture_achat = (CardView) headerView.findViewById(R.id.btn_facture_achat);
         btn_facture_achat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent1 = new Intent(getApplicationContext() , FactureAchat.class) ;
+                Intent intent1 = new Intent(getApplicationContext(), FactureAchat.class);
                 startActivity(intent1);
 
             }
         });
 
 
-
-        CardView   btn_home= (CardView) headerView.findViewById(R.id.btn_home );
+        CardView btn_home = (CardView) headerView.findViewById(R.id.btn_home);
         btn_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toCaisseRecette  = new Intent(getApplicationContext() , HomeActivity.class) ;
+                Intent toCaisseRecette = new Intent(getApplicationContext(), HomeActivity.class);
                 startActivity(toCaisseRecette);
 
             }
         });
 
-        layoutBottomSheet = (RelativeLayout) findViewById(R.id.bottom_sheet);
-        fab_arrow = (FloatingActionButton) findViewById(R.id.fab_arrow);
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setHideable(false);
-
-        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                switch (newState) {
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED: {
-                        // Toast.makeText(getActivity() , "Close Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_down);
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_COLLAPSED: {
-                        // Toast.makeText(getActivity() , "Expand Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_up);
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_DRAGGING:
-                        break;
-                    case BottomSheetBehavior.STATE_SETTLING:
-                        break;
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
-            }
-        });
-
-
-
-
-
 
     }
 
-
     public void updateData() {
 
-        HistoriqueBCAchatTask historiqueBCTask = new HistoriqueBCAchatTask(this, date_debut, date_fin, lv_list_historique_bc, pb_bc, search_bar_client);
+        HistoriqueBCAchatTask historiqueBCTask = new HistoriqueBCAchatTask(this, date_debut, date_fin, lv_list_historique_bc, pb_bc, CodeFournisseurSelected);
         historiqueBCTask.execute();
-
 
     }
 

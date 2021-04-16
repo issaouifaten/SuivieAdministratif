@@ -5,10 +5,10 @@ public class LigneBonLivraisonVente {
 
     private String NumeroBonLivraisonVente;
     private String CodeArticle;
-    private int    NumeroOrdre;
+    private int NumeroOrdre;
     private String DesignationArticle;
     private double PrixVenteHT;
-    private int    Quantite;
+    private int Quantite;
     private double MontantHT;
     private double TauxRemise;
 
@@ -23,16 +23,17 @@ public class LigneBonLivraisonVente {
     private String Observation;
     private String NumeroBonCommandeVente;
 
-    private int QuantiteRetour ;
+    private int QuantiteRetour;
 
 
-    public LigneBonLivraisonVente(String NumeroBonLivraisonVente, String codeArticle, int quantite, double montantTTC) {
-       this.NumeroBonLivraisonVente = NumeroBonLivraisonVente;
+    public LigneBonLivraisonVente(String NumeroBonLivraisonVente, String codeArticle, int quantite, double NetHT, double TauxRemise, double montantTTC) {
+        this.NumeroBonLivraisonVente = NumeroBonLivraisonVente;
         CodeArticle = codeArticle;
         Quantite = quantite;
+        this.NetHT = NetHT;
+        this.TauxRemise = TauxRemise;
         MontantTTC = montantTTC;
     }
-
 
 
     public LigneBonLivraisonVente(String codeArticle, String designationArticle, int quantite) {
@@ -43,19 +44,19 @@ public class LigneBonLivraisonVente {
 
 
     //  constructeur de  retour
-    public LigneBonLivraisonVente(String numeroBonLivraisonVente, String codeArticle, int numeroOrdre, String designationArticle, int quantite, int quantiteRetour ,double MontantTTC , double PrixVenteHT ,  double PrixAchatNet, double NoteArticle,  double TauxTVA ,double TauxRemise) {
+    public LigneBonLivraisonVente(String numeroBonLivraisonVente, String codeArticle, int numeroOrdre, String designationArticle, int quantite, int quantiteRetour, double MontantTTC, double PrixVenteHT, double PrixAchatNet, double NoteArticle, double TauxTVA, double TauxRemise) {
         NumeroBonLivraisonVente = numeroBonLivraisonVente;
         CodeArticle = codeArticle;
         NumeroOrdre = numeroOrdre;
         DesignationArticle = designationArticle;
         Quantite = quantite;
         QuantiteRetour = quantiteRetour;
-         this. MontantTTC =   MontantTTC ;
-         this.PrixVenteHT=PrixVenteHT;
-         this.PrixAchatNet=PrixAchatNet ;
-         this.NoteArticle=NoteArticle ;
-         this.TauxTVA=TauxTVA ;
-        this.TauxRemise=TauxRemise ;
+        this.MontantTTC = MontantTTC;
+        this.PrixVenteHT = PrixVenteHT;
+        this.PrixAchatNet = PrixAchatNet;
+        this.NoteArticle = NoteArticle;
+        this.TauxTVA = TauxTVA;
+        this.TauxRemise = TauxRemise;
     }
 
     public LigneBonLivraisonVente(String numeroBonLivraisonVente, String codeArticle, int numeroOrdre, String designationArticle, double prixVenteHT, int quantite, double montantHT, double tauxRemise, double montantRemise, double netHT, double tauxTVA, double montantTVA, double montantTTC, double prixAchatNet, double noteArticle, double prixUnitaireNetTTC, String observation, String numeroBonCommandeVente) {

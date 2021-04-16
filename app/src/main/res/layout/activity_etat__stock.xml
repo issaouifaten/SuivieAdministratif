@@ -12,11 +12,6 @@
         android:orientation="vertical"
         android:layout_marginBottom="40dp">
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -29,7 +24,7 @@
 
                 <RadioButton
                     android:id="@+id/bt_prix_achatht"
-                    android:layout_width="80dp"
+                    android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:background="@drawable/rbtn_selector_"
@@ -38,11 +33,12 @@
                     android:gravity="center"
                     android:text="AchatHT"
 
+                    android:layout_weight="1"
                     android:textColor="@drawable/rbtn_textcolor_selector_" />
 
                 <RadioButton
                     android:id="@+id/bt_prix_achatttc"
-                    android:layout_width="80dp"
+                    android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
@@ -58,21 +54,21 @@
 
                 <RadioButton
                     android:id="@+id/bt_prix_venteht"
-                    android:layout_width="80dp"
+                    android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
+
                     android:background="@drawable/rbtn_selector_"
                     android:button="@null"
                     android:checked="true"
                     android:gravity="center"
                     android:text="Vente HT"
-
+                    android:layout_weight="1"
                     android:textColor="@drawable/rbtn_textcolor_selector_" />
 
                 <RadioButton
                     android:id="@+id/bt_prix_ventettc"
-                    android:layout_width="80dp"
+                    android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:background="@drawable/rbtn_selector_"
@@ -80,10 +76,10 @@
                     android:checked="true"
                     android:gravity="center"
                     android:text="Vente TTC"
-
+                    android:layout_weight="1"
                     android:textColor="@drawable/rbtn_textcolor_selector_" />
 
-                <RadioButton
+           <!--     <RadioButton
                     android:id="@+id/bt_valeurmax"
                     android:layout_width="80dp"
                     android:layout_height="40dp"
@@ -107,9 +103,239 @@
                     android:gravity="center"
 
                     android:text="Val.Min"
-                    android:textColor="@drawable/rbtn_textcolor_selector_" />
+                    android:textColor="@drawable/rbtn_textcolor_selector_" />-->
             </RadioGroup>
         </HorizontalScrollView>
+
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Article"
+            android:textColor="@color/colorPrimary2"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:orientation="horizontal">
+
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/buttonround"
+                android:gravity="center">
+
+                <SearchView
+                    android:id="@+id/search_bar_article"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:hint="Rechercher Client"></SearchView>
+
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_pourcent"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/buttonround"
+                android:gravity="center"
+                android:text="%"
+                android:textColor="@color/colorPrimary2"></Button>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+            <TextView
+                android:id="@+id/txt_recherche"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recherche en cours  ..."></TextView>
+
+
+        </LinearLayout>
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            app:cardBackgroundColor="#edfcf9f9"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="6dp"
+            app:cardMaxElevation="2dp">
+
+            <FrameLayout
+                android:id="@+id/farme_card"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/card_edge_red">
+
+            </FrameLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/txt_libelle_etat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"
+                        android:text="Total  "
+                        android:textColor="@color/color_g_7"
+                        android:textStyle="italic|bold"
+                        android:typeface="serif" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:gravity="bottom"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="left"
+
+                            android:textColor="@color/colortxt"
+                            android:typeface="serif" />
+
+
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="left"
+                            android:text="Quantité"
+                            android:textColor="@color/colortxt"
+                            android:typeface="serif" />
+
+                        <TextView
+                            android:id="@+id/libelle_total_mnt"
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="left"
+                            android:text="Montant TTC"
+                            android:textColor="@color/colortxt"
+                            android:typeface="serif" />
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:gravity="bottom"
+                        android:orientation="horizontal">
+
+
+
+                        <TextView
+
+                            android:layout_width="100dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:autoSizeMaxTextSize="15dp"
+                            android:autoSizeMinTextSize="12sp"
+                            android:gravity="left"
+
+                            android:textSize="15dp"
+                            android:textColor="@color/color_g_1"
+                            android:textStyle="italic|bold"
+                            android:typeface="serif" />
+
+
+
+
+
+                        <LinearLayout
+                            android:layout_width="100dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:gravity="right">
+
+                            <TextView
+                                android:id="@+id/txt_tot_quantite"
+                                android:layout_width="100dp"
+                                android:layout_height="40dp"
+                                android:background="@drawable/round_intervenant"
+                                android:gravity="center"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:text="----"
+                                android:textColor="@color/white"
+                                android:textSize="20dp"
+                                android:textStyle="italic|bold"
+                                android:typeface="serif" />
+
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:id="@+id/txt_total_mnt"
+                            android:layout_width="120dp"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="---.---"
+                            android:textColor="@color/color_g_1"
+                            android:textSize="17dp"
+                            android:textStyle="italic|bold"
+                            android:typeface="serif" />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
 
         <GridView
             android:id="@+id/grid_etat"

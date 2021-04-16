@@ -2,22 +2,16 @@ package com.example.suivieadministratif.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.Toast;
 
-import com.example.suivieadministratif.model.WorkFlow;
-import com.example.suivieadministratif.ui.menu.MenuAchatFragment;
-import com.example.suivieadministratif.ui.menu.MenuCaisseFragment;
-import com.example.suivieadministratif.ui.menu.MenuEtatDeStockFragment;
-import com.example.suivieadministratif.ui.menu.MenuPrincipalFragment;
-import com.example.suivieadministratif.ui.menu.MenuStatistiqueFragment;
-import com.example.suivieadministratif.ui.menu.MenuTresorerieFragment;
-import com.example.suivieadministratif.ui.menu.MenuVenteFragment;
-import com.example.suivieadministratif.ui.menu.StatistiqueMenuActivity;
+import com.example.suivieadministratif.menu.MenuAchatFragment;
+import com.example.suivieadministratif.menu.MenuCaisseFragment;
+import com.example.suivieadministratif.menu.MenuStockFragment;
+import com.example.suivieadministratif.menu.MenuPrincipalFragment;
+import com.example.suivieadministratif.menu.MenuVenteFragment;
+import com.example.suivieadministratif.menu.StatistiqueMenuActivity;
 import com.example.suivieadministratif.ui.parametrage.ParametrageFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -26,10 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+
 import com.example.suivieadministratif.R;
 import com.google.android.material.navigation.NavigationView;
 
@@ -43,14 +35,10 @@ public class HomeActivity extends AppCompatActivity {
         BottomNavigationView navViewBottom = findViewById(R.id.nav_view_bottom);
 
 
-
-
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder
                 (R.id.navigation_menu,   R.id.navigation_workflow ,  R.id.navigation_parametrage)
                 .build();
-
 
 
         navViewBottom.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -148,7 +136,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.nav_host_fragment,new MenuEtatDeStockFragment())
+                        .replace(R.id.nav_host_fragment,new MenuStockFragment())
                         .addToBackStack(MenuAchatFragment.class.getSimpleName())
                         .commit();
 

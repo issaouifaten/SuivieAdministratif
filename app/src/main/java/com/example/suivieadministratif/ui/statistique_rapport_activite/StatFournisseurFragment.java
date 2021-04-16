@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.suivieadministratif.R;
-import com.example.suivieadministratif.ui.menu.MenuViewModel;
+import com.example.suivieadministratif.menu.MenuViewModel;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Fournisseur.CommandeFournisseurNonConforme;
-import com.example.suivieadministratif.ui.statistique_rapport_activite.Fournisseur.ListeRetenuFrs;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Fournisseur.ListeRetenuFournisseurActivity;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Fournisseur.PieceNonPayeFrs;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Fournisseur.SuivieCommandeFrs;
 
@@ -48,7 +48,7 @@ public class StatFournisseurFragment extends Fragment {
         btn_retenu_frs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent6 = new Intent(getActivity(), ListeRetenuFrs.class);
+                Intent intent6 = new Intent(getActivity(), ListeRetenuFournisseurActivity.class);
                 startActivity(intent6);
             }
         });

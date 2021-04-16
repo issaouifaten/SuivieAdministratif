@@ -19,7 +19,7 @@ import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.task.ListDepotTaskForSearchableSpinner;
 import com.example.suivieadministratif.task.ListFamilleTaskForSearchableSpinner;
 import com.example.suivieadministratif.task.ListFournisseurTaskForSearchableSpinner;
-import com.example.suivieadministratif.ui.menu.MenuViewModel;
+import com.example.suivieadministratif.menu.MenuViewModel;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.article.ArticleDLC;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.article.ArticleFaibleRotationActivity;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.article.ArticleNonMouvementeActivity;
@@ -321,20 +321,7 @@ public class StatArticleFragment extends Fragment {
 
 
                 startActivity(intent6);
-                /*
-                Intent toDetailSoldeClient = new Intent(getActivity(), DetailSoldeClientActivity.class);
 
-                toDetailSoldeClient.putExtra("cle_code_client", CodeClientSeleted);
-                toDetailSoldeClient.putExtra("cle_raison_client", RaisonClientSeleted);
-
-                toDetailSoldeClient.putExtra("cle_code_recouv", CodeRecouvreurSeleted);
-                toDetailSoldeClient.putExtra("cle_Nom_recouv", NomRecouvreurSeleted);
-
-                toDetailSoldeClient.putExtra("cle_date_debut", df.format(date_debut));
-                toDetailSoldeClient.putExtra("cle_date_fin", df.format(date_fin));
-
-                startActivity(toDetailSoldeClient);
-                */
 
             }
         });

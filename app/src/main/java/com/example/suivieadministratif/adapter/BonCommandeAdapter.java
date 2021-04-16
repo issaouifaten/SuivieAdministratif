@@ -32,12 +32,11 @@ public class BonCommandeAdapter extends ArrayAdapter<BonCommandeVente> {
 
 
     NumberFormat formatter = new DecimalFormat("0.000");
-
     private final Activity activity;
     private final ArrayList<BonCommandeVente> listBonCommandeVente;
 
     public BonCommandeAdapter(Activity activity  , ArrayList<BonCommandeVente> listBonCommandeVente) {
-        super(activity, R.layout.item_bon_commande, listBonCommandeVente);
+        super(activity, R.layout.item_etat_entete, listBonCommandeVente);
         // TODO Auto-generated constructor stub
 
         this.activity=activity;
@@ -48,18 +47,20 @@ public class BonCommandeAdapter extends ArrayAdapter<BonCommandeVente> {
         LayoutInflater inflater=activity.getLayoutInflater();
         Context context = parent.getContext();
 
-        View rowView=inflater.inflate(R.layout.item_bon_commande, null, true);
+        View rowView=inflater.inflate(R.layout.item_etat_entete, null, true);
 
 
         BonCommandeVente bc = listBonCommandeVente.get(position);
 
         CardView card_cmd  = (CardView) rowView.findViewById(R.id.item_bon_commande);
-        TextView txt_num_bc        = (TextView) rowView.findViewById(R.id.txt_num_bc);
+        TextView txt_num_bc        = (TextView) rowView.findViewById(R.id.txt_num_piece);
         TextView txt_raison_client       = (TextView) rowView.findViewById(R.id.txt_raison_client);
 
-        TextView txt_ht           = (TextView) rowView.findViewById(R.id.txt_prix_ht);
+
+
+        TextView txt_ht           = (TextView) rowView.findViewById(R.id.txt_prix_net_ht);
         TextView txt_tva          = (TextView) rowView.findViewById(R.id.txt_prix_tva);
-        TextView txt_remise       = (TextView) rowView.findViewById(R.id.txt_remise);
+
         TextView txt_ttc          = (TextView) rowView.findViewById(R.id.txt_prix_ttc);
 
 
@@ -69,10 +70,12 @@ public class BonCommandeAdapter extends ArrayAdapter<BonCommandeVente> {
 
         txt_num_bc .setText (bc.getNumeroBonCommandeVente());
         txt_raison_client.setText(bc.getReferenceClient());
+        TextView txt_etablie_par       = (TextView) rowView.findViewById(R.id.txt_etablie_par);
+        txt_etablie_par.setText(bc.getNomUtilisateur());
 
-        txt_ht.setText   (formatter.format(bc.getTotalHT())+"");
+        txt_ht.setText   (formatter.format(bc.getTotalNetHT())+"");
         txt_tva.setText   (formatter.format(bc.getTotalTVA())+"");
-        txt_remise.setText   (formatter.format(bc.getTotalRemise())+"");
+
         txt_ttc.setText   (formatter.format(bc.getTotalTTC())+"");
 
 

@@ -12,7 +12,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -53,9 +55,6 @@ public class MouvementCaisseDepenseDetailActivity extends AppCompatActivity {
 
     public  static  TextView  txt_tot_depense ;
 
-    FloatingActionButton fab_arrow;
-    RelativeLayout layoutBottomSheet;
-    BottomSheetBehavior sheetBehavior;
 
 
 
@@ -63,13 +62,17 @@ public class MouvementCaisseDepenseDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mouvement_caisse_depense_detail);
+
+
+        SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
+        String NomSociete = pref.getString("NomSociete", "");
+        setTitle(NomSociete + " : Caisse Dépense");
+
+
         txt_date_debut = findViewById(R.id.txt_date_debut);
         txt_date_fin = findViewById(R.id.txt_date_fin);
-
         lv_list_mvmnt_caisse  = findViewById( R.id.lv_list_mvmnt_caisse) ;
-
         pb = (ProgressBar) findViewById(R.id.pb);
-
 
         rg_depense=   findViewById(R.id.rg_type_caisse) ;
         rb_tout =  findViewById(R.id.rb_tout) ;
@@ -77,7 +80,7 @@ public class MouvementCaisseDepenseDetailActivity extends AppCompatActivity {
         rb_fournisseur = findViewById(R.id.rb_fournisseur) ;
         rb_client = findViewById(R.id.rb_client) ;
 
-        txt_tot_depense = (TextView) findViewById(R.id.txt_tot_echeance_client) ;
+        txt_tot_depense = (TextView) findViewById(R.id.txt_total_depense) ;
 
         final Calendar cal1 = Calendar.getInstance();
         cal1.setTime(currentDate);
@@ -251,45 +254,6 @@ public class MouvementCaisseDepenseDetailActivity extends AppCompatActivity {
         });
 
 
-
-        layoutBottomSheet = (RelativeLayout)  findViewById(R.id.bottom_sheet);
-        fab_arrow = (FloatingActionButton)  findViewById(R.id.fab_arrow);
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setHideable(false);
-
-        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                switch (newState) {
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED: {
-
-                        // Toast.makeText(getActivity() , "Close Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_down);
-
-                      /* ReptureStockClientTaskTask reptureStockClientTaskTask = new ReptureStockClientTaskTask(getActivity() ,"1" , exptens_lv_stock_en_repture) ;
-                        reptureStockClientTaskTask.execute() ;*/
-
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_COLLAPSED: {
-                        // Toast.makeText(getActivity() , "Expand Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_up);
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_DRAGGING:
-                        break;
-                    case BottomSheetBehavior.STATE_SETTLING:
-                        break;
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
-            }
-        });
 
     }
 

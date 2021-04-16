@@ -14,31 +14,39 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.SearchView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
+import com.example.suivieadministratif.module.Stock.EtatDeStockActivity;
+import com.example.suivieadministratif.task.StockArticleTask;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class Etat_Stock extends AppCompatActivity {
-    RadioButton bt_achatht,bt_achattc,bt_venteht,bt_ventettc,bt_valeurmin,bt_valeurmax;
-    String query_list="",query_list_min_max="";
+    RadioButton bt_achatht, bt_achattc, bt_venteht, bt_ventettc ; //, bt_valeurmin, bt_valeurmax;
+    public static String query_list = "";
+
+    String query_list_min_max = "";
 
     ConnectionClass connectionClass;
     String CodeSociete, NomUtilisateur, CodeLivreur;
@@ -48,17 +56,33 @@ public class Etat_Stock extends AppCompatActivity {
     GridView gridEtat;
     ProgressBar progressBar;
 
-    String condition="",conditionDepense="",conditionArticle="";
+    public static String btn_selected = "";
+    String condition = "", conditionDepense = "", conditionArticle = "";
+
+
+    TextView txt_total_qt, txt_total_mnt, txt_libelle_mnt;
+    TextView txt_recherche  ;
+    public static String termRecherche = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(  R.layout.activity_etat__stock);
-        bt_achatht=(RadioButton)findViewById(R.id.bt_prix_achatht);
-        bt_achattc=(RadioButton)findViewById(R.id.bt_prix_achatttc);
-        bt_venteht=(RadioButton)findViewById(R.id.bt_prix_venteht);
-        bt_ventettc=(RadioButton)findViewById(R.id.bt_prix_ventettc);
-        bt_valeurmax=(RadioButton)findViewById(R.id.bt_valeurmax);
-        bt_valeurmin=(RadioButton)findViewById(R.id.bt_valeurmin);
+        setContentView(R.layout.activity_etat__stock);
+
+
+        bt_achatht = (RadioButton) findViewById(R.id.bt_prix_achatht);
+        bt_achattc = (RadioButton) findViewById(R.id.bt_prix_achatttc);
+        bt_venteht = (RadioButton) findViewById(R.id.bt_prix_venteht);
+        bt_ventettc = (RadioButton) findViewById(R.id.bt_prix_ventettc);
+      /*  bt_valeurmax = (RadioButton) findViewById(R.id.bt_valeurmax);
+        bt_valeurmin = (RadioButton) findViewById(R.id.bt_valeurmin);*/
+
+
+        txt_total_qt = (TextView) findViewById(R.id.txt_tot_quantite);
+        txt_total_mnt = (TextView) findViewById(R.id.txt_total_mnt);
+        txt_libelle_mnt = (TextView) findViewById(R.id.libelle_total_mnt);
+        txt_recherche= (TextView) findViewById(R.id.txt_recherche);
+
         SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
         setTitle(NomSociete + " : Etat Stock");
@@ -70,31 +94,25 @@ public class Etat_Stock extends AppCompatActivity {
         NomUtilisateur = prefe.getString("NomUtilisateur", NomUtilisateur);
 
 
-
         SharedPreferences.Editor edt = pref.edit();
         user = pref.getString("user", user);
         ip = pref.getString("ip", ip);
         password = pref.getString("password", password);
         base = pref.getString("base", base);
-        gridEtat=(GridView)findViewById(R.id.grid_etat) ;
-        progressBar=(ProgressBar)findViewById(R.id.progress_bar) ;
+        gridEtat = (GridView) findViewById(R.id.grid_etat);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+
 
         bt_achatht.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                {
-                    query_list="  SELECT Article.CodeArticle, Article.Designation, Stock.Quantite, Depot.Libelle, \n" +
-                            " Article.CodeTVA, Article.PrixAchatHT,convert(numeric(18,3),(TVA.TauxTVA+100)/100*Article.PrixAchatHT)as Prix ,\n" +
-                            " convert(numeric(18,3),(TVA.TauxTVA+100)/100*Article.PrixAchatHT*Stock.Quantite)as Montant \n" +
-                            " FROM   Article Article \n" +
-                            " INNER JOIN (Depot Depot \n" +
-                            " INNER JOIN Stock Stock ON Depot.CodeDepot=Stock.CodeDepot) \n" +
-                            " ON Article.CodeArticle=Stock.CodeArticle\n" +
-                            "  inner join TVA ON TVA.CodeTVA=Article.CodeTVA\n" +
-                            "where Stock.Quantite!=0";
-                    FillList fillList=new FillList();
-                    fillList.execute();
+                if (isChecked) {
+                    btn_selected = "bt_achatht";
+                    txt_libelle_mnt.setText("Total Achat HT");
+
+                    FillStock fillStock = new FillStock(termRecherche);
+                    fillStock.execute();
+
 
                 }
             }
@@ -103,33 +121,29 @@ public class Etat_Stock extends AppCompatActivity {
         bt_achattc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                {
-                    query_list="  SELECT Article.CodeArticle, Article.Designation, Article.PrixAchatHT, Stock.Quantite, Depot.Libelle\n" +
-                            " ,convert(numeric(18,3),Article.PrixAchatHT*Stock.Quantite )as Montant\n" +
-                            "  ,convert(numeric(18,3),Article.PrixAchatHT )as Prix\n" +
-                            " FROM   Article Article INNER JOIN (Depot Depot INNER JOIN Stock Stock ON Depot.CodeDepot=Stock.CodeDepot) \n" +
-                            " ON Article.CodeArticle=Stock.CodeArticle\n" +
-                            " where Stock.Quantite!=0";
-                    FillList fillList=new FillList();
-                    fillList.execute();
+                if (isChecked) {
+
+                    btn_selected = "bt_achattc";
+                    txt_libelle_mnt.setText("Total Achat TTC");
+
+                    FillStock fillStock = new FillStock(termRecherche);
+                    fillStock.execute();
 
                 }
             }
         });
+
         bt_venteht.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                {
-                    query_list=" SELECT Article.CodeArticle, Article.Designation, Stock.Quantite, \n" +
-                            "Depot.Libelle,convert(numeric(18,3), Article.PrixVenteHT) as Prix,\n" +
-                            "convert(numeric(18,3), Article.PrixVenteHT*Stock.Quantite )as Montant\n" +
-                            "FROM   Article Article \n" +
-                            "INNER JOIN (Depot Depot INNER JOIN Stock Stock ON Depot.CodeDepot=Stock.CodeDepot) ON Article.CodeArticle=Stock.CodeArticle\n" +
-                            "where Quantite!=0";
-                    FillList fillList=new FillList();
-                    fillList.execute();
+                if (isChecked) {
+
+                    btn_selected = "bt_venteht";
+
+                    txt_libelle_mnt.setText("Total Vente HT");
+
+                    FillStock fillStock = new FillStock(termRecherche);
+                    fillStock.execute();
                 }
             }
         });
@@ -137,28 +151,25 @@ public class Etat_Stock extends AppCompatActivity {
         bt_ventettc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                {
-                    query_list="SELECT Article.CodeArticle, Article.Designation, Stock.Quantite, Depot.Libelle, convert(numeric(18,3),Article.PrixVenteTTC) as Prix\n" +
-                            ",convert(numeric(18,3),Article.PrixVenteTTC* Stock.Quantite)as Montant \n" +
-                            "FROM   Article Article\n" +
-                            "INNER JOIN (Depot Depot INNER JOIN Stock Stock ON Depot.CodeDepot=Stock.CodeDepot)\n" +
-                            "ON Article.CodeArticle=Stock.CodeArticle\n" +
-                            "where Quantite!=0";
-                    FillList fillList=new FillList();
-                    fillList.execute();
+                if (isChecked) {
+
+                    btn_selected = "bt_ventettc";
+
+                    txt_libelle_mnt.setText("Total Vente TTC");
+
+                    FillStock fillStock = new FillStock(termRecherche);
+                    fillStock.execute();
 
                 }
             }
         });
 
 
-        bt_valeurmin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+      /*  bt_valeurmin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                {
-                    query_list_min_max="SELECT Article.CodeFamille, Article.CodeSousFamille, Stock.CodeArticle, Article.Designation, \n" +
+                if (isChecked) {
+                    query_list_min_max = "SELECT Article.CodeFamille, Article.CodeSousFamille, Stock.CodeArticle, Article.Designation, \n" +
                             "convert(numeric(18,3),Stock.PrixUnitaireAchat) as Prix , Stock.CodeDepot, Depot.Libelle as Depot, FamilleArticle.Libelle as FamilleArticle,\n" +
                             " SousFamilleArticle.Libelle as SousFamilleArticle ,\n" +
                             " convert(numeric(18,0),Stock.QuaniteMinimale)  as Quantite,convert(numeric(18,3),Stock.QuaniteMinimale*Stock.PrixUnitaireAchat) as Montant,\n" +
@@ -170,7 +181,9 @@ public class Etat_Stock extends AppCompatActivity {
                             "INNER JOIN UniteArticle UniteArticle ON Article.CodeUnite=UniteArticle.CodeUnite)\n" +
                             "INNER JOIN FamilleArticle FamilleArticle ON SousFamilleArticle.CodeFamille=FamilleArticle.CodeFamille\n" +
                             "ORDER BY Stock.CodeDepot, Article.CodeFamille, Article.CodeSousFamille\n";
-                    FillList_Min_Max fillList=new FillList_Min_Max();
+
+
+                    FillList_Min_Max fillList = new FillList_Min_Max();
                     fillList.execute();
 
                 }
@@ -180,9 +193,8 @@ public class Etat_Stock extends AppCompatActivity {
         bt_valeurmax.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                {
-                    query_list_min_max="SELECT Article.CodeFamille, Article.CodeSousFamille, Stock.CodeArticle, Article.Designation, \n" +
+                if (isChecked) {
+                    query_list_min_max = "SELECT Article.CodeFamille, Article.CodeSousFamille, Stock.CodeArticle, Article.Designation, \n" +
                             "convert(numeric(18,3),Stock.PrixUnitaireAchat) as Prix, Stock.CodeDepot, Depot.Libelle as Depot, FamilleArticle.Libelle as FamilleArticle,\n" +
                             " SousFamilleArticle.Libelle as SousFamilleArticle ,\n" +
                             " convert(numeric(18,0),Stock.QuantiteMaximale)  as Quantite ,convert(numeric(18,3),Stock.QuantiteMaximale*Stock.PrixUnitaireAchat) as Montant,\n" +
@@ -194,56 +206,123 @@ public class Etat_Stock extends AppCompatActivity {
                             "INNER JOIN UniteArticle UniteArticle ON Article.CodeUnite=UniteArticle.CodeUnite)\n" +
                             "INNER JOIN FamilleArticle FamilleArticle ON SousFamilleArticle.CodeFamille=FamilleArticle.CodeFamille\n" +
                             "ORDER BY Stock.CodeDepot, Article.CodeFamille, Article.CodeSousFamille";
-                    FillList_Min_Max fillList=new FillList_Min_Max();
+
+                    FillList_Min_Max fillList = new FillList_Min_Max();
                     fillList.execute();
 
                 }
             }
-        });
+        });*/
+
+
         bt_achatht.setChecked(true);
 
 
+        final SearchView search_bar_article;
+        search_bar_article = (SearchView) findViewById(R.id.search_bar_article);
+
+        Button btn_pourcent = (Button) findViewById(R.id.btn_pourcent);
+        btn_pourcent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String last_query = search_bar_article.getQuery().toString();
+                String new_query = last_query + "%";
+                search_bar_article.setQuery(new_query, false);
+            }
+        });
+
+
+        search_bar_article.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                if (!search_bar_article.isIconified()) {
+                    search_bar_article.setIconified(true);
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                ///  rechgreche ici
+
+                Log.e("query_search", query);
+
+                termRecherche = query.toLowerCase();
+
+                if (!termRecherche.equals("")) {
+
+                    FillStock fillStock = new FillStock(termRecherche);
+                    fillStock.execute();
+
+                }
+                return false;
+            }
+        });
 
 
     }
 
 
-
-
-
-    public class FillList extends AsyncTask<String, String, String> {
+    public class FillStock extends AsyncTask<String, String, String> {
         String z = "";
         Boolean test = false;
 
+
+        String term_search;
+
         ArrayList<Integer> list = new ArrayList<Integer>();
         List<Map<String, String>> prolist = new ArrayList<Map<String, String>>();
-        float total_gloabl=0;
+        float total_gloabl = 0;
+        int   total_art  = 0  ;
+        double total_mnt = 0;
+        int total_qt = 0;
+
+        public FillStock(String term_search) {
+
+            this.term_search = term_search;
+        }
 
         @Override
         protected void onPreExecute() {
             progressBar.setVisibility(View.VISIBLE);
             list.clear();
-            total_gloabl=0;
+            total_gloabl = 0;
+
+            txt_total_qt.setText("---");
+            txt_total_mnt.setText("---");
+            txt_recherche .setText("Recherche en cours ...");
+
+
         }
 
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         @Override
         protected void onPostExecute(String r) {
             progressBar.setVisibility(View.GONE);
-            condition="";
+            condition = "";
 
 
-            String[] from = { "CodeArticle", "Libelle", "Prix", "Montant", "Designation" ,"Quantite"};
-            int[] views = {R.id.txt_code, R.id.txt_depot,  R.id.txt_prix, R.id.txt_montant,R.id.txt_designation,R.id.txt_qt};
+            txt_total_qt.setText(total_qt + "");
+
+
+            txt_recherche.setText(total_art +" articles  trouvés");
+            final NumberFormat format = NumberFormat.getNumberInstance(Locale.FRENCH);
+            format.setMinimumFractionDigits(3);
+            format.setMaximumFractionDigits(3);
+
+            txt_total_mnt.setText(format.format(total_mnt) + " Dt ");
+
+
+            String[] from = {"CodeArticle", "Libelle", "Prix", "Montant", "Designation", "Quantite"};
+            int[] views = {R.id.txt_code, R.id.txt_depot, R.id.txt_prix, R.id.txt_montant, R.id.txt_designation, R.id.txt_qt};
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
                     prolist, R.layout.item_etat_stock, from,
                     views);
 
 
-
-
             gridEtat.setAdapter(ADA);
-
 
         }
 
@@ -256,15 +335,58 @@ public class Etat_Stock extends AppCompatActivity {
                     z = "Error in connection with SQL server";
                 } else {
 
+                    String query = "";
+
+                    if (btn_selected.equals("bt_achatht")) {
+                        query = " SELECT Article.CodeArticle, Article.Designation, Article.PrixAchatHT, Stock.Quantite, Depot.Libelle\n" +
+                                " ,convert(numeric(18,3),Article.PrixAchatHT*Stock.Quantite )as Montant\n" +
+                                "  ,convert(numeric(18,3),Article.PrixAchatHT )as Prix\n" +
+                                " FROM   Article Article INNER JOIN (Depot Depot INNER JOIN Stock Stock ON Depot.CodeDepot=Stock.CodeDepot) \n" +
+                                " ON Article.CodeArticle=Stock.CodeArticle\n" +
+                                " where Stock.Quantite > 0 \n";
+                    } else if (btn_selected.equals("bt_achattc")) {
+                        query = "  SELECT Article.CodeArticle, Article.Designation, Stock.Quantite, Depot.Libelle, \n" +
+                                " Article.CodeTVA, Article.PrixAchatHT,convert(numeric(18,3),(TVA.TauxTVA+100)/100*Article.PrixAchatHT)as Prix ,\n" +
+                                " convert(numeric(18,3),(TVA.TauxTVA+100)/100*Article.PrixAchatHT*Stock.Quantite)   as Montant \n" +
+                                " FROM   Article Article \n" +
+                                " INNER JOIN (Depot Depot \n" +
+                                " INNER JOIN Stock Stock ON Depot.CodeDepot=Stock.CodeDepot) \n" +
+                                " ON Article.CodeArticle=Stock.CodeArticle\n" +
+                                "  inner join TVA ON TVA.CodeTVA=Article.CodeTVA\n" +
+                                "where Stock.Quantite > 0 \n";
+                    } else if (btn_selected.equals("bt_venteht")) {
+
+                        query = " SELECT Article.CodeArticle, Article.Designation, Stock.Quantite, \n" +
+                                "Depot.Libelle,convert(numeric(18,3), Article.PrixVenteHT) as Prix,\n" +
+                                "convert(numeric(18,3), Article.PrixVenteHT*Stock.Quantite )as Montant\n" +
+                                "FROM   Article Article \n" +
+                                "INNER JOIN (Depot Depot INNER JOIN Stock Stock ON Depot.CodeDepot=Stock.CodeDepot) ON Article.CodeArticle=Stock.CodeArticle\n" +
+                                "where Quantite> 0 \n";
+                    } else if (btn_selected.equals("bt_ventettc")) {
+
+                        query = "SELECT Article.CodeArticle, Article.Designation, Stock.Quantite, Depot.Libelle, convert(numeric(18,3),Article.PrixVenteTTC) as Prix\n" +
+                                ",convert(numeric(18,3),Article.PrixVenteTTC* Stock.Quantite)as Montant \n" +
+                                "FROM   Article Article\n" +
+                                "INNER JOIN (Depot Depot INNER JOIN Stock Stock ON Depot.CodeDepot=Stock.CodeDepot)\n" +
+                                "ON Article.CodeArticle=Stock.CodeArticle\n" +
+                                "where Quantite> 0 \n";
+                    }
 
 
-                    PreparedStatement ps = con.prepareStatement(query_list);
-                    Log.e("query_list", query_list);
+                    query = query + " " +
+                            "\n and   (Article.Designation   like  '%" + termRecherche + "%'  or  Article.CodeArticle  like  '%" + termRecherche + "%' )  \n";
+
+                    PreparedStatement ps = con.prepareStatement(query);
+                    Log.e("query_stock", query);
 
                     ResultSet rs = ps.executeQuery();
                     z = "e";
-                    String ancien = "";
-                    int posi = 0;
+
+
+                    total_mnt = 0;
+                    total_qt = 0;
+
+                        total_art  = 0  ;
                     while (rs.next()) {
 
                         Map<String, String> datanum = new HashMap<String, String>();
@@ -274,18 +396,21 @@ public class Etat_Stock extends AppCompatActivity {
                         datanum.put("Prix", rs.getString("Prix"));
                         datanum.put("Montant", rs.getString("Montant"));
                         datanum.put("Libelle", rs.getString("Libelle"));
-                        datanum.put("Quantite", rs.getString("Quantite"));
+
+                        datanum.put("Quantite", rs.getInt("Quantite") + "");
 
                         datanum.put("Designation", rs.getString("Designation"));
 
-                
+                        total_gloabl += rs.getFloat("Montant");
+                        total_mnt += rs.getDouble("Montant");
+                        total_qt += rs.getInt("Quantite");
 
-                        total_gloabl+= rs.getFloat("Montant");
                         prolist.add(datanum);
 
 
                         test = true;
 
+                        total_art++  ;
 
                         z = "succees";
                     }
@@ -301,9 +426,6 @@ public class Etat_Stock extends AppCompatActivity {
             return z;
         }
     }
-
-
-
 
 
     public class FillList_Min_Max extends AsyncTask<String, String, String> {
@@ -327,8 +449,8 @@ public class Etat_Stock extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
 
 
-            String[] from = { "Depot", "SousFamilleArticle", "FamilleArticle", "Montant", "Designation" ,"Quantite","Prix"};
-            int[] views = {R.id.txt_code, R.id.txt_depot,  R.id.txt_prix, R.id.txt_montant,R.id.txt_designation,R.id.txt_qt};
+            String[] from = {"Depot", "SousFamilleArticle", "FamilleArticle", "Montant", "Designation", "Quantite", "Prix"};
+            int[] views = {R.id.txt_code, R.id.txt_depot, R.id.txt_prix, R.id.txt_montant, R.id.txt_designation, R.id.txt_qt};
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
                     prolist, R.layout.item_etat_stock, from,
                     views);
@@ -355,7 +477,7 @@ public class Etat_Stock extends AppCompatActivity {
                     final LayoutInflater layoutInflater = LayoutInflater.from(co);
                     convertView = layoutInflater.inflate(R.layout.item_etat_stock_min_max, null);
 
-                   // final TextView txt_codedepot = (TextView) convertView.findViewById(R.id.txt_codedepot);
+                    // final TextView txt_codedepot = (TextView) convertView.findViewById(R.id.txt_codedepot);
                     final TextView txt_qt = (TextView) convertView.findViewById(R.id.txt_qt);
                     final TextView txt_designation_article = (TextView) convertView.findViewById(R.id.txt_designation_article);
                     final TextView txt_depot = (TextView) convertView.findViewById(R.id.txt_depot);
@@ -367,7 +489,8 @@ public class Etat_Stock extends AppCompatActivity {
 
                     final HashMap<String, Object> obj = (HashMap<String, Object>) ADA
                             .getItem(position);
-                    // String[] from = { "Depot", "SousFamilleArticle", "FamilleArticle", "Montant", "Designation" ,"Quantite","Prix"};
+
+
                     String Depot = (String) obj.get("Depot");
                     String SousFamilleArticle = (String) obj.get("SousFamilleArticle");
                     String Quantite = (String) obj.get("Quantite");
@@ -377,14 +500,13 @@ public class Etat_Stock extends AppCompatActivity {
                     String FamilleArticle = (String) obj.get("FamilleArticle");
                     String Designation = (String) obj.get("Designation");
 
-                   txt_qt.setText(Quantite);
+                    txt_qt.setText(Quantite);
                     txt_designation_article.setText(Designation);
                     txt_depot.setText(Depot);
                     txt_prix.setText(Prix);
                     txt_famille.setText(FamilleArticle);
                     txt_montant.setText(Montant);
                     txt_sous_famille.setText(SousFamilleArticle);
-
 
 
                     if (list.contains(position)) {
@@ -396,8 +518,6 @@ public class Etat_Stock extends AppCompatActivity {
                     return convertView;
                 }
             };
-
-
 
 
             gridEtat.setAdapter(baseAdapter);
@@ -413,8 +533,6 @@ public class Etat_Stock extends AppCompatActivity {
                 if (con == null) {
                     z = "Error in connection with SQL server";
                 } else {
-
-
 
                     PreparedStatement ps = con.prepareStatement(query_list_min_max);
                     Log.e("query_list_min_max", query_list_min_max);
@@ -433,7 +551,7 @@ public class Etat_Stock extends AppCompatActivity {
                         datanum.put("Depot", rs.getString("Depot"));
                         datanum.put("Prix", rs.getString("Prix"));
                         datanum.put("Montant", rs.getString("Montant"));
-                        datanum.put("Quantite", rs.getString("Quantite"));
+                        datanum.put("Quantite", rs.getInt("Quantite") + "");
                         datanum.put("SousFamilleArticle", rs.getString("SousFamilleArticle"));
 
                         String nom = rs.getString("SousFamilleArticle").toUpperCase();
@@ -445,27 +563,18 @@ public class Etat_Stock extends AppCompatActivity {
                         posi++;
 
                         prolist.add(datanum);
-
-
                         test = true;
-
-
                         z = "succees";
                     }
-
 
                 }
             } catch (SQLException ex) {
                 z = "tablelist" + ex.toString();
                 Log.e("erreur", z);
-
-
             }
             return z;
         }
     }
-
-
 
 
 }

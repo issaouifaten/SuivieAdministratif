@@ -34,6 +34,7 @@ import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -59,21 +60,11 @@ public class SuivieCommandeFrs extends AppCompatActivity {
     NumberFormat formatter = new DecimalFormat("00");
 
     public static TextView txt_tot_ht;
-
-    FloatingActionButton fab_arrow   ;
-    RelativeLayout layoutBottomSheet ;
-    BottomSheetBehavior sheetBehavior;
-
     SearchView search_bar_article;
-
-
-
     public   static   String  CodeDepotSelected  = "" ;
     public   static   String  DepotSelected  = "" ;
-     public   static   String  term_rech_art  = "" ;
-
+    public   static   String  term_rech_art  = "" ;
     public   static   String  CodeNatureArticleSelected  = "" ;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +78,7 @@ public class SuivieCommandeFrs extends AppCompatActivity {
 
         txt_date_debut = findViewById(R.id.txt_date_debut);
         txt_date_fin = findViewById(R.id.txt_date_fin);
-        txt_tot_ht = (TextView) findViewById(R.id.txt_tot_ht);
+        txt_tot_ht = (TextView) findViewById(R.id.txt_total_ht);
         search_bar_article = (SearchView) findViewById(R.id.search_bar_article);
 
         rv_list_suivi_cmd_frns = (RecyclerView) findViewById(R.id.rv_list_suivi_cmd_frns);
@@ -100,12 +91,13 @@ public class SuivieCommandeFrs extends AppCompatActivity {
         //sp_article = (SearchableSpinner)  findViewById(R.id.sp_article);
         SearchableSpinner sp_nature_article = (SearchableSpinner)  findViewById(R.id.sp_nature_article);
 
+
         final Calendar cal1 = Calendar.getInstance();
         cal1.setTime(currentDate);
-        cal1.add(Calendar.MONTH, -3);
-        year_x1  = cal1.get(Calendar.YEAR);
+        //cal1.add(Calendar.MONTH, -1);
+        year_x1 = cal1.get(Calendar.YEAR);
         month_x1 = cal1.get(Calendar.MONTH);
-        day_x1   = cal1.get(Calendar.DAY_OF_MONTH);
+        day_x1 = 1;
 
 
         final Calendar cal2 = Calendar.getInstance();
@@ -115,8 +107,19 @@ public class SuivieCommandeFrs extends AppCompatActivity {
         month_x2 = cal2.get(Calendar.MONTH);
         day_x2 = cal2.get(Calendar.DAY_OF_MONTH);
 
-        date_debut = cal1.getTime();
-        String _date_du = df.format(cal1.getTime());
+
+        DecimalFormat df_month = new DecimalFormat("00");
+        DecimalFormat df_year = new DecimalFormat("0000");
+
+        Log.e("date_debut ", "01/" + df_month.format(cal1.get(Calendar.MONTH) + 1) + "/" + df_year.format(cal1.get(Calendar.YEAR)));
+        String _date_du = "01/" + df_month.format(cal1.get(Calendar.MONTH) + 1) + "/" + df_year.format(cal1.get(Calendar.YEAR));
+
+        try {
+            date_debut = df.parse(_date_du);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         txt_date_debut.setText(_date_du);
 
         date_fin = cal2.getTime();
@@ -244,39 +247,7 @@ public class SuivieCommandeFrs extends AppCompatActivity {
         });
 
 
-        layoutBottomSheet = (RelativeLayout) findViewById(R.id.bottom_sheet);
-        fab_arrow = (FloatingActionButton) findViewById(R.id.fab_arrow);
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setHideable(false);
 
-        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                switch (newState) {
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED: {
-                        // Toast.makeText(getActivity() , "Close Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_down);
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_COLLAPSED: {
-                        // Toast.makeText(getActivity() , "Expand Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_up);
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_DRAGGING:
-                        break;
-                    case BottomSheetBehavior.STATE_SETTLING:
-                        break;
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
-            }
-        });
 
     }
 

@@ -109,9 +109,9 @@ public class DetailLigneBonTransfert extends AppCompatActivity {
             //  progressBar.setVisibility(View.GONE);
 
             String[] from = {"DesignationArticle", "Quantite",   "MontantTTC" };
-            int[] views = {R.id.txt_article, R.id.txt_qt_article, R.id.txt_prix_ttc};
+            int[] views = {R.id.txt_article, R.id.txt_quantite, R.id.txt_prix_ttc};
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
-                    prolist, R.layout.item_lbc, from,
+                    prolist, R.layout.item_ligne_piece, from,
                     views);
 
 
