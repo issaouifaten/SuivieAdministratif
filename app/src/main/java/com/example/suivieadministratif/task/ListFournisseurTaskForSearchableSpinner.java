@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.adapter.SpinnerAdapter;
+import com.example.suivieadministratif.menu.MenuTresorerieFragment;
 import com.example.suivieadministratif.model.Depot;
 import com.example.suivieadministratif.model.Fournisseur;
 import com.example.suivieadministratif.module.achat.BonCommandeAchatActivity;
@@ -253,7 +254,12 @@ public class ListFournisseurTaskForSearchableSpinner extends AsyncTask<String,St
                     echeanceFournisseurTask.execute() ;
 
                 }
-                //
+
+                else  if(origine.equals("MenuTresorerieFragment"))
+                {
+                    MenuTresorerieFragment.CodeFournissseurSelected =  listFournisseur.get(position).getCodeFournisseur() ;
+                    MenuTresorerieFragment.FournisseurSelected =  listFournisseur.get(position).getRaisonSocial() ;
+                }
 
 
             }

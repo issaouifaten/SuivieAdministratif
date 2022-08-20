@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import com.example.suivieadministratif.module.Production.Module_Production ;
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.activity.AlerteWorkflow;
 import com.example.suivieadministratif.param.Param;
@@ -75,6 +75,15 @@ public class MenuPrincipalFragment extends Fragment {
             }
         });
 
+        CardView btn_produit = (CardView)   root.findViewById(R.id.btn_produit) ;
+        btn_produit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(),Module_Production.class));
+
+            }
+        });
+
 
         CardView btn_achat = (CardView) root.findViewById(R.id.btn_achat);
         btn_achat.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +119,8 @@ public class MenuPrincipalFragment extends Fragment {
         btn_stock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 Fragment fragment = new MenuStockFragment();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 if (fragment != null) {

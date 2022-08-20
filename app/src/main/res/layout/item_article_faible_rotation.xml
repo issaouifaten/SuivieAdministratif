@@ -438,6 +438,97 @@
                     </LinearLayout>
 
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+
+
+                        <LinearLayout
+                            android:id="@+id/btn_fiche_article"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:clickable="true"
+                            android:paddingRight="10dp"
+                            android:paddingLeft="10dp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:background="@drawable/card_edge_green"
+                            android:elevation="6dp"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1">
+
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center_vertical"
+                                android:src="@drawable/ic_fiche_article"
+                                android:layout_marginRight="2dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="2dp"
+                                android:background="#00000000"
+                                android:gravity="center"
+                                android:text=" Fiche Article"
+                                android:textAllCaps="false"
+                                android:textColor="#009688"
+                                />
+
+                        </LinearLayout>
+
+
+
+
+
+                        <LinearLayout
+                            android:id="@+id/btn_stock_ala_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:clickable="true"
+                            android:paddingRight="10dp"
+                            android:paddingLeft="10dp"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:background="@drawable/card_edge_red"
+                            android:elevation="6dp"
+                            android:layout_margin="2dp"
+                            android:layout_weight="1"
+                            android:visibility="invisible">
+
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center_vertical"
+                                android:src="@drawable/ic_etat_stock"
+                                android:layout_marginRight="2dp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" Stock à la date  "
+                                android:textAllCaps="false"
+                                android:background="#00000000"
+                                android:textColor="@color/color_alerte"
+                                android:layout_marginLeft="2dp"
+
+                                android:gravity="center"
+                                android:layout_gravity="center_vertical"/>
+
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+
+
                 </LinearLayout>
 
             </LinearLayout>

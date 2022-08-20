@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".menu.MenuVenteFragment"
-    android:background="@drawable/back">
+    android:background="@drawable/back_login">
 
 
     <LinearLayout
@@ -72,7 +72,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_bon_commande_achat"
-
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
@@ -117,7 +117,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_facture_achat"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
@@ -169,7 +169,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_bon_livraison_achat"
-
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
@@ -213,7 +213,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_bon_retour_achat"
-
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
@@ -270,7 +270,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_reg_frns"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
@@ -318,7 +318,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_echenace_fournisseur"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
@@ -373,7 +373,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_fiche_fournisseur"
-
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"

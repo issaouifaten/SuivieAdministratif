@@ -19,6 +19,7 @@ import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.menu.MenuViewModel;
 import com.example.suivieadministratif.task.ListeClientSelectTask;
 import com.example.suivieadministratif.task.ListeFournisseurSelectTask;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.StatArticleFragment;
 
 public class SelectClientFragment extends Fragment {
 
@@ -27,6 +28,8 @@ public class SelectClientFragment extends Fragment {
     RecyclerView rv_list_client  ;
     SearchView search_bar_client;
     private MenuViewModel menuViewModel;
+    private static final String ARG_SECTION_NUMBER = "section_number";
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,7 +48,7 @@ public class SelectClientFragment extends Fragment {
             @Override
             public void onChanged(@Nullable String s) {
 
-                ListeClientSelectTask listeClientSelectTask =   new ListeClientSelectTask(getActivity()  , rv_list_client  , pb ,search_bar_client)  ;
+                ListeClientSelectTask listeClientSelectTask =   new ListeClientSelectTask(getActivity()  , rv_list_client  , pb ,search_bar_client,"FciheClient")  ;
                 listeClientSelectTask.execute() ;
 
             }

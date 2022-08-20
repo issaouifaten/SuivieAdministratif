@@ -23,9 +23,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class DetailLigneBonSortie extends AppCompatActivity {
@@ -67,7 +69,7 @@ public class DetailLigneBonSortie extends AppCompatActivity {
 
         SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " : Detail Facture ");
+        setTitle(NomSociete + " : Détail Bon Sortie ");
         connectionClass = new ConnectionClass();
         SharedPreferences prefe = getSharedPreferences("usersession", Context.MODE_PRIVATE);
         SharedPreferences.Editor edte = prefe.edit();
@@ -103,8 +105,9 @@ public class DetailLigneBonSortie extends AppCompatActivity {
         protected void onPostExecute(String r) {
             //  progressBar.setVisibility(View.GONE);
 
-            String[] from = {"DesignationArticle", "Quantite",   "MontantTTC" };
-            int[] views = {R.id.txt_article, R.id.txt_quantite, R.id.txt_prix_ttc};
+            String[] from = {"DesignationArticle", "CodeArticle", "MontantHT", "MontantTVA", "MontantTTC", "Quantite", "MontantTTC", "Libelle_2"};
+            int[] views = {R.id.txt_designation,R.id.txt_code_article  , R.id.txt_net_ht, R.id.txt_taux_remise, R.id.txt_mnt_ttc, R.id.txt_quantite, R.id.txt_prix_ttc,R.id.libelle_2};
+
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
                     prolist, R.layout.item_ligne_piece, from,
                     views);
@@ -127,7 +130,8 @@ public class DetailLigneBonSortie extends AppCompatActivity {
                 } else {
 
 
-                    String queryTable = " select  CodeArticle,DesignationArticle, convert(numeric(18,0),Quantite)as Quantite ,MontantTTC  from LigneBonSortie where  NumeroBonSortie='"+ NumeroBonSortie+"' ";
+                    String queryTable = " select  CodeArticle,DesignationArticle, convert(numeric(18,0),Quantite)as Quantite ,  MontantHT , MontantTVA   , MontantTTC  " +
+                            "  from LigneBonSortie where  NumeroBonSortie='"+ NumeroBonSortie+"' ";
 
                     PreparedStatement ps = con.prepareStatement(queryTable);
                     Log.e("queryDetailFacture", queryTable);
@@ -135,20 +139,25 @@ public class DetailLigneBonSortie extends AppCompatActivity {
                     ResultSet rs = ps.executeQuery();
                     z = "e";
 
+
+                    final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+                    instance.setMinimumFractionDigits(3);
+                    instance.setMaximumFractionDigits(3);
+
                     while (rs.next()) {
 
                         Map<String, String> datanum = new HashMap<String, String>();
                         datanum.put("CodeArticle", rs.getString("CodeArticle"));
                         datanum.put("DesignationArticle", rs.getString("DesignationArticle"));
                         datanum.put("Quantite", rs.getString("Quantite"));
-                        datanum.put("MontantTTC", rs.getString("MontantTTC"));
+                        datanum.put("MontantHT", instance.format(rs.getDouble("MontantHT")));
+                        datanum.put("MontantTVA", instance.format(rs.getDouble("MontantTVA")) +"");
+                        datanum.put("MontantTTC", instance.format(rs.getDouble("MontantTTC")));
+                        datanum.put("Libelle_2",   "Mnt TVA");
 
 
                         prolist.add(datanum);
-
-
                         test = true;
-
 
                         z = "succees";
                     }

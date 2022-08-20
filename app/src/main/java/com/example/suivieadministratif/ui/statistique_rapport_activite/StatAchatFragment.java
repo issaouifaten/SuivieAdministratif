@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.menu.MenuViewModel;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.Achat.ArticleAcheteNonVenduActivity;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Achat.EtatArticlePerime;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Achat.EtatGlobalAchat;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Achat.EtatJournalArticleAchete;
@@ -35,8 +36,6 @@ public class StatAchatFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-
 
         menuViewModel =
                 ViewModelProviders.of(this).get(MenuViewModel.class);
@@ -85,17 +84,17 @@ public class StatAchatFragment extends Fragment {
             }
         });
 
-/*
-        CardView   btn_reglement_client = (CardView)  root.findViewById(R.id.btn_reg_client)  ;
+
+        CardView   btn_reglement_client = (CardView)  root.findViewById(R.id.btn_article_achete_nn_vendu)  ;
         btn_reglement_client.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent  intent1 = new Intent(getActivity() , ReglementClientActivity.class) ;
+                Intent  intent1 = new Intent(getActivity() , ArticleAcheteNonVenduActivity.class) ;
                 startActivity(intent1);
             }
         });
 
-
+/*
         CardView   btn_echeance_client = (CardView)   root.findViewById(R.id.btn_echeance_Client);
         btn_echeance_client.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +103,6 @@ public class StatAchatFragment extends Fragment {
                 startActivity(intent1);
             }
         });
-
 */
 
         menuViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {

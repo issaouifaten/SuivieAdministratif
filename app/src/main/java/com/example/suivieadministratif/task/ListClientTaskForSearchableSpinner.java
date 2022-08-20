@@ -16,6 +16,7 @@ import com.example.suivieadministratif.model.Depot;
 import com.example.suivieadministratif.param.Param;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Fournisseur.SuivieCommandeFrs;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.StatArticleFragment;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.StatClientFragment;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.StatVenteFragment;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
@@ -86,7 +87,7 @@ public class ListClientTaskForSearchableSpinner extends AsyncTask<String,String,
                 String  CONDITION  = "" ;
 
 
-                String query = "select  CodeClient  , RaisonSociale   from  Client   where 1 =1 " + CONDITION ;
+                String query = "select  CodeClient    from  Client   where 1 =1 " + CONDITION ;
 
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
@@ -96,7 +97,7 @@ public class ListClientTaskForSearchableSpinner extends AsyncTask<String,String,
 
                 listRaison.clear();
 
-                if (origine.equals("dialogChoixJournalBLVente"))
+                if (origine.equals("dialogChoixJournalBLVente") ||  origine.equals("dialogChoixRecouvrementClientEtendu"))
                 {
                     listClient.add(new Client("" ,"Tout les Clients")) ;
                     listRaison.add("Tout les Clients")  ;
@@ -105,12 +106,9 @@ public class ListClientTaskForSearchableSpinner extends AsyncTask<String,String,
                 while ( rs.next() ) {
 
                     String CodeClient = rs.getString("CodeClient") ;
-                    String RaisonSociale =rs.getString("RaisonSociale") ;
-
-                    Client   client  = new Client(CodeClient ,RaisonSociale) ;
+                    Client   client  = new Client(CodeClient ) ;
                     listClient.add(client) ;
-                    listRaison.add(client.getRaisonSociale())  ;
-                    Log.e("Client", client.getCodeClient() + " - " +client.getRaisonSociale() );
+
 
                 }
             }
@@ -139,7 +137,12 @@ public class ListClientTaskForSearchableSpinner extends AsyncTask<String,String,
 
         if (origine .equals("dialogChoixJournalBLVente")) {
             StatVenteFragment.CodeClient_selected = listClient.get(0).getCodeClient();
-            StatVenteFragment.RaisonClient_selected = listClient.get(0).getRaisonSociale();
+        }
+
+        if (origine .equals("dialogChoixRecouvrementClientEtendu"))
+        {
+            StatClientFragment.CodeClient_selected = listClient.get(0).getCodeClient() ;
+
         }
 
         sp_client.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -151,9 +154,18 @@ public class ListClientTaskForSearchableSpinner extends AsyncTask<String,String,
            if (origine .equals("dialogChoixJournalBLVente"))
                 {
                     StatVenteFragment.CodeClient_selected = listClient.get(position).getCodeClient() ;
-                    StatVenteFragment.RaisonClient_selected  = listClient.get(position).getRaisonSociale() ;
 
                 }
+
+
+                if (origine .equals("dialogChoixRecouvrementClientEtendu"))
+                {
+                    StatClientFragment.CodeClient_selected = listClient.get(position).getCodeClient() ;
+
+
+                }
+
+                //
 
             }
             @Override

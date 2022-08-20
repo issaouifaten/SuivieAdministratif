@@ -73,10 +73,15 @@ public class LigneFactureVente extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
         setTitle(NomSociete + " : Detail Facture ");
-        connectionClass = new ConnectionClass();
+
+
+
         SharedPreferences prefe = getSharedPreferences("usersession", Context.MODE_PRIVATE);
         SharedPreferences.Editor edte = prefe.edit();
         NomUtilisateur = prefe.getString("NomUtilisateur", NomUtilisateur);
+
+
+        connectionClass = new ConnectionClass();
         SharedPreferences.Editor edt = pref.edit();
         user = pref.getString("user", user);
         ip = pref.getString("ip", ip);
@@ -102,7 +107,7 @@ public class LigneFactureVente extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-               pb.setVisibility(View.VISIBLE);
+            pb.setVisibility(View.VISIBLE);
 
 
         }
@@ -110,7 +115,7 @@ public class LigneFactureVente extends AppCompatActivity {
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         @Override
         protected void onPostExecute(String r) {
-              pb.setVisibility(View.GONE);
+            pb.setVisibility(View.GONE);
 
             String[] from = {"DesignationArticle", "CodeArticle", "NetHT", "TauxRemise", "MontantTTC", "Quantite", "MontantTTC"};
             int[] views = {R.id.txt_designation,R.id.txt_code_article  , R.id.txt_net_ht, R.id.txt_taux_remise, R.id.txt_mnt_ttc, R.id.txt_quantite, R.id.txt_prix_ttc};

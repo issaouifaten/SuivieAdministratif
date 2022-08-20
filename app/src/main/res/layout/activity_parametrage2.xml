@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.ParametrageActivity"
-    android:background="@drawable/back">
+    android:background="@drawable/back_login">
 
 
     <RelativeLayout
@@ -14,10 +15,10 @@
         android:orientation="vertical"
         android:scrollbarAlwaysDrawVerticalTrack="true">
 
+
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-
             android:layout_marginLeft="30dp"
             android:layout_marginTop="70dp"
             android:layout_marginRight="30dp"
@@ -61,7 +62,7 @@
                         android:hint="IP Local"
                         android:inputType="text"
                         android:singleLine="true"
-                        android:text="192.168.1.40" />
+                        android:text="192.168.1.49" />
 
                 </LinearLayout>
 
@@ -79,7 +80,7 @@
                         android:hint="IP Distant"
                         android:inputType="text"
                         android:singleLine="true"
-                        android:text="41.230.54.0" />
+                        android:text="41.230.54.0"/>
 
 
                     <!--
@@ -90,12 +91,13 @@
                     192.168.1.40
 
                     TECHNOFRIEN
-                41.230.54.0
+                    41.230.54.0
 
                     MTD
                     41.228.160.56
 
-                    -->
+                    I2S 41.231.87.241
+                                      -->
 
                 </LinearLayout>
 
@@ -104,12 +106,10 @@
                     android:id="@+id/db"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
-
                     android:hint="base"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
-                    android:text="TECHNOFRIEN" />
+                    android:text="Technopack" />
 
                 <!--
                   MTD
@@ -119,7 +119,7 @@
                   192.168.1.40
 
                   TECHNOFRIEN
-              41.230.54.0
+                  41.230.54.0
 
                   MTD
                   41.228.160.56
@@ -164,6 +164,7 @@
 
 
             </LinearLayout>
+
         </RelativeLayout>
 
         <ImageView

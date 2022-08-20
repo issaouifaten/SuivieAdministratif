@@ -9,20 +9,24 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.adapter.ArticleNonMouvementeAdapterLV;
 import com.example.suivieadministratif.model.ArticleFaibleRotation;
 import com.example.suivieadministratif.model.ArticleNonMouvemente;
 import com.example.suivieadministratif.param.Param;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.article.ArticleNonMouvementeActivity;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Locale;
 
 public class ArticleNnMouvementeTask extends AsyncTask<String, String, String> {
 
@@ -48,6 +52,10 @@ public class ArticleNnMouvementeTask extends AsyncTask<String, String, String> {
     ArrayList<ArticleNonMouvemente> listArticleNonMouvemente = new ArrayList<>();
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+   int  qt_stock ;
+    int qt_achat ;
+    double  total_ht ;
 
     public ArticleNnMouvementeTask(Activity activity, ListView lv_article_faible_rotation, SearchView search_bar, ProgressBar pb,
                                    String DateDebut, String DateFin, String CodeDepot, String CodeFrns, String CodeFam, int FrnsEtranger) {
@@ -204,6 +212,10 @@ public class ArticleNnMouvementeTask extends AsyncTask<String, String, String> {
                     String Designation = rs.getString("Designation");
                     double valeurHT = rs.getDouble("valeurHT");
 
+                    qt_stock += QuantiteInitial ;
+                    qt_achat+= QuantiteAchete ;
+                    total_ht += valeurHT ;
+
                     ArticleNonMouvemente articleNonMouvemente = new ArticleNonMouvemente(Etrange ,CodeDepot ,CodeArticle ,QuantiteInitial ,
                             QuantiteAchete ,CodeFamille , Libelle ,CodeFournisseur ,RaisonSociale ,PrixAchatHT ,Designation , valeurHT ) ;
 
@@ -230,6 +242,15 @@ public class ArticleNnMouvementeTask extends AsyncTask<String, String, String> {
         ArticleNonMouvementeAdapterLV adapterLV = new ArticleNonMouvementeAdapterLV(activity, listArticleNonMouvemente);
         lv_article_faible_rotation.setAdapter(adapterLV);
 
+        ArticleNonMouvementeActivity.txt_qt_achat.setText(qt_achat+"");
+        ArticleNonMouvementeActivity.txt_qt_stock.setText(qt_stock+"");
+
+        final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+        instance.setMinimumFractionDigits(3);
+        instance.setMaximumFractionDigits(3);
+
+
+        ArticleNonMouvementeActivity.txt_total_ht.setText(instance.format(total_ht)+"");
 
         search_bar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

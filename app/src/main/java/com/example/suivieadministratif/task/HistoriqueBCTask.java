@@ -104,7 +104,7 @@ public class HistoriqueBCTask extends AsyncTask<String, String, String> {
                     condition += "  and CodeClient=   '"+CodeClientSelected+"' "  ;
                 }
 
-                String queryHis_bc = " select   NumeroBonCommandeVente  ,RaisonSociale  , NomUtilisateur   ,TotalNetHT , TotalTVA  ,  TotalTTC  , Etat.NumeroEtat ,Etat.Libelle  , DateBonCommandeVente   from BonCommandeVente   \n" +
+                String queryHis_bc = " select   NumeroBonCommandeVente  , NomUtilisateur   ,TotalNetHT , TotalTVA  ,  TotalTTC  , Etat.NumeroEtat ,Etat.Libelle  , DateBonCommandeVente   from BonCommandeVente   \n" +
                         "    inner JOIN Etat  on Etat.NumeroEtat =  BonCommandeVente.NumeroEtat   \n" +
                         "where CONVERT (Date  , DateBonCommandeVente)  between  '"+df.format(date_debut)+"'  and  '"+df.format(date_fin)+"'\n" +condition+
                         "order by DateBonCommandeVente desc  \n ";

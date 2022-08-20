@@ -195,6 +195,7 @@ public class FicheClientActivity extends AppCompatActivity {
     {
 
         FicheClientTask  ficheClientTask = new FicheClientTask(this ,rv_list_fiche  ,CodeClient ,TypeFiche  ,date_debut  ,date_fin ,progressBar  ) ;
-        ficheClientTask.execute() ;
+        ficheClientTask.execute();
+
     }
 }

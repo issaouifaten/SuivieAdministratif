@@ -6,6 +6,10 @@ public class Client {
     private   String  RaisonSociale   ;
     private   int   nbrClick  ;
 
+    public Client(String codeClient) {
+        CodeClient = codeClient;
+    }
+
     public Client(String codeClient, String raisonSociale) {
         CodeClient = codeClient;
         RaisonSociale = raisonSociale;

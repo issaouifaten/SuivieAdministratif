@@ -16,6 +16,7 @@ import com.example.suivieadministratif.adapter.ArticleFaibleRotationAdapterLV;
 import com.example.suivieadministratif.model.ArticleFaibleRotation;
 
 import com.example.suivieadministratif.param.Param;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.article.ArticleFaibleRotationActivity;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,6 +46,8 @@ public class ArticleFaibleRotationTask extends AsyncTask<String, String, String>
     String CodeFamille;
     int FrnsEtranger;
 
+    double  taux_rot_inf, taux_rot_max  ;
+
 
     String z = "";
     ConnectionClass connectionClass;
@@ -58,7 +61,7 @@ public class ArticleFaibleRotationTask extends AsyncTask<String, String, String>
     double Benif = 0;
 
     public ArticleFaibleRotationTask(Activity activity, ListView lv_article_faible_rotation, SearchView search_bar, ProgressBar pb,
-                                     String DateDebut, String DateFin, String CodeDepot, String CodeFrns, String CodeFamille, int FrnsEtranger) {
+                                     String DateDebut, String DateFin, String CodeDepot, String CodeFrns, String CodeFamille, int FrnsEtranger,double taux_rot_inf,double   taux_rot_max ) {
         this.activity = activity;
         this.lv_article_faible_rotation = lv_article_faible_rotation;
         this.pb = pb;
@@ -69,6 +72,8 @@ public class ArticleFaibleRotationTask extends AsyncTask<String, String, String>
         this.CodeFamille = CodeFamille;
         this.CodeDepot = CodeDepot;
         this.FrnsEtranger = FrnsEtranger;
+        this.taux_rot_inf = taux_rot_inf ;
+        this.taux_rot_max= taux_rot_max ;
 
     /*    this.date_debut = date_debut;
         this.date_fin = date_fin;
@@ -93,6 +98,18 @@ public class ArticleFaibleRotationTask extends AsyncTask<String, String, String>
     protected void onPreExecute() {
         super.onPreExecute();
         pb.setVisibility(View.VISIBLE);
+
+        if (taux_rot_inf!=0)
+        {
+            ArticleFaibleRotationActivity.txt_recherche.setText("calcul en cours ...");
+            ArticleFaibleRotationActivity.progressBar.setVisibility(View.VISIBLE);
+        }
+        else   if (taux_rot_inf==0)
+        {
+            ArticleFaibleRotationActivity.txt_recherche.setText("Chercher");
+            ArticleFaibleRotationActivity.progressBar.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     @Override
@@ -307,8 +324,22 @@ public class ArticleFaibleRotationTask extends AsyncTask<String, String, String>
 
         }
 
-        // Log.e("art_faible_rot",""+list_art_faible_rot.size()) ;
-        // Log.e("art_faible_rot",""+list_art_faible_rot.toString()) ;
+
+        if (taux_rot_inf !=0)
+        {
+
+            ArrayList<ArticleFaibleRotation> list_art_sup_rot  = new ArrayList<>() ;
+            for (ArticleFaibleRotation  art  : listArticleFaibleRotation)
+            {
+                if (art.getTauxRotation()>taux_rot_inf  &&  art.getTauxRotation() < taux_rot_max  )
+                    list_art_sup_rot.add(art);
+            }
+            listArticleFaibleRotation = list_art_sup_rot ;
+        }
+
+
+        ArticleFaibleRotationActivity.txt_recherche.setText("Chercher");
+        ArticleFaibleRotationActivity.progressBar.setVisibility(View.INVISIBLE);
 
         ArticleFaibleRotationAdapterLV adapterLV = new ArticleFaibleRotationAdapterLV(activity, listArticleFaibleRotation);
         lv_article_faible_rotation.setAdapter(adapterLV);
@@ -367,50 +398,6 @@ public class ArticleFaibleRotationTask extends AsyncTask<String, String, String>
 
     }
 
-    private ArrayList<ArticleFaibleRotation> filterArticleFR(ArrayList<ArticleFaibleRotation> listArtFR, String term) {
 
-        term = term.toLowerCase();
-        final ArrayList<ArticleFaibleRotation> filetrListArtFR = new ArrayList<>();
-
-        ArrayList<String> aList = new ArrayList(Arrays.asList(term.split(" ")));
-
-        Iterator<String> iterator = aList.iterator();
-
-
-        while (iterator.hasNext()) {
-
-            String t = iterator.next();
-
-            if (t.contains(" "))
-                t.replace(" ", "");
-            t.trim();
-
-            if (t.equals(""))
-                iterator.remove();
-
-        }
-
-
-        Log.e("aList", aList.toString());
-
-        for (ArticleFaibleRotation a : listArtFR) {
-
-            final String txtDesign = a.getDesignation().toLowerCase();
-
-            for (String input : aList) {
-                if (txtDesign.contains(input)) {
-                    filetrListArtFR.add(a);
-                    break;
-                }
-            }
-
-          /*  if (txtDesign.contains(term) || txtDesign.contains()) {
-                filetrListArtFR.add(a);
-            }*/
-        }
-
-        return filetrListArtFR;
-
-    }
 
 }

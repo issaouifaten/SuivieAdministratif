@@ -2,15 +2,19 @@ package com.example.suivieadministratif.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.suivieadministratif.R;
+import com.example.suivieadministratif.model.Article;
 import com.example.suivieadministratif.model.ArticleFaibleRotation;
+import com.example.suivieadministratif.module.Stock.FicheArticleActivity;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -39,7 +43,7 @@ public class ArticleFaibleRotationAdapterLV extends ArrayAdapter<ArticleFaibleRo
         Context context = parent.getContext();
         View rowView = inflater.inflate(R.layout.item_article_faible_rotation, null, true);
 
-        ArticleFaibleRotation artFaibleRot = listArticleFaibleRotation.get(position);
+    final     ArticleFaibleRotation artFaibleRot = listArticleFaibleRotation.get(position);
 
 
         TextView txt_order  = (TextView) rowView.findViewById(R.id.order);
@@ -58,6 +62,8 @@ public class ArticleFaibleRotationAdapterLV extends ArrayAdapter<ArticleFaibleRo
         TextView txt_taux_rotation = (TextView) rowView.findViewById(R.id.txt_taux_rotation);
         TextView txt_coeff = (TextView) rowView.findViewById(R.id.txt_coeff);
 
+
+        LinearLayout btn_fiche_article= (LinearLayout) rowView.findViewById(R.id.btn_fiche_article);
 
 
         DecimalFormat decF = new DecimalFormat("0.000");
@@ -84,6 +90,8 @@ public class ArticleFaibleRotationAdapterLV extends ArrayAdapter<ArticleFaibleRo
         } catch (Exception ex) {
             Log.e("ERROR_echeance_client", ex.getMessage().toString());
         }
+
+
 
 
 

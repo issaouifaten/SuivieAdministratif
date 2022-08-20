@@ -12,6 +12,12 @@
         android:title="Workflow" />
 
     <item
+        android:id="@+id/navigation_notification"
+        android:icon="@drawable/ic_notifications"
+        android:title="Notification" />
+
+
+    <item
         android:id="@+id/navigation_parametrage"
         android:icon="@drawable/ic_menu_"
         android:title="Paramètrage" />

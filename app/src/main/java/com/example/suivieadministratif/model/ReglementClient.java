@@ -11,6 +11,7 @@ public class ReglementClient {
     private String RaisonSociale;
     private double  TotalPayement ;
     private String NomUtilisateur;
+    private double  TotalRecu;
 
 
     public ReglementClient(String numeroReglementClient, Date dateReglementClient, Date heureCreation , String raisonSociale, double totalPayement, String nomUtilisateur) {
@@ -20,6 +21,22 @@ public class ReglementClient {
         RaisonSociale = raisonSociale;
         TotalPayement = totalPayement;
         NomUtilisateur = nomUtilisateur;
+    }
+
+    public ReglementClient(String numeroReglementClient, Date dateReglementClient, Date heureCreation, String nomUtilisateur, double totalRecu) {
+        NumeroReglementClient = numeroReglementClient;
+        this.dateReglementClient = dateReglementClient;
+        this.heureCreation = heureCreation;
+        NomUtilisateur = nomUtilisateur;
+        TotalRecu = totalRecu;
+    }
+
+    public double getTotalRecu() {
+        return TotalRecu;
+    }
+
+    public void setTotalRecu(double totalRecu) {
+        TotalRecu = totalRecu;
     }
 
     public String getNumeroReglementClient() {

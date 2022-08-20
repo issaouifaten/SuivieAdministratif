@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class JournalFactureVente extends AppCompatActivity {
+public class JournalFactureVenteA extends AppCompatActivity {
 
     String user, password, base, ip;
     String CodeSociete, NomUtilisateur;

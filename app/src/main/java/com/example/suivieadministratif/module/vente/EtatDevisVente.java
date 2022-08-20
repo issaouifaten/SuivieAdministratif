@@ -93,10 +93,7 @@ public class EtatDevisVente extends AppCompatActivity {
         setTitle(NomSociete + " : Devis Vente");
         connectionClass = new ConnectionClass();
 
-        SharedPreferences prefe = getSharedPreferences("usersession", Context.MODE_PRIVATE);
-        SharedPreferences.Editor edte = prefe.edit();
 
-        SharedPreferences.Editor edt = pref.edit();
         user = pref.getString("user", user);
         ip = pref.getString("ip", ip);
         password = pref.getString("password", password);
@@ -343,6 +340,7 @@ public class EtatDevisVente extends AppCompatActivity {
 
         EtatDevisTask etatDevisTask = new EtatDevisTask(this  ,date_debut ,date_fin, lv_list_historique_bc, progressBar, CodeClientSelected);
         etatDevisTask.execute();
+
     }
 
 

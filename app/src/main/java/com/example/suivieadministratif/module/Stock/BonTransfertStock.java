@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.annotation.TargetApi;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
@@ -31,6 +33,7 @@ import android.widget.TextView;
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.activity.HomeActivity;
+import com.example.suivieadministratif.module.vente.EtatDevisVente;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -42,6 +45,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -56,24 +60,24 @@ public class BonTransfertStock extends AppCompatActivity {
     ProgressBar progressBar;
     SearchView search_bar_client;
 
-    public TextView txt_date_debut, txt_date_fin;
-    DatePicker datePicker;
-    final Context co = this;
-    String user, password, base, ip;
-    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-    NumberFormat formatter = new DecimalFormat("00");
-    public static TextView txt_tot_commande;
-
-    FloatingActionButton fab_arrow;
-    RelativeLayout layoutBottomSheet;
-    BottomSheetBehavior sheetBehavior;
-
-
-
-    String date_debut = "",date_fin="",condition="";
-
     ConnectionClass connectionClass;
-    String CodeSociete, NomUtilisateur, CodeLivreur;
+    String user, password, base, ip;
+    String NomUtilisateur;
+
+    String condition = "";
+    int id_DatePickerDialog = 0;
+    Date currentDate = new Date();
+    public static int year_x1, month_x1, day_x1;
+    public static int year_x2, month_x2, day_x2;
+
+    public static Date date_debut = null;
+    public static Date date_fin = null;
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    NumberFormat formatter = new DecimalFormat("00");
+    public TextView txt_date_debut, txt_date_fin;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,28 +86,62 @@ public class BonTransfertStock extends AppCompatActivity {
         //sql session
         SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " :Bon Transfert");
+        setTitle(NomSociete + " : Bon Transfert");
         connectionClass = new ConnectionClass();
 
-        SharedPreferences prefe = getSharedPreferences("usersession", Context.MODE_PRIVATE);
-        SharedPreferences.Editor edte = prefe.edit();
-        NomUtilisateur = prefe.getString("NomUtilisateur", NomUtilisateur);
 
-        // SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
-        SharedPreferences.Editor edt = pref.edit();
         user = pref.getString("user", user);
         ip = pref.getString("ip", ip);
         password = pref.getString("password", password);
         base = pref.getString("base", base);
 
-        txt_tot_commande = (TextView) findViewById(R.id.txt_tot_commande);
+
+        lv_list_historique_bc = (GridView) findViewById(R.id.lv_list);
+        progressBar = (ProgressBar) findViewById(R.id.pb_bc);
+        EditText editText=(EditText)findViewById(R.id.search_bar_client) ;
+
         txt_date_debut = findViewById(R.id.txt_date_debut);
         txt_date_fin = findViewById(R.id.txt_date_fin);
 
 
-        lv_list_historique_bc = (GridView) findViewById(R.id.lv_list_historique_bc);
-        progressBar = (ProgressBar) findViewById(R.id.pb_bc);
-        EditText editText=(EditText)findViewById(R.id.search_bar_client) ;
+
+
+        final Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(currentDate);
+        //cal1.add(Calendar.MONTH, -1);
+        year_x1 = cal1.get(Calendar.YEAR);
+        month_x1 = cal1.get(Calendar.MONTH);
+        day_x1 = 1;
+
+
+        final Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(currentDate);
+
+        year_x2 = cal2.get(Calendar.YEAR);
+        month_x2 = cal2.get(Calendar.MONTH);
+        day_x2 = cal2.get(Calendar.DAY_OF_MONTH);
+
+
+        DecimalFormat df_month = new DecimalFormat("00");
+        DecimalFormat df_year = new DecimalFormat("0000");
+
+        Log.e("date_debut ", "01/" + df_month.format(cal1.get(Calendar.MONTH) + 1) + "/" + df_year.format(cal1.get(Calendar.YEAR)));
+        String _date_du = "01/" + df_month.format(cal1.get(Calendar.MONTH) + 1) + "/" + df_year.format(cal1.get(Calendar.YEAR));
+
+        try {
+            date_debut = sdf.parse(_date_du);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        txt_date_debut.setText(_date_du);
+
+        date_fin = cal2.getTime();
+        String _date_au = sdf.format(cal2.getTime());
+        txt_date_fin.setText(_date_au);
+
+
+
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -129,46 +167,49 @@ public class BonTransfertStock extends AppCompatActivity {
             }
         });
 
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        date_fin = sdf.format(calendar.getTime());
-        calendar.add(Calendar.MONTH, -1);
-        date_debut = sdf.format(calendar.getTime());
-        txt_date_debut.setText(date_debut);
-        txt_date_fin.setText(date_fin);
-        TextView txt_gratuite =(TextView)findViewById(R.id.txt_gratuite);
-        txt_gratuite.setText("Total Bon Transfert");
-      FillList fillList = new  FillList();
+
+
+        FillList fillList = new  FillList();
         fillList.execute("");
+
 
         txt_date_debut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LayoutInflater li = LayoutInflater.from(co);
-                View px = li.inflate(R.layout.diagcalend, null);
-                AlertDialog.Builder alt = new AlertDialog.Builder(co);
-                alt.setIcon(R.drawable.i2s);
-                alt.setView(px);
-                alt.setTitle("date");
-                datePicker = (DatePicker) px.findViewById(R.id.datedebut);
-                alt.setPositiveButton("ok",                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface di, int i) {
 
-                                Date d = new Date(datePicker.getYear() - 1900, datePicker.getMonth(), datePicker.getDayOfMonth());
-                                date_debut = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH)
-                                        .format(d);
+                id_DatePickerDialog = 0;
+                Log.e("month_x1", "On picker  : " + month_x1);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(BonTransfertStock.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                                txt_date_debut.setText(date_debut);
-                                 FillList fillList = new  FillList();
+                        if (id_DatePickerDialog == 0) {
+                            year_x1 = year;
+                            month_x1 = monthOfYear;
+                            day_x1 = dayOfMonth;
+
+                            txt_date_debut.setText("" + formatter.format(day_x1) + "/" + formatter.format(month_x1 + 1) + "/" + year_x1);
+
+                            String _date_du = formatter.format(day_x1) + "/" + formatter.format(month_x1 + 1) + "/" + year_x1 + " ";
+                            String _date_au = txt_date_fin.getText().toString();
+
+
+                            try {
+                                date_debut = sdf.parse(_date_du);
+                                date_fin = sdf.parse(_date_au);
+
+
+                                FillList fillList = new  FillList();
                                 fillList.execute("");
 
 
+                            } catch (Exception e) {
+                                Log.e("Exception--", " " + e.getMessage());
                             }
-                        });
-
-                AlertDialog dd = alt.create();
-                dd.show();
+                        }
+                    }
+                }, year_x1, month_x1, day_x1);
+                datePickerDialog.show();
             }
         });
 
@@ -177,70 +218,45 @@ public class BonTransfertStock extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                LayoutInflater li = LayoutInflater.from(co);
-                View px = li.inflate(R.layout.diagcalend, null);
-                AlertDialog.Builder alt = new AlertDialog.Builder(co);
-                alt.setIcon(R.drawable.i2s);
-                alt.setView(px);
-                alt.setTitle("date");
-                datePicker = (DatePicker) px.findViewById(R.id.datedebut);
-                alt.setPositiveButton("ok",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface di, int i) {
 
-                                Date d = new Date(datePicker.getYear() - 1900, datePicker.getMonth(), datePicker.getDayOfMonth());
-                                date_fin = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH)
-                                        .format(d);
+                id_DatePickerDialog = 1;
 
-                                txt_date_fin.setText(date_fin);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(BonTransfertStock.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        if (id_DatePickerDialog == 1) {
+
+                            year_x2 = year;
+                            month_x2 = monthOfYear;
+                            day_x2 = dayOfMonth;
+
+                            txt_date_fin.setText("" + formatter.format(day_x2) + "/" + formatter.format(month_x2 + 1) + "/" + year_x2);
+
+                            String _date_au = "" + formatter.format(day_x2) + "/" + formatter.format(month_x2 + 1) + "/" + year_x2;
+                            String _date_du = txt_date_debut.getText().toString();
+
+                            try {
+                                date_debut = sdf.parse(_date_du);
+                                date_fin = sdf.parse(_date_au);
 
 
-                                 FillList fillList = new  FillList();
+
+                                FillList fillList = new  FillList();
                                 fillList.execute("");
+
+                            } catch (Exception e) {
+                                Log.e("Exception --", " " + e.getMessage());
                             }
-                        });
 
-                AlertDialog dd = alt.create();
-                dd.show();
-
+                        }
+                    }
+                }, year_x2, month_x2, day_x2);
+                datePickerDialog.show();
             }
         });
 
 
-        layoutBottomSheet = (RelativeLayout) findViewById(R.id.bottom_sheet);
-        fab_arrow = (FloatingActionButton) findViewById(R.id.fab_arrow);
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setHideable(false);
 
-        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                switch (newState) {
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED: {
-                        // Toast.makeText(getActivity() , "Close Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_down);
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_COLLAPSED: {
-                        // Toast.makeText(getActivity() , "Expand Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_up);
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_DRAGGING:
-                        break;
-                    case BottomSheetBehavior.STATE_SETTLING:
-                        break;
-                }
-            }
-
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
-            }
-        });
         NavigationView nav_menu=findViewById(R.id.nav_view);
         View root = nav_menu.getHeaderView(0);
 
@@ -332,7 +348,8 @@ public class BonTransfertStock extends AppCompatActivity {
 
 
 
-            txt_tot_commande.setText(""+total_devis);
+         //   txt_tot_commande.setText(""+total_devis);
+
             lv_list_historique_bc.setAdapter(ADA);
             lv_list_historique_bc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -378,10 +395,9 @@ public class BonTransfertStock extends AppCompatActivity {
                     String queryTable = " select NumeroBonTransfert,TotalTTC,NomUtilisateur ,DateCreation,\n" +
                             "(select Libelle from Depot where Depot.CodeDepot=BonTransfert.CodeDepotDestination) AS  DepotDestination,\n" +
                             "(select Libelle from Depot where Depot.CodeDepot=BonTransfert.CodeDepotSource) AS  DepotSource\n" +
-                            ",Etat.Libelle as Etat\n" +
+                            ",DateCreation  as Etat\n" +
                             "from BonTransfert\n" +
-                            "inner join Etat on Etat.NumeroEtat=BonTransfert.NumeroEtat " +
-                            "where DateCreation between '"+date_debut+"' and '"+date_fin+"'\n" +condition+
+                            "where DateCreation between '"+sdf.format(date_debut)+"' and '"+sdf.format(date_fin)+"'\n" +condition+
                             "order by DateCreation desc";
 
                     PreparedStatement ps = con.prepareStatement(queryTable);

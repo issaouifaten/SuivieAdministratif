@@ -101,7 +101,7 @@ public class HistoriqueBRTask extends AsyncTask<String, String, String> {
                     condition += "  and CodeClient=   '"+CodeClient+"' "  ;
                 }
 
-                String queryHis_bc = "select   NumeroBonRetourVente ,RaisonSociale , NomUtilisateur , TotalNetHT , TotalTVA  ,  TotalTTC  , DateBonRetourVente ,Etat.NumeroEtat  ,Etat.Libelle " +
+                String queryHis_bc = "select   NumeroBonRetourVente , NomUtilisateur , TotalNetHT , TotalTVA  ,  TotalTTC  , DateBonRetourVente ,Etat.NumeroEtat  ,Etat.Libelle " +
                         "  from BonRetourVente  " +
                         "    inner JOIN Etat  on Etat.NumeroEtat =  BonRetourVente.NumeroEtat  \n" +
                         "    where CONVERT (Date  , DateBonRetourVente)  between  '" + df.format(date_debut) + "'  and  '" + df.format(date_fin) + "'\n" +condition+
@@ -117,7 +117,6 @@ public class HistoriqueBRTask extends AsyncTask<String, String, String> {
                 while (rs.next()) {
 
                     String NumeroBonRetourVente = rs.getString("NumeroBonRetourVente");
-                    String RaisonSociale = rs.getString("RaisonSociale");
                     String NomUtilisateur = rs.getString("NomUtilisateur");
 
 
@@ -136,7 +135,7 @@ public class HistoriqueBRTask extends AsyncTask<String, String, String> {
                         total_tva += TotalTVA;
                         total_ttc += TotalTTC;
                     }
-                    BonRetourVente bonRetourVente = new BonRetourVente(NumeroBonRetourVente, DateBonRetourVente, NomUtilisateur, RaisonSociale, TotalNetHT, TotalTVA, TotalTTC, NumeroEtat, Libelle);
+                    BonRetourVente bonRetourVente = new BonRetourVente(NumeroBonRetourVente, DateBonRetourVente,   TotalNetHT, TotalTVA, TotalTTC, NumeroEtat, Libelle , NomUtilisateur);
                     listBonRetourVente.add(bonRetourVente);
 
                 }

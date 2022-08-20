@@ -26,6 +26,18 @@ public class LigneBonLivraisonVente {
     private int QuantiteRetour;
 
 
+
+    public LigneBonLivraisonVente(String NumeroBonLivraisonVente, String codeArticle,String designationArticle,  int quantite, double NetHT, double TauxRemise, double montantTTC) {
+        this.NumeroBonLivraisonVente = NumeroBonLivraisonVente;
+        CodeArticle = codeArticle;
+        this.DesignationArticle=designationArticle ;
+        Quantite = quantite;
+        this.NetHT = NetHT;
+        this.TauxRemise = TauxRemise;
+        MontantTTC = montantTTC;
+    }
+
+
     public LigneBonLivraisonVente(String NumeroBonLivraisonVente, String codeArticle, int quantite, double NetHT, double TauxRemise, double montantTTC) {
         this.NumeroBonLivraisonVente = NumeroBonLivraisonVente;
         CodeArticle = codeArticle;

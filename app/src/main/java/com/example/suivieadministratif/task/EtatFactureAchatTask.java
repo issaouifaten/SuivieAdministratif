@@ -37,7 +37,6 @@ import java.util.Map;
 
 public class EtatFactureAchatTask extends AsyncTask<String, String, String> {
 
-
     Activity activity;
 
     ListView lv_list;
@@ -111,7 +110,7 @@ public class EtatFactureAchatTask extends AsyncTask<String, String, String> {
                         ",Etat.NumeroEtat from FactureAchat \n" +
                         "inner join Etat on Etat.NumeroEtat=FactureAchat.NumeroEtat\n" +
                         "where DateReferenceFournisseur between '"+sdf.format(date_debut)+"' and '"+sdf.format(date_fin)+"'\n" +condition+
-                        "order by NumeroFactureAchat desc";
+                        "order by NumeroFactureAchat desc" ;
 
                 PreparedStatement ps = con.prepareStatement(queryTable);
                 Log.e("queryfactureAchat", queryTable);

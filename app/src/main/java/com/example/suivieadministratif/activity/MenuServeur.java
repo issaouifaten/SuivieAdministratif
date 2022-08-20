@@ -1,15 +1,10 @@
 package com.example.suivieadministratif.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -29,14 +23,13 @@ import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
-import com.example.suivieadministratif.activity.HomeActivity;
-import com.example.suivieadministratif.activity.LoginActivity;
 import com.example.suivieadministratif.param.Param;
-import com.example.suivieadministratif.ui.parametrage.ParametrageFragment;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -231,14 +224,30 @@ public class MenuServeur extends AppCompatActivity {
 
                     while (rs.next()) {
 
-                        Map<String, String> datanum = new HashMap<String, String>();
-                        datanum.put("CodeSociete", rs.getString("CodeSociete"));
-                        datanum.put("NomSociete", rs.getString("NomSociete"));
-                        datanum.put("IP", rs.getString("IP"));
-                        datanum.put("NomBase", rs.getString("NomBase"));
+                        if (NomUtilisateur.equals("NEJAH"))
+                        {
+                            if (rs.getString("NomBase").equals("MTD"))
+                            {
+                                Map<String, String> datanum = new HashMap<String, String>();
+                                datanum.put("CodeSociete", rs.getString("CodeSociete"));
+                                datanum.put("NomSociete", rs.getString("NomSociete"));
+                                datanum.put("IP", rs.getString("IP"));
+                                datanum.put("NomBase", rs.getString("NomBase"));
+                                prolist.add(datanum);
+
+                            }
+                        }
+                        else
+                        {
+                            Map<String, String> datanum = new HashMap<String, String>();
+                            datanum.put("CodeSociete", rs.getString("CodeSociete"));
+                            datanum.put("NomSociete", rs.getString("NomSociete"));
+                            datanum.put("IP", rs.getString("IP"));
+                            datanum.put("NomBase", rs.getString("NomBase"));
+                            prolist.add(datanum);
+                        }
 
 
-                        prolist.add(datanum);
 
 
                         test = true;
@@ -367,16 +376,17 @@ public class MenuServeur extends AppCompatActivity {
 
     }
 
+
+
     public class TestConnection extends AsyncTask<String, String, String> {
+
         String z = "";
         Boolean test = false;
-
 
         String ip;
         LinearLayout ll_test_conn;
         TextView txt_test_conn;
         ProgressBar pb_test_conn;
-
 
 
         public TestConnection(String ip, LinearLayout ll_test_conn, TextView txt_test_conn, ProgressBar pb_test_conn) {

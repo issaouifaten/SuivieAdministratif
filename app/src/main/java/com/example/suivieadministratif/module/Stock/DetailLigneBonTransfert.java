@@ -108,8 +108,8 @@ public class DetailLigneBonTransfert extends AppCompatActivity {
         protected void onPostExecute(String r) {
             //  progressBar.setVisibility(View.GONE);
 
-            String[] from = {"DesignationArticle", "Quantite",   "MontantTTC" };
-            int[] views = {R.id.txt_article, R.id.txt_quantite, R.id.txt_prix_ttc};
+            String[] from = {"DesignationArticle", "CodeArticle"  , "Quantite",   "MontantTTC" ,  "NetHT", "TauxRemise" };
+            int[] views = {R.id.txt_designation, R.id.txt_code_article, R.id.txt_quantite, R.id.txt_mnt_ttc, R.id.txt_net_ht, R.id.txt_taux_remise};
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
                     prolist, R.layout.item_ligne_piece, from,
                     views);
@@ -132,7 +132,7 @@ public class DetailLigneBonTransfert extends AppCompatActivity {
                 } else {
 
 
-                    String queryTable = " select  CodeArticle,DesignationArticle, convert(numeric(18,0),Quantite)as Quantite ,MontantTTC  from LigneBonTransfert where  NumeroBonTransfert='"+ NumeroBonTransfert+"' ";
+                    String queryTable = " select  CodeArticle,DesignationArticle, convert(numeric(18,0),Quantite)as Quantite ,MontantTTC  , TauxRemise , NetHT    from LigneBonTransfert where  NumeroBonTransfert='"+ NumeroBonTransfert+"' ";
 
                     PreparedStatement ps = con.prepareStatement(queryTable);
                     Log.e("queryDetailbontransfert", queryTable);
@@ -147,7 +147,8 @@ public class DetailLigneBonTransfert extends AppCompatActivity {
                         datanum.put("DesignationArticle", rs.getString("DesignationArticle"));
                         datanum.put("Quantite", rs.getString("Quantite"));
                         datanum.put("MontantTTC", rs.getString("MontantTTC"));
-
+                        datanum.put("TauxRemise",  rs.getDouble("TauxRemise")+" %");
+                        datanum.put("NetHT", rs.getString("NetHT"));
 
                         prolist.add(datanum);
 

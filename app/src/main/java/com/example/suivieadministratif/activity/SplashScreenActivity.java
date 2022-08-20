@@ -1,7 +1,5 @@
 package com.example.suivieadministratif.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,10 +12,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.example.suivieadministratif.ConnectionClass;
-import  com.example.suivieadministratif.R ;
-import com.example.suivieadministratif.param.Param;
+import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.suivieadministratif.ConnectionClass;
+import com.example.suivieadministratif.R;
+import com.example.suivieadministratif.param.Param;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -25,7 +24,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-public class SplachScreenActivity extends AppCompatActivity {
+public class SplashScreenActivity extends AppCompatActivity {
 
     boolean etatSQL = false;
     boolean etatUser = false;
@@ -234,7 +233,7 @@ public class SplachScreenActivity extends AppCompatActivity {
 
 
             if (r.equals("Error in connection with SQL server")) {
-                Intent ToConnexionFailed = new Intent(SplachScreenActivity.this, ConnexionEuServeurEchoueActivity.class);
+                Intent ToConnexionFailed = new Intent(SplashScreenActivity.this, ConnexionEuServeurEchoueActivity.class);
                 startActivity(ToConnexionFailed);
             } else {
 
@@ -281,7 +280,7 @@ public class SplachScreenActivity extends AppCompatActivity {
 
                 } else {
 
-                    Intent ToCompteDesactive = new Intent(SplachScreenActivity.this, CompteDesactiveActivity.class);
+                    Intent ToCompteDesactive = new Intent(SplashScreenActivity.this, CompteDesactiveActivity.class);
                     ToCompteDesactive.putExtra("nom_user", NomUtilisateur);
                     startActivity(ToCompteDesactive);
 

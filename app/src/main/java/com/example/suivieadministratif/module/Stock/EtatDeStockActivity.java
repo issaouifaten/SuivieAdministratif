@@ -1,6 +1,7 @@
 package com.example.suivieadministratif.module.Stock;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,6 +43,9 @@ public class EtatDeStockActivity extends AppCompatActivity {
 
     public static TextView txt_tot_ht, txt_tot_tva, txt_tot_ttc, txt_tot_quantite;
 
+
+  CardView btn_rechrche ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +63,7 @@ public class EtatDeStockActivity extends AppCompatActivity {
         rv_list_article.setHasFixedSize(true);
         rv_list_article.setLayoutManager(new LinearLayoutManager(this));
 
+        btn_rechrche = (CardView)   findViewById(R.id.btn_rechrche)  ;
 
         pb = (ProgressBar) findViewById(R.id.pb);
         txt_recherche = (TextView) findViewById(R.id.txt_recherche);
@@ -92,30 +97,16 @@ public class EtatDeStockActivity extends AppCompatActivity {
         });
 
 
-        search_bar_article.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+
+
+        btn_rechrche.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
+            public void onClick(View view) {
 
-                if (!search_bar_article.isIconified()) {
-                    search_bar_article.setIconified(true);
-                }
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-                ///  rechgreche ici
-
-                Log.e("query_search", query);
-
-              termRecherche = query.toLowerCase();
-
-                if (!termRecherche.equals("")) {
-                    stockArticleTask.cancel(false);
-                    stockArticleTask = new StockArticleTask(EtatDeStockActivity.this, rv_list_article, txt_recherche, pb, CodeDepotSelected, LibelleDepotSelected, termRecherche);
-                    stockArticleTask.execute();
-                }
-                return false;
+                termRecherche  = search_bar_article.getQuery().toString();
+                stockArticleTask = new StockArticleTask(EtatDeStockActivity.this, rv_list_article, txt_recherche, pb, CodeDepotSelected, LibelleDepotSelected, termRecherche);
+                stockArticleTask.execute();
             }
         });
 

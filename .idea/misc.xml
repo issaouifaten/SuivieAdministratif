@@ -1,6 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/drawable/ic_add_shopping.xml" value="0.2046875" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/drawable/ic_param_conn.xml" value="0.2046875" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_alerte_workflow.xml" value="0.1" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_alimentation_banque_recette.xml" value="0.128125" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_alimentation_caisse.xml" value="0.1" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_article_achete_non_vendu.xml" value="0.1" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_article_d_l_c.xml" value="0.1" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_article_faible_rotation.xml" value="0.1" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_article_non_mouvemente.xml" value="0.1" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_bon_entre.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_bon_redressement.xml" value="0.128125" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_bon_sortie.xml" value="0.1" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_bon_transfert_stock.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_caisse_recette.xml" value="0.1" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_commande_fournisseur_non_conforme.xml" value="0.1" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_detail_bon_redressement.xml" value="0.1" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_detail_ligne_bon_entre.xml" value="0.1" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_detail_ligne_bon_transfert.xml" value="0.1" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_detail_ligne_piece.xml" value="0.1671875" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_detail_reglement_client.xml" value="0.33" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_diagramme.xml" value="0.1671875" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_etat_achat.xml" value="0.1" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_etat_article_perime.xml" value="0.1" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_etat_chiffre_affaire.xml" value="0.15" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_etat_de_stock.xml" value="0.22" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_etat_facture_vente.xml" value="0.1421875" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_etat_global_achat.xml" value="0.25" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_etat_global_vente.xml" value="0.1" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_etat_indic_dispo_stock.xml" value="0.1" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_etat_journal_article_achete.xml" value="0.1" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_etat_journal_article_vendu.xml" value="0.1" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_etat_stock.xml" value="0.1" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_globale.xml" value="0.134375" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_home.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_impaye_fournisseur.xml" value="0.11510416666666666" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_menu_home.xml" value="0.1421875" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_module_production.xml" value="0.22" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_parametrage.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_parametrage2.xml" value="0.22" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_reacap_echeancier_fournisseur.xml" value="0.134375" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_suivie_commande_frs.xml" value="0.1578125" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/activity_suivie_commande_non_conforme_client.xml" value="0.16510416666666666" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/fragment_menu_principal.xml" value="0.11510416666666666" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/item_ligne_piece.xml" value="0.11822916666666666" />
+        <entry key="..\:/Users/GAMING/AndroidStudioProjects_4.0/Suivi/SuivieAdministratif/app/src/main/res/layout/menu.xml" value="0.1484375" />
+      </map>
+    </option>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

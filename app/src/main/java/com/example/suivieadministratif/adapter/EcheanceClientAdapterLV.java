@@ -64,26 +64,6 @@ public class EcheanceClientAdapterLV extends ArrayAdapter<EcheanceClient> {
         }
 
 
-/*
-
-        TextView txt_num_piece = (TextView) rowView.findViewById(R.id.txt_piece);
-        TextView txt_date_piece = (TextView) rowView.findViewById(R.id.txt_date_piece);
-
-
-        TextView txt_code_client  = (TextView) rowView.findViewById(R.id.txt_code_client);
-        TextView txt_raison_client  = (TextView) rowView.findViewById(R.id.txt_raison_client);
-
-
-        TextView txt_code_article  = (TextView) rowView.findViewById(R.id.txt_code_article);
-        TextView txt_design_article  = (TextView) rowView.findViewById(R.id.txt_design_article);
-        TextView txt_qt_article  = (TextView) rowView.findViewById(R.id.txt_qt);
-
-
-        TextView  txt_fournisseur = (TextView) rowView.findViewById(R.id.txt_frns);
-
-        TextView txt_montant = (TextView) rowView.findViewById(R.id.txt_total_montant);
-
-*/
 
         return rowView;
 

@@ -75,7 +75,7 @@ public class MenuStockFragment extends Fragment {
                 startActivity(intent2);
             }
         });
-        //btn_passation_bon_transfert
+
 
         CardView  btn_bon_redressement = (CardView) root.findViewById(R.id.btn_bon_redressement) ;
         btn_bon_redressement.setOnClickListener(new View.OnClickListener() {

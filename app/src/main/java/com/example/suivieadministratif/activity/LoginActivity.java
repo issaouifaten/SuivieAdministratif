@@ -1,8 +1,5 @@
 package com.example.suivieadministratif.activity;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,10 +17,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.param.Param;
-
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.sql.Connection;
@@ -84,9 +83,6 @@ public class LoginActivity extends AppCompatActivity
             }
         });
 
-
-        //********************************************************************////////////
-        //********************************************************************////////////
 
 
     }

@@ -106,7 +106,7 @@ public class HistoriqueBLTask extends AsyncTask<String, String, String> {
                 }
 
 
-                String queryHis_bc = " select  NumeroBonLivraisonVente  ,RaisonSociale  ,NomUtilisateur , TotalNetHT , TotalTVA  ,  TotalTTC  ,\n  Etat.NumeroEtat ,Etat.Libelle  , DateBonLivraisonVente  from BonLivraisonVente   \n" +
+                String queryHis_bc = " select  NumeroBonLivraisonVente  ,NomUtilisateur , TotalNetHT , TotalTVA  ,  TotalTTC  ,\n  Etat.NumeroEtat ,Etat.Libelle  , DateBonLivraisonVente  from BonLivraisonVente   \n" +
                         "   inner JOIN Etat  on Etat.NumeroEtat =  BonLivraisonVente.NumeroEtat  \n" +
                         "   where CONVERT (Date  , DateBonLivraisonVente)  between  '"+df.format(date_debut)+"'  and  '"+df.format(date_fin)+"'\n" +condition+
                         "   order by NumeroBonLivraisonVente  desc \n" +
@@ -126,7 +126,6 @@ public class HistoriqueBLTask extends AsyncTask<String, String, String> {
                 while (rs.next()) {
 
                     String NumeroBonLivraisonVente = rs.getString("NumeroBonLivraisonVente");
-                    String RaisonSociale = rs.getString("RaisonSociale");
                     String NomUtilisateur = rs.getString("NomUtilisateur");
 
 
@@ -146,7 +145,7 @@ public class HistoriqueBLTask extends AsyncTask<String, String, String> {
 
                     }
 
-                    BonLivraisonVente bonLivraisonVente = new BonLivraisonVente(NumeroBonLivraisonVente, DateBonLivraisonVente, NomUtilisateur ,RaisonSociale, TotalNetHT ,    TotalTVA  ,  TotalTTC , NumeroEtat, LibelleEtat);
+                    BonLivraisonVente bonLivraisonVente = new BonLivraisonVente(NumeroBonLivraisonVente, DateBonLivraisonVente,  TotalNetHT ,    TotalTVA  ,  TotalTTC , NumeroEtat, LibelleEtat , NomUtilisateur);
                     listBonLivraisonVentes.add(bonLivraisonVente);
 
 

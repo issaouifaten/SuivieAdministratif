@@ -107,7 +107,7 @@ public class EtatFactureVenteTask extends AsyncTask<String, String, String> {
                     condition += "  and CodeClient=   '"+CodeClientSelected+"' "  ;
                 }
 
-            String    queryTable = " select NumeroFactureVente,DateFactureVente,NomUtilisateur , CodeClient,RaisonSociale, TotalNetHT , TotalTVA  ,  TotalTTC, Etat.Libelle as Etat\n" +
+            String    queryTable = " select NumeroFactureVente,DateFactureVente,NomUtilisateur , CodeClient, TotalNetHT , TotalTVA  ,  TotalTTC, Etat.Libelle as Etat\n" +
                     "     from FactureVente\n" +
                     "     inner join Etat on Etat.NumeroEtat=FactureVente.NumeroEtat\n" +condition+
                     "     where DateFactureVente between '" +sdf.format(date_debut)+"'and '" + sdf.format(date_fin)+"'    order by NumeroFactureVente desc";
@@ -125,7 +125,7 @@ public class EtatFactureVenteTask extends AsyncTask<String, String, String> {
                     datanum.put("NumeroFactureVente", rs.getString("NumeroFactureVente"));
                     datanum.put("NomUtilisateur", rs.getString("NomUtilisateur"));
                     datanum.put("CodeClient", rs.getString("CodeClient"));
-                    datanum.put("RaisonSociale", rs.getString("RaisonSociale"));
+
 
 
                     final NumberFormat format  = NumberFormat.getNumberInstance(Locale.FRENCH);
@@ -169,8 +169,8 @@ public class EtatFactureVenteTask extends AsyncTask<String, String, String> {
         pb.setVisibility(View.GONE);
 
         // TotalNetHT , TotalTVA  ,  TotalTTC
-        String[] from = {"NumeroFactureVente", "DateFactureVente","NomUtilisateur" , "RaisonSociale", "TotalNetHT", "TotalTVA", "TotalTTC", "Etat"};
-        int[] views = {R.id.txt_num_piece, R.id.txt_date_bc, R.id.txt_etablie_par , R.id.txt_raison_client, R.id.txt_prix_net_ht, R.id.txt_prix_tva, R.id.txt_prix_ttc, R.id.txt_libelle_etat};
+        String[] from = {"NumeroFactureVente", "DateFactureVente","NomUtilisateur" ,  "TotalNetHT", "TotalTVA", "TotalTTC", "Etat"};
+        int[] views = {R.id.txt_num_piece, R.id.txt_date_bc, R.id.txt_etablie_par ,  R.id.txt_prix_net_ht, R.id.txt_prix_tva, R.id.txt_prix_ttc, R.id.txt_libelle_etat};
         final SimpleAdapter ADA = new SimpleAdapter(activity ,
                 prolist, R.layout.item_etat_entete, from, views);
 
@@ -194,7 +194,6 @@ public class EtatFactureVenteTask extends AsyncTask<String, String, String> {
 
                 String NumeroFactureVente = (String) obj.get("NumeroFactureVente");
                 String DateCreation = (String) obj.get("NumeroFactureVente");
-                String RaisonSociale = (String) obj.get("RaisonSociale");
                 String Etat = (String) obj.get("Etat");
                 String TotalTTC = (String) obj.get("TotalTTC");
 
@@ -202,7 +201,6 @@ public class EtatFactureVenteTask extends AsyncTask<String, String, String> {
                 Intent intent = new Intent(activity, LigneFactureVente.class);
                 intent.putExtra("NumeroFactureVente", NumeroFactureVente);
                 intent.putExtra("DateCreation", DateCreation);
-                intent.putExtra("RaisonSociale", RaisonSociale);
                 intent.putExtra("TotalTTC", TotalTTC);
                 intent.putExtra("Etat", Etat);
                 activity. startActivity(intent);

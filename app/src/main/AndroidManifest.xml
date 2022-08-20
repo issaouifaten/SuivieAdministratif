@@ -3,15 +3,42 @@
     package="com.example.suivieadministratif">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/i2s"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@drawable/i2s"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".module.tresorerie.DetailRecapEcheancierClientParMois"></activity>
+        <activity
+            android:name=".module.Production.Module_Production"
+            android:exported="false" />
+        <activity android:name=".ui.statistique_rapport_activite.Client.RecouvrementClientEtenduActivity" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <activity android:name=".module.tresorerie.ImpayeFournisseurActivity" />
+        <activity android:name=".module.tresorerie.ImpayeClientActivity" />
+        <activity android:name=".module.caisse.AlimentationCaisseActivity" />
+        <activity android:name=".module.caisse.AlimentationBanqueRecetteActivity" />
+        <activity android:name=".ui.statistique_rapport_activite.Vente.JournalFactureVenteActivity" />
+        <activity android:name=".ui.statistique_rapport_activite.Achat.ArticleAcheteNonVenduActivity" />
+        <activity android:name=".module.vente.RappelPayementActivity" />
+        <activity android:name=".module.tresorerie.DetailRecapEcheancierFournisseurParMois" />
+        <activity android:name=".module.tresorerie.ReacapEcheancierFournisseurActivity" />
+        <activity android:name=".module.tresorerie.DetailRecapEcheancierClientParMois" />
         <activity android:name=".module.tresorerie.RecapEcheancierClientActivity" />
         <activity android:name=".module.tresorerie.PortFeuilleTraiteActvity" />
         <activity android:name=".module.tresorerie.PortFeuilleChequeActivity" />
@@ -32,7 +59,7 @@
         <activity android:name=".ui.statistique_rapport_activite.CRM.ListeCauseRetour" />
         <activity android:name=".ui.statistique_rapport_activite.Compte.ListDepense" />
         <activity android:name=".ui.statistique_rapport_activite.Vente.EtatGlobalVente" />
-        <activity android:name=".ui.statistique_rapport_activite.Vente.JournalFactureVente" />
+        <activity android:name=".ui.statistique_rapport_activite.Vente.JournalFactureVenteA" />
         <activity android:name=".ui.statistique_rapport_activite.Achat.JournalFactureAchat" />
         <activity android:name=".ui.statistique_rapport_activite.Achat.EtatArticlePerime" />
         <activity android:name=".ui.statistique_rapport_activite.Achat.EtatGlobalAchat" />
@@ -117,7 +144,8 @@
             android:name=".activity.HomeActivity"
             android:label="@string/title_activity_home" />
         <activity
-            android:name=".activity.SplachScreenActivity"
+            android:name=".activity.SplashScreenActivity"
+            android:exported="true"
             android:theme="@style/noactionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

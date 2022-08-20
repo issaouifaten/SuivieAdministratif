@@ -12,6 +12,7 @@ import android.widget.SearchView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.suivieadministratif.ConnectionClass;
+import com.example.suivieadministratif.adapter.ClientRappelPayementSelectAdapterRV;
 import com.example.suivieadministratif.adapter.ClientSelectAdapterRV;
 import com.example.suivieadministratif.adapter.FournisseurSelectAdapterRV;
 import com.example.suivieadministratif.model.Client;
@@ -43,9 +44,10 @@ public class ListeClientSelectTask extends AsyncTask<String, String, String> {
     ArrayList<Client> listClient = new ArrayList<>();
 
     double total_retenu = 0;
+    String  origine    ;
 
 
-    public ListeClientSelectTask(Activity activity, RecyclerView rv_list_client, ProgressBar pb_chargement, SearchView search_bar_client) {
+    public ListeClientSelectTask(Activity activity, RecyclerView rv_list_client, ProgressBar pb_chargement, SearchView search_bar_client ,  String  origine ) {
         this.activity = activity;
         this.rv_list_client = rv_list_client;
         this.pb_chargement = pb_chargement;
@@ -58,6 +60,7 @@ public class ListeClientSelectTask extends AsyncTask<String, String, String> {
         password = pref.getString("password", password);
 
         connectionClass = new ConnectionClass();
+        this.origine=origine ;
 
     }
 
@@ -79,7 +82,7 @@ public class ListeClientSelectTask extends AsyncTask<String, String, String> {
             } else {
 
 
-                String query = " select CodeClient  , RaisonSociale    from   Client  ";
+                String query = " select CodeClient    from   Client  ";
 
                 Log.e("query_frns", query);
 
@@ -89,10 +92,10 @@ public class ListeClientSelectTask extends AsyncTask<String, String, String> {
                 while (rs.next()) {
 
                     String CodeClient = rs.getString("CodeClient");
-                    String RaisonSociale = rs.getString("RaisonSociale");
 
 
-                    Client client = new Client(CodeClient, RaisonSociale, 0);
+
+                    Client client = new Client(CodeClient);
                     listClient.add(client);
 
 
@@ -122,9 +125,19 @@ public class ListeClientSelectTask extends AsyncTask<String, String, String> {
 
         pb_chargement.setVisibility(View.INVISIBLE);
 
-        ClientSelectAdapterRV adapterRV = new ClientSelectAdapterRV(activity, listClient);
-        rv_list_client.setAdapter(adapterRV);
 
+        if (origine.equals("FciheClient"))
+        {
+
+            ClientSelectAdapterRV adapterRV = new ClientSelectAdapterRV(activity, listClient);
+            rv_list_client.setAdapter(adapterRV);
+        }
+        else  if  (origine.equals("RappelPayement"))
+        {
+
+            ClientRappelPayementSelectAdapterRV adapterRV = new ClientRappelPayementSelectAdapterRV(activity, listClient);
+            rv_list_client.setAdapter(adapterRV);
+        }
 
         search_bar_client.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -141,18 +154,21 @@ public class ListeClientSelectTask extends AsyncTask<String, String, String> {
 
                 final ArrayList<Client> fitlerClientList = filterlistClient (listClient, query);
 
+                if (origine.equals("FciheClient")) {
 
-                ClientSelectAdapterRV adapterRV = new ClientSelectAdapterRV(activity, fitlerClientList);
-                rv_list_client.setAdapter(adapterRV);
+                    ClientSelectAdapterRV adapterRV = new ClientSelectAdapterRV(activity, fitlerClientList);
+                    rv_list_client.setAdapter(adapterRV);
 
-
-
+                }
+                else  if  (origine.equals("RappelPayement"))
+                {
+                    ClientRappelPayementSelectAdapterRV adapterRV = new ClientRappelPayementSelectAdapterRV(activity, fitlerClientList);
+                    rv_list_client.setAdapter(adapterRV);
+                }
 
                 return false;
             }
         });
-
-
 
 
     }

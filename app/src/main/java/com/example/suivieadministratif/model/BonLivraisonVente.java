@@ -62,7 +62,6 @@ public class BonLivraisonVente {
         this.LibelleEtat = LibelleEtat;
     }
 
-
     public BonLivraisonVente(String numeroBonLivraisonVente, Date heureCreation, String codeClient, String raisonSociale, double totalTTC, double MontantRecuPayement, String LibelleEtatPayement, String NumeroEtat, String CodeDepot
             , String NumeroBonGratuiteVente, String NumeroFactureVente, String NumeroEtatPaiment, boolean retour, boolean Draft
             , String EtabliePar, String DraftePar, String PayePar) {
@@ -90,6 +89,17 @@ public class BonLivraisonVente {
 
         this.MontantRecuPayement = MontantRecuPayement;
         this.ResteAPayer = TotalTTC - MontantRecuPayement;
+    }
+
+    public BonLivraisonVente(String numeroBonLivraisonVente, Date dateBonLivraisonVente, double totalNetHT, double totalTVA, double totalTTC, String numeroEtat, String libelleEtat, String nomUtilisateur) {
+        NumeroBonLivraisonVente = numeroBonLivraisonVente;
+        DateBonLivraisonVente = dateBonLivraisonVente;
+        TotalNetHT = totalNetHT;
+        TotalTVA = totalTVA;
+        TotalTTC = totalTTC;
+        NumeroEtat = numeroEtat;
+        LibelleEtat = libelleEtat;
+        NomUtilisateur = nomUtilisateur;
     }
 
     public BonLivraisonVente(String numeroBonLivraisonVente, Date dateBonLivraisonVente, String CodeDepot, String codeClient, String raisonSociale, String codeModeReglement, String codeRepresentant, double totalHT, double totalRemise, double totalNetHT, double totalTVA, double totalTTC, double totalNote, String numeroEtat, String nomUtilisateur, Date dateCreation, Date heureCreation, String observation, String codeLiv, String CodeForceVente) {

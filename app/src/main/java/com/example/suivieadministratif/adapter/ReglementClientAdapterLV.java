@@ -49,7 +49,7 @@ public class ReglementClientAdapterLV extends ArrayAdapter<ReglementClient> {
 
         txt_raison  .setText(reglementClient.getRaisonSociale());
         txt_etablie_par.setText(reglementClient.getNomUtilisateur());
-        txt_total_montant.setText(formatter.format(reglementClient.getTotalPayement())+" Dt");
+        txt_total_montant.setText(formatter.format(reglementClient.getTotalRecu())+" Dt");
         txt_date_reglement.setText(sdf.format(reglementClient.getHeureCreation()));
 
 

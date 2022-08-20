@@ -10,7 +10,7 @@ import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
+
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -19,15 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.menu.MenuViewModel;
-import com.example.suivieadministratif.module.Stock.BonEntre;
-import com.example.suivieadministratif.module.Stock.BonRedressement;
-import com.example.suivieadministratif.module.Stock.BonSortie;
-import com.example.suivieadministratif.module.Stock.BonTransfertStock;
-import com.example.suivieadministratif.module.Stock.EtatDeStockActivity;
+
 import com.example.suivieadministratif.task.ListeFournisseurSelectTask;
 
 public class SelectFournisseurFragment extends Fragment {
-
 
     ProgressBar pb  ;
     RecyclerView rv_list_fournisseur  ;

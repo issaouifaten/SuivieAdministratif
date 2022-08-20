@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.activity.ParametrageActivity;
-import com.example.suivieadministratif.activity.SplachScreenActivity;
+import com.example.suivieadministratif.activity.SplashScreenActivity;
 import com.example.suivieadministratif.param.Param;
 
 
@@ -67,7 +67,7 @@ public class ParametrageFragment extends Fragment {
                 edt.commit();
                 getActivity().   finish();
                 Toast.makeText(getActivity() ,"Déconnexion ..", Toast.LENGTH_LONG).show();
-                Intent inte = new Intent( getActivity().getApplicationContext(), SplachScreenActivity.class);
+                Intent inte = new Intent( getActivity().getApplicationContext(), SplashScreenActivity.class);
                 startActivity(inte);
 
 

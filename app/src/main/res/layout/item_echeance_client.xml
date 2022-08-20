@@ -8,8 +8,8 @@
 
 
     <androidx.cardview.widget.CardView
-
         android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -21,8 +21,6 @@
         card_view:cardBackgroundColor="#66FCF9F9"
         card_view:cardElevation="2dp"
         card_view:cardMaxElevation="6dp">
-
-
 
 
                 <LinearLayout

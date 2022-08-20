@@ -44,12 +44,20 @@ public class BonRetourVente {
     }
 
 
+    public BonRetourVente(String numeroBonRetourVente, Date dateBonRetourVente, double totalNetHT, double totalTVA, double totalTTC, String numeroEtat, String libelleEtat, String nomUtilisateur) {
+        NumeroBonRetourVente = numeroBonRetourVente;
+        DateBonRetourVente = dateBonRetourVente;
+        TotalNetHT = totalNetHT;
+        TotalTVA = totalTVA;
+        TotalTTC = totalTTC;
+        NumeroEtat = numeroEtat;
+        LibelleEtat = libelleEtat;
+        NomUtilisateur = nomUtilisateur;
+    }
 
-
-    public BonRetourVente(String numeroBonRetourVente , Date heureCreation, String codeClient, String raisonSociale, String  NomUtilisateur ,double TotalTTC , String numeroEtat) {
+    public BonRetourVente(String numeroBonRetourVente , Date heureCreation, String codeClient, String  NomUtilisateur , double TotalTTC , String numeroEtat) {
         NumeroBonRetourVente = numeroBonRetourVente;
         CodeClient = codeClient;
-        RaisonSociale = raisonSociale;
         this.NomUtilisateur=   NomUtilisateur ;
         NumeroEtat = numeroEtat;
         this.TotalTTC =TotalTTC;

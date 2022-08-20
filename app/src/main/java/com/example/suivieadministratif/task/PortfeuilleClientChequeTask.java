@@ -105,7 +105,7 @@ public class PortfeuilleClientChequeTask extends AsyncTask<String, String, Strin
                         " from Vue_CaisseRecette \n" +
                         " inner join Banque on Banque.CodeBanque=Vue_CaisseRecette.CodeBanque \n" +
                         "where  Vue_CaisseRecette.CodeModeReglement='C' \n" +
-                        "and Vue_CaisseRecette.Libelle='Reception Regelement' "+condition + "  order   by   Echeance  desc   ";
+                        "and Vue_CaisseRecette.Libelle='Reception Regelement' "+condition + "  order   by   Echeance      ";
 
 
                 Log.e("query_echeance_client",""+query_echeance_client) ;

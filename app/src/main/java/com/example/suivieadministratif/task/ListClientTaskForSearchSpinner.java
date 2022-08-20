@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.adapter.SpinnerAdapter;
+import com.example.suivieadministratif.menu.MenuTresorerieFragment;
 import com.example.suivieadministratif.model.Client;
 import com.example.suivieadministratif.module.tresorerie.PortFeuilleChequeActivity;
 import com.example.suivieadministratif.module.tresorerie.PortFeuilleTraiteActvity;
@@ -24,6 +25,7 @@ import com.example.suivieadministratif.module.vente.ReglementClientActivity;
 import com.example.suivieadministratif.param.Param;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.PieceNonPayeClient;
 import com.example.suivieadministratif.ui.statistique_rapport_activite.StatVenteFragment;
+import com.example.suivieadministratif.ui.statistique_rapport_activite.article.EtatJournalArticleVendu;
 import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.sql.Connection;
@@ -93,7 +95,7 @@ public class ListClientTaskForSearchSpinner extends AsyncTask<String,String,Stri
                 String  CONDITION  = "" ;
 
 
-                String query = "select  CodeClient  , RaisonSociale   from  Client   where 1 =1 " + CONDITION ;
+                String query = "select  CodeClient    from  Client   where 1 =1 " + CONDITION ;
 
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
@@ -106,7 +108,7 @@ public class ListClientTaskForSearchSpinner extends AsyncTask<String,String,Stri
                 if (origine.equals("dialogChoixJournalBLVente")  ||  origine.equals("PieceNonPayeClient")  ||  origine.equals("EtatDevisVente")
                 ||     origine.equals("EtatCommande")   ||   origine.equals("EtatLivraisonActivity")   ||  origine.equals("EtatRetourActivity")
                 ||   origine.equals("EtatFactureVente")  ||   origine.equals("ReglementClientActivity")   ||   origine.equals("RapportEcheanceClientActivity")
-                ||   origine.equals("PortFeuilleChequeActivity")  ||    origine.equals("PortFeuilleTraiteActvity")     )
+                ||   origine.equals("PortFeuilleChequeActivity")  ||    origine.equals("PortFeuilleTraiteActvity")   ||  origine.equals("EtatJournalArticleVendu")  ||  origine.equals("MenuTresorerieFragment")   )
 
                 {
                     listClient.add(new Client("" ,"Tout les Clients")) ;
@@ -256,6 +258,24 @@ public class ListClientTaskForSearchSpinner extends AsyncTask<String,String,Stri
 
 
 
+                if (origine .equals("EtatJournalArticleVendu"))
+                {
+                    EtatJournalArticleVendu.CodeClientSelected = listClient.get(position).getCodeClient() ;
+
+                    new JournalArticleVenduTask(activity ,   EtatJournalArticleVendu.date_debut ,   EtatJournalArticleVendu.date_fin,   EtatJournalArticleVendu.elv_jav,   EtatJournalArticleVendu.pb_bc,EtatJournalArticleVendu.CodeClientSelected  ).execute() ;
+                }
+
+                if (origine .equals("MenuTresorerieFragment"))
+                {
+                    MenuTresorerieFragment.CodeClientSelected = listClient.get(position).getCodeClient() ;
+                    MenuTresorerieFragment.ClientSelected = listClient.get(position).getRaisonSociale() ;
+
+
+                }
+
+
+
+//
 
 
             }

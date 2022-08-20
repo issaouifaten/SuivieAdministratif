@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.suivieadministratif.R;
+import com.example.suivieadministratif.module.caisse.AlimentationBanqueRecetteActivity;
+import com.example.suivieadministratif.module.caisse.AlimentationCaisseActivity;
 import com.example.suivieadministratif.module.caisse.CaisseRecetteActivity;
 import com.example.suivieadministratif.module.caisse.MouvementCaisseDepenseDetailActivity;
 
@@ -57,6 +59,31 @@ public class MenuCaisseFragment extends Fragment {
 
             }
         });
+
+
+        CardView   btn_alimen_caisse_recette= (CardView) root.findViewById(R.id.btn_alimen_caisse_recette );
+        btn_alimen_caisse_recette.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+             Intent toCaisseRecette  = new Intent(getActivity() , AlimentationBanqueRecetteActivity.class) ;
+                startActivity(toCaisseRecette);
+
+            }
+        });
+
+
+        CardView   btn_alimen_caisse= (CardView) root.findViewById(R.id.btn_alimen_caisse);
+        btn_alimen_caisse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent toCaisseRecette  = new Intent(getActivity() , AlimentationCaisseActivity.class) ;
+                startActivity(toCaisseRecette);
+
+            }
+        });
+
 
 
 

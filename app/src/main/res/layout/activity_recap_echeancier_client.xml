@@ -20,9 +20,9 @@
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginLeft="30dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="70dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
@@ -54,6 +54,44 @@
                         android:text="Récap.en engagement "
                         android:textAllCaps="true"
                         android:textColor="@color/white" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            card_view:cardBackgroundColor="#edfcf9f9"
+            card_view:cardCornerRadius="5dp"
+            card_view:cardElevation="6dp"
+            card_view:cardMaxElevation="6dp"
+            card_view:contentPadding="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@color/color_g_6">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
                     <TextView
                         android:id="@+id/txt_mode_reg"
                         android:layout_width="wrap_content"
@@ -69,6 +107,7 @@
 
 
         </androidx.cardview.widget.CardView>
+
 
 
         <androidx.cardview.widget.CardView
@@ -91,7 +130,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:background="@color/colorPrimary2">
+                android:background="@color/color1">
 
 
                 <LinearLayout

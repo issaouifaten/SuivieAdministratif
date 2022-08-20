@@ -38,6 +38,7 @@ public class JournalArticleVenduTask extends AsyncTask<String, String, String> {
     Activity activity;
     ExpandableListView elv_jav;
     ProgressBar pb;
+    String CodeClientSelected;
 
 
     String z = "";
@@ -54,14 +55,13 @@ public class JournalArticleVenduTask extends AsyncTask<String, String, String> {
 
     double tot_journal = 0;
 
-    public JournalArticleVenduTask(Activity activity, Date date_debut, Date date_fin, ExpandableListView elv_jav, ProgressBar pb) {
+    public JournalArticleVenduTask(Activity activity, Date date_debut, Date date_fin, ExpandableListView elv_jav, ProgressBar pb, String CodeClientSelected) {
         this.activity = activity;
         this.date_debut = date_debut;
         this.date_fin = date_fin;
         this.elv_jav = elv_jav;
         this.pb = pb;
-        // this.search_bar_client = search_bar_client;
-
+        this.CodeClientSelected = CodeClientSelected;
 
         SharedPreferences prefe = activity.getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
         user = prefe.getString("user", user);
@@ -92,12 +92,20 @@ public class JournalArticleVenduTask extends AsyncTask<String, String, String> {
                 z = "Error in connection with SQL server";
             } else {
 
+
+                String  condition  = "" ;
+                if (!CodeClientSelected.equals(""))
+                {
+                    condition += "  and CodeClient =  '"+CodeClientSelected+"' "  ;
+                }
+
+
                 String query_echeance_client = " select * from \n" +
                         "(select Vue_ListeVenteGlobal.CodeArticle, CodeClient,RaisonSociale,MontantTTC ,NumeroPiece ,convert(numeric(18,0),Quantite) as  Quantite ,\n" +
                         "(select  Nom from Respensable where Respensable.CodeRespensable=Vue_ListeVenteGlobal.CodeRespensableAdministration)as RAD\n" +
                         ",(select  Nom from Respensable where Respensable.CodeRespensable=Vue_ListeVenteGlobal.CodeRepresentant)as REPRESENTANT \n" +
                         ",(select  Designation from Article where Article.CodeArticle=Vue_ListeVenteGlobal.CodeArticle)as DesignationArticle  \n" +
-                        "from Vue_ListeVenteGlobal where DatePiece between '" + df.format(date_debut) + "' and '" + df.format(date_fin) + "'  ) as t  \n" +
+                        "from Vue_ListeVenteGlobal where DatePiece between '" + df.format(date_debut) + "' and '" + df.format(date_fin) + "'  "+condition+") as t  \n" +
                         "order by NumeroPiece, CodeClient\n  ";
 
 
@@ -128,7 +136,7 @@ public class JournalArticleVenduTask extends AsyncTask<String, String, String> {
                     JournalArticleVendu journalArticleVendu = new JournalArticleVendu(CodeClient, RaisonSociale, RAD, REPRESENTANT, NumeroPiece, CodeArticle, DesignationArticle, MontantTTC, Quantite);
                     list_jav.add(journalArticleVendu);
 
-                    Log.e("J.A.V",journalArticleVendu.toString())  ;
+                    Log.e("J.A.V", journalArticleVendu.toString());
 
                 }
 
@@ -162,21 +170,21 @@ public class JournalArticleVenduTask extends AsyncTask<String, String, String> {
                 bl_distinct.add(jav.getNumeroPiece().trim());
         }
 
-        Log.e("bl_distinct",bl_distinct.toString()) ;
+        Log.e("bl_distinct", bl_distinct.toString());
 
         for (String codeCLient : client_distinct) {
 
             ClientJAV clientJAV = new ClientJAV();
-            ArrayList<Bl_Client_JAV>  list_bl_par_client  = new ArrayList<>()  ;
+            ArrayList<Bl_Client_JAV> list_bl_par_client = new ArrayList<>();
             double ttc_par_client = 0;
 
             for (JournalArticleVendu jav : list_jav) {
 
                 if (codeCLient.equals(jav.getCodeClient())) {
 
-                    Log.e( "CLIENT "+ " "+jav.getRaisonSociale(),jav.getCodeArticle()+"  "+jav.getMontantTTC()) ;
+                    Log.e("CLIENT " + " " + jav.getRaisonSociale(), jav.getCodeArticle() + "  " + jav.getMontantTTC());
                     clientJAV = new ClientJAV(jav.getCodeClient(), jav.getRaisonSociale(), jav.getRAD(), jav.getREPRESENTANT());
-                    ttc_par_client = ttc_par_client+ jav.getMontantTTC();
+                    ttc_par_client = ttc_par_client + jav.getMontantTTC();
 
                 }
 
@@ -186,27 +194,19 @@ public class JournalArticleVenduTask extends AsyncTask<String, String, String> {
             clientJAV.setTotalTTC(ttc_par_client);
             clientJAV.setList_bl_par_client(list_bl_par_client);
             listClientjav.add(clientJAV);
-            Log.e("CLIENT_jav", clientJAV.getRaisonSociale()+  " "+clientJAV.getTotalTTC())  ;
+            Log.e("CLIENT_jav", clientJAV.getRaisonSociale() + " " + clientJAV.getTotalTTC());
 
 
         }
 
 
-
-
-
-
-        Bl_Client_JAV bl_client_jav = new Bl_Client_JAV() ;
-
-
-
+        Bl_Client_JAV bl_client_jav = new Bl_Client_JAV();
 
 
         /// génération des bl  distinct
-        ArrayList<Bl_Client_JAV> list_bl_distinct = new ArrayList<>() ;
-        for(String bl : bl_distinct)
-        {
-            ArrayList<Article_BL_JAV>  list_art_par_bl  = new ArrayList<>() ;
+        ArrayList<Bl_Client_JAV> list_bl_distinct = new ArrayList<>();
+        for (String bl : bl_distinct) {
+            ArrayList<Article_BL_JAV> list_art_par_bl = new ArrayList<>();
             double ttc_par_bl = 0;
             for (JournalArticleVendu jav : list_jav) {
                 if (bl.equals(jav.getNumeroPiece())) {
@@ -221,25 +221,20 @@ public class JournalArticleVenduTask extends AsyncTask<String, String, String> {
 
             bl_client_jav.setList_art_par_bl(list_art_par_bl);
             bl_client_jav.setMontantTTC(ttc_par_bl);
-            list_bl_distinct.add(bl_client_jav) ;
+            list_bl_distinct.add(bl_client_jav);
         }
 
 
-
-
         ///affectation  bl sur  client
-         for (ClientJAV clientJAV  : listClientjav)
-         {
-             ArrayList<Bl_Client_JAV>  listBL_par_client  = new ArrayList<>() ;
-             for  (Bl_Client_JAV bl_client_jav1  :  list_bl_distinct)
-             {
-                 if (bl_client_jav1.getCodeClient().equals(clientJAV.getCodeClient()))
-                 {
-                     listBL_par_client.add(bl_client_jav1) ;
-                 }
-             }
-             clientJAV.setList_bl_par_client(listBL_par_client);
-         }
+        for (ClientJAV clientJAV : listClientjav) {
+            ArrayList<Bl_Client_JAV> listBL_par_client = new ArrayList<>();
+            for (Bl_Client_JAV bl_client_jav1 : list_bl_distinct) {
+                if (bl_client_jav1.getCodeClient().equals(clientJAV.getCodeClient())) {
+                    listBL_par_client.add(bl_client_jav1);
+                }
+            }
+            clientJAV.setList_bl_par_client(listBL_par_client);
+        }
 
 
         JournalArticleVenteExtensibleAdapter adapter = new JournalArticleVenteExtensibleAdapter(activity, listClientjav);

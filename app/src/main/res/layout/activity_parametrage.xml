@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".param.Parametrage"
-    android:background="@drawable/back">
+    android:background="@drawable/back_login">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -107,7 +107,7 @@
                     android:hint="base"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
-                    android:text="CMVI" />
+                    android:text="I2S_COM" />
 
                 <EditText
                     android:id="@+id/user"

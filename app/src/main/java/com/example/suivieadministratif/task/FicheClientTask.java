@@ -59,9 +59,7 @@ public class FicheClientTask extends AsyncTask<String, String, String> {
         this.CodeClient = CodeClient ;
         this.date_debut  = date_debut  ;
         this.date_fin= date_fin  ;
-
         this.pb_chargement =pb_chargement ;
-
 
 
         SharedPreferences pref = activity.getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
@@ -71,7 +69,6 @@ public class FicheClientTask extends AsyncTask<String, String, String> {
         password = pref.getString("password", password);
         base = pref.getString("base", base);
         connectionClass = new ConnectionClass();
-
 
 
     }

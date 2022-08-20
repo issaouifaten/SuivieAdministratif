@@ -109,10 +109,10 @@ public class StockAlaDateTask extends AsyncTask<String, String, String> {
 
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
-
                 while (rs.next()) {
                     quantite_a_la_date = rs.getInt("Quantite")  ;
                 }
+
             }
             con.close();
 

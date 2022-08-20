@@ -10,27 +10,19 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
 
 import com.example.suivieadministratif.ConnectionClass;
 import com.example.suivieadministratif.adapter.RecapEcheanceClientAdapter;
-import com.example.suivieadministratif.adapter.RetenuClientAdapter;
 import com.example.suivieadministratif.model.RecapEcheancierClient;
-import com.example.suivieadministratif.model.RetenuClientFournisseur;
 import com.example.suivieadministratif.module.tresorerie.DetailRecapEcheancierClientParMois;
 import com.example.suivieadministratif.module.tresorerie.RecapEcheancierClientActivity;
 import com.example.suivieadministratif.param.Param;
-import com.example.suivieadministratif.ui.statistique_rapport_activite.Client.ListRetenuClientActivity;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 
 public class ListeRecapEcheanceClientTask extends AsyncTask<String, String, String> {
@@ -47,6 +39,7 @@ public class ListeRecapEcheanceClientTask extends AsyncTask<String, String, Stri
     String user, password, base, ip;
 
     String CodeModeReg;
+    String LibelleModeReg   ;
     String date_debut, date_fin;
 
 
@@ -55,13 +48,14 @@ public class ListeRecapEcheanceClientTask extends AsyncTask<String, String, Stri
     double  total =0 ;
 
 
-    public ListeRecapEcheanceClientTask(Activity activity, String date_debut, String date_fin, String CodeModeReg, ListView lv, ProgressBar pb) {
+    public ListeRecapEcheanceClientTask(Activity activity, String date_debut, String date_fin, String CodeModeReg, String LibelleModeReg , ListView lv, ProgressBar pb) {
         this.activity = activity;
         this.date_debut = date_debut;
         this.date_fin = date_fin;
         this.lv = lv;
         this.pb = pb;
         this.CodeModeReg = CodeModeReg;
+        this.LibelleModeReg=LibelleModeReg ;
 
 
         SharedPreferences prefe = activity.getSharedPreferences(Param.PEF_SERVER, Context.MODE_PRIVATE);
@@ -216,13 +210,13 @@ public class ListeRecapEcheanceClientTask extends AsyncTask<String, String, Stri
 
                 Intent  toDetail  = new Intent(activity  , DetailRecapEcheancierClientParMois.class) ;
 
-
                 toDetail.putExtra("annee" ,recapSelected.getAnnee());
                 toDetail.putExtra("mois" ,recapSelected.getMois());
                 toDetail.putExtra("libelle_mois" ,recapSelected.getLibelleMois());
                 toDetail.putExtra("date_debut" ,date_debut );
                 toDetail.putExtra("date_fin" ,date_fin);
                 toDetail.putExtra("mode_reglement" ,CodeModeReg);
+                toDetail.putExtra("libelle_reglement" ,LibelleModeReg);
 
 
 

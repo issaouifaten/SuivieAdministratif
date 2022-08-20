@@ -379,6 +379,66 @@
                     </androidx.cardview.widget.CardView>
 
 
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/btn_impaye_client"
+                        android:layout_width="140dp"
+                        android:layout_height="140dp"
+                        android:layout_margin="10dp"
+
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        app:cardBackgroundColor="#66FCF9F9"
+                        app:cardCornerRadius="2dp"
+                        app:cardElevation="2dp"
+                        app:cardMaxElevation="6dp"
+                        app:contentPadding="10dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+
+                            <RelativeLayout
+                                android:layout_width="70dp"
+                                android:layout_height="70dp">
+
+                                <ImageView
+                                    android:layout_width="70dp"
+                                    android:layout_height="70dp"
+                                    android:padding="15dp"
+                                    android:src="@drawable/ic_customer" />
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_alignParentRight="true"
+                                    android:src="@drawable/impaye_client" />
+
+                            </RelativeLayout>
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="10dp"
+                                android:src="@drawable/line_h" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:gravity="center"
+                                android:text="Impayé Client"
+                                android:textSize="15dp"
+                                android:textStyle="bold" />
+
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+
+
                 </LinearLayout>
 
 
@@ -387,8 +447,6 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="horizontal">
-
-
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/btn_gestion_echeancier_frns"
@@ -450,6 +508,66 @@
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/btn_impaye_fournisseur"
+                        android:layout_width="140dp"
+                        android:layout_height="140dp"
+                        android:layout_margin="10dp"
+
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        app:cardBackgroundColor="#66FCF9F9"
+                        app:cardCornerRadius="2dp"
+                        app:cardElevation="2dp"
+                        app:cardMaxElevation="6dp"
+                        app:contentPadding="10dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+
+                            <RelativeLayout
+                                android:layout_width="70dp"
+                                android:layout_height="50dp">
+
+
+                                <ImageView
+                                    android:layout_width="70dp"
+                                    android:layout_height="50dp"
+                                    android:padding="5dp"
+                                    android:src="@drawable/ic_frns" />
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_alignParentRight="true"
+                                    android:src="@drawable/impaye_client" />
+
+
+                            </RelativeLayout>
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="10dp"
+                                android:src="@drawable/line_h" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:gravity="center"
+                                android:text="Impayé Fournisseur"
+                                android:textSize="15dp"
+                                android:textStyle="bold" />
+
+
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
                 </LinearLayout>
 

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".menu.MenuVenteFragment"
-    android:background="@drawable/back">
+    android:background="@drawable/back_login">
 
 
     <LinearLayout
@@ -72,7 +72,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_vente_parametrable"
-
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
@@ -129,7 +129,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_var_ca_commercial_en_mois"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"
@@ -177,7 +177,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_var_ca_comptable_en_mois"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:layout_width="140dp"
                     android:layout_height="140dp"

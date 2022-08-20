@@ -131,7 +131,7 @@ public class StockArticleTask extends AsyncTask<String, String, String> {
                         "from   Stock  \n" +
                         "inner  join Article  on  Article.CodeArticle= Stock.CodeArticle \n" +
                         "inner  join  TVA on TVA.CodeTVA  = Article.CodeTVA\n" +
-                        "where  CodeDepot = '" + CodeDepot + "'  and Quantite > 0\n" +
+                        "where  CodeDepot = '" + CodeDepot + "'  and Quantite >= 0\n" +
                         "and   (Article.Designation   like  '%" + term_search + "%'  or  Article.CodeArticle  like  '%" + term_search + "%' ) \n" +
                         "  ";
 

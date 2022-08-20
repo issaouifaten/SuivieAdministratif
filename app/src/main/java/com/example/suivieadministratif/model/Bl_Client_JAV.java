@@ -3,8 +3,6 @@ package com.example.suivieadministratif.model;
 import java.util.ArrayList;
 
 public class Bl_Client_JAV {
-
-
     private String CodeClient;
     private String RaisonSociale;
     private String NumeroPiece;

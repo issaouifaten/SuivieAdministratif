@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.annotation.TargetApi;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
@@ -42,6 +44,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,127 +55,173 @@ import java.util.Locale;
 import java.util.Map;
 
 public class BonSortie extends AppCompatActivity {
-    GridView lv_list_historique_bc;
+
+    ListView lv_list ;
     ProgressBar progressBar;
     SearchView search_bar_client;
 
-    public TextView txt_date_debut, txt_date_fin;
-    DatePicker datePicker;
+
+
     final Context co = this;
     String user, password, base, ip;
-    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
+    public static TextView txt_tot_ttc ,txt_tot_ht , txt_tot_tva ;
+
+
+    String condition="";
+
+
+    int id_DatePickerDialog = 0;
+    Date currentDate = new Date();
+    public static int year_x1, month_x1, day_x1;
+    public static int year_x2, month_x2, day_x2;
+
+    public static Date date_debut = null;
+    public static Date date_fin = null;
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     NumberFormat formatter = new DecimalFormat("00");
-    public static TextView txt_tot_commande;
-
-    FloatingActionButton fab_arrow;
-    RelativeLayout layoutBottomSheet;
-    BottomSheetBehavior sheetBehavior;
+    public TextView txt_date_debut, txt_date_fin;
 
 
-
-    String date_debut = "",date_fin="",condition="";
 
     ConnectionClass connectionClass;
-    String CodeSociete, NomUtilisateur, CodeLivreur;
+    String  NomUtilisateur ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bon_sortie);
+        setContentView(R.layout.activity_etat_stock);
 
         //sql session
         SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         String NomSociete = pref.getString("NomSociete", "");
-        setTitle(NomSociete + " :Bon Sortie");
+        setTitle(NomSociete + " : Bon Sortie");
         connectionClass = new ConnectionClass();
 
-        SharedPreferences prefe = getSharedPreferences("usersession", Context.MODE_PRIVATE);
-        SharedPreferences.Editor edte = prefe.edit();
-        NomUtilisateur = prefe.getString("NomUtilisateur", NomUtilisateur);
 
-        // SharedPreferences pref = getSharedPreferences("usersessionsql", Context.MODE_PRIVATE);
         SharedPreferences.Editor edt = pref.edit();
         user = pref.getString("user", user);
         ip = pref.getString("ip", ip);
         password = pref.getString("password", password);
         base = pref.getString("base", base);
 
-        txt_tot_commande = (TextView) findViewById(R.id.txt_tot_commande);
+        txt_tot_ht = (TextView) findViewById(R.id.txt_tot_ht);
+        txt_tot_tva = (TextView) findViewById(R.id.txt_total_tva);
+        txt_tot_ttc = (TextView) findViewById(R.id.txt_total_ttc);
+
+
         txt_date_debut = findViewById(R.id.txt_date_debut);
         txt_date_fin = findViewById(R.id.txt_date_fin);
 
 
-        lv_list_historique_bc = (GridView) findViewById(R.id.lv_list_historique_bc);
+        lv_list = (ListView) findViewById(R.id.lv_list);
         progressBar = (ProgressBar) findViewById(R.id.pb_bc);
-        EditText editText=(EditText)findViewById(R.id.search_bar_client) ;
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+
+        final Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(currentDate);
+        //cal1.add(Calendar.MONTH, -1);
+        year_x1 = cal1.get(Calendar.YEAR);
+        month_x1 = cal1.get(Calendar.MONTH);
+        day_x1 = 1;
+
+
+        final Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(currentDate);
+
+        year_x2 = cal2.get(Calendar.YEAR);
+        month_x2 = cal2.get(Calendar.MONTH);
+        day_x2 = cal2.get(Calendar.DAY_OF_MONTH);
+
+
+        DecimalFormat df_month = new DecimalFormat("00");
+        DecimalFormat df_year = new DecimalFormat("0000");
+
+        Log.e("date_debut ", "01/" + df_month.format(cal1.get(Calendar.MONTH) + 1) + "/" + df_year.format(cal1.get(Calendar.YEAR)));
+        String _date_du = "01/" + df_month.format(cal1.get(Calendar.MONTH) + 1) + "/" + df_year.format(cal1.get(Calendar.YEAR));
+
+        try {
+            date_debut = sdf.parse(_date_du);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        txt_date_debut.setText(_date_du);
+
+        date_fin = cal2.getTime();
+        String _date_au = sdf.format(cal2.getTime());
+        txt_date_fin.setText(_date_au);
+
+
+        search_bar_client=(SearchView)findViewById(R.id.search_bar_client) ;
+        search_bar_client. setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                if (!search_bar_client.isIconified()) {
+                    search_bar_client.setIconified(true);
+                }
+                return false;
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                if( s.length()>1) {
+            public boolean onQueryTextChange(String s) {
+                if( s.length() > 0) {
                     condition = " and( NumeroBonSortie like'%" + s + "%'  or  Depot.Libelle  like'%" + s + "%' ) ";
 
                 }else{
                     condition="";
                 }
-        FillList fillList = new  FillList();
-                fillList.execute("");
-            }
 
-            @Override
-            public void afterTextChanged(Editable s) {
+                FillList fillList = new  FillList();
+                fillList.execute("");
+
+                return false;
 
             }
         });
 
 
 
-
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        date_fin = sdf.format(calendar.getTime());
-        calendar.add(Calendar.MONTH, -1);
-        date_debut = sdf.format(calendar.getTime());
-        txt_date_debut.setText(date_debut);
-        txt_date_fin.setText(date_fin);
-        TextView txt_gratuite =(TextView)findViewById(R.id.txt_gratuite);
-        txt_gratuite.setText("Total Sortie");
          FillList fillList = new  FillList();
         fillList.execute("");
 
         txt_date_debut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LayoutInflater li = LayoutInflater.from(co);
-                View px = li.inflate(R.layout.diagcalend, null);
-                AlertDialog.Builder alt = new AlertDialog.Builder(co);
-                alt.setIcon(R.drawable.i2s);
-                alt.setView(px);
-                alt.setTitle("date");
-                datePicker = (DatePicker) px.findViewById(R.id.datedebut);
-                alt.setPositiveButton("ok",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface di, int i) {
 
-                                Date d = new Date(datePicker.getYear() - 1900, datePicker.getMonth(), datePicker.getDayOfMonth());
-                                date_debut = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH)
-                                        .format(d);
+                id_DatePickerDialog = 0;
+                Log.e("month_x1", "On picker  : " + month_x1);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(BonSortie.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                                txt_date_debut.setText(date_debut);
-                             FillList fillList = new  FillList();
+                        if (id_DatePickerDialog == 0) {
+                            year_x1 = year;
+                            month_x1 = monthOfYear;
+                            day_x1 = dayOfMonth;
+
+                            txt_date_debut.setText("" + formatter.format(day_x1) + "/" + formatter.format(month_x1 + 1) + "/" + year_x1);
+
+                            String _date_du = formatter.format(day_x1) + "/" + formatter.format(month_x1 + 1) + "/" + year_x1 + " ";
+                            String _date_au = txt_date_fin.getText().toString();
+
+
+                            try {
+                                date_debut = sdf.parse(_date_du);
+                                date_fin = sdf.parse(_date_au);
+
+
+                                FillList fillList = new  FillList();
                                 fillList.execute("");
 
 
+                            } catch (Exception e) {
+                                Log.e("Exception--", " " + e.getMessage());
                             }
-                        });
-
-                AlertDialog dd = alt.create();
-                dd.show();
+                        }
+                    }
+                }, year_x1, month_x1, day_x1);
+                datePickerDialog.show();
             }
         });
 
@@ -181,70 +230,45 @@ public class BonSortie extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                LayoutInflater li = LayoutInflater.from(co);
-                View px = li.inflate(R.layout.diagcalend, null);
-                AlertDialog.Builder alt = new AlertDialog.Builder(co);
-                alt.setIcon(R.drawable.i2s);
-                alt.setView(px);
-                alt.setTitle("date");
-                datePicker = (DatePicker) px.findViewById(R.id.datedebut);
-                alt.setPositiveButton("ok",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface di, int i) {
 
-                                Date d = new Date(datePicker.getYear() - 1900, datePicker.getMonth(), datePicker.getDayOfMonth());
-                                date_fin = new SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH)
-                                        .format(d);
+                id_DatePickerDialog = 1;
 
-                                txt_date_fin.setText(date_fin);
+                DatePickerDialog datePickerDialog = new DatePickerDialog(BonSortie.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        if (id_DatePickerDialog == 1) {
 
+                            year_x2 = year;
+                            month_x2 = monthOfYear;
+                            day_x2 = dayOfMonth;
 
-                              FillList fillList = new  FillList();
+                            txt_date_fin.setText("" + formatter.format(day_x2) + "/" + formatter.format(month_x2 + 1) + "/" + year_x2);
+
+                            String _date_au = "" + formatter.format(day_x2) + "/" + formatter.format(month_x2 + 1) + "/" + year_x2;
+                            String _date_du = txt_date_debut.getText().toString();
+
+                            try {
+                                date_debut = sdf.parse(_date_du);
+                                date_fin = sdf.parse(_date_au);
+
+                                FillList fillList = new  FillList();
                                 fillList.execute("");
+
+                            } catch (Exception e) {
+                                Log.e("Exception --", " " + e.getMessage());
                             }
-                        }); 
 
-                AlertDialog dd = alt.create();
-                dd.show();
-
+                        }
+                    }
+                }, year_x2, month_x2, day_x2);
+                datePickerDialog.show();
             }
         });
 
 
-        layoutBottomSheet = (RelativeLayout) findViewById(R.id.bottom_sheet);
-        fab_arrow = (FloatingActionButton) findViewById(R.id.fab_arrow);
-        sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-        sheetBehavior.setHideable(false);
 
-        sheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override
-            public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                switch (newState) {
-                    case BottomSheetBehavior.STATE_HIDDEN:
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED: {
-                        // Toast.makeText(getActivity() , "Close Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_down);
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_COLLAPSED: {
-                        // Toast.makeText(getActivity() , "Expand Sheet" ,Toast.LENGTH_LONG).show();
-                        fab_arrow.setImageResource(R.drawable.ic_arrow_up);
-                    }
-                    break;
-                    case BottomSheetBehavior.STATE_DRAGGING:
-                        break;
-                    case BottomSheetBehavior.STATE_SETTLING:
-                        break;
-                }
-            }
 
-            @Override
-            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
 
-            }
-        });
         NavigationView nav_menu=findViewById(R.id.nav_view);
         View root = nav_menu.getHeaderView(0);
 
@@ -312,7 +336,11 @@ public class BonSortie extends AppCompatActivity {
 
 
         List<Map<String, String>> prolist = new ArrayList<Map<String, String>>();
-        float total_devis=0;
+
+        double total_ttc= 0;
+        double total_tva = 0 ;
+        double total_net_ht =0 ;
+
 
 
         @Override
@@ -327,18 +355,25 @@ public class BonSortie extends AppCompatActivity {
         protected void onPostExecute(String r) {
             progressBar.setVisibility(View.GONE);
 
-// NumeroDevisVente,DateCreation,NomUtilisateur,CodeDepot,Depot,TotalTTC,Etat.Libelle as Etat
-            String[] from = {"NumeroBonSortie", "DateCreation",   "Depot","TotalTTC","Etat"};
-            int[] views = {R.id.txt_num_bc, R.id.txt_date_bc, R.id.txt_raison_client, R.id.txt_prix_ttc, R.id.txt_libelle_etat};
+            // NumeroDevisVente,DateCreation,NomUtilisateur,CodeDepot,Depot,TotalTTC,Etat.Libelle as Etat
+            String[] from = {"NumeroBonSortie", "DateCreation",   "Depot", "TotalHT", "TotalTVA", "TotalTTC",  "Etat","NomUtilisateur"};
+            int[] views = {R.id.txt_num_piece, R.id.txt_date_bc, R.id.txt_raison_client , R.id.txt_prix_net_ht, R.id.txt_prix_tva,  R.id.txt_prix_ttc,  R.id.txt_libelle_etat ,R.id.txt_etablie_par };
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
-                    prolist, R.layout.item_etat_entete, from,
-                    views);
+                    prolist, R.layout.item_etat_entete, from, views);
+
+            final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+            instance.setMinimumFractionDigits(3);
+            instance.setMaximumFractionDigits(3);
+
+
+            txt_tot_ttc.setText( instance.format(total_ttc));
+            txt_tot_ht.setText( instance.format(total_net_ht));
+            txt_tot_tva.setText( instance.format(total_tva));
 
 
 
-            txt_tot_commande.setText(""+total_devis);
-            lv_list_historique_bc.setAdapter(ADA);
-            lv_list_historique_bc.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            lv_list.setAdapter(ADA);
+            lv_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     HashMap<String, Object> obj = (HashMap<String, Object>) ADA
@@ -349,8 +384,6 @@ public class BonSortie extends AppCompatActivity {
                     String  Depot = (String) obj.get("Depot");
                     String  Etat = (String) obj.get("Etat");
                     String  TotalTTC = (String) obj.get("TotalTTC");
-
-
                     Intent intent=new Intent(getApplicationContext(), DetailLigneBonSortie.class);
                     intent.putExtra("NumeroBonSortie",NumeroBonSortie);
                     intent.putExtra("DateCreation",DateCreation);
@@ -377,11 +410,10 @@ public class BonSortie extends AppCompatActivity {
                 } else {
 
 
-                    String queryTable = "select NumeroBonSortie,Depot.Libelle as Depot ,BonSortie.CodeDepot,TotalTTC,DateCreation ,Etat.Libelle as Etat,NomUtilisateur\n" +
+                    String queryTable = "select NumeroBonSortie,Depot.Libelle as Depot ,BonSortie.CodeDepot, TotalHT  , TotalTVA  ,TotalTTC ,DateCreation  as Etat,NomUtilisateur\n" +
                             "from BonSortie \n" +
-                            "inner join Etat on Etat.NumeroEtat=BonSortie.NumeroEtat\n" +
                             "inner join Depot on Depot.CodeDepot=BonSortie.CodeDepot   " +
-                            "where DateCreation between '"+date_debut+"' and '"+date_fin+"'\n" +condition+
+                            "where DateCreation between '"+sdf.format(date_debut)+"' and '"+sdf.format(date_fin)+"'\n" +condition+
                             "order by DateCreation desc";
 
                     PreparedStatement ps = con.prepareStatement(queryTable);
@@ -391,19 +423,28 @@ public class BonSortie extends AppCompatActivity {
                     z = "e";
 
                     while (rs.next()) {
+                        final NumberFormat instance = NumberFormat.getNumberInstance(Locale.FRENCH);
+                        instance.setMinimumFractionDigits(3);
+                        instance.setMaximumFractionDigits(3);
+
 
                         Map<String, String> datanum = new HashMap<String, String>();
                         datanum.put("NumeroBonSortie", rs.getString("NumeroBonSortie"));
                         datanum.put("NomUtilisateur", rs.getString("NomUtilisateur"));
                         datanum.put("CodeDepot", rs.getString("CodeDepot"));
                         datanum.put("Depot", rs.getString("Depot"));
-                        datanum.put("TotalTTC", rs.getString("TotalTTC"));
+                        datanum.put("TotalHT",instance.format(rs.getDouble("TotalHT")) );
+                        datanum.put("TotalTVA", instance.format(rs.getDouble("TotalTVA")));
+                        datanum.put("TotalTTC", instance.format(rs.getDouble("TotalTTC")));
                         datanum.put("Etat", rs.getString("Etat"));
 
                         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 
-                        datanum.put("DateCreation", df.format(rs.getDate("DateCreation")));
-                        total_devis+=rs.getFloat("TotalTTC");
+
+                        total_ttc+=rs.getDouble("TotalTTC");
+                        total_tva+=rs.getDouble("TotalTVA");
+                        total_net_ht+=rs.getDouble("TotalHT");
+
                         prolist.add(datanum);
 
 

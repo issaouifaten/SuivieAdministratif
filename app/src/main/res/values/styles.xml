@@ -18,6 +18,7 @@
     <style name="noactionBar" parent="Theme.AppCompat.Light.NoActionBar">
 
         <item name="colorAccent">@color/colorAccent</item>
+
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

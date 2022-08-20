@@ -141,18 +141,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="60dp"
+                        android:layout_marginBottom="40dp"
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <!--    <Button
-                    android:id="@+id/btreload"
-                    android:layout_width="75dp"
-                    android:layout_height="75dp"
-                    android:background="@drawable/reload" /> -->
 
 
                         <GridView
-                            android:id="@+id/lv_list_historique_bc"
+                            android:id="@+id/lv_list"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />
 

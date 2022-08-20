@@ -31,13 +31,14 @@ public class ListModeReglementTaskForSearchableSpinner extends AsyncTask<String,
     Activity activity  ;
     SearchableSpinner sp_mode ;
 
+
     ArrayList<String> listLibelle = new ArrayList<>() ;
     ArrayList<ModeReglement> listModeReg = new ArrayList<ModeReglement>() ;
 
     ConnectionClass connectionClass;
     String user, password, base, ip;
 
-    public ListModeReglementTaskForSearchableSpinner(Activity activity , SearchableSpinner sp_mode ) {
+    public ListModeReglementTaskForSearchableSpinner(Activity activity , SearchableSpinner sp_mode   ) {
         this.activity = activity;
         this.sp_mode = sp_mode   ;
 

@@ -111,8 +111,8 @@ public class DetailLigneBonEntre extends AppCompatActivity {
         protected void onPostExecute(String r) {
             pb.setVisibility(View.GONE);
 
-            String[] from = {"DesignationArticle", "CodeArticle", "MontantHT", "MontantTVA", "MontantTTC", "Quantite", "MontantTTC"};
-            int[] views = {R.id.txt_designation,R.id.txt_code_article  , R.id.txt_net_ht, R.id.txt_taux_remise, R.id.txt_mnt_ttc, R.id.txt_quantite, R.id.txt_prix_ttc};
+            String[] from = {"DesignationArticle", "CodeArticle", "MontantHT", "MontantTVA", "MontantTTC", "Quantite", "MontantTTC", "Libelle_2"};
+            int[] views = {R.id.txt_designation,R.id.txt_code_article  , R.id.txt_net_ht, R.id.txt_taux_remise, R.id.txt_mnt_ttc, R.id.txt_quantite, R.id.txt_prix_ttc,R.id.libelle_2};
 
             final SimpleAdapter ADA = new SimpleAdapter(getApplicationContext(),
                     prolist, R.layout.item_ligne_piece, from,
@@ -136,7 +136,8 @@ public class DetailLigneBonEntre extends AppCompatActivity {
                 } else {
 
 
-                    String queryTable = " select  CodeArticle,DesignationArticle, convert(numeric(18,0),Quantite)as Quantite ,  MontantHT , MontantTVA   , MontantTTC       from LigneBonEntrer where  NumeroBonEntrer='"+ NumeroBonEntrer+"' ";
+                    String queryTable = " select  CodeArticle,DesignationArticle, convert(numeric(18,0),Quantite)as Quantite ,  MontantHT , MontantTVA   , MontantTTC    " +
+                            "   from LigneBonEntrer where  NumeroBonEntrer='"+ NumeroBonEntrer+"' ";
 
                     PreparedStatement  ps = con.prepareStatement(queryTable);
                     Log.e("LigneBonEntrer", queryTable);
@@ -156,34 +157,23 @@ public class DetailLigneBonEntre extends AppCompatActivity {
                         datanum.put("Quantite", rs.getString("Quantite"));
 
                         datanum.put("MontantHT", instance.format(rs.getDouble("MontantHT")));
-                        datanum.put("MontantTVA", rs.getInt("MontantTVA") +"");
+                        datanum.put("MontantTVA", instance.format(rs.getDouble("MontantTVA")) +"");
                         datanum.put("MontantTTC", instance.format(rs.getDouble("MontantTTC")));
+                        datanum.put("Libelle_2",   "Mnt TVA");
 
                         prolist.add(datanum);
-
-
                         test = true;
-
-
                         z = "succees";
                     }
-
 
                 }
             } catch (SQLException ex) {
                 z = "tablelist" + ex.toString();
                 Log.e("erreur", z);
-
-
             }
             return z;
         }
     }
-
-
-
-
-
 
 
 }

@@ -8,12 +8,18 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.task.ArticleNnMouvementeTask;
 
 
 public class ArticleNonMouvementeActivity extends AppCompatActivity {
+
+    public  static TextView txt_qt_stock ;
+    public  static TextView txt_qt_achat ;
+    public  static TextView txt_total_ht ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +33,11 @@ public class ArticleNonMouvementeActivity extends AppCompatActivity {
         setTitle(NomSociete + " : Article Non Mouvementé");
 
 
+        txt_qt_stock  = (TextView)  findViewById(R.id.txt_qt_stock)  ;
+        txt_qt_achat  = (TextView)  findViewById(R.id.txt_qt_achat)  ;
+        txt_total_ht  = (TextView)  findViewById(R.id.txt_total_ht)  ;
+
         SearchView search_bar = (SearchView)  findViewById(R.id.search_bar) ;
-
-
         ListView lv_list_art_nn_mvmnt = (ListView)   findViewById(R.id.lv_list_art_nn_mvmnt) ;
         ProgressBar pb  = (ProgressBar)   findViewById(R.id.pb) ;
 

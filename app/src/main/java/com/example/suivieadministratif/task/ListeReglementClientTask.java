@@ -93,7 +93,7 @@ public class ListeReglementClientTask extends AsyncTask<String, String, String> 
                     condition += "  and CodeClient=   '"+CodeClient+"' "  ;
                 }
 
-                String query = " select NumeroReglementClient ,DateReglement  , RaisonSociale ,TotalPayement ,NomUtilisateur  , HeureCreation    \n" +
+                String query = " select NumeroReglementClient ,DateReglement  , TotalRecu,NomUtilisateur  , HeureCreation    \n" +
                         " from  ReglementClient\n" +
                         " where DateReglement between  '"+sdf.format(date_debut)+"' and '"+sdf.format(date_fin)+"' \n" +condition+
                         " order  by  NumeroReglementClient  DESC " ;
@@ -108,15 +108,11 @@ public class ListeReglementClientTask extends AsyncTask<String, String, String> 
                     String NumeroReglementClient  = rs.getString("NumeroReglementClient");
                     Date DateReglement  =dtfSQL.parse( rs.getString("DateReglement"));
                     Date HeureCreation  =dtfSQL.parse( rs.getString("HeureCreation"));
-
-                    String RaisonSociale  = rs.getString("RaisonSociale");
-                    Double TotalPayer  = rs.getDouble("TotalPayement");
+                    Double TotalRecu  = rs.getDouble("TotalRecu");
                     String NomUtilisateur  = rs.getString("NomUtilisateur");
+                    total_reglement  =  total_reglement + TotalRecu ;
 
-
-                    total_reglement  =  total_reglement + TotalPayer ;
-
-                    ReglementClient reglementClient  = new  ReglementClient (NumeroReglementClient ,DateReglement ,HeureCreation ,RaisonSociale ,TotalPayer ,NomUtilisateur ) ;
+                    ReglementClient reglementClient  = new  ReglementClient (NumeroReglementClient ,DateReglement ,HeureCreation ,NomUtilisateur ,TotalRecu) ;
                     listReglementClient.add(reglementClient) ;
 
 
@@ -137,6 +133,7 @@ public class ListeReglementClientTask extends AsyncTask<String, String, String> 
 
     @Override
     protected void onProgressUpdate(String... values) {
+
         super.onProgressUpdate(values);
     }
 
@@ -182,7 +179,7 @@ public class ListeReglementClientTask extends AsyncTask<String, String, String> 
                 intent1.putExtra("cle_raison",reg_selected.getRaisonSociale());
                 intent1.putExtra("cle_date_reg",simpleDateFormat.format( reg_selected.getDateReglementClient() ));
                 intent1.putExtra("cle_etablie_par",reg_selected.getNomUtilisateur());
-                intent1.putExtra("cle_montant",reg_selected.getTotalPayement());
+                intent1.putExtra("cle_montant",reg_selected.getTotalRecu());
 
                 activity.startActivity(intent1);
             }

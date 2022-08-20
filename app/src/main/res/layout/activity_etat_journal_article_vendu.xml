@@ -117,24 +117,37 @@
 
 
                     <RelativeLayout
+                        xmlns:android="http://schemas.android.com/apk/res/android"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
+                        android:layout_height="40dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginBottom="10dp">
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/buttonround"
+                        android:gravity="center">
 
 
-                        <SearchView
-                            android:id="@+id/search_bar_client"
+
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/sp_client"
+                            style="@android:style/Widget.Material.Light.Spinner.Underlined"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
-                            android:background="@drawable/buttonround"
-                            android:drawableRight="@android:drawable/ic_menu_search"
-                            android:ems="10"
-                            android:inputType="textPersonName"
-                            android:padding="5dp" />
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#00000000"
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            tools:targetApi="lollipop" />
 
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="2dp"
+                            android:padding="5dp"
+                            android:src="@drawable/ic_search" />
 
                     </RelativeLayout>
 

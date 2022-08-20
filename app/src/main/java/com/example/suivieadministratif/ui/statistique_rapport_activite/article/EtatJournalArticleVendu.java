@@ -39,6 +39,8 @@ import com.example.suivieadministratif.R;
 import com.example.suivieadministratif.adapter.BonCommandeAdapter;
 import com.example.suivieadministratif.module.achat.BonCommandeAchatActivity;
 import com.example.suivieadministratif.task.JournalArticleVenduTask;
+import com.example.suivieadministratif.task.ListClientTaskForSearchSpinner;
+import com.toptoche.searchablespinnerlibrary.SearchableSpinner;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -61,9 +63,12 @@ import javax.microedition.khronos.egl.EGLDisplay;
 public class EtatJournalArticleVendu extends AppCompatActivity {
 
 
-    ExpandableListView elv_jav ;
-    ProgressBar pb_bc;
-    SearchView search_bar_client;
+   public  static ExpandableListView elv_jav ;
+   public  static   ProgressBar pb_bc;
+
+    SearchableSpinner sp_client ;
+    public   static   String  CodeClientSelected = "";
+
     public TextView txt_date_debut, txt_date_fin;
 
     int id_DatePickerDialog = 0;
@@ -96,7 +101,7 @@ public class EtatJournalArticleVendu extends AppCompatActivity {
 
         elv_jav = (ExpandableListView) findViewById(R.id.elv_jav);
         pb_bc = (ProgressBar) findViewById(R.id.pb_bc);
-        search_bar_client = (SearchView) findViewById(R.id.search_bar_client);
+        sp_client  = (SearchableSpinner)   findViewById(R.id.sp_client)   ;
 
 
 
@@ -134,6 +139,8 @@ public class EtatJournalArticleVendu extends AppCompatActivity {
         String _date_au = df.format(cal2.getTime());
         txt_date_fin.setText(_date_au);
 
+        ListClientTaskForSearchSpinner listClientTaskForSearchableSpinner = new ListClientTaskForSearchSpinner(this ,sp_client, "EtatJournalArticleVendu") ;
+        listClientTaskForSearchableSpinner.execute() ;
 
 
         updateData();
@@ -218,6 +225,6 @@ public class EtatJournalArticleVendu extends AppCompatActivity {
 
     public   void updateData()
     {
-       new JournalArticleVenduTask(this ,date_debut ,date_fin,elv_jav,pb_bc).execute() ;
+       new JournalArticleVenduTask(this ,date_debut ,date_fin,elv_jav,pb_bc , CodeClientSelected  ).execute() ;
     }
 }

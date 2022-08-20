@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".menu.MenuVenteFragment"
-    android:background="@drawable/back">
+    android:background="@drawable/back_login">
 
 
     <LinearLayout
@@ -62,6 +62,8 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
 
+
+
             <LinearLayout
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -72,7 +74,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_mouvement_caisse_depense"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
@@ -118,7 +120,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/btn_caisse_recette"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
@@ -164,6 +166,225 @@
 
 
 
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_alimen_caisse_recette"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_margin="10dp"
+                    card_view:cardCornerRadius="2dp"
+                    card_view:contentPadding="10dp"
+                    card_view:cardBackgroundColor="#66FCF9F9"
+                    card_view:cardElevation="2dp"
+                    card_view:cardMaxElevation="6dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+
+
+                        <RelativeLayout
+                            android:layout_width="100dp"
+                            android:layout_height="80dp">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/ic_banque"
+                               />
+
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/ic_arrow"
+                                android:layout_marginLeft="10dp"
+                                android:layout_alignParentBottom="true"
+                                />
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_caisse"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentBottom="true"
+                         />
+
+
+                        </RelativeLayout>
+
+
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:src="@drawable/line_h"/>
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                             android:gravity="center"
+                            android:textSize="15dp"
+                            android:text="Alimentation Caisse Recette "/>
+
+
+                    </LinearLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_alimen_caisse"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_margin="10dp"
+                    card_view:cardCornerRadius="2dp"
+                    card_view:contentPadding="10dp"
+                    card_view:cardBackgroundColor="#66FCF9F9"
+                    card_view:cardElevation="2dp"
+                    card_view:cardMaxElevation="6dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+
+                        <RelativeLayout
+                            android:layout_width="100dp"
+                            android:layout_height="80dp">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/ic_caisse" />
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/ic_arrow"
+                                android:layout_marginLeft="10dp"
+                                android:layout_alignParentBottom="true" />
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_depense"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentBottom="true" />
+
+                        </RelativeLayout>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:src="@drawable/line_h"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:textSize="15dp"
+                            android:text="Alimentation Caisse Dépense"/>
+
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/btn_alimen_caisse_depense"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_margin="10dp"
+                    card_view:cardCornerRadius="2dp"
+                    card_view:contentPadding="10dp"
+                    card_view:cardBackgroundColor="#66FCF9F9"
+                    card_view:cardElevation="2dp"
+                    card_view:cardMaxElevation="6dp"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+
+                        <RelativeLayout
+                            android:layout_width="100dp"
+                            android:layout_height="80dp">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/ic_banque"
+                                />
+
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/ic_arrow"
+                                android:layout_marginLeft="10dp"
+                                android:layout_alignParentBottom="true" />
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_depense"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentBottom="true" />
+
+                        </RelativeLayout>
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:src="@drawable/line_h"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:textSize="15dp"
+                            android:text="Alimentation Caisse Dépense"/>
+
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
 
         </LinearLayout>
 

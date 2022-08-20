@@ -17,6 +17,7 @@ import com.example.suivieadministratif.module.vente.EtatLivraisonActivity;
 import com.example.suivieadministratif.module.vente.EtatRetourActivity;
 import com.example.suivieadministratif.module.vente.MouvementVenteServiceActivity;
 import com.example.suivieadministratif.module.vente.SelectClientFragment;
+import com.example.suivieadministratif.module.vente.SelectClientRappelPayementFragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -136,12 +137,25 @@ public class MenuVenteFragment extends Fragment {
                     ft.addToBackStack(null);
                     ft.commit();
                 }
-
-
-
             }
         });
 
+
+
+        CardView   btn_rappel_payement = (CardView)   root.findViewById(R.id.btn_rappel_payement);
+        btn_rappel_payement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Fragment fragment = new SelectClientRappelPayementFragment();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                if (fragment != null) {
+                    ft.replace(R.id.nav_host_fragment, fragment);
+                    ft.addToBackStack(null);
+                    ft.commit();
+                }
+            }
+        });
 
 
         //

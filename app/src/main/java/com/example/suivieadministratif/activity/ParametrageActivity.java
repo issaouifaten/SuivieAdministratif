@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Switch;
 
 import com.example.suivieadministratif.R;
@@ -19,13 +18,10 @@ import com.example.suivieadministratif.param.Param;
 
 public class ParametrageActivity extends AppCompatActivity {
 
-
-
     boolean st = false;
 
     Button btadd ;
     EditText ed_ip_local  , ed_ip_distant , edtpass, edtbase, edtuser ;
-
 
     String  ip_selected  ="" ;
 
@@ -48,6 +44,13 @@ public class ParametrageActivity extends AppCompatActivity {
 
         SharedPreferences prefs =   getSharedPreferences(Param.PEF_SERVER , Context.MODE_PRIVATE);
 
+        //  initialisation
+        bt_distant.setChecked(false);
+        bt_distant.setText("Local");
+        ed_ip_local.setTextColor(getResources().getColor(R.color.color_g_7));
+        ed_ip_distant.setTextColor(getResources().getColor(R.color.ripple_lite));
+        ip_selected =ed_ip_local .getText().toString()  ;
+
 
         if( prefs.contains("ip_distant") && prefs.contains("ip_local")&& prefs.contains("ip") &&  prefs.contains("base") ) {
             String _ip_distant = prefs.getString("ip_distant", "");
@@ -65,6 +68,7 @@ public class ParametrageActivity extends AppCompatActivity {
                  bt_distant.setText("Local");
                  ed_ip_local.setTextColor(getResources().getColor(R.color.color_g_7));
                  ed_ip_distant.setTextColor(getResources().getColor(R.color.ripple_lite));
+                 ip_selected = _ip ;
              }
              else {
                  bt_distant.setChecked(true);
@@ -72,6 +76,9 @@ public class ParametrageActivity extends AppCompatActivity {
 
                  ed_ip_local.setTextColor(getResources().getColor(R.color.ripple_lite));
                  ed_ip_distant.setTextColor(getResources().getColor(R.color.color_g_7));
+
+                 ip_selected = _ip ;
+
              }
 
         }
@@ -118,7 +125,7 @@ public class ParametrageActivity extends AppCompatActivity {
                 edt.putString("ip_local", ed_ip_local.getText().toString());
 
                 edt.commit();
-                Intent intent = new Intent(getApplicationContext(), SplachScreenActivity.class);
+                Intent intent = new Intent(getApplicationContext(), SplashScreenActivity.class);
                 startActivity(intent);
 
                 finish();
